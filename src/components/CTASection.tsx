@@ -8,7 +8,10 @@ export function CTASection({ client }: { client: ClientConfig }) {
       aria-labelledby="cta-heading"
     >
       <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
-        <h2 id="cta-heading" className="text-2xl font-bold text-white sm:text-3xl">
+        <h2
+          id="cta-heading"
+          className="font-display text-2xl font-semibold text-white sm:text-3xl"
+        >
           Ready to talk about your case?
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-white/85 sm:text-base">
@@ -18,14 +21,14 @@ export function CTASection({ client }: { client: ClientConfig }) {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
             href={client.ctaUrl}
-            className="inline-flex rounded-lg px-6 py-3 text-sm font-semibold text-slate-950 shadow-card transition hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold text-[var(--brand-primary)] shadow-card motion-safe:transition hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             style={{ backgroundColor: "var(--brand-secondary)" }}
           >
             {client.ctaText}
           </a>
           <a
             href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
-            className="inline-flex rounded-lg border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur motion-safe:transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             Call {client.phone}
           </a>

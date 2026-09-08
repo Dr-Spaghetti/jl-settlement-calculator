@@ -1,3 +1,5 @@
+import { WORKED_EXAMPLE } from "@/lib/calculator";
+
 export function HowItWorks() {
   const steps = [
     {
@@ -21,13 +23,13 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="scroll-mt-20 bg-white py-16 sm:py-20"
+      className="scroll-mt-20 bg-white/60 py-16 sm:py-20"
       aria-labelledby="how-heading"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2
           id="how-heading"
-          className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl"
+          className="font-display text-2xl font-semibold tracking-tight text-[var(--brand-primary)] sm:text-3xl"
         >
           How the math works
         </h2>
@@ -39,7 +41,7 @@ export function HowItWorks() {
           {steps.map((step, i) => (
             <li
               key={step.title}
-              className="relative rounded-2xl border border-slate-200 bg-slate-50 p-6"
+              className="relative rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] bg-[var(--page-ground)] p-6"
             >
               <span
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-white"
@@ -48,19 +50,40 @@ export function HowItWorks() {
               >
                 {i + 1}
               </span>
-              <h3 className="mt-3 text-lg font-semibold text-slate-900">{step.title}</h3>
+              <h3 className="font-display mt-3 text-lg font-semibold text-[var(--brand-primary)]">
+                {step.title}
+              </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.body}</p>
             </li>
           ))}
         </ol>
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-5 font-mono text-sm text-slate-700">
-          <p className="font-sans text-xs font-semibold uppercase tracking-wide text-slate-500">
-            Simplified formula
-          </p>
+
+        <div className="mt-8 rounded-xl border border-[color-mix(in_srgb,var(--brand-primary)_12%,transparent)] bg-white p-5 font-mono text-sm text-slate-700">
+          <p className="legend-micro font-sans">Simplified formula</p>
           <p className="mt-2 overflow-x-auto whitespace-nowrap">
             Estimate ≈ (Medical + Wages + Other) × Multiplier + PropertyDamage
           </p>
         </div>
+
+        <aside
+          className="mt-8 rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_12%,transparent)] bg-[var(--page-ground)] p-6"
+          aria-labelledby="worked-example-heading"
+        >
+          <h3
+            id="worked-example-heading"
+            className="font-display text-lg font-semibold text-[var(--brand-primary)]"
+          >
+            {WORKED_EXAMPLE.title}
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            {WORKED_EXAMPLE.narrative}
+          </p>
+          <ul className="mt-4 list-disc space-y-1.5 pl-5 text-sm text-slate-700">
+            {WORKED_EXAMPLE.highlights.map((h) => (
+              <li key={h}>{h}</li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </section>
   );

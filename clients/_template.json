@@ -13,5 +13,11 @@
   "city": "Your City",
   "state": "ST",
   "tagline": "Fighting for fair compensation after a car accident.",
-  "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Settlement outcomes depend on many case-specific factors. Consult a licensed attorney in your state for advice about your situation."
+  "heroEyebrow": "Free educational estimate",
+  "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Settlement outcomes depend on many case-specific factors. Consult a licensed attorney in your state for advice about your situation.",
+  "trustStats": [
+    { "value": "Browser-only", "label": "All math runs on your device" },
+    { "value": "No PII", "label": "Nothing collected or stored" },
+    { "value": "Educational", "label": "Not a case valuation or legal advice" }
+  ]
 }

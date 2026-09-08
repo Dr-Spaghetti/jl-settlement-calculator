@@ -96,3 +96,11 @@ Educational estimates only — **not legal advice**. Does not create an attorney
 ## License
 
 Private template for Justify Local / client deployments unless otherwise agreed.
+
+## Changelog (2026-09-08)
+
+- UX: 3-step calc, live range, breakdown, SVG Offer Reality Check, print, sticky mobile CTA
+- Trust: heroEyebrow/trustStats/testimonials, 3-pill strip, professional disclaimer, FAQ phone
+- Visual: warm #F7F5F0, Source Serif 4 + Inter, Mid hierarchy + count-up, scarce gold
+- Motion: reduced-motion hooks; signature-moment flag OFF
+

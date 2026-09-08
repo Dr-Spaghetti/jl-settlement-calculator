@@ -4,13 +4,13 @@ export function RangesTable() {
   return (
     <section
       id="ranges"
-      className="scroll-mt-20 bg-slate-50 py-16 sm:py-20"
+      className="scroll-mt-20 bg-[var(--page-ground)] py-16 sm:py-20"
       aria-labelledby="ranges-heading"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2
           id="ranges-heading"
-          className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl"
+          className="font-display text-2xl font-semibold tracking-tight text-[var(--brand-primary)] sm:text-3xl"
         >
           Educational settlement ranges
         </h2>
@@ -18,12 +18,12 @@ export function RangesTable() {
           Illustrative bands only — real cases vary widely by venue, policy limits, and
           proof. These figures are not averages from any firm&apos;s closed files.
         </p>
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-soft">
+        <div className="mt-8 overflow-x-auto rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] bg-white shadow-soft">
           <table className="min-w-full text-left text-sm">
             <caption className="sr-only">
               Educational car accident settlement range examples by severity
             </caption>
-            <thead className="bg-slate-900 text-white">
+            <thead className="bg-[var(--brand-primary)] text-white">
               <tr>
                 <th scope="col" className="px-4 py-3 font-semibold sm:px-6">
                   Scenario
@@ -43,9 +43,12 @@ export function RangesTable() {
               {EDUCATIONAL_RANGES.map((row, idx) => (
                 <tr
                   key={row.scenario}
-                  className={idx % 2 === 0 ? "bg-white" : "bg-slate-50"}
+                  className={idx % 2 === 0 ? "bg-white" : "bg-[var(--page-ground)]/80"}
                 >
-                  <th scope="row" className="px-4 py-3 font-medium text-slate-900 sm:px-6">
+                  <th
+                    scope="row"
+                    className="px-4 py-3 font-medium text-[var(--brand-primary)] sm:px-6"
+                  >
                     {row.scenario}
                   </th>
                   <td className="px-4 py-3 text-slate-600 sm:px-6">{row.medical}</td>

@@ -1,5 +1,6 @@
 import type {
   CalculatorInputs,
+  MultiplierLever,
   OfferRealityCheck,
   SettlementRange,
   Severity,
@@ -57,6 +58,39 @@ function roundMoney(n: number): number {
   return Math.round(n / 100) * 100;
 }
 
+function buildLevers(inputs: CalculatorInputs): MultiplierLever[] {
+  const careAdj = careAdjustment(inputs.careType);
+  const liabAdj = liabilityAdjustment(inputs.liabilityClarity);
+  const treatAdj = treatmentAdjustment(Math.max(0, inputs.treatmentMonths));
+
+  return [
+    {
+      id: "severity",
+      label: "Injury severity",
+      detail: SEVERITY_LABELS[inputs.severity],
+      adjustment: 0, // severity sets the base band, not an additive lever
+    },
+    {
+      id: "care",
+      label: "Primary care type",
+      detail: CARE_LABELS[inputs.careType],
+      adjustment: careAdj,
+    },
+    {
+      id: "treatment",
+      label: "Months of treatment",
+      detail: `${Math.max(0, inputs.treatmentMonths)} month${inputs.treatmentMonths === 1 ? "" : "s"}`,
+      adjustment: treatAdj,
+    },
+    {
+      id: "liability",
+      label: "Liability clarity",
+      detail: LIABILITY_LABELS[inputs.liabilityClarity],
+      adjustment: liabAdj,
+    },
+  ];
+}
+
 /**
  * Educational multiplier-method estimate.
  * Economic damages × adjusted multiplier → low / mid / high range.
@@ -73,14 +107,14 @@ export function calculateSettlement(inputs: CalculatorInputs): SettlementRange {
   const economicBase = specialsForPain + property;
 
   const base = SEVERITY_BASE[inputs.severity];
-  const adj =
-    careAdjustment(inputs.careType) +
-    liabilityAdjustment(inputs.liabilityClarity) +
-    treatmentAdjustment(Math.max(0, inputs.treatmentMonths));
+  const levers = buildLevers(inputs);
+  const totalAdjustment = levers
+    .filter((l) => l.id !== "severity")
+    .reduce((sum, l) => sum + l.adjustment, 0);
 
-  const multiplierLow = clampMultiplier(base.low + adj);
-  const multiplierMid = clampMultiplier(base.mid + adj);
-  const multiplierHigh = clampMultiplier(base.high + adj);
+  const multiplierLow = clampMultiplier(base.low + totalAdjustment);
+  const multiplierMid = clampMultiplier(base.mid + totalAdjustment);
+  const multiplierHigh = clampMultiplier(base.high + totalAdjustment);
 
   const low = roundMoney(specialsForPain * multiplierLow + property);
   const mid = roundMoney(specialsForPain * multiplierMid + property);
@@ -93,6 +127,14 @@ export function calculateSettlement(inputs: CalculatorInputs): SettlementRange {
     mid,
     high,
     economicBase,
+    specialsForPain,
+    propertyDamage: property,
+    medicalTotal: medical,
+    lostWages: wages,
+    otherOutOfPocket: other,
+    baseMultiplier: { ...base },
+    levers,
+    totalAdjustment: Math.round(totalAdjustment * 100) / 100,
     multiplierLow: Math.round(multiplierLow * 100) / 100,
     multiplierMid: Math.round(multiplierMid * 100) / 100,
     multiplierHigh: Math.round(multiplierHigh * 100) / 100,
@@ -108,6 +150,7 @@ export function evaluateOffer(
   const safeMid = Math.max(1, midEstimate);
   const percentOfMid = Math.round((offer / safeMid) * 1000) / 10;
   const gap = midEstimate - offer;
+  const gaugePercent = Math.min(140, Math.max(0, percentOfMid));
 
   let label: OfferRealityCheck["label"];
   let summary: string;
@@ -134,6 +177,7 @@ export function evaluateOffer(
     offer,
     midEstimate,
     percentOfMid,
+    gaugePercent,
     gap,
     label,
     summary,
@@ -146,6 +190,12 @@ export function formatCurrency(n: number): string {
     currency: "USD",
     maximumFractionDigits: 0,
   }).format(n);
+}
+
+export function formatSignedMultiplier(adj: number): string {
+  if (adj === 0) return "±0.00×";
+  const sign = adj > 0 ? "+" : "";
+  return `${sign}${adj.toFixed(2)}×`;
 }
 
 export const SEVERITY_LABELS: Record<Severity, string> = {
@@ -194,3 +244,16 @@ export const EDUCATIONAL_RANGES = [
     illustrative: "$500,000–multi-million*",
   },
 ];
+
+/** Worked example used in educational content (matches demo defaults). */
+export const WORKED_EXAMPLE = {
+  title: "Worked example (educational)",
+  narrative:
+    "Suppose $15,000 in medical bills, $4,500 lost wages, $800 other costs, and $6,500 property damage after a moderate injury with four months of MD care and clear liability.",
+  highlights: [
+    "Specials for pain: $20,300",
+    "Severity band starts near 2.0×–3.5×",
+    "Care + treatment + liability levers nudge the mid multiplier upward",
+    "Property damage is added after multiplication",
+  ],
+};

@@ -2,11 +2,15 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
+import { TrustStrip } from "@/components/TrustStrip";
 import { Calculator } from "@/components/Calculator";
 import { HowItWorks } from "@/components/HowItWorks";
 import { RangesTable } from "@/components/RangesTable";
 import { FAQ } from "@/components/FAQ";
 import { CTASection } from "@/components/CTASection";
+import { Testimonials } from "@/components/Testimonials";
+import { ProfessionalDisclaimer } from "@/components/ProfessionalDisclaimer";
+import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { getActiveClient } from "@/lib/client";
 
 export default function HomePage() {
@@ -18,23 +22,17 @@ export default function HomePage() {
       <DisclaimerBanner />
       <main>
         <Hero client={client} />
-        <Calculator defaultState={client.state} />
+        <TrustStrip client={client} />
+        <Calculator defaultState={client.state} client={client} />
         <HowItWorks />
         <RangesTable />
+        <Testimonials client={client} />
         <CTASection client={client} />
-        <FAQ />
-        <section className="border-t border-amber-200 bg-amber-50 py-10" aria-label="Full disclaimer">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-amber-900">
-              Disclaimer
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-amber-950/90">
-              {client.attorneyDisclaimer}
-            </p>
-          </div>
-        </section>
+        <FAQ client={client} />
+        <ProfessionalDisclaimer client={client} />
       </main>
       <Footer client={client} />
+      <StickyMobileCTA client={client} />
     </>
   );
 }
