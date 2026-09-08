@@ -1,0 +1,17 @@
+{
+  "id": "template",
+  "firmName": "Your Firm Name, P.C.",
+  "shortName": "Your Firm",
+  "logoUrl": "/logo-placeholder.svg",
+  "primaryColor": "#0B3D5C",
+  "secondaryColor": "#C9A227",
+  "phone": "(555) 555-0100",
+  "email": "intake@yourfirm.example",
+  "website": "https://www.yourfirm.example",
+  "ctaText": "Free Case Review",
+  "ctaUrl": "https://www.yourfirm.example/contact",
+  "city": "Your City",
+  "state": "ST",
+  "tagline": "Fighting for fair compensation after a car accident.",
+  "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Settlement outcomes depend on many case-specific factors. Consult a licensed attorney in your state for advice about your situation."
+}

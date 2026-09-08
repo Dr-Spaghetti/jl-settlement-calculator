@@ -1,0 +1,17 @@
+{
+  "id": "demo-apex-injury",
+  "firmName": "Apex Injury Law Group",
+  "shortName": "Apex Injury",
+  "logoUrl": "/logo-apex.svg",
+  "primaryColor": "#0A2540",
+  "secondaryColor": "#D4A017",
+  "phone": "(602) 555-0142",
+  "email": "help@apexinjury.demo",
+  "website": "https://www.apexinjury.demo",
+  "ctaText": "Get Your Free Case Review",
+  "ctaUrl": "https://www.apexinjury.demo/contact",
+  "city": "Phoenix",
+  "state": "AZ",
+  "tagline": "Arizona car accident victims deserve answers — and fair compensation.",
+  "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Results are illustrative ranges based on common valuation methods and do not predict any particular outcome. Apex Injury Law Group is a fictional demo firm for template demonstration. Consult a licensed attorney in your jurisdiction for advice about your situation."
+}
