@@ -19,5 +19,27 @@
     { "value": "Browser-only", "label": "All math runs on your device" },
     { "value": "No PII", "label": "Nothing collected or stored" },
     { "value": "Educational", "label": "Not a case valuation or legal advice" }
-  ]
+  ],
+  "_comment_testimonials": "Optional. For live clients, only include real client quotes with permission. Omit or leave empty to hide the Testimonials section.",
+  "_comment_multipliers": "Optional firm overrides. Omit entirely to use built-in defaults (see README). Example below is documented via underscore keys — copy into a real \"multipliers\" object to activate.",
+  "_example_multipliers": {
+    "severity": {
+      "minor": { "low": 1.5, "mid": 2.0, "high": 2.5 },
+      "moderate": { "low": 2.0, "mid": 2.75, "high": 3.5 },
+      "severe": { "low": 3.0, "mid": 3.75, "high": 4.5 },
+      "catastrophic": { "low": 4.0, "mid": 5.0, "high": 6.0 }
+    },
+    "clampMin": 1.25,
+    "clampMax": 7,
+    "care": { "chiro": -0.15, "md": 0.1, "surgery": 0.45 },
+    "liability": { "clear": 0.25, "mixed": -0.2, "disputed": -0.55 },
+    "treatmentGap": { "none": 0, "short": -0.2, "long": -0.45 },
+    "permanency": { "none": 0, "possible": 0.25, "rated": 0.55 },
+    "treatmentMonths": [
+      { "maxMonths": 1, "adjustment": -0.15 },
+      { "maxMonths": 3, "adjustment": 0 },
+      { "maxMonths": 6, "adjustment": 0.15 },
+      { "maxMonths": 12, "adjustment": 0.3 }
+    ]
+  }
 }

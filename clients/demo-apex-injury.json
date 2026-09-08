@@ -19,22 +19,5 @@
     { "value": "Browser-only", "label": "All math runs on your device" },
     { "value": "No PII", "label": "Nothing collected or stored" },
     { "value": "Educational", "label": "Not a case valuation or legal advice" }
-  ],
-  "testimonials": [
-    {
-      "quote": "The estimate helped me understand why the first offer felt low before I called.",
-      "name": "M. R.",
-      "detail": "Demo testimonial — fictional"
-    },
-    {
-      "quote": "Clear steps, no form spam. I used the print summary for my consult notes.",
-      "name": "J. K.",
-      "detail": "Demo testimonial — fictional"
-    },
-    {
-      "quote": "The Offer Reality Check made the gap to mid obvious in one glance.",
-      "name": "A. L.",
-      "detail": "Demo testimonial — fictional"
-    }
   ]
 }

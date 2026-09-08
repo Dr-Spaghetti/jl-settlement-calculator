@@ -104,3 +104,12 @@ Private template for Justify Local / client deployments unless otherwise agreed.
 - Visual: warm #F7F5F0, Source Serif 4 + Inter, Mid hierarchy + count-up, scarce gold
 - Motion: reduced-motion hooks; signature-moment flag OFF
 
+## Firm multipliers
+Omit multipliers in client JSON for built-in defaults. See clients/_template.json _example_multipliers for severity, clampMin/Max, care, liability, treatmentGap, permanency, treatmentMonths.
+Wire via calculateSettlement(inputs, client.multipliers) from the page.
+
+## Usefulness features
+- Comparative fault percent reduces or bars recoverable dollars
+- Policy BI caps and dual formula demand vs adjuster
+- Treatment gap, permanency, firm multipliers JSON
+Testimonials: only real quotes for live clients.

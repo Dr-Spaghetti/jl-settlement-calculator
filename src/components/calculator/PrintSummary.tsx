@@ -28,7 +28,6 @@ export function PrintSummary({
         Print / save summary
       </button>
 
-      {/* Print-only block — hidden on screen, shown when printing */}
       <div className="hidden print:block print:space-y-4" id="print-summary">
         <header>
           <h1 className="text-xl font-bold">{firmName}</h1>
@@ -36,32 +35,63 @@ export function PrintSummary({
             Educational settlement estimate summary — not legal advice
           </p>
           <p className="text-xs text-slate-500">
-            Generated locally in your browser · State note: {usState}
+            Generated locally in your browser · State note: {usState} · Formula:{" "}
+            {result.formulaMode}
           </p>
         </header>
         <dl className="grid grid-cols-3 gap-3 text-center">
           <div>
-            <dt className="text-xs uppercase text-slate-500">Low</dt>
+            <dt className="text-xs uppercase text-slate-500">Pre-fault Low</dt>
             <dd className="text-lg font-bold">{formatCurrency(result.low)}</dd>
           </div>
           <div>
-            <dt className="text-xs uppercase text-slate-500">Mid</dt>
+            <dt className="text-xs uppercase text-slate-500">Pre-fault Mid</dt>
             <dd className="text-lg font-bold">{formatCurrency(result.mid)}</dd>
           </div>
           <div>
-            <dt className="text-xs uppercase text-slate-500">High</dt>
+            <dt className="text-xs uppercase text-slate-500">Pre-fault High</dt>
             <dd className="text-lg font-bold">{formatCurrency(result.high)}</dd>
           </div>
         </dl>
+        <dl className="grid grid-cols-3 gap-3 text-center">
+          <div>
+            <dt className="text-xs uppercase text-slate-500">Recoverable Low</dt>
+            <dd className="text-lg font-bold">
+              {formatCurrency(result.recoverableLow)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs uppercase text-slate-500">Recoverable Mid</dt>
+            <dd className="text-lg font-bold">
+              {formatCurrency(result.recoverableMid)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs uppercase text-slate-500">Recoverable High</dt>
+            <dd className="text-lg font-bold">
+              {formatCurrency(result.recoverableHigh)}
+            </dd>
+          </div>
+        </dl>
+        {result.cappedMid != null ? (
+          <p className="text-sm">
+            Per-person policy capped mid: {formatCurrency(result.cappedMid)}
+            {result.policyLimitsMayBind ? " — policy limits may bind" : ""}
+          </p>
+        ) : null}
         <p className="text-sm">
           Economic base {formatCurrency(result.economicBase)} · Multipliers{" "}
           {result.multiplierLow}× / {result.multiplierMid}× / {result.multiplierHigh}×
+          {result.faultPercentApplied > 0
+            ? ` · Plaintiff fault ${result.faultPercentApplied}%`
+            : ""}
+          {result.recoveryBarred ? " · Recovery may be barred" : ""}
         </p>
         {offerCheck ? (
           <p className="text-sm">
             Offer Reality Check: {formatCurrency(offerCheck.offer)} ={" "}
-            {offerCheck.percentOfMid}% of mid ({formatCurrency(offerCheck.midEstimate)}).{" "}
-            {offerCheck.summary}
+            {offerCheck.percentOfMid}% of post-fault mid (
+            {formatCurrency(offerCheck.midEstimate)}). {offerCheck.summary}
           </p>
         ) : null}
         <p className="text-xs text-slate-500">{result.comparativeFaultNote}</p>

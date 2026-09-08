@@ -59,9 +59,12 @@ export function HowItWorks() {
         </ol>
 
         <div className="mt-8 rounded-xl border border-[color-mix(in_srgb,var(--brand-primary)_12%,transparent)] bg-white p-5 font-mono text-sm text-slate-700">
-          <p className="legend-micro font-sans">Simplified formula</p>
+          <p className="legend-micro font-sans">Simplified formulas</p>
           <p className="mt-2 overflow-x-auto whitespace-nowrap">
-            Estimate ≈ (Medical + Wages + Other) × Multiplier + PropertyDamage
+            Demand ≈ (Medical + Wages + Other) × Multiplier + Property
+          </p>
+          <p className="mt-1 overflow-x-auto whitespace-nowrap text-slate-600">
+            Adjuster ≈ Medical × Multiplier + Wages + Other + Property
           </p>
         </div>
 

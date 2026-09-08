@@ -1,14 +1,26 @@
 "use client";
 
 import type { SettlementRange } from "@/lib/types";
-import { formatCurrency, formatSignedMultiplier } from "@/lib/calculator";
+import {
+  formatCurrency,
+  formatSignedMultiplier,
+  FORMULA_MODE_COPY,
+} from "@/lib/calculator";
 
 export function BreakdownPanel({ result }: { result: SettlementRange }) {
+  const formula = FORMULA_MODE_COPY[result.formulaMode];
+
   return (
     <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm text-slate-600">
       <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
         Breakdown
       </h4>
+
+      <p className="mt-2 text-xs leading-relaxed text-slate-500">
+        <span className="font-semibold text-slate-700">{formula.label}</span>
+        {" — "}
+        {formula.blurb}
+      </p>
 
       <dl className="mt-3 space-y-1.5">
         <div className="flex justify-between gap-3">
@@ -30,9 +42,13 @@ export function BreakdownPanel({ result }: { result: SettlementRange }) {
           </dd>
         </div>
         <div className="flex justify-between gap-3 border-t border-slate-200/80 pt-1.5">
-          <dt className="font-medium text-slate-800">Specials (multiplied)</dt>
+          <dt className="font-medium text-slate-800">
+            {result.formulaMode === "adjuster"
+              ? "Multiplied base (medical)"
+              : "Specials (multiplied)"}
+          </dt>
           <dd className="font-semibold text-slate-900 tabular-nums">
-            {formatCurrency(result.specialsForPain)}
+            {formatCurrency(result.multipliedBase)}
           </dd>
         </div>
         <div className="flex justify-between gap-3">
@@ -75,8 +91,9 @@ export function BreakdownPanel({ result }: { result: SettlementRange }) {
       </div>
 
       <p className="mt-3 text-xs leading-relaxed text-slate-500">
-        Pain-and-suffering style multipliers apply to medical, wages, and other out-of-pocket
-        costs. Property damage is added after multiplication.
+        {result.formulaMode === "adjuster"
+          ? "Adjuster-style: only medical bills are multiplied; wages, other costs, and property are added after."
+          : "Demand-style: pain-and-suffering multipliers apply to medical, wages, and other out-of-pocket. Property damage is added after multiplication."}
       </p>
     </div>
   );

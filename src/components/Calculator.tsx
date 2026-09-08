@@ -4,16 +4,23 @@ import { useEffect, useMemo, useState } from "react";
 import {
   calculateSettlement,
   evaluateOffer,
+  formatCurrency,
   SEVERITY_LABELS,
   CARE_LABELS,
   LIABILITY_LABELS,
+  TREATMENT_GAP_LABELS,
+  PERMANENCY_LABELS,
+  FORMULA_MODE_COPY,
 } from "@/lib/calculator";
 import { US_STATES } from "@/lib/states";
 import type {
   CareType,
   ClientConfig,
+  FormulaMode,
   LiabilityClarity,
+  Permanency,
   Severity,
+  TreatmentGap,
 } from "@/lib/types";
 import { BreakdownPanel } from "@/components/calculator/BreakdownPanel";
 import { OfferGauge } from "@/components/calculator/OfferGauge";
@@ -38,14 +45,16 @@ function NumberField({
   onChange,
   min = 0,
   error,
+  optional,
 }: {
   id: string;
   label: string;
   help?: string;
-  value: number;
-  onChange: (n: number) => void;
+  value: number | "";
+  onChange: (n: number | "") => void;
   min?: number;
   error?: string;
+  optional?: boolean;
 }) {
   return (
     <div>
@@ -62,8 +71,16 @@ function NumberField({
           inputMode="decimal"
           min={min}
           step={100}
-          value={Number.isFinite(value) ? value : 0}
-          onChange={(e) => onChange(Math.max(min, Number(e.target.value) || 0))}
+          placeholder={optional ? "Optional" : undefined}
+          value={value === "" ? "" : Number.isFinite(value) ? value : 0}
+          onChange={(e) => {
+            const raw = e.target.value;
+            if (optional && raw.trim() === "") {
+              onChange("");
+              return;
+            }
+            onChange(Math.max(min, Number(raw) || 0));
+          }}
           className={`${inputClass} !mt-0 pl-7 ${error ? "border-red-400" : ""}`}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? `${id}-error` : undefined}
@@ -83,7 +100,7 @@ function NumberField({
 const STEPS: { id: StepId; title: string; short: string }[] = [
   { id: 1, title: "Economic damages", short: "Costs" },
   { id: 2, title: "Injury & liability", short: "Injury" },
-  { id: 3, title: "Offer (optional)", short: "Offer" },
+  { id: 3, title: "Offer & limits", short: "Offer" },
 ];
 
 export function Calculator({
@@ -105,24 +122,45 @@ export function Calculator({
   const [liabilityClarity, setLiabilityClarity] =
     useState<LiabilityClarity>("clear");
   const [usState, setUsState] = useState(defaultState || "AZ");
+  const [plaintiffFaultPercent, setPlaintiffFaultPercent] = useState(0);
+  const [treatmentGap, setTreatmentGap] = useState<TreatmentGap>("none");
+  const [permanency, setPermanency] = useState<Permanency>("none");
+  const [formulaMode, setFormulaMode] = useState<FormulaMode>("demand");
+  const [policyLimitPerPerson, setPolicyLimitPerPerson] = useState<number | "">(
+    ""
+  );
+  const [policyLimitPerAccident, setPolicyLimitPerAccident] = useState<
+    number | ""
+  >("");
   const [offerReceived, setOfferReceived] = useState<string>("");
   const [touched, setTouched] = useState(false);
   const [midPop, setMidPop] = useState(false);
 
   const result = useMemo(
     () =>
-      calculateSettlement({
-        medicalBillsPast,
-        medicalBillsFuture,
-        lostWages,
-        otherOutOfPocket,
-        propertyDamage,
-        severity,
-        treatmentMonths,
-        careType,
-        liabilityClarity,
-        usState,
-      }),
+      calculateSettlement(
+        {
+          medicalBillsPast,
+          medicalBillsFuture,
+          lostWages,
+          otherOutOfPocket,
+          propertyDamage,
+          severity,
+          treatmentMonths,
+          careType,
+          liabilityClarity,
+          usState,
+          plaintiffFaultPercent,
+          treatmentGap,
+          permanency,
+          formulaMode,
+          policyLimitPerPerson:
+            policyLimitPerPerson === "" ? null : policyLimitPerPerson,
+          policyLimitPerAccident:
+            policyLimitPerAccident === "" ? null : policyLimitPerAccident,
+        },
+        client.multipliers
+      ),
     [
       medicalBillsPast,
       medicalBillsFuture,
@@ -134,6 +172,13 @@ export function Calculator({
       careType,
       liabilityClarity,
       usState,
+      plaintiffFaultPercent,
+      treatmentGap,
+      permanency,
+      formulaMode,
+      policyLimitPerPerson,
+      policyLimitPerAccident,
+      client.multipliers,
     ]
   );
 
@@ -142,7 +187,10 @@ export function Calculator({
     offerNum === null || (Number.isFinite(offerNum) && offerNum >= 0);
   const offerCheck =
     offerNum !== null && Number.isFinite(offerNum) && offerNum >= 0
-      ? evaluateOffer(offerNum, result.mid)
+      ? evaluateOffer(offerNum, result.recoverableMid, {
+          cappedMid: result.cappedMid,
+          policyLimitsMayBind: result.policyLimitsMayBind,
+        })
       : null;
 
   const hasEconomic =
@@ -155,6 +203,13 @@ export function Calculator({
     touched && !hasEconomic
       ? "Enter at least one economic damage amount to estimate a range."
       : undefined;
+  const faultError =
+    touched &&
+    (plaintiffFaultPercent < 0 || plaintiffFaultPercent > 100)
+      ? "Enter 0–100%"
+      : undefined;
+
+  const displayMid = result.recoverableMid;
 
   useEffect(() => {
     if (!touched || !hasEconomic) return;
@@ -162,7 +217,7 @@ export function Calculator({
     setMidPop(true);
     const t = window.setTimeout(() => setMidPop(false), 480);
     return () => window.clearTimeout(t);
-  }, [result.mid, touched, hasEconomic]);
+  }, [displayMid, touched, hasEconomic]);
 
   function markTouched() {
     if (!touched) setTouched(true);
@@ -182,6 +237,9 @@ export function Calculator({
     markTouched();
     setStep(id);
   }
+
+  const showPreFault =
+    result.faultPercentApplied > 0 || result.recoveryBarred;
 
   return (
     <section
@@ -256,35 +314,78 @@ export function Calculator({
                     label="Medical bills (past)"
                     help="ER, imaging, PT, specialists to date"
                     value={medicalBillsPast}
-                    onChange={setMedicalBillsPast}
+                    onChange={(n) => setMedicalBillsPast(typeof n === "number" ? n : 0)}
                   />
                   <NumberField
                     id="medical-future"
                     label="Medical bills (future)"
                     help="Expected remaining care costs"
                     value={medicalBillsFuture}
-                    onChange={setMedicalBillsFuture}
+                    onChange={(n) =>
+                      setMedicalBillsFuture(typeof n === "number" ? n : 0)
+                    }
                   />
                   <NumberField
                     id="lost-wages"
                     label="Lost wages / income"
                     value={lostWages}
-                    onChange={setLostWages}
+                    onChange={(n) => setLostWages(typeof n === "number" ? n : 0)}
                   />
                   <NumberField
                     id="other-oop"
                     label="Other out-of-pocket"
                     help="Travel, meds, household help, etc."
                     value={otherOutOfPocket}
-                    onChange={setOtherOutOfPocket}
+                    onChange={(n) =>
+                      setOtherOutOfPocket(typeof n === "number" ? n : 0)
+                    }
                   />
                   <NumberField
                     id="property"
                     label="Property damage"
                     help="Vehicle repair / total loss (added, not multiplied)"
                     value={propertyDamage}
-                    onChange={setPropertyDamage}
+                    onChange={(n) =>
+                      setPropertyDamage(typeof n === "number" ? n : 0)
+                    }
                   />
+                </div>
+                <div className="mt-5 rounded-xl border border-slate-200 bg-[var(--page-ground)]/50 p-4">
+                  <p className="text-sm font-medium text-slate-800">
+                    Formula style
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Choose how wages and other costs enter the multiplier math.
+                  </p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {(Object.keys(FORMULA_MODE_COPY) as FormulaMode[]).map((mode) => {
+                      const copy = FORMULA_MODE_COPY[mode];
+                      const active = formulaMode === mode;
+                      return (
+                        <button
+                          key={mode}
+                          type="button"
+                          onClick={() => {
+                            markTouched();
+                            setFormulaMode(mode);
+                          }}
+                          className={`rounded-lg border px-3 py-2.5 text-left text-sm motion-safe:transition ${
+                            active
+                              ? "border-[var(--brand-primary)] bg-white shadow-sm ring-2 ring-[var(--brand-primary)]/20"
+                              : "border-slate-200 bg-white/80 hover:border-slate-300"
+                          }`}
+                          aria-pressed={active}
+                        >
+                          <span className="font-semibold text-[var(--brand-primary)]">
+                            {copy.label}
+                          </span>
+                          <span className="mt-1 block text-xs leading-relaxed text-slate-500">
+                            {copy.blurb}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </fieldset>
             ) : null}
@@ -369,7 +470,53 @@ export function Calculator({
                       )}
                     </select>
                   </div>
-                  <div className="sm:col-span-2">
+                  <div>
+                    <label htmlFor="treatment-gap" className={labelClass}>
+                      Treatment gap
+                    </label>
+                    <select
+                      id="treatment-gap"
+                      className={inputClass}
+                      value={treatmentGap}
+                      onChange={(e) =>
+                        setTreatmentGap(e.target.value as TreatmentGap)
+                      }
+                    >
+                      {(Object.keys(TREATMENT_GAP_LABELS) as TreatmentGap[]).map(
+                        (k) => (
+                          <option key={k} value={k}>
+                            {TREATMENT_GAP_LABELS[k]}
+                          </option>
+                        )
+                      )}
+                    </select>
+                    <p className={helpClass}>
+                      Gaps in care can reduce multiplier support (educational).
+                    </p>
+                  </div>
+                  <div>
+                    <label htmlFor="permanency" className={labelClass}>
+                      Permanency
+                    </label>
+                    <select
+                      id="permanency"
+                      className={inputClass}
+                      value={permanency}
+                      onChange={(e) =>
+                        setPermanency(e.target.value as Permanency)
+                      }
+                    >
+                      {(Object.keys(PERMANENCY_LABELS) as Permanency[]).map((k) => (
+                        <option key={k} value={k}>
+                          {PERMANENCY_LABELS[k]}
+                        </option>
+                      ))}
+                    </select>
+                    <p className={helpClass}>
+                      Documented lasting impairment can support higher multipliers.
+                    </p>
+                  </div>
+                  <div>
                     <label htmlFor="us-state" className={labelClass}>
                       State where crash occurred
                     </label>
@@ -385,9 +532,34 @@ export function Calculator({
                         </option>
                       ))}
                     </select>
-                    <p className={helpClass}>
-                      Used for an educational comparative-fault note only.
-                    </p>
+                  </div>
+                  <div>
+                    <label htmlFor="plaintiff-fault" className={labelClass}>
+                      Your estimated fault %
+                    </label>
+                    <input
+                      id="plaintiff-fault"
+                      type="number"
+                      min={0}
+                      max={100}
+                      step={1}
+                      className={`${inputClass} ${faultError ? "border-red-400" : ""}`}
+                      value={plaintiffFaultPercent}
+                      onChange={(e) =>
+                        setPlaintiffFaultPercent(
+                          Math.max(0, Math.min(100, Number(e.target.value) || 0))
+                        )
+                      }
+                      aria-invalid={Boolean(faultError)}
+                    />
+                    {faultError ? (
+                      <p className={errorClass}>{faultError}</p>
+                    ) : (
+                      <p className={helpClass}>
+                        Applied using this state&apos;s comparative-fault category
+                        (reduces or bars recoverable dollars).
+                      </p>
+                    )}
                   </div>
                 </div>
               </fieldset>
@@ -396,40 +568,60 @@ export function Calculator({
             {step === 3 ? (
               <fieldset onChange={markTouched}>
                 <legend className="legend-micro">
-                  Step 3 · Offer Reality Check (optional)
+                  Step 3 · Offer & policy limits (optional)
                 </legend>
                 <p className="mt-2 text-sm text-slate-600">
-                  If an insurer already made an offer, enter it to compare against the mid
-                  estimate. Leave blank to skip.
+                  Enter an insurer offer and known BI limits to compare against the
+                  post-fault mid estimate. Leave blank to skip.
                 </p>
-                <div className="mt-4 max-w-sm">
-                  <label htmlFor="offer" className={labelClass}>
-                    Offer received
-                  </label>
-                  <div className="relative mt-1.5">
-                    <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-slate-400">
-                      $
-                    </span>
-                    <input
-                      id="offer"
-                      type="number"
-                      inputMode="decimal"
-                      min={0}
-                      step={100}
-                      placeholder="Leave blank if none"
-                      className={`${inputClass} !mt-0 pl-7 ${!offerValid ? "border-red-400" : ""}`}
-                      value={offerReceived}
-                      onChange={(e) => setOfferReceived(e.target.value)}
-                      aria-invalid={!offerValid}
-                    />
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="offer" className={labelClass}>
+                      Offer received
+                    </label>
+                    <div className="relative mt-1.5">
+                      <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-slate-400">
+                        $
+                      </span>
+                      <input
+                        id="offer"
+                        type="number"
+                        inputMode="decimal"
+                        min={0}
+                        step={100}
+                        placeholder="Leave blank if none"
+                        className={`${inputClass} !mt-0 pl-7 ${!offerValid ? "border-red-400" : ""}`}
+                        value={offerReceived}
+                        onChange={(e) => setOfferReceived(e.target.value)}
+                        aria-invalid={!offerValid}
+                      />
+                    </div>
+                    {!offerValid ? (
+                      <p className={errorClass}>
+                        Enter a valid offer amount (0 or more).
+                      </p>
+                    ) : (
+                      <p className={helpClass}>
+                        Compared to post-fault Mid in the Offer Reality Check.
+                      </p>
+                    )}
                   </div>
-                  {!offerValid ? (
-                    <p className={errorClass}>Enter a valid offer amount (0 or more).</p>
-                  ) : (
-                    <p className={helpClass}>
-                      Powers the Offer Reality Check meter in your live results.
-                    </p>
-                  )}
+                  <NumberField
+                    id="policy-per-person"
+                    label="BI limit per person"
+                    help="Caps recoverable range when set"
+                    value={policyLimitPerPerson}
+                    onChange={setPolicyLimitPerPerson}
+                    optional
+                  />
+                  <NumberField
+                    id="policy-per-accident"
+                    label="BI limit per accident"
+                    help="Shown as a note; not used to cap the estimate"
+                    value={policyLimitPerAccident}
+                    onChange={setPolicyLimitPerAccident}
+                    optional
+                  />
                 </div>
               </fieldset>
             ) : null}
@@ -492,13 +684,32 @@ export function Calculator({
                 </p>
               ) : (
                 <>
+                  {result.recoveryBarred ? (
+                    <div
+                      className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950"
+                      role="status"
+                    >
+                      <p className="font-semibold">Recovery may be barred</p>
+                      <p className="mt-1 leading-relaxed">
+                        At {result.faultPercentApplied}% plaintiff fault under{" "}
+                        {usState}&apos;s rules, recoverable dollars are shown as $0.
+                        An attorney can evaluate exceptions and strategy.
+                      </p>
+                    </div>
+                  ) : null}
+
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                    {showPreFault
+                      ? "Recoverable after comparative fault"
+                      : "Estimated range"}
+                  </p>
                   <dl className="grid grid-cols-3 items-end gap-2 text-center">
                     <div className="rounded-xl bg-[var(--page-ground)] p-3">
                       <dt className="text-[10px] font-medium uppercase tracking-wide text-slate-500">
                         Low
                       </dt>
                       <dd className="mt-1 text-sm font-semibold tabular-nums text-slate-700 sm:text-base">
-                        <CountUpCurrency value={result.low} />
+                        <CountUpCurrency value={result.recoverableLow} />
                       </dd>
                     </div>
                     <div
@@ -515,7 +726,7 @@ export function Calculator({
                         Mid
                       </dt>
                       <dd className="mt-1 text-xl font-bold tabular-nums sm:text-2xl">
-                        <CountUpCurrency value={result.mid} />
+                        <CountUpCurrency value={result.recoverableMid} />
                       </dd>
                     </div>
                     <div className="rounded-xl bg-[var(--page-ground)] p-3">
@@ -523,10 +734,63 @@ export function Calculator({
                         High
                       </dt>
                       <dd className="mt-1 text-sm font-semibold tabular-nums text-slate-700 sm:text-base">
-                        <CountUpCurrency value={result.high} />
+                        <CountUpCurrency value={result.recoverableHigh} />
                       </dd>
                     </div>
                   </dl>
+
+                  {showPreFault ? (
+                    <div className="rounded-xl border border-dashed border-slate-200 bg-[var(--page-ground)]/40 px-3 py-2.5">
+                      <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                        Pre-fault range
+                      </p>
+                      <p className="mt-1 text-xs tabular-nums text-slate-600">
+                        Low {formatCurrency(result.low)} · Mid{" "}
+                        {formatCurrency(result.mid)} · High{" "}
+                        {formatCurrency(result.high)}
+                        {result.faultPercentApplied > 0
+                          ? ` · Fault ${result.faultPercentApplied}%`
+                          : ""}
+                      </p>
+                    </div>
+                  ) : null}
+
+                  {result.cappedMid != null ? (
+                    <div className="rounded-xl border border-slate-200 px-3 py-2.5">
+                      <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                        Per-person policy capped
+                      </p>
+                      <p className="mt-1 text-xs tabular-nums text-slate-700">
+                        Low {formatCurrency(result.cappedLow ?? 0)} · Mid{" "}
+                        {formatCurrency(result.cappedMid)} · High{" "}
+                        {formatCurrency(result.cappedHigh ?? 0)}
+                        {result.policyLimitPerPerson != null
+                          ? ` · Limit ${formatCurrency(result.policyLimitPerPerson)}`
+                          : ""}
+                      </p>
+                      {result.policyLimitPerAccident != null ? (
+                        <p className="mt-1 text-xs text-slate-500">
+                          Per-accident limit noted:{" "}
+                          {formatCurrency(result.policyLimitPerAccident)} (not
+                          applied as a hard cap here).
+                        </p>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  {result.policyLimitsMayBind ? (
+                    <div
+                      className="rounded-xl border border-[color-mix(in_srgb,var(--brand-secondary)_45%,transparent)] bg-[color-mix(in_srgb,var(--brand-secondary)_12%,white)] px-4 py-3 text-sm text-[var(--brand-primary)]"
+                      role="status"
+                    >
+                      <p className="font-semibold">Policy limits may bind</p>
+                      <p className="mt-1 text-xs leading-relaxed opacity-90">
+                        Post-fault Mid ({formatCurrency(result.recoverableMid)}) exceeds
+                        the per-person BI limit (
+                        {formatCurrency(result.policyLimitPerPerson ?? 0)}).
+                      </p>
+                    </div>
+                  ) : null}
 
                   <BreakdownPanel result={result} />
 
