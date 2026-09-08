@@ -1,33 +1,62 @@
 import type { ClientConfig } from "@/lib/types";
+import type { ReactNode } from "react";
+
+type FaqItem = {
+  q: string;
+  a: ReactNode;
+};
 
 export function FAQ({ client }: { client: ClientConfig }) {
   const phone = client.phone;
   const tel = phone.replace(/[^\d+]/g, "");
 
-  const faqs = [
+  const faqs: FaqItem[] = [
     {
-      q: "Is this calculator free to use?",
-      a: "Yes. It runs entirely in your browser. We do not ask for your name, email, or case details to produce an estimate.",
+      q: "How much is my car accident settlement worth?",
+      a: "There is no single average that predicts your case. Adjusters often start from economic damages (medical bills, lost wages, and related costs), then estimate pain and suffering with a severity multiplier—commonly about 1.5×–5×—and reduce for your share of fault and available insurance limits. This calculator applies that educational method to your inputs and returns a low / mid / high range, not a guaranteed payout.",
     },
     {
-      q: "Why is there a low, mid, and high number?",
-      a: "Settlement valuation is uncertain. Showing a range reflects how severity, treatment, liability, and negotiation can move outcomes — and avoids implying false precision.",
+      q: "How do insurance companies calculate car accident settlements?",
+      a: "Most use a multiplier method: add proven specials, multiply for pain and suffering based on injury severity and documentation, add property damage (usually not multiplied), then adjust for liability and policy limits. This tool mirrors that structure—including Demand-style vs Adjuster-style formulas—so you can see how the math moves.",
     },
     {
-      q: "What is the Offer Reality Check?",
-      a: "If you enter an insurer offer, we compare it to the mid-range educational estimate for your inputs and summarize whether it appears well below, below, near, or above that mid point. It is not a fairness score or legal opinion.",
+      q: "How is pain and suffering calculated after a car accident?",
+      a: "Pain and suffering is the non-economic part of a claim. The usual convention is medical or economic damages × a multiplier tied to severity (soft tissue toward the low end; surgery or permanent impairment toward the high end). Permanency, treatment length, care type, and treatment gaps all nudge that factor. Enter those levers in the calculator to see how the mid estimate changes.",
     },
     {
-      q: "Does comparative fault change my number?",
-      a: "Yes. When you enter a fault percentage, the main range shows recoverable dollars after applying your state's comparative-fault category (which can reduce or bar recovery). A pre-fault footnote still shows the unreduced educational range. Rules and exceptions are educational only — an attorney should apply them to your facts.",
+      q: "What is a fair car accident settlement offer?",
+      a: "“Fair” depends on proof, fault, venue, and insurance limits—not a national average. A practical check: compare the offer to a mid-range estimate built from your bills, wages, injury details, and fault %. Use Offer Reality Check to see whether an offer sits well below, near, or above that mid point. Early insurer offers are often starting points.",
     },
     {
-      q: "Will an attorney get the same number?",
-      a: "Unlikely. Attorneys weigh medical proof, experts, venue, insurance limits, prior claims, and negotiation dynamics that no public form can capture. Treat this as a starting point for a conversation.",
+      q: "Does my percentage of fault reduce my car accident settlement?",
+      a: "In most states, yes. Pure comparative negligence reduces recovery by your fault share; modified systems can bar recovery at 50% or 51%; a few states still use contributory negligence (any fault may bar recovery). Enter your estimated fault % and state—the range shows recoverable dollars after those rules, with a pre-fault footnote for context.",
     },
     {
-      q: "Is this legal advice?",
-      a: null as string | null,
+      q: "Do insurance policy limits cap my car accident settlement?",
+      a: "Often. Even a strong claim may be limited by the at-fault driver’s bodily injury limits (and sometimes your underinsured-motorist coverage). Enter per-person BI limits to see when the estimate may be capped and when policy limits may bind.",
+    },
+    {
+      q: "How much is a car accident settlement with soft tissue injuries or whiplash?",
+      a: "Soft-tissue claims usually sit toward the lower multiplier band (often roughly 1.5×–2.5×), especially with short treatment and full recovery. Longer care, imaging findings, specialist treatment, or lasting symptoms can push higher. Use severity, care type, and months of treatment in the calculator for a range that fits your facts—not a one-size average.",
+    },
+    {
+      q: "Is an online car accident settlement calculator accurate?",
+      a: (
+        <>
+          It is a starting point, not a case valuation. No public form can weigh medical
+          records, experts, venue, prior injuries, or negotiation strategy. Treat the
+          result as an educational range to prepare for a consult—not a promise of what
+          you will receive. This tool is not legal advice and does not create an
+          attorney-client relationship. For a real review, contact {client.shortName} at{" "}
+          <a
+            className="font-semibold text-[var(--brand-primary)] underline decoration-slate-300 underline-offset-2 hover:decoration-[var(--brand-primary)]"
+            href={`tel:${tel}`}
+          >
+            {phone}
+          </a>{" "}
+          or a licensed attorney in your state.
+        </>
+      ),
     },
   ];
 
@@ -60,21 +89,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
                   </span>
                 </span>
               </summary>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                {item.a ?? (
-                  <>
-                    No. Using this tool does not create an attorney-client relationship. For
-                    advice about your situation, contact {client.shortName} at{" "}
-                    <a
-                      className="font-semibold text-[var(--brand-primary)] underline decoration-slate-300 underline-offset-2 hover:decoration-[var(--brand-primary)]"
-                      href={`tel:${tel}`}
-                    >
-                      {phone}
-                    </a>{" "}
-                    or a licensed attorney in your state.
-                  </>
-                )}
-              </p>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600">{item.a}</p>
             </details>
           ))}
         </div>
