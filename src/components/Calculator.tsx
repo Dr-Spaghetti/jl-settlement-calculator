@@ -298,8 +298,9 @@ export function Calculator({
           </ol>
         </nav>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-5">
-          <div className="space-y-6 rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] bg-white p-5 shadow-soft sm:p-6 lg:col-span-3">
+        <div className="mt-8 grid items-start gap-8 lg:grid-cols-5">
+          <div className="space-y-4 lg:col-span-3">
+          <div className="space-y-6 rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] bg-white p-5 shadow-soft sm:p-6">
             {step === 1 ? (
               <fieldset onChange={markTouched}>
                 <legend className="legend-micro">Step 1 · Economic damages</legend>
@@ -657,6 +658,51 @@ export function Calculator({
                 Estimate updates instantly as you type.
               </p>
             </div>
+          </div>
+
+          {/* Quiet step guidance — caption weight only; fills left column without a competing card */}
+          <aside
+            className="rounded-xl border border-[color-mix(in_srgb,var(--brand-primary)_8%,transparent)] bg-[var(--page-ground)]/80 px-4 py-3"
+            aria-label="While you estimate"
+          >
+            <p className="legend-micro">While you estimate</p>
+            <ul className="mt-2.5 divide-y divide-slate-200/80">
+              {(step === 1
+                ? [
+                    "Specials (medical + wages + OOP) drive the multiplier base.",
+                    "Property damage is added after multipliers — not multiplied.",
+                    "Demand vs settlement style only changes how wages enter the math.",
+                  ]
+                : step === 2
+                  ? [
+                      "Severity and care type set the starting multiplier band.",
+                      "Your fault % reduces recoverable dollars by state rules.",
+                      "Permanency and treatment gaps quietly shift the levers.",
+                    ]
+                  : [
+                      "Offer Reality Check compares an insurer offer to Mid.",
+                      "Per-person BI limits can cap what is realistically collectible.",
+                      "Leave blanks if you do not know limits yet — range still updates.",
+                    ]
+              ).map((line) => (
+                <li key={line} className="py-2 text-sm leading-snug text-slate-500 first:pt-0 last:pb-0">
+                  {line}
+                </li>
+              ))}
+            </ul>
+            {step === 2 ? (
+              <p className="mt-2 border-t border-slate-200/80 pt-2 text-xs tabular-nums text-slate-500">
+                Entered so far: medical{" "}
+                {formatCurrency(medicalBillsPast + medicalBillsFuture)} · wages{" "}
+                {formatCurrency(lostWages)}
+              </p>
+            ) : null}
+            {step === 3 && hasEconomic ? (
+              <p className="mt-2 border-t border-slate-200/80 pt-2 text-xs tabular-nums text-slate-500">
+                Current Mid recoverable: {formatCurrency(result.recoverableMid)}
+              </p>
+            ) : null}
+          </aside>
           </div>
 
           <div className="lg:col-span-2">
