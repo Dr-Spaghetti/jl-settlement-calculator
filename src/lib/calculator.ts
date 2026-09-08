@@ -452,15 +452,17 @@ export const PERMANENCY_LABELS: Record<Permanency, string> = {
 
 export const FORMULA_MODE_COPY: Record<
   FormulaMode,
-  { label: string; blurb: string }
+  { label: string; short: string; blurb: string }
 > = {
   demand: {
     label: "Demand-style",
+    short: "Multiplies specials, then adds property.",
     blurb:
       "Multiplies medical + wages + other (specials), then adds property — common in demand letters.",
   },
   adjuster: {
     label: "Adjuster-style",
+    short: "Multiplies medical only; adds other costs after.",
     blurb:
       "Multiplies medical only, then adds wages, other, and property — closer to some adjuster worksheets.",
   },

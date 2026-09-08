@@ -256,9 +256,7 @@ export function Calculator({
             Estimate your settlement range
           </h2>
           <p className="mt-3 text-slate-600">
-            Step through your known costs and injury details. The range updates live —
-            low, mid, and high — with a transparent breakdown. No personal information is
-            collected or stored.
+            Range updates live as you step through costs and injury details.
           </p>
         </div>
 
@@ -379,8 +377,8 @@ export function Calculator({
                           <span className="font-semibold text-[var(--brand-primary)]">
                             {copy.label}
                           </span>
-                          <span className="mt-1 block text-xs leading-relaxed text-slate-500">
-                            {copy.blurb}
+                          <span className="mt-1 block text-xs leading-snug text-slate-500">
+                            {copy.short}
                           </span>
                         </button>
                       );
@@ -671,7 +669,7 @@ export function Calculator({
                 <h3 className="font-display text-lg font-semibold text-[var(--brand-primary)]">
                   Your live range
                 </h3>
-                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700">
+                <span className="rounded-full bg-[var(--page-ground)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--brand-primary)]">
                   Live
                 </span>
               </div>
@@ -684,20 +682,6 @@ export function Calculator({
                 </p>
               ) : (
                 <>
-                  {result.recoveryBarred ? (
-                    <div
-                      className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950"
-                      role="status"
-                    >
-                      <p className="font-semibold">Recovery may be barred</p>
-                      <p className="mt-1 leading-relaxed">
-                        At {result.faultPercentApplied}% plaintiff fault under{" "}
-                        {usState}&apos;s rules, recoverable dollars are shown as $0.
-                        An attorney can evaluate exceptions and strategy.
-                      </p>
-                    </div>
-                  ) : null}
-
                   <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
                     {showPreFault
                       ? "Recoverable after comparative fault"
@@ -739,77 +723,70 @@ export function Calculator({
                     </div>
                   </dl>
 
-                  {showPreFault ? (
-                    <div className="rounded-xl border border-dashed border-slate-200 bg-[var(--page-ground)]/40 px-3 py-2.5">
-                      <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
-                        Pre-fault range
+                  <div className="space-y-2.5">
+                    {result.recoveryBarred ? (
+                      <p className="text-xs leading-snug text-amber-900" role="status">
+                        <span className="font-semibold">Recovery may be barred.</span> At{" "}
+                        {result.faultPercentApplied}% plaintiff fault under {usState}
+                        &apos;s rules, recoverable dollars are shown as $0.
                       </p>
-                      <p className="mt-1 text-xs tabular-nums text-slate-600">
-                        Low {formatCurrency(result.low)} · Mid{" "}
-                        {formatCurrency(result.mid)} · High{" "}
-                        {formatCurrency(result.high)}
+                    ) : null}
+
+                    {showPreFault ? (
+                      <p className="text-xs tabular-nums leading-snug text-slate-500">
+                        Pre-fault: Low {formatCurrency(result.low)} · Mid{" "}
+                        {formatCurrency(result.mid)} · High {formatCurrency(result.high)}
                         {result.faultPercentApplied > 0
                           ? ` · Fault ${result.faultPercentApplied}%`
                           : ""}
                       </p>
-                    </div>
-                  ) : null}
+                    ) : null}
 
-                  {result.cappedMid != null ? (
-                    <div className="rounded-xl border border-slate-200 px-3 py-2.5">
-                      <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
-                        Per-person policy capped
-                      </p>
-                      <p className="mt-1 text-xs tabular-nums text-slate-700">
-                        Low {formatCurrency(result.cappedLow ?? 0)} · Mid{" "}
+                    {result.cappedMid != null ? (
+                      <p className="text-xs tabular-nums leading-snug text-slate-500">
+                        Policy-capped: Low {formatCurrency(result.cappedLow ?? 0)} · Mid{" "}
                         {formatCurrency(result.cappedMid)} · High{" "}
                         {formatCurrency(result.cappedHigh ?? 0)}
                         {result.policyLimitPerPerson != null
                           ? ` · Limit ${formatCurrency(result.policyLimitPerPerson)}`
                           : ""}
+                        {result.policyLimitPerAccident != null
+                          ? ` · Per-accident noted ${formatCurrency(result.policyLimitPerAccident)}`
+                          : ""}
                       </p>
-                      {result.policyLimitPerAccident != null ? (
-                        <p className="mt-1 text-xs text-slate-500">
-                          Per-accident limit noted:{" "}
-                          {formatCurrency(result.policyLimitPerAccident)} (not
-                          applied as a hard cap here).
-                        </p>
-                      ) : null}
-                    </div>
-                  ) : null}
+                    ) : null}
 
-                  {result.policyLimitsMayBind ? (
-                    <div
-                      className="rounded-xl border border-[color-mix(in_srgb,var(--brand-secondary)_45%,transparent)] bg-[color-mix(in_srgb,var(--brand-secondary)_12%,white)] px-4 py-3 text-sm text-[var(--brand-primary)]"
-                      role="status"
-                    >
-                      <p className="font-semibold">Policy limits may bind</p>
-                      <p className="mt-1 text-xs leading-relaxed opacity-90">
+                    {result.policyLimitsMayBind ? (
+                      <p className="text-xs leading-snug text-[var(--brand-primary)]" role="status">
+                        <span className="font-semibold">Policy limits may bind.</span>{" "}
                         Post-fault Mid ({formatCurrency(result.recoverableMid)}) exceeds
                         the per-person BI limit (
                         {formatCurrency(result.policyLimitPerPerson ?? 0)}).
                       </p>
-                    </div>
-                  ) : null}
-
-                  <BreakdownPanel result={result} />
-
-                  <div className="rounded-xl border border-slate-200 p-4">
-                    <h4 className="font-display text-sm font-semibold text-[var(--brand-primary)]">
-                      Comparative fault note ({usState})
-                    </h4>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                      {result.comparativeFaultNote}
-                    </p>
+                    ) : null}
                   </div>
 
                   {offerCheck ? (
                     <OfferGauge check={offerCheck} />
                   ) : (
-                    <p className="rounded-xl border border-dashed border-slate-200 bg-[var(--page-ground)]/60 px-4 py-3 text-sm text-slate-500">
-                      Enter an offer in step 3 to see the Offer Reality Check meter.
+                    <p className="border-t border-dashed border-slate-200 pt-2.5 text-xs text-slate-500">
+                      Enter an offer in step 3 to see the Offer Reality Check.
                     </p>
                   )}
+
+                  <details className="rounded-xl border border-slate-200/80 bg-[var(--page-ground)]/40">
+                    <summary className="cursor-pointer list-none px-3 py-2.5 text-xs font-semibold text-slate-600 marker:content-none [&::-webkit-details-marker]:hidden">
+                      <span className="flex items-center justify-between gap-2">
+                        <span>Show math / levers</span>
+                        <span className="text-slate-400" aria-hidden>
+                          +
+                        </span>
+                      </span>
+                    </summary>
+                    <div className="border-t border-slate-200/80 px-2 pb-2 pt-2">
+                      <BreakdownPanel result={result} usState={usState} />
+                    </div>
+                  </details>
 
                   <PrintSummary
                     result={result}

@@ -7,7 +7,13 @@ import {
   FORMULA_MODE_COPY,
 } from "@/lib/calculator";
 
-export function BreakdownPanel({ result }: { result: SettlementRange }) {
+export function BreakdownPanel({
+  result,
+  usState,
+}: {
+  result: SettlementRange;
+  usState?: string;
+}) {
   const formula = FORMULA_MODE_COPY[result.formulaMode];
 
   return (
@@ -95,6 +101,15 @@ export function BreakdownPanel({ result }: { result: SettlementRange }) {
           ? "Adjuster-style: only medical bills are multiplied; wages, other costs, and property are added after."
           : "Demand-style: pain-and-suffering multipliers apply to medical, wages, and other out-of-pocket. Property damage is added after multiplication."}
       </p>
+
+      {result.comparativeFaultNote ? (
+        <p className="mt-3 border-t border-slate-200/80 pt-3 text-xs leading-relaxed text-slate-500">
+          <span className="font-semibold text-slate-600">
+            Comparative fault{usState ? ` (${usState})` : ""}:
+          </span>{" "}
+          {result.comparativeFaultNote}
+        </p>
+      ) : null}
     </div>
   );
 }

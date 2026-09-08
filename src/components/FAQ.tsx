@@ -19,7 +19,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
     },
     {
       q: "Does comparative fault change my number?",
-      a: "The calculator shows an educational note about your state's general fault system. It does not automatically reduce the range by a fault percentage — that requires case-specific analysis.",
+      a: "Yes. When you enter a fault percentage, the main range shows recoverable dollars after applying your state's comparative-fault category (which can reduce or bar recovery). A pre-fault footnote still shows the unreduced educational range. Rules and exceptions are educational only — an attorney should apply them to your facts.",
     },
     {
       q: "Will an attorney get the same number?",

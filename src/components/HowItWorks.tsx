@@ -4,19 +4,19 @@ export function HowItWorks() {
   const steps = [
     {
       title: "Add up economic damages",
-      body: "Past and future medical bills, lost wages, and other out-of-pocket costs form the base used for pain-and-suffering multipliers. Property damage is tracked separately and added after multiplication.",
+      body: "Medical bills, lost wages, and other out-of-pocket costs form the multiplied base. Property damage is added after multiplication.",
     },
     {
       title: "Choose a multiplier band",
-      body: "Severity sets a starting band (roughly 1.5×–5×+). Clear documentation and longer treatment often support higher multipliers; disputed liability and brief care often pull them down.",
+      body: "Severity sets a starting band (about 1.5×–5×+). Strong documentation and longer care support higher multipliers; disputed liability pulls them down.",
     },
     {
       title: "Adjust for case levers",
-      body: "Care type (chiro / MD / surgery), months of treatment, and liability clarity nudge the band up or down within sensible bounds — producing low, mid, and high estimates.",
+      body: "Care type, months of treatment, and liability clarity nudge the band within bounds — producing low, mid, and high estimates.",
     },
     {
       title: "Remember the caveats",
-      body: "Insurance policy limits, comparative fault, venue, prior injuries, and proof quality can overshadow any formula. Use this as a conversation starter with counsel — not a verdict.",
+      body: "Policy limits, comparative fault, venue, and proof quality can overshadow any formula. Use this as a conversation starter — not a verdict.",
     },
   ];
 
@@ -68,17 +68,21 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <aside
-          className="mt-8 rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_12%,transparent)] bg-[var(--page-ground)] p-6"
-          aria-labelledby="worked-example-heading"
-        >
-          <h3
-            id="worked-example-heading"
-            className="font-display text-lg font-semibold text-[var(--brand-primary)]"
-          >
-            {WORKED_EXAMPLE.title}
-          </h3>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+        <details className="mt-8 rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_12%,transparent)] bg-[var(--page-ground)] p-6">
+          <summary className="cursor-pointer list-none marker:content-none [&::-webkit-details-marker]:hidden">
+            <span className="flex items-center justify-between gap-3">
+              <span
+                id="worked-example-heading"
+                className="font-display text-lg font-semibold text-[var(--brand-primary)]"
+              >
+                {WORKED_EXAMPLE.title}
+              </span>
+              <span className="text-sm font-medium text-slate-500" aria-hidden>
+                Show
+              </span>
+            </span>
+          </summary>
+          <p className="mt-3 text-sm leading-relaxed text-slate-600">
             {WORKED_EXAMPLE.narrative}
           </p>
           <ul className="mt-4 list-disc space-y-1.5 pl-5 text-sm text-slate-700">
@@ -86,7 +90,7 @@ export function HowItWorks() {
               <li key={h}>{h}</li>
             ))}
           </ul>
-        </aside>
+        </details>
       </div>
     </section>
   );
