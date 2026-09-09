@@ -191,36 +191,139 @@ input[type="range"]::-moz-range-thumb {
   display: none;
 }
 
-
-/* Djougourian: more green/amber, less plain white (Premier unaffected) */
+/* ==========================================================================
+   Djougourian Executive Legal theme (Premier unaffected — no theme class)
+   ========================================================================== */
 html.theme-djougourian {
-  --page-ground: #e6f3eb;
+  --page-ground: #eef2ef;
+  font-feature-settings: "tnum" 1, "cv05" 1;
 }
+
 html.theme-djougourian body {
-  background-image:
-    radial-gradient(ellipse 80% 50% at 10% -10%, color-mix(in srgb, var(--plg-crimson) 16%, transparent), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, color-mix(in srgb, var(--plg-gold) 22%, transparent), transparent 50%);
   background-color: var(--page-ground);
+  background-image: none;
+  color: #0f172a;
 }
-html.theme-djougourian .bg-white {
-  background-color: var(--plg-surface) !important;
+
+html.theme-djougourian ::selection {
+  background: #047857;
+  color: white;
 }
-html.theme-djougourian .bg-white\/95,
-html.theme-djougourian .bg-white\/60 {
-  background-color: color-mix(in srgb, var(--plg-surface) 92%, transparent) !important;
-}
-html.theme-djougourian .from-white {
-  --tw-gradient-from: color-mix(in srgb, var(--plg-crimson) 8%, white) var(--tw-gradient-from-position) !important;
-}
-html.theme-djougourian .via-plg-cream {
-  --tw-gradient-via: color-mix(in srgb, var(--plg-crimson) 12%, white) var(--tw-gradient-via-position) !important;
-}
-html.theme-djougourian .to-plg-warmIvory\/50 {
-  --tw-gradient-to: color-mix(in srgb, var(--plg-gold) 28%, white) var(--tw-gradient-to-position) !important;
-}
+
 html.theme-djougourian ::-webkit-scrollbar-track {
-  background: color-mix(in srgb, var(--plg-crimson) 10%, white);
+  background: #e5eae6;
 }
 html.theme-djougourian ::-webkit-scrollbar-thumb:hover {
-  background: var(--plg-gold);
+  background: #047857;
+}
+
+html.theme-djougourian :focus-visible {
+  outline-color: #047857;
+}
+
+/* Soft sage surfaces — cards stay white; section grounds stay sage */
+html.theme-djougourian .bg-plg-cream {
+  background-color: var(--page-ground) !important;
+}
+html.theme-djougourian .bg-plg-warmIvory,
+html.theme-djougourian .bg-plg-warmIvory\/50,
+html.theme-djougourian .bg-plg-warmIvory\/60,
+html.theme-djougourian .bg-plg-warmIvory\/80 {
+  background-color: #e5eae6 !important;
+}
+
+/* Tabular figures for currency / inputs */
+html.theme-djougourian .font-serif,
+html.theme-djougourian .font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+}
+html.theme-djougourian .font-cinzel {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: 0.02em;
+}
+
+/* Input focus ring — emerald */
+html.theme-djougourian .focus\:border-plg-crimson:focus {
+  border-color: #047857 !important;
+}
+html.theme-djougourian .focus\:ring-plg-crimson:focus {
+  --tw-ring-color: rgba(4, 120, 87, 0.25) !important;
+}
+
+/* Range thumb emerald */
+html.theme-djougourian input[type="range"]::-webkit-slider-thumb {
+  background: #047857;
+}
+html.theme-djougourian input[type="range"]::-moz-range-thumb {
+  background: #047857;
+}
+
+/* Executive shadows */
+html.theme-djougourian .shadow-plg-card {
+  box-shadow:
+    0 1px 3px 0 rgba(15, 23, 42, 0.04),
+    0 1px 2px -1px rgba(15, 23, 42, 0.04);
+}
+html.theme-djougourian .shadow-plg-panel {
+  box-shadow:
+    0 10px 25px -5px rgba(6, 78, 59, 0.08),
+    0 8px 10px -6px rgba(15, 23, 42, 0.05);
+}
+
+/* Dark results module helpers */
+html.theme-djougourian .dj-results-shell {
+  background: var(--dj-inverse, #17231c);
+  border-color: #263a2f;
+  color: #e9efe9;
+}
+html.theme-djougourian .dj-results-mid {
+  background: var(--dj-primary-container, #0b3d2e);
+  border-color: #1b6b50;
+}
+html.theme-djougourian .dj-results-tier {
+  background: var(--dj-inverse-elevated, #1f3027);
+  border-color: #2b4236;
+}
+html.theme-djougourian .dj-mint {
+  color: var(--dj-mint, #85d9b6);
+}
+html.theme-djougourian .dj-logo-dark {
+  /* Keep original dark logo (no invert) for light header */
+  filter: none;
+  opacity: 1;
+}
+
+html.theme-djougourian .required-asterisk {
+  color: #D97706 !important;
+}
+
+/* Educational sections — soft sage, white cards, emerald accents */
+html.theme-djougourian #how-it-works li.relative {
+  background-color: #ffffff;
+  border-color: #cdd6d0;
+}
+html.theme-djougourian #faq .divide-y {
+  background-color: #ffffff;
+  border-color: #cdd6d0;
+}
+html.theme-djougourian #settlement-ranges table tbody tr:nth-child(even) {
+  background-color: #f8faf9;
+}
+html.theme-djougourian #settlement-ranges .bg-white {
+  background-color: #ffffff !important;
+}
+html.theme-djougourian footer {
+  background-color: var(--dj-header, #091b15) !important;
+}
+
+html.theme-djougourian #how-it-works .text-plg-gold {
+  color: #85d9b6 !important;
+}
+html.theme-djougourian #how-it-works .rounded-2xl.bg-plg-navy {
+  background-color: var(--dj-header, #091b15) !important;
+  border-color: #263a2f !important;
+}
+html.theme-djougourian .sticky-mobile-cta {
+  background-color: rgba(238, 242, 239, 0.96) !important;
+  border-color: #cdd6d0 !important;
 }

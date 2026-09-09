@@ -1,4 +1,5 @@
 import type { ClientConfig } from "@/lib/types";
+import { clientUsesDjFonts } from "@/lib/client";
 import {
   ArrowRightIcon,
   PhoneIcon,
@@ -17,6 +18,7 @@ function shortTagline(tagline: string, fallback: string): string {
 }
 
 export function Header({ client }: { client: ClientConfig }) {
+  const isDj = clientUsesDjFonts(client);
   const state = client.state.toUpperCase();
   const cities =
     client.servingAreas?.trim() ||
@@ -33,6 +35,122 @@ export function Header({ client }: { client: ClientConfig }) {
   const showLogo = Boolean(client.logoUrl);
   const rangesLabel =
     state === "WA" ? "WA Ranges" : state === "CA" ? "CA Ranges" : "Ranges";
+
+  if (isDj) {
+    return (
+      <>
+        <div className="border-b border-[#132c22] bg-[var(--dj-utility,#05130e)] text-xs text-white print:hidden">
+          <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-2 px-4 py-2.5 sm:flex-row sm:px-6 lg:px-8">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#a3e0c7]/90">
+              <span className="inline-flex items-center rounded bg-[#0e5c43] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                California
+              </span>
+              <span className="text-[#85d9b6]">{cities}</span>
+              <span className="hidden text-[#85d9b6]/40 md:inline">|</span>
+              <span className="hidden items-center md:inline-flex">
+                <ScaleIcon
+                  size={14}
+                  className="mr-1.5 inline-block align-[-2px] text-[#85d9b6]"
+                />
+                California Pure Comparative Negligence
+              </span>
+            </div>
+            <a
+              href={telHref(client.phone)}
+              className="flex items-center font-semibold text-white transition hover:text-[#85d9b6]"
+            >
+              <PhoneIcon
+                size={14}
+                className="mr-1.5 inline-block align-[-2px] text-[#85d9b6]"
+              />
+              {client.phone}
+            </a>
+          </div>
+        </div>
+
+        <header className="sticky top-0 z-40 border-b border-[#cdd6d0] bg-white/95 shadow-sm backdrop-blur-md print:hidden">
+          <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+            <div className="flex h-20 items-center justify-between gap-4">
+              <a href="#top" className="group flex min-w-0 items-center gap-3">
+                {showLogo ? (
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={client.logoUrl}
+                      alt={`${client.firmName} logo`}
+                      className="h-12 w-auto max-w-[160px] shrink-0 object-contain object-left sm:max-w-[200px]"
+                      width={200}
+                      height={48}
+                      decoding="async"
+                    />
+                  </>
+                ) : null}
+                <div className="flex min-w-0 flex-col">
+                  <span className="font-display truncate text-sm font-semibold tracking-tight text-[#0f172a] sm:text-lg">
+                    {client.shortName.toUpperCase()}
+                  </span>
+                  <span className="truncate text-[10px] font-bold uppercase tracking-[0.2em] text-[#85d9b6]/80">
+                    {entity} • {tag}
+                  </span>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-3 sm:gap-4">
+                <nav
+                  className="hidden items-center gap-1 rounded-xl border border-[#cdd6d0] bg-[#eef2ef] p-1 text-sm lg:flex"
+                  aria-label="Primary"
+                >
+                  <a
+                    href="#calculator"
+                    className="rounded-lg bg-[#0e5c43] px-3 py-1.5 font-semibold text-white shadow-sm"
+                  >
+                    Calculator
+                  </a>
+                  <a
+                    href="#how-it-works"
+                    className="rounded-lg px-3 py-1.5 text-[#334155] transition hover:text-[#0f172a]"
+                  >
+                    The Formula
+                  </a>
+                  <a
+                    href="#settlement-ranges"
+                    className="rounded-lg px-3 py-1.5 text-[#334155] transition hover:text-[#0f172a]"
+                  >
+                    {rangesLabel}
+                  </a>
+                  <a
+                    href="#faq"
+                    className="rounded-lg px-3 py-1.5 text-[#334155] transition hover:text-[#0f172a]"
+                  >
+                    FAQ
+                  </a>
+                </nav>
+
+                <a
+                  href={client.ctaUrl}
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#157a58] px-4 py-2.5 text-sm font-semibold tracking-wide text-white shadow-[0_2px_10px_rgba(14,92,67,0.35)] transition hover:bg-[#1b936b] sm:px-5"
+                >
+                  <span className="hidden sm:inline">{client.ctaText}</span>
+                  <span className="sm:hidden">Consult</span>
+                  <ArrowRightIcon size={14} className="opacity-80" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-[#193d30] bg-[#0d221b] px-4 py-2">
+            <p className="mx-auto flex max-w-[1200px] items-center justify-center gap-2 rounded-full border border-[#1f4b3c] bg-[#133026] px-4 py-1 text-center text-[11px] text-[#b9cdc3]">
+              <strong className="font-semibold text-white">
+                Educational Calculator:
+              </strong>{" "}
+              Provides educational, illustrative ranges — not a prediction of your case.
+              No attorney-client relationship is created.
+            </p>
+          </div>
+        </header>
+      </>
+    );
+  }
 
   return (
     <>
