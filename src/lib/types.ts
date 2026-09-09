@@ -42,7 +42,8 @@ export interface ClientConfig {
   primaryColor: string;
   secondaryColor: string;
   phone: string;
-  email: string;
+  /** Optional — omit or blank when no verified public firm email */
+  email?: string;
   website: string;
   ctaText: string;
   ctaUrl: string;

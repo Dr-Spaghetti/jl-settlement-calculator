@@ -15,8 +15,10 @@ export function CTASection({ client }: { client: ClientConfig }) {
           Ready to talk about your case?
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-white/85 sm:text-base">
-          {client.shortName} can review your facts, insurance coverage, and next steps —
-          often at no upfront cost for qualifying injury matters.
+          {client.shortName} offers a free consultation for vehicle accident and personal
+          injury matters. For qualifying contingency cases, you don’t pay attorney fees
+          unless the firm wins — start with this educational estimate, then talk with a
+          lawyer.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a

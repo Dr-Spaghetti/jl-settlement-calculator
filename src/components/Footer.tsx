@@ -2,6 +2,7 @@ import type { ClientConfig } from "@/lib/types";
 
 export function Footer({ client }: { client: ClientConfig }) {
   const year = new Date().getFullYear();
+  const email = client.email?.trim();
   return (
     <footer className="border-t border-slate-800 bg-[var(--brand-primary)] text-slate-300 pb-24 md:pb-0">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -21,11 +22,13 @@ export function Footer({ client }: { client: ClientConfig }) {
                 {client.phone}
               </a>
             </p>
-            <p className="mt-1 text-sm">
-              <a className="hover:text-white" href={`mailto:${client.email}`}>
-                {client.email}
-              </a>
-            </p>
+            {email ? (
+              <p className="mt-1 text-sm">
+                <a className="hover:text-white" href={`mailto:${email}`}>
+                  {email}
+                </a>
+              </p>
+            ) : null}
           </div>
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">

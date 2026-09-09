@@ -6,7 +6,7 @@ function telHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
 
-/** Sticky bottom bar on small screens — Call + Get review (Design-locked). */
+/** Sticky bottom bar on small screens — Call + primary CTA. */
 export function StickyMobileCTA({ client }: { client: ClientConfig }) {
   return (
     <div
@@ -23,10 +23,10 @@ export function StickyMobileCTA({ client }: { client: ClientConfig }) {
         </a>
         <a
           href={client.ctaUrl}
-          className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg px-3 py-3 text-sm font-semibold text-white"
+          className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg px-3 py-3 text-center text-sm font-semibold text-white"
           style={{ backgroundColor: "var(--brand-secondary)" }}
         >
-          Get review
+          {client.ctaText}
         </a>
       </div>
     </div>
