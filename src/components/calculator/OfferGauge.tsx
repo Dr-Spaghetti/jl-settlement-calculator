@@ -25,15 +25,15 @@ export function OfferGauge({ check }: { check: OfferRealityCheck }) {
 
   return (
     <div
-      className="rounded-xl border border-slate-200/80 bg-white p-4"
+      className="rounded-xl border border-plg-borderMuted bg-plg-warmIvory/50 p-4"
       role="group"
       aria-label="Offer Reality Check"
     >
       <div className="flex items-start justify-between gap-3">
-        <h4 className="font-display text-base font-semibold text-[var(--brand-primary)]">
+        <h4 className="font-serif text-base font-semibold text-slate-900">
           Offer Reality Check
         </h4>
-        <span className="shrink-0 rounded-full bg-[color-mix(in_srgb,var(--brand-secondary)_18%,white)] px-2.5 py-0.5 text-xs font-semibold text-[var(--brand-primary)]">
+        <span className="shrink-0 rounded-full bg-plg-crimson/10 px-2.5 py-0.5 text-xs font-semibold text-plg-crimson">
           {LABEL_COPY[check.label]}
         </span>
       </div>

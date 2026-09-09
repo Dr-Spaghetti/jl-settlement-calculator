@@ -1,23 +1,37 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import {
+  Cormorant_Garamond,
+  Plus_Jakarta_Sans,
+  Cinzel,
+} from "next/font/google";
 import { getActiveClient, getClientCssVars } from "@/lib/client";
 import "./globals.css";
 
-const inter = Inter({
+const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const sourceSerif = Source_Serif_4({
+const cormorant = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["500", "600", "700", "800"],
 });
 
 export function generateMetadata(): Metadata {
   const client = getActiveClient();
-  const title = `Car Accident Settlement Calculator | ${client.firmName}`;
+  const title = `Washington Car Accident Settlement Calculator | ${client.firmName}`;
   const description = `${client.tagline} Free educational settlement range estimator from ${client.firmName} in ${client.city}, ${client.state}. Not legal advice.`;
   return {
     title,
@@ -40,9 +54,9 @@ export default function RootLayout({
   const cssVars = getClientCssVars(client);
 
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${sourceSerif.variable} font-sans`}
+        className={`${plusJakarta.variable} ${cormorant.variable} ${cinzel.variable} bg-plg-cream font-sans text-plg-charcoal antialiased`}
         style={cssVars}
       >
         {children}

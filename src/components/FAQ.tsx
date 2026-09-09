@@ -102,7 +102,7 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
           you will receive. This tool is not legal advice and does not create an
           attorney-client relationship. For a real review, contact {client.shortName} at{" "}
           <a
-            className="font-semibold text-[var(--brand-primary)] underline decoration-slate-300 underline-offset-2 hover:decoration-[var(--brand-primary)]"
+            className="font-semibold text-plg-crimson underline decoration-slate-300 underline-offset-2 hover:decoration-plg-crimson"
             href={`tel:${tel}`}
           >
             {phone}
@@ -122,13 +122,16 @@ export function FAQ({ client }: { client: ClientConfig }) {
   return (
     <section
       id="faq"
-      className="scroll-mt-20 bg-[var(--page-ground)] py-16 sm:py-20"
+      className="scroll-mt-28 border-t border-plg-borderMuted bg-plg-cream py-16 sm:py-20"
       aria-labelledby="faq-heading"
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+          Common Questions
+        </span>
         <h2
           id="faq-heading"
-          className="font-display text-2xl font-semibold tracking-tight text-[var(--brand-primary)] sm:text-3xl"
+          className="font-serif mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl"
         >
           Frequently asked questions
         </h2>
@@ -136,16 +139,16 @@ export function FAQ({ client }: { client: ClientConfig }) {
           Educational answers only — not legal advice. Rules and deadlines can vary; confirm
           details with a licensed attorney{client.state ? ` in ${client.state}` : ""}.
         </p>
-        <div className="mt-8 divide-y divide-slate-200/80 border-y border-slate-200/80">
+        <div className="mt-8 divide-y divide-plg-borderMuted rounded-2xl border border-plg-borderMuted bg-white px-5 shadow-sm">
           {faqs.map((item) => (
             <details key={item.q} className="group py-4">
               <summary className="cursor-pointer list-none marker:content-none [&::-webkit-details-marker]:hidden">
                 <span className="flex items-start justify-between gap-4">
-                  <span className="font-display text-base font-semibold text-[var(--brand-primary)]">
+                  <span className="font-serif text-base font-semibold text-slate-900">
                     {item.q}
                   </span>
                   <span
-                    className="mt-0.5 shrink-0 text-slate-400 motion-safe:transition group-open:rotate-45"
+                    className="mt-0.5 shrink-0 text-plg-crimson motion-safe:transition group-open:rotate-45"
                     aria-hidden
                   >
                     +

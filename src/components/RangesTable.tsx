@@ -3,65 +3,73 @@ import { EDUCATIONAL_RANGES } from "@/lib/calculator";
 export function RangesTable() {
   return (
     <section
-      id="ranges"
-      className="scroll-mt-20 bg-[var(--page-ground)] py-16 sm:py-20"
+      id="settlement-ranges"
+      className="scroll-mt-28 border-t border-plg-borderMuted bg-plg-warmIvory/60 py-16"
       aria-labelledby="ranges-heading"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2
-          id="ranges-heading"
-          className="font-display text-2xl font-semibold tracking-tight text-[var(--brand-primary)] sm:text-3xl"
-        >
-          Educational settlement ranges
-        </h2>
-        <p className="mt-3 max-w-2xl text-slate-600">
-          Illustrative bands only — real cases vary widely by venue, policy limits, and
-          proof. These figures are not averages from any firm&apos;s closed files.
-        </p>
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] bg-white shadow-soft">
-          <table className="min-w-full text-left text-sm">
-            <caption className="sr-only">
-              Educational car accident settlement range examples by severity
-            </caption>
-            <thead className="bg-[var(--brand-primary)] text-white">
-              <tr>
-                <th scope="col" className="px-4 py-3 font-semibold sm:px-6">
-                  Scenario
-                </th>
-                <th scope="col" className="px-4 py-3 font-semibold sm:px-6">
-                  Medical specials
-                </th>
-                <th scope="col" className="px-4 py-3 font-semibold sm:px-6">
-                  Typical multiplier
-                </th>
-                <th scope="col" className="px-4 py-3 font-semibold sm:px-6">
-                  Illustrative total*
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {EDUCATIONAL_RANGES.map((row, idx) => (
-                <tr
-                  key={row.scenario}
-                  className={idx % 2 === 0 ? "bg-white" : "bg-[var(--page-ground)]/80"}
-                >
-                  <th
-                    scope="row"
-                    className="px-4 py-3 font-medium text-[var(--brand-primary)] sm:px-6"
-                  >
-                    {row.scenario}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+            Washington Benchmarks
+          </span>
+          <h2
+            id="ranges-heading"
+            className="font-serif mt-1 mb-3 text-3xl font-bold text-slate-900 sm:text-4xl"
+          >
+            Typical Educational Settlement Ranges by Injury Type
+          </h2>
+          <p className="text-xs text-slate-600 sm:text-sm">
+            Illustrative bands only — real cases vary widely by venue, policy limits, and
+            proof. These figures are not averages from any firm&apos;s closed files.
+          </p>
+        </div>
+
+        <div className="overflow-hidden rounded-2xl border border-plg-borderMuted bg-white shadow-sm">
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-left text-xs sm:text-sm">
+              <caption className="sr-only">
+                Educational car accident settlement range examples by severity
+              </caption>
+              <thead>
+                <tr className="bg-plg-navy text-[11px] uppercase tracking-wider text-white sm:text-xs">
+                  <th scope="col" className="px-5 py-4 font-semibold">
+                    Scenario
                   </th>
-                  <td className="px-4 py-3 text-slate-600 sm:px-6">{row.medical}</td>
-                  <td className="px-4 py-3 text-slate-600 sm:px-6">
-                    {row.typicalMultiplier}
-                  </td>
-                  <td className="px-4 py-3 font-medium text-slate-800 sm:px-6">
-                    {row.illustrative}
-                  </td>
+                  <th scope="col" className="px-5 py-4 font-semibold">
+                    Medical Specials
+                  </th>
+                  <th scope="col" className="px-5 py-4 font-semibold">
+                    Usual Multiplier
+                  </th>
+                  <th scope="col" className="px-5 py-4 font-semibold">
+                    Illustrative Total*
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-700">
+                {EDUCATIONAL_RANGES.map((row) => (
+                  <tr
+                    key={row.scenario}
+                    className="transition hover:bg-plg-warmIvory/30"
+                  >
+                    <th
+                      scope="row"
+                      className="px-5 py-4 font-bold text-slate-900"
+                    >
+                      {row.scenario}
+                    </th>
+                    <td className="px-5 py-4 font-mono">{row.medical}</td>
+                    <td className="px-5 py-4 font-semibold text-plg-crimson">
+                      {row.typicalMultiplier}
+                    </td>
+                    <td className="px-5 py-4 font-bold text-slate-900">
+                      {row.illustrative}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         <p className="mt-3 text-xs text-slate-500">
           *Catastrophic matters often involve structured settlements, life-care plans, and

@@ -1,49 +1,153 @@
 import type { ClientConfig } from "@/lib/types";
 
+function telHref(phone: string): string {
+  return `tel:${phone.replace(/[^\d+]/g, "")}`;
+}
+
+function shortTagline(tagline: string): string {
+  const match = tagline.match(/^([^.]+\.[^.]*\.)/);
+  return match ? match[1].trim() : "Big Enough to Win. Small Enough to Care.";
+}
+
 export function Header({ client }: { client: ClientConfig }) {
+  const cities =
+    client.state.toUpperCase() === "WA"
+      ? "Serving Seattle • Bellevue • Federal Way • Renton"
+      : `Serving ${client.city}, ${client.state}`;
+  const tag = shortTagline(client.tagline);
+  const isPremier = client.id === "premier-law-group";
+
   return (
-    <header className="sticky top-0 z-50 border-b border-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] bg-[color-mix(in_srgb,var(--page-ground)_92%,white)]/95 backdrop-blur-md print:hidden">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <a href="#top" className="flex min-w-0 items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={client.logoUrl}
-            alt={`${client.firmName} logo`}
-            className="h-14 w-auto max-w-[240px] shrink-0 object-contain sm:h-16 sm:max-w-[280px]"
-            width={280}
-            height={64}
-          />
-          <div className="min-w-0">
-            <p className="font-display truncate text-sm font-semibold text-[var(--brand-primary)] sm:text-base">
-              {client.firmName}
-            </p>
-            <p className="hidden truncate text-xs text-slate-500 sm:block">
-              {client.city}, {client.state}
-            </p>
+    <>
+      <div className="border-b border-slate-800 bg-plg-navy text-xs text-white print:hidden">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-2 sm:flex-row sm:px-6 lg:px-8">
+          <div className="flex items-center space-x-2 text-slate-300">
+            <span className="inline-flex items-center rounded bg-plg-crimson px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+              {client.state.toUpperCase() === "WA"
+                ? "Washington State"
+                : client.state}
+            </span>
+            <span className="text-slate-300">{cities}</span>
           </div>
-        </a>
-        <nav className="flex items-center gap-2 sm:gap-4" aria-label="Primary">
-          <a
-            href="#calculator"
-            className="hidden text-sm font-medium text-slate-600 hover:text-[var(--brand-primary)] sm:inline"
-          >
-            Calculator
-          </a>
-          <a
-            href="#how-it-works"
-            className="hidden text-sm font-medium text-slate-600 hover:text-[var(--brand-primary)] md:inline"
-          >
-            How it works
-          </a>
-          <a
-            href={client.ctaUrl}
-            className="inline-flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-semibold text-white shadow-soft motion-safe:transition hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            style={{ backgroundColor: "var(--brand-primary)" }}
-          >
-            {client.ctaText}
-          </a>
-        </nav>
+          <div className="flex items-center space-x-6 text-xs text-slate-300">
+            {client.state.toUpperCase() === "WA" ? (
+              <span className="hidden md:inline">
+                <span className="mr-1.5 text-plg-gold" aria-hidden>
+                  ⚖
+                </span>
+                RCW § 4.22.005 Pure Comparative Negligence
+              </span>
+            ) : null}
+            <a
+              href={telHref(client.phone)}
+              className="flex items-center font-semibold text-white transition hover:text-plg-gold"
+            >
+              <span className="mr-1.5 text-plg-crimson" aria-hidden>
+                ☎
+              </span>
+              {client.phone}
+            </a>
+          </div>
+        </div>
       </div>
-    </header>
+
+      <header className="sticky top-0 z-40 border-b border-plg-borderMuted bg-white/95 shadow-sm backdrop-blur transition-all duration-300 print:hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-24 items-center justify-between">
+            <a href="#top" className="group flex min-w-0 items-center gap-3 sm:gap-4">
+              {isPremier && client.logoUrl ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={client.logoUrl}
+                    alt=""
+                    className="hidden h-14 w-auto max-w-[120px] shrink-0 object-contain sm:block sm:h-16"
+                    width={120}
+                    height={64}
+                  />
+                  <div className="flex items-center justify-center space-x-1.5 border-r border-slate-200 py-1 pr-4 sm:hidden">
+                    <span className="font-cinzel text-2xl font-bold tracking-tight text-slate-900 transition group-hover:text-plg-crimson">
+                      P
+                    </span>
+                    <span className="inline-block h-7 w-[2px] bg-plg-crimson" />
+                    <span className="font-cinzel text-2xl font-bold tracking-tight text-slate-900 transition group-hover:text-plg-crimson">
+                      L
+                    </span>
+                    <span className="inline-block h-7 w-[2px] bg-plg-crimson" />
+                    <span className="font-cinzel text-2xl font-bold tracking-tight text-slate-900 transition group-hover:text-plg-crimson">
+                      G
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div className="flex items-center justify-center space-x-1.5 border-r border-slate-200 py-1 pr-5">
+                  <span className="font-cinzel text-3xl font-bold tracking-tight text-slate-900 transition group-hover:text-plg-crimson">
+                    {client.shortName.charAt(0)}
+                  </span>
+                </div>
+              )}
+              <div className="flex min-w-0 flex-col">
+                <span className="font-cinzel truncate text-base font-bold uppercase tracking-[0.16em] text-slate-900 sm:text-xl">
+                  {client.shortName}
+                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500">
+                    PLLC
+                  </span>
+                  <span className="text-[10px] text-slate-400">•</span>
+                  <span className="truncate text-[11px] font-medium italic text-plg-crimson">
+                    {tag}
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            <div className="flex items-center space-x-4 sm:space-x-6">
+              <nav
+                className="hidden items-center space-x-8 text-sm font-medium text-slate-700 lg:flex"
+                aria-label="Primary"
+              >
+                <a href="#calculator" className="transition hover:text-plg-crimson">
+                  Calculator
+                </a>
+                <a href="#how-it-works" className="transition hover:text-plg-crimson">
+                  The Formula
+                </a>
+                <a
+                  href="#settlement-ranges"
+                  className="transition hover:text-plg-crimson"
+                >
+                  WA Ranges
+                </a>
+                <a href="#faq" className="transition hover:text-plg-crimson">
+                  FAQ
+                </a>
+              </nav>
+
+              <a
+                href={client.ctaUrl}
+                className="inline-flex items-center gap-2 rounded-lg bg-plg-crimson px-4 py-2.5 text-sm font-semibold tracking-wide text-white shadow-sm transition hover:bg-plg-crimsonDark hover:shadow sm:px-5"
+              >
+                <span className="hidden sm:inline">{client.ctaText}</span>
+                <span className="sm:hidden">Consult</span>
+                <span className="text-xs opacity-80" aria-hidden>
+                  →
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-plg-borderMuted bg-plg-warmIvory/80 px-4 py-1 text-center">
+          <p className="text-[11px] text-slate-600">
+            <strong className="font-semibold text-plg-crimson">
+              Educational Calculator:
+            </strong>{" "}
+            Provides simulated ranges based on common insurance settlement formulas. No
+            attorney-client relationship is created.
+          </p>
+        </div>
+      </header>
+    </>
   );
 }

@@ -3,8 +3,8 @@
   "firmName": "Premier Law Group, PLLC",
   "shortName": "Premier Law Group",
   "logoUrl": "/logo-premier-law-group.png",
-  "primaryColor": "#1A1A1A",
-  "secondaryColor": "#A11F28",
+  "primaryColor": "#0F172A",
+  "secondaryColor": "#8C1D24",
   "phone": "(206) 285-1743",
   "email": "",
   "website": "https://plg-pllc.com/",
@@ -13,20 +13,24 @@
   "city": "Bellevue",
   "state": "WA",
   "tagline": "Big Enough to Win. Small Enough to Care. Educational car accident settlement estimates for Washington injury victims.",
-  "heroEyebrow": "Bellevue · Seattle · Federal Way · Renton · Free educational estimate",
+  "heroEyebrow": "Washington State Personal Injury Evaluation Framework",
   "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Results are illustrative ranges based on common valuation methods and do not predict any particular outcome. Consult a licensed Washington attorney at Premier Law Group, PLLC, or in your jurisdiction for advice about your situation.",
   "trustStats": [
     {
-      "value": "4 offices",
-      "label": "Bellevue · Seattle · Federal Way · Renton"
+      "value": "100% Private",
+      "label": "Zero data stored on servers"
     },
     {
-      "value": "Free consult",
-      "label": "Talk with an attorney at no charge"
+      "value": "WA Specific",
+      "label": "RCW 4.22.005 comparative rules"
     },
     {
-      "value": "No fee unless we win",
-      "label": "Contingency fee for injury cases"
+      "value": "Zero fee unless we win",
+      "label": "Contingency legal fee model"
+    },
+    {
+      "value": "Free consultation",
+      "label": "4 offices · Bellevue · Seattle · Federal Way · Renton"
     }
   ]
 }

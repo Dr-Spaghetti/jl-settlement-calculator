@@ -4,19 +4,22 @@ export function Footer({ client }: { client: ClientConfig }) {
   const year = new Date().getFullYear();
   const email = client.email?.trim();
   return (
-    <footer className="border-t border-slate-800 bg-[var(--brand-primary)] text-slate-300 pb-24 md:pb-0">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <footer className="border-t border-slate-800 bg-plg-navy pb-24 text-slate-300 md:pb-0">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <p className="font-display text-base font-semibold text-white">
-              {client.firmName}
+            <p className="font-cinzel text-base font-bold uppercase tracking-[0.12em] text-white">
+              {client.shortName}
             </p>
             <p className="mt-2 text-sm text-slate-400">
               {client.city}, {client.state}
+              {client.state.toUpperCase() === "WA"
+                ? " · Seattle · Federal Way · Renton"
+                : ""}
             </p>
             <p className="mt-1 text-sm">
               <a
-                className="hover:text-white"
+                className="font-semibold text-white transition hover:text-plg-gold"
                 href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
               >
                 {client.phone}
@@ -29,6 +32,9 @@ export function Footer({ client }: { client: ClientConfig }) {
                 </a>
               </p>
             ) : null}
+            <p className="mt-3 text-xs italic text-plg-gold">
+              Big Enough to Win. Small Enough to Care.
+            </p>
           </div>
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
@@ -36,24 +42,29 @@ export function Footer({ client }: { client: ClientConfig }) {
             </p>
             <ul className="mt-3 space-y-2 text-sm">
               <li>
-                <a href="#calculator" className="hover:text-white">
+                <a href="#calculator" className="transition hover:text-white">
                   Settlement calculator
                 </a>
               </li>
               <li>
-                <a href="#how-it-works" className="hover:text-white">
-                  How the math works
+                <a href="#how-it-works" className="transition hover:text-white">
+                  The formula
                 </a>
               </li>
               <li>
-                <a href="#faq" className="hover:text-white">
+                <a href="#settlement-ranges" className="transition hover:text-white">
+                  WA ranges
+                </a>
+              </li>
+              <li>
+                <a href="#faq" className="transition hover:text-white">
                   FAQ
                 </a>
               </li>
               <li>
                 <a
                   href={client.website}
-                  className="hover:text-white"
+                  className="transition hover:text-white"
                   rel="noopener noreferrer"
                 >
                   Firm website
