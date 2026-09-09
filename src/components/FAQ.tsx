@@ -14,11 +14,11 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
   const base: FaqItem[] = [
     {
       q: "How much is my car accident settlement worth?",
-      a: "There is no single average that predicts your case. Adjusters often start from economic damages (medical bills, lost wages, and related costs), then estimate pain and suffering with a severity multiplier—commonly about 1.5×–5×—and reduce for your share of fault and available insurance limits. This calculator applies that educational method to your inputs and returns a low / mid / high range, not a guaranteed payout.",
+      a: "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier—often discussed around 1.5×–5×—and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range, not a guaranteed payout.",
     },
     {
       q: "How do insurance companies calculate car accident settlements?",
-      a: "Most use a multiplier method: add proven specials, multiply for pain and suffering based on injury severity and documentation, add property damage (usually not multiplied), then adjust for liability and policy limits. This tool mirrors that structure—including Demand-style vs Adjuster-style formulas—so you can see how the math moves.",
+      a: "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (usually not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range. It does not recreate any insurer’s proprietary software.",
     },
     {
       q: "How is pain and suffering calculated after a car accident?",

@@ -17,7 +17,7 @@ export function HowItWorks() {
     },
     {
       title: "Apply Policy Reality",
-      body: "Insurance carriers often cannot pay beyond bodily injury limits. Identifying UIM or excess coverage is essential when damages exceed limits.",
+      body: "Available insurance coverage can limit what is realistically collectible. Identifying UIM or excess options matters when damages may exceed policy limits.",
     },
   ];
 
@@ -39,9 +39,9 @@ export function HowItWorks() {
             How Insurance Companies and Lawyers Calculate Your Settlement
           </h2>
           <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
-            Insurers and attorneys often discuss a “multiplier method” for general damages.
-            This calculator follows that educational framework transparently — not a
-            prediction of any particular outcome.
+            Attorneys and claims professionals often discuss a “multiplier method” for
+            general damages. This calculator shows that educational framework
+            transparently — not a prediction of any particular outcome.
           </p>
         </div>
 

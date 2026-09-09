@@ -137,8 +137,8 @@ export function Header({ client }: { client: ClientConfig }) {
             <strong className="font-semibold text-plg-crimson">
               Educational Calculator:
             </strong>{" "}
-            Provides simulated ranges based on common insurance settlement formulas. No
-            attorney-client relationship is created.
+            Provides educational, illustrative ranges — not a prediction of your case.
+            No attorney-client relationship is created.
           </p>
         </div>
       </header>

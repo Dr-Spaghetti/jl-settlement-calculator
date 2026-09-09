@@ -37,7 +37,7 @@ export function Hero({ client }: { client: ClientConfig }) {
 
   const supportCopy =
     client.state.toUpperCase() === "WA"
-      ? "Built on common Washington insurance valuation models and Washington’s pure comparative fault laws (RCW 4.22.005). Educational ranges only — not a case valuation or legal advice."
+      ? "An educational estimate using common valuation concepts and Washington’s pure comparative fault laws (RCW 4.22.005). Illustrative ranges only — not a case valuation or legal advice."
       : client.tagline;
 
   return (
