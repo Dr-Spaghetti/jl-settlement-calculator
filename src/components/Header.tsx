@@ -9,9 +9,9 @@ export function Header({ client }: { client: ClientConfig }) {
           <img
             src={client.logoUrl}
             alt={`${client.firmName} logo`}
-            className="h-10 w-10 shrink-0 rounded-lg object-contain"
-            width={40}
-            height={40}
+            className="h-10 w-auto max-w-[160px] shrink-0 object-contain sm:h-11 sm:max-w-[200px]"
+            width={200}
+            height={44}
           />
           <div className="min-w-0">
             <p className="font-display truncate text-sm font-semibold text-[var(--brand-primary)] sm:text-base">
