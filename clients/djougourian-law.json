@@ -3,9 +3,9 @@
   "firmName": "Djougourian Law Corporation",
   "shortName": "Djougourian Law Corp",
   "logoUrl": "/logo-djougourian.png",
-  "primaryColor": "#212529",
-  "secondaryColor": "#127849",
-  "accentColor": "#FFA21C",
+  "primaryColor": "#062e22",
+  "secondaryColor": "#047857",
+  "accentColor": "#D97706",
   "phone": "(818) 530-0000",
   "email": "arthur@djlawcorp.com",
   "website": "https://djlawcorp.com/",
@@ -13,7 +13,7 @@
   "ctaUrl": "https://djlawcorp.com/contact",
   "city": "Burbank",
   "state": "CA",
-  "entitySuffix": "PLC",
+  "entitySuffix": "Corp",
   "servingAreas": "Burbank \u00b7 Los Angeles \u00b7 Southern California",
   "tagline": "Aggressive representation for the injured.",
   "heroEyebrow": "California Personal Injury Evaluation Framework",
@@ -36,5 +36,5 @@
       "label": "Fee terms discussed at consult"
     }
   ],
-  "pageGround": "#E6F3EB"
+  "pageGround": "#eef2ef"
 }

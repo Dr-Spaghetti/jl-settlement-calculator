@@ -10,7 +10,7 @@ function telHref(phone: string): string {
 export function StickyMobileCTA({ client }: { client: ClientConfig }) {
   return (
     <div
-      className="sticky-mobile-cta fixed inset-x-0 bottom-0 z-40 border-t border-plg-borderMuted bg-white/95 p-3 shadow-[0_-8px_30px_-12px_rgba(15,23,42,0.22)] backdrop-blur-md md:hidden print:hidden"
+      className="sticky-mobile-cta fixed inset-x-0 bottom-0 z-50 border-t border-plg-borderMuted bg-white/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_-12px_rgba(15,23,42,0.22)] backdrop-blur-md md:hidden print:hidden"
       role="region"
       aria-label="Quick contact"
     >

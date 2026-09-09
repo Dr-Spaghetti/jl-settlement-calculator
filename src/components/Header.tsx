@@ -31,7 +31,7 @@ export function Header({ client }: { client: ClientConfig }) {
       ? "Big Enough to Win. Small Enough to Care."
       : client.tagline
   );
-  const entity = client.entitySuffix?.trim() || (state === "CA" ? "PLC" : "PLLC");
+  const entity = client.entitySuffix?.trim() || (state === "CA" ? "Corp" : "PLLC");
   const showLogo = Boolean(client.logoUrl);
   const rangesLabel =
     state === "WA" ? "WA Ranges" : state === "CA" ? "CA Ranges" : "Ranges";
@@ -68,59 +68,55 @@ export function Header({ client }: { client: ClientConfig }) {
           </div>
         </div>
 
-        <header className="sticky top-0 z-40 border-b border-[#cdd6d0] bg-white/95 shadow-sm backdrop-blur-md print:hidden">
+        <header className="sticky top-0 z-40 border-b border-[#132c22] bg-[var(--dj-header,#091b15)] shadow-md print:hidden">
           <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-            <div className="flex h-20 items-center justify-between gap-4">
-              <a href="#top" className="group flex min-w-0 items-center gap-3">
+            <div className="flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
+              <a href="#top" className="group flex min-w-0 items-center">
                 {showLogo ? (
                   <>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={client.logoUrl}
                       alt={`${client.firmName} logo`}
-                      className="h-12 w-auto max-w-[160px] shrink-0 object-contain object-left sm:max-w-[200px]"
-                      width={200}
-                      height={48}
+                      className="dj-logo-dark h-12 w-auto max-w-[200px] shrink-0 object-contain object-left sm:h-14 sm:max-w-[240px]"
+                      width={240}
+                      height={56}
                       decoding="async"
                     />
                   </>
-                ) : null}
-                <div className="flex min-w-0 flex-col">
-                  <span className="font-display truncate text-sm font-semibold tracking-tight text-[#0f172a] sm:text-lg">
-                    {client.shortName.toUpperCase()}
+                ) : (
+                  <span className="font-display truncate text-lg font-semibold tracking-tight text-white">
+                    {client.shortName}
                   </span>
-                  <span className="truncate text-[10px] font-bold uppercase tracking-[0.2em] text-[#85d9b6]/80">
-                    {entity} • {tag}
-                  </span>
-                </div>
+                )}
               </a>
 
               <div className="flex items-center gap-3 sm:gap-4">
                 <nav
-                  className="hidden items-center gap-1 rounded-xl border border-[#cdd6d0] bg-[#eef2ef] p-1 text-sm lg:flex"
+                  className="hidden items-center gap-1 rounded-xl border border-[#1f4b3c] bg-[#0d221b] p-1 text-sm lg:flex"
                   aria-label="Primary"
                 >
                   <a
                     href="#calculator"
-                    className="rounded-lg bg-[#0e5c43] px-3 py-1.5 font-semibold text-white shadow-sm"
+                    className="rounded-lg bg-[#047857] px-3 py-1.5 font-semibold text-white shadow-sm"
                   >
                     Calculator
                   </a>
                   <a
                     href="#how-it-works"
-                    className="rounded-lg px-3 py-1.5 text-[#334155] transition hover:text-[#0f172a]"
+                    className="rounded-lg px-3 py-1.5 text-[#a3bdb2] transition hover:text-white"
                   >
                     The Formula
                   </a>
                   <a
                     href="#settlement-ranges"
-                    className="rounded-lg px-3 py-1.5 text-[#334155] transition hover:text-[#0f172a]"
+                    className="rounded-lg px-3 py-1.5 text-[#a3bdb2] transition hover:text-white"
                   >
                     {rangesLabel}
                   </a>
                   <a
                     href="#faq"
-                    className="rounded-lg px-3 py-1.5 text-[#334155] transition hover:text-[#0f172a]"
+                    className="rounded-lg px-3 py-1.5 text-[#a3bdb2] transition hover:text-white"
                   >
                     FAQ
                   </a>
@@ -128,7 +124,7 @@ export function Header({ client }: { client: ClientConfig }) {
 
                 <a
                   href={client.ctaUrl}
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#157a58] px-4 py-2.5 text-sm font-semibold tracking-wide text-white shadow-[0_2px_10px_rgba(14,92,67,0.35)] transition hover:bg-[#1b936b] sm:px-5"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#047857] px-4 py-2.5 text-sm font-semibold tracking-wide text-white shadow-[0_2px_10px_rgba(4,120,87,0.35)] transition hover:bg-[#064E3B] sm:px-5"
                 >
                   <span className="hidden sm:inline">{client.ctaText}</span>
                   <span className="sm:hidden">Consult</span>

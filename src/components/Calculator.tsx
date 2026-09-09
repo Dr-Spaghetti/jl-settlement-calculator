@@ -125,7 +125,7 @@ function NumberField({
     <div>
       <label htmlFor={id} className={labelClass}>
         {label}{" "}
-        {required ? <span className="text-plg-crimson">*</span> : null}
+        {required ? <span className="required-asterisk text-plg-crimson">*</span> : null}
       </label>
       <div className="relative mt-1.5 rounded-lg shadow-sm">
         <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-sm font-semibold text-slate-400">
@@ -176,6 +176,7 @@ export function Calculator({
   defaultState: string;
   client: ClientConfig;
 }) {
+  const isDj = client.id === "djougourian-law";
   const [step, setStep] = useState<StepId>(1);
   const [medicalBillsPast, setMedicalBillsPast] = useState(12000);
   const [medicalBillsFuture, setMedicalBillsFuture] = useState(3000);
@@ -353,19 +354,29 @@ export function Calculator({
   return (
     <section
       id="calculator"
-      className="scroll-mt-28 bg-plg-cream py-12 sm:py-14"
+      className={`scroll-mt-28 py-12 pb-32 sm:py-14 lg:pb-14 ${isDj ? "bg-[#eef2ef]" : "bg-plg-cream"}`}
       aria-labelledby="calculator-heading"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${isDj ? "max-w-[1200px]" : "max-w-7xl"}`}>
         <h2 id="calculator-heading" className="sr-only">
           Settlement calculator
         </h2>
 
         {/* Severity presets */}
-        <div className="mb-8 rounded-xl border border-plg-borderMuted bg-white p-4 shadow-sm sm:p-5">
+        <div
+          className={`mb-8 rounded-xl border p-4 shadow-sm sm:p-5 ${
+            isDj
+              ? "border-[#cdd6d0] bg-[#e6ece8]"
+              : "border-plg-borderMuted bg-white"
+          }`}
+        >
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
             <div>
-              <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-plg-crimson">
+              <span
+                className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider ${
+                  isDj ? "text-[#047857]" : "text-plg-crimson"
+                }`}
+              >
                 <BoltIcon size={14} className="inline-block" /> Quick{" "}
                 {usState === "WA"
                   ? "Washington "
@@ -387,8 +398,12 @@ export function Calculator({
                   onClick={() => loadPreset(id)}
                   className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
                     activePreset === id
-                      ? "border-plg-crimson bg-plg-warmIvory text-plg-crimson"
-                      : "border-slate-200 text-slate-700 hover:border-plg-crimson hover:bg-plg-warmIvory"
+                      ? isDj
+                        ? "border-[#062e22] bg-[#062e22] text-white shadow-sm"
+                        : "border-plg-crimson bg-plg-warmIvory text-plg-crimson"
+                      : isDj
+                        ? "border-[#c3cdc6] bg-[#dbe3de] text-[#062e22] hover:bg-[#cfd9d3]"
+                        : "border-slate-200 text-slate-700 hover:border-plg-crimson hover:bg-plg-warmIvory"
                   }`}
                 >
                   {PRESETS[id].label}
@@ -397,7 +412,11 @@ export function Calculator({
               <button
                 type="button"
                 onClick={resetCalculator}
-                className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-400 transition hover:text-slate-700"
+                className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium transition ${
+                  isDj
+                    ? "text-red-600 hover:bg-red-50"
+                    : "text-slate-400 hover:text-slate-700"
+                }`}
                 title="Reset fields"
               >
                 <RotateCcwIcon size={12} className="inline-block" /> Reset
@@ -410,7 +429,11 @@ export function Calculator({
           {/* LEFT */}
           <div className="space-y-6 lg:col-span-7">
             <div
-              className="flex items-center justify-between rounded-xl border border-plg-borderMuted bg-white p-2 shadow-sm"
+              className={`flex items-center justify-between rounded-xl border p-2 shadow-sm ${
+                isDj
+                  ? "border-[#cdd6d0] bg-[#e2e8e4]"
+                  : "border-plg-borderMuted bg-white"
+              }`}
               role="tablist"
               aria-label="Calculator steps"
             >
@@ -425,15 +448,23 @@ export function Calculator({
                     onClick={() => jumpToStep(s.id)}
                     className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-2 py-3 text-xs font-semibold transition sm:px-4 sm:text-sm ${
                       active
-                        ? "bg-plg-navy text-white shadow-sm"
-                        : "font-medium text-slate-600 hover:bg-plg-warmIvory"
+                        ? isDj
+                          ? "bg-[#062e22] text-white shadow-sm"
+                          : "bg-plg-navy text-white shadow-sm"
+                        : isDj
+                          ? "font-medium text-[#404944] hover:text-[#111c16]"
+                          : "font-medium text-slate-600 hover:bg-plg-warmIvory"
                     }`}
                   >
                     <span
                       className={`flex h-5 w-5 items-center justify-center rounded-full text-xs ${
                         active
-                          ? "bg-white/20 text-white"
-                          : "bg-slate-200 text-slate-700"
+                          ? isDj
+                            ? "bg-[#0e5c43] text-white"
+                            : "bg-white/20 text-white"
+                          : isDj
+                            ? "bg-[#d3dbd5] text-[#111c16]"
+                            : "bg-slate-200 text-slate-700"
                       }`}
                     >
                       {s.id}
@@ -445,23 +476,45 @@ export function Calculator({
               })}
             </div>
 
-            <div className="rounded-2xl border border-plg-borderMuted bg-white p-6 shadow-plg-card sm:p-8">
+            <div
+              className={`overflow-hidden rounded-xl border shadow-plg-card sm:rounded-2xl ${
+                isDj
+                  ? "border-[#c8d2cc] bg-[#e6ece8]"
+                  : "border-plg-borderMuted bg-white"
+              }`}
+            >
+            <div className={isDj ? "p-0" : "p-6 sm:p-8"}>
               {step === 1 ? (
                 <fieldset className="space-y-6" onChange={markTouched}>
-                  <div className="border-b border-slate-100 pb-4">
-                    <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+                  <div
+                    className={
+                      isDj
+                        ? "border-b border-[#1c5d48] bg-gradient-to-r from-[#0b3d2e] to-[#124d3b] px-6 py-4 text-white sm:px-8"
+                        : "border-b border-slate-100 pb-4"
+                    }
+                  >
+                    <span
+                      className={`text-xs font-bold uppercase tracking-wider ${
+                        isDj ? "text-[#85d9b6]" : "text-plg-crimson"
+                      }`}
+                    >
                       Step 1 of 3
                     </span>
-                    <h3 className="font-serif mt-1 text-2xl font-bold text-slate-900">
+                    <h3
+                      className={`font-serif mt-1 text-2xl font-bold ${
+                        isDj ? "text-white" : "text-slate-900"
+                      }`}
+                    >
                       Direct Economic Damages (Special Damages)
                     </h3>
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className={`mt-1 text-xs ${isDj ? "text-[#d5e7df]" : "text-slate-500"}`}>
                       Enter tangible, out-of-pocket financial expenses from the collision.
                     </p>
                     {economicError ? (
                       <p className={`mt-2 ${errorClass}`}>{economicError}</p>
                     ) : null}
                   </div>
+                  <div className={isDj ? "space-y-6 px-6 pb-6 sm:px-8" : "contents"}>
 
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <NumberField
@@ -532,15 +585,21 @@ export function Calculator({
                               }}
                               className={`relative flex cursor-pointer items-start rounded-xl border-2 p-3.5 text-left transition ${
                                 active
-                                  ? "border-plg-crimson bg-plg-warmIvory/40"
-                                  : "border-slate-200 bg-white hover:bg-plg-warmIvory"
+                                  ? isDj
+                                    ? "border-[#047857] bg-[#F0FDF4]"
+                                    : "border-plg-crimson bg-plg-warmIvory/40"
+                                  : isDj
+                                    ? "border-[#c7d2cc] bg-[#e0e7e2] hover:bg-[#d8e2db]"
+                                    : "border-slate-200 bg-white hover:bg-plg-warmIvory"
                               }`}
                               aria-pressed={active}
                             >
                               <span
                                 className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
                                   active
-                                    ? "border-plg-crimson bg-plg-crimson"
+                                    ? isDj
+                                      ? "border-[#047857] bg-[#047857]"
+                                      : "border-plg-crimson bg-plg-crimson"
                                     : "border-slate-300"
                                 }`}
                                 aria-hidden
@@ -564,36 +623,56 @@ export function Calculator({
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-4">
+                  <div className={`flex items-center justify-between pt-4 ${isDj ? "border-t border-[#d1dbd4]" : ""}`}>
                     <span className="text-xs italic text-slate-500">
                       Step 1 figures update the live range immediately.
                     </span>
                     <button
                       type="button"
                       onClick={goNext}
-                      className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-plg-crimson"
+                      className={`flex items-center gap-2 rounded-lg px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition ${
+                        isDj
+                          ? "bg-[#062e22] hover:bg-[#0b3d2e]"
+                          : "bg-slate-900 hover:bg-plg-crimson"
+                      }`}
                     >
                       Continue to Injury Severity
                       <ChevronRightIcon size={14} className="shrink-0" />
                     </button>
+                  </div>
                   </div>
                 </fieldset>
               ) : null}
 
               {step === 2 ? (
                 <fieldset className="space-y-6" onChange={markTouched}>
-                  <div className="border-b border-slate-100 pb-4">
-                    <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+                  <div
+                    className={
+                      isDj
+                        ? "border-b border-[#1c5d48] bg-gradient-to-r from-[#0b3d2e] to-[#124d3b] px-6 py-4 text-white sm:px-8"
+                        : "border-b border-slate-100 pb-4"
+                    }
+                  >
+                    <span
+                      className={`text-xs font-bold uppercase tracking-wider ${
+                        isDj ? "text-[#85d9b6]" : "text-plg-crimson"
+                      }`}
+                    >
                       Step 2 of 3
                     </span>
-                    <h3 className="font-serif mt-1 text-2xl font-bold text-slate-900">
+                    <h3
+                      className={`font-serif mt-1 text-2xl font-bold ${
+                        isDj ? "text-white" : "text-slate-900"
+                      }`}
+                    >
                       Injury Severity & Comparative Fault
                     </h3>
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className={`mt-1 text-xs ${isDj ? "text-[#d5e7df]" : "text-slate-500"}`}>
                       General damages are estimated from injury classification, care
                       factors, and degree of responsibility.
                     </p>
                   </div>
+                  <div className={isDj ? "space-y-6 px-6 pb-6 sm:px-8" : "contents"}>
 
                   <div>
                     <label htmlFor="severity" className={`${labelClass} mb-1.5`}>
@@ -797,8 +876,12 @@ export function Calculator({
                             }}
                             className={`rounded-lg px-3 py-2.5 text-xs font-semibold transition ${
                               active
-                                ? "border-2 border-plg-crimson bg-plg-warmIvory text-plg-crimson"
-                                : "border border-slate-200 font-medium text-slate-600 hover:border-slate-400"
+                                ? isDj
+                                  ? "border-2 border-[#047857] bg-[#F0FDF4] text-[#064E3B]"
+                                  : "border-2 border-plg-crimson bg-plg-warmIvory text-plg-crimson"
+                                : isDj
+                                  ? "border border-[#c7d2cc] font-medium text-slate-600 hover:border-[#047857]"
+                                  : "border border-slate-200 font-medium text-slate-600 hover:border-slate-400"
                             }`}
                             aria-pressed={active}
                           >
@@ -827,7 +910,7 @@ export function Calculator({
                     </select>
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-slate-100 pt-4">
+                  <div className={`flex items-center justify-between border-t pt-4 ${isDj ? "border-[#d1dbd4]" : "border-slate-100"}`}>
                     <button
                       type="button"
                       onClick={goBack}
@@ -838,29 +921,49 @@ export function Calculator({
                     <button
                       type="button"
                       onClick={goNext}
-                      className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-plg-crimson"
+                      className={`flex items-center gap-2 rounded-lg px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition ${
+                        isDj
+                          ? "bg-[#062e22] hover:bg-[#0b3d2e]"
+                          : "bg-slate-900 hover:bg-plg-crimson"
+                      }`}
                     >
                       Continue to Insurance Limits
                       <ChevronRightIcon size={14} className="shrink-0" />
                     </button>
+                  </div>
                   </div>
                 </fieldset>
               ) : null}
 
               {step === 3 ? (
                 <fieldset className="space-y-6" onChange={markTouched}>
-                  <div className="border-b border-slate-100 pb-4">
-                    <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+                  <div
+                    className={
+                      isDj
+                        ? "border-b border-[#1c5d48] bg-gradient-to-r from-[#0b3d2e] to-[#124d3b] px-6 py-4 text-white sm:px-8"
+                        : "border-b border-slate-100 pb-4"
+                    }
+                  >
+                    <span
+                      className={`text-xs font-bold uppercase tracking-wider ${
+                        isDj ? "text-[#85d9b6]" : "text-plg-crimson"
+                      }`}
+                    >
                       Step 3 of 3
                     </span>
-                    <h3 className="font-serif mt-1 text-2xl font-bold text-slate-900">
+                    <h3
+                      className={`font-serif mt-1 text-2xl font-bold ${
+                        isDj ? "text-white" : "text-slate-900"
+                      }`}
+                    >
                       Insurance Policy Limits & Offer Reality Check
                     </h3>
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className={`mt-1 text-xs ${isDj ? "text-[#d5e7df]" : "text-slate-500"}`}>
                       Settlements are frequently capped by applicable policy maximums.
                       Enter known BI limits and any insurer offer.
                     </p>
                   </div>
+                  <div className={isDj ? "space-y-6 px-6 pb-6 sm:px-8" : "contents"}>
 
                   <div>
                     <label htmlFor="policy-preset" className={`${labelClass} mb-1.5`}>
@@ -970,7 +1073,7 @@ export function Calculator({
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-slate-100 pt-4">
+                  <div className={`flex items-center justify-between border-t pt-4 ${isDj ? "border-[#d1dbd4]" : "border-slate-100"}`}>
                     <button
                       type="button"
                       onClick={goBack}
@@ -981,89 +1084,196 @@ export function Calculator({
                     <a
                       href="#results"
                       onClick={markTouched}
-                      className="flex items-center gap-2 rounded-lg border border-slate-300 bg-plg-warmIvory px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 transition hover:bg-slate-200 lg:hidden"
+                      className={`flex items-center gap-2 rounded-lg border px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition lg:hidden ${
+                        isDj
+                          ? "border-[#c8d2cc] bg-[#dbe3de] text-[#062e22] hover:bg-[#cfd9d3]"
+                          : "border-slate-300 bg-plg-warmIvory text-slate-900 hover:bg-slate-200"
+                      }`}
                     >
                       View Live Estimate
                     </a>
                   </div>
+                  </div>
                 </fieldset>
               ) : null}
+            </div>
             </div>
 
           </div>
 
           {/* RIGHT results */}
           <div className="lg:col-span-5">
-            <div className="sticky top-28 space-y-5">
+            <div className="space-y-5 lg:sticky lg:top-28 pb-28 lg:pb-0">
               <div
                 id="results"
-                className="scroll-mt-28 overflow-hidden rounded-2xl border-2 border-slate-900 bg-white shadow-plg-panel"
+                className={`scroll-mt-28 overflow-hidden rounded-xl border shadow-plg-panel sm:rounded-2xl ${
+                  isDj
+                    ? "dj-results-shell border-[#263a2f] bg-[#17231c] text-[#e9efe9]"
+                    : "border-2 border-slate-900 bg-white"
+                }`}
                 aria-live="polite"
               >
-                <div className="flex items-center justify-between border-b border-slate-800 bg-plg-navy px-6 py-4 text-white">
+                <div
+                  className={`flex items-center justify-between px-6 py-4 ${
+                    isDj
+                      ? "border-b border-[#2d473a]"
+                      : "border-b border-slate-800 bg-plg-navy text-white"
+                  }`}
+                >
                   <div>
-                    <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-plg-gold">
+                    <span
+                      className={`block text-[10px] font-bold uppercase tracking-[0.2em] ${
+                        isDj
+                          ? "inline-block rounded bg-[#22382c] border border-[#2e4c3c] px-2 py-0.5 text-[#97f5cc]"
+                          : "text-plg-gold"
+                      }`}
+                    >
                       Confidential Analysis
                     </span>
-                    <h3 className="font-serif text-lg font-bold">
+                    <h3
+                      className={`font-serif text-lg font-bold ${
+                        isDj ? "mt-2 text-white" : ""
+                      }`}
+                    >
                       Estimated Settlement Range
                     </h3>
                   </div>
+                  {isDj ? (
+                    <span className="text-xs text-[#e9efe9]/70">Estimated range</span>
+                  ) : null}
                 </div>
 
-                <div className="bg-gradient-to-b from-white to-plg-cream/50 p-6">
+                <div
+                  className={
+                    isDj
+                      ? "relative p-6"
+                      : "bg-gradient-to-b from-white to-plg-cream/50 p-6"
+                  }
+                >
+                  {isDj ? (
+                    <div
+                      className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[#0e5c43]/20 blur-2xl"
+                      aria-hidden
+                    />
+                  ) : null}
                   <SignatureMoment placement="result" className="min-h-0" />
 
                   {!hasEconomic ? (
-                    <p className="text-sm text-slate-500">
+                    <p className={`text-sm ${isDj ? "text-[#cadbd2]" : "text-slate-500"}`}>
                       Enter at least one economic damage amount to see a low / mid / high
                       range.
                     </p>
                   ) : (
                     <>
-                      <p className="mb-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                      <p
+                        className={`mb-3 text-[10px] font-semibold uppercase tracking-wide ${
+                          isDj ? "text-[#cadbd2]/80" : "text-slate-500"
+                        }`}
+                      >
                         {showPreFault
                           ? "Recoverable after comparative fault"
                           : "Estimated range"}
                       </p>
 
-                      <div className="mb-4 grid grid-cols-3 items-end gap-2.5">
-                        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:border-slate-300">
-                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                      <div
+                        className={`mb-4 grid grid-cols-3 items-stretch gap-2 ${
+                          isDj ? "gap-2 sm:gap-2.5" : "items-end gap-2.5"
+                        }`}
+                      >
+                        <div
+                          className={`rounded-xl border text-center transition ${
+                            isDj
+                              ? "dj-results-tier border-[#2b4236] bg-[#1f3027] p-2.5 sm:p-3"
+                              : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
+                          }`}
+                        >
+                          <span
+                            className={`mb-1 block text-[10px] font-bold uppercase tracking-wider ${
+                              isDj ? "text-[#e9efe9]/45" : "text-slate-500"
+                            }`}
+                          >
                             Conservative
                           </span>
-                          <span className="block text-base font-extrabold text-slate-700 sm:text-lg">
+                          <span
+                            className={`block font-extrabold ${
+                              isDj
+                                ? "text-sm text-[#e9efe9]/85 sm:text-base"
+                                : "text-base text-slate-700 sm:text-lg"
+                            }`}
+                          >
                             <CountUpCurrency value={result.recoverableLow} />
                           </span>
-                          <span className="mt-0.5 block text-[10px] text-slate-400">
+                          <span
+                            className={`mt-0.5 block text-[10px] ${
+                              isDj ? "text-[#e9efe9]/40" : "text-slate-400"
+                            }`}
+                          >
                             {result.multiplierLow}× Multiplier
                           </span>
                         </div>
 
                         <div
-                          className={`rounded-xl border border-slate-700 bg-slate-900 p-3.5 text-center text-white shadow-md ring-2 ring-plg-crimson/40 ${
-                            midPop ? "motion-safe:animate-mid-pop" : ""
-                          }`}
+                          className={`rounded-xl border text-center text-white shadow-md ${
+                            isDj
+                              ? "dj-results-mid relative z-10 border-[#10B981]/50 bg-[#064E3B] p-4 shadow-lg sm:p-5"
+                              : "border-slate-700 bg-slate-900 p-3.5 ring-2 ring-plg-crimson/40"
+                          } ${midPop ? "motion-safe:animate-mid-pop" : ""}`}
                         >
-                          <span className="mb-1 block text-[10px] font-medium uppercase tracking-wider text-plg-gold">
+                          <span
+                            className={`mb-1 block uppercase tracking-wider ${
+                              isDj
+                                ? "text-[10px] font-semibold text-[#97f5cc]"
+                                : "text-[10px] font-medium text-plg-gold"
+                            }`}
+                          >
                             Estimated Mid
                           </span>
-                          <span className="block text-xl font-black text-white sm:text-2xl">
+                          <span
+                            className={`block font-black text-white ${
+                              isDj
+                                ? "text-2xl tabular-nums sm:text-3xl"
+                                : "text-xl sm:text-2xl"
+                            }`}
+                          >
                             <CountUpCurrency value={result.recoverableMid} />
                           </span>
-                          <span className="mt-0.5 block text-[10px] text-slate-300">
+                          <span
+                            className={`mt-0.5 block text-[10px] ${
+                              isDj ? "text-[#a3e0c7]" : "text-slate-300"
+                            }`}
+                          >
                             {result.multiplierMid}× Multiplier
                           </span>
                         </div>
 
-                        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:border-slate-300">
-                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                        <div
+                          className={`rounded-xl border text-center transition ${
+                            isDj
+                              ? "dj-results-tier border-[#2b4236] bg-[#1f3027] p-2.5 sm:p-3"
+                              : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
+                          }`}
+                        >
+                          <span
+                            className={`mb-1 block text-[10px] font-bold uppercase tracking-wider ${
+                              isDj ? "text-[#e9efe9]/45" : "text-slate-500"
+                            }`}
+                          >
                             Trial / Strong
                           </span>
-                          <span className="block text-base font-extrabold text-slate-700 sm:text-lg">
+                          <span
+                            className={`block font-extrabold ${
+                              isDj
+                                ? "text-sm text-[#e9efe9]/85 sm:text-base"
+                                : "text-base text-slate-700 sm:text-lg"
+                            }`}
+                          >
                             <CountUpCurrency value={result.recoverableHigh} />
                           </span>
-                          <span className="mt-0.5 block text-[10px] text-slate-400">
+                          <span
+                            className={`mt-0.5 block text-[10px] ${
+                              isDj ? "text-[#e9efe9]/40" : "text-slate-400"
+                            }`}
+                          >
                             {result.multiplierHigh}× Multiplier
                           </span>
                         </div>
@@ -1071,7 +1281,11 @@ export function Calculator({
 
                       {result.policyLimitsMayBind ? (
                         <div
-                          className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"
+                          className={`mb-4 rounded-lg border p-3 text-xs ${
+                            isDj
+                              ? "border-[#6a3700]/60 bg-[#4a2400]/40 text-[#ffb77d]"
+                              : "border-amber-200 bg-amber-50 text-amber-900"
+                          }`}
                           role="status"
                         >
                           <strong>Policy Limit Cap:</strong> Value exceeds at-fault limit (
@@ -1081,7 +1295,12 @@ export function Calculator({
                       ) : null}
 
                       {result.recoveryBarred ? (
-                        <p className="mb-3 text-xs leading-snug text-amber-900" role="status">
+                        <p
+                          className={`mb-3 text-xs leading-snug ${
+                            isDj ? "text-[#ffb77d]" : "text-amber-900"
+                          }`}
+                          role="status"
+                        >
                           <span className="font-semibold">Recovery may be barred.</span> At{" "}
                           {result.faultPercentApplied}% plaintiff fault under {usState}
                           &apos;s rules, recoverable dollars are shown as $0.
@@ -1089,7 +1308,11 @@ export function Calculator({
                       ) : null}
 
                       {showPreFault ? (
-                        <p className="mb-3 text-xs tabular-nums leading-snug text-slate-500">
+                        <p
+                          className={`mb-3 text-xs tabular-nums leading-snug ${
+                            isDj ? "text-[#cadbd2]/80" : "text-slate-500"
+                          }`}
+                        >
                           Pre-fault: Low {formatCurrency(result.low)} · Mid{" "}
                           {formatCurrency(result.mid)} · High {formatCurrency(result.high)}
                           {result.faultPercentApplied > 0
@@ -1099,7 +1322,13 @@ export function Calculator({
                       ) : null}
 
                       {result.cappedMid != null ? (
-                        <p className="mb-3 text-xs tabular-nums leading-snug text-slate-500">
+                        <p
+                          className={`mb-3 rounded-lg border px-3 py-2 text-xs tabular-nums leading-snug ${
+                            isDj
+                              ? "border-[#2d473a] bg-[#1f3027] text-center text-[#e9efe9]/80"
+                              : "text-slate-500"
+                          }`}
+                        >
                           Policy-capped: Low {formatCurrency(result.cappedLow ?? 0)} · Mid{" "}
                           {formatCurrency(result.cappedMid)} · High{" "}
                           {formatCurrency(result.cappedHigh ?? 0)}
@@ -1108,25 +1337,49 @@ export function Calculator({
 
                       {offerCheck ? (
                         <div className="mb-4">
-                          <OfferGauge check={offerCheck} />
+                          <OfferGauge check={offerCheck} dark={isDj} />
                         </div>
                       ) : null}
 
-                      <div className="mb-5 overflow-hidden rounded-xl border border-slate-200 bg-white">
+                      <div
+                        className={`mb-5 overflow-hidden rounded-xl border ${
+                          isDj
+                            ? "border-[#2d473a] bg-[#1f3027]"
+                            : "border-slate-200 bg-white"
+                        }`}
+                      >
                         <details>
-                          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-2.5 text-left text-xs font-bold text-slate-800 transition hover:bg-slate-50 marker:content-none [&::-webkit-details-marker]:hidden">
+                          <summary
+                            className={`flex cursor-pointer list-none items-center justify-between px-4 py-2.5 text-left text-xs font-bold transition marker:content-none [&::-webkit-details-marker]:hidden ${
+                              isDj
+                                ? "text-[#97f5cc] hover:text-white"
+                                : "text-slate-800 hover:bg-slate-50"
+                            }`}
+                          >
                             <span className="flex items-center gap-1.5">
-                              <span className="text-plg-crimson" aria-hidden>
+                              <span
+                                className={isDj ? "text-[#85d9b6]" : "text-plg-crimson"}
+                                aria-hidden
+                              >
                                 ⌘
                               </span>
                               Show Line-by-Line Math Breakdown
                             </span>
-                            <span className="text-xs text-slate-400" aria-hidden>
+                            <span
+                              className={`text-xs ${isDj ? "text-[#85d9b6]/70" : "text-slate-400"}`}
+                              aria-hidden
+                            >
                               ▾
                             </span>
                           </summary>
-                          <div className="border-t border-slate-100 bg-slate-50/50 px-2 pb-2 pt-2">
-                            <BreakdownPanel result={result} usState={usState} />
+                          <div
+                            className={`border-t px-2 pb-2 pt-2 ${
+                              isDj
+                                ? "border-[#2d473a] bg-[#14221b]/80"
+                                : "border-slate-100 bg-slate-50/50"
+                            }`}
+                          >
+                            <BreakdownPanel result={result} usState={usState} dark={isDj} />
                           </div>
                         </details>
                       </div>
@@ -1134,16 +1387,27 @@ export function Calculator({
                       <div className="space-y-2.5 print:hidden">
                         <a
                           href={client.ctaUrl}
-                          className="flex w-full items-center justify-center gap-2 rounded-xl bg-plg-crimson px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:bg-plg-crimsonDark hover:shadow-lg"
+                          className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg ${
+                            isDj
+                              ? "bg-[#047857] hover:bg-[#064E3B]"
+                              : "bg-plg-crimson hover:bg-plg-crimsonDark"
+                          }`}
                         >
                           {client.ctaText} — Review With An Attorney
                         </a>
                         <div className="grid grid-cols-2 gap-2">
                           <a
                             href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
-                            className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-3 py-2.5 text-xs font-bold tracking-wide text-white transition hover:bg-slate-800"
+                            className={`flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-white transition ${
+                              isDj
+                                ? "bg-[#0F172A] hover:bg-[#1E293B]"
+                                : "bg-slate-900 hover:bg-slate-800"
+                            }`}
                           >
-                            <PhoneIcon size={14} className="text-plg-gold" />
+                            <PhoneIcon
+                              size={14}
+                              className={isDj ? "text-[#85d9b6]" : "text-plg-gold"}
+                            />
                             {client.phone}
                           </a>
                           <PrintSummary
@@ -1156,8 +1420,16 @@ export function Calculator({
                         </div>
                       </div>
 
-                      <div className="mt-4 border-t border-slate-200 pt-4 text-center">
-                        <p className="text-[11px] leading-normal text-slate-500">
+                      <div
+                        className={`mt-4 border-t pt-4 text-center ${
+                          isDj ? "border-[#2d473a]" : "border-slate-200"
+                        }`}
+                      >
+                        <p
+                          className={`text-[11px] leading-normal ${
+                            isDj ? "text-[#cadbd2]/80" : "text-slate-500"
+                          }`}
+                        >
                           <strong>No upfront attorney fees.</strong> For qualifying
                           contingency cases, you pay nothing unless {client.shortName}{" "}
                           settles or wins your case. Educational estimate only — not a
