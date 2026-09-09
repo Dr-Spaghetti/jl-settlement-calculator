@@ -60,31 +60,20 @@ export function Header({ client }: { client: ClientConfig }) {
 
       <header className="sticky top-0 z-40 border-b border-plg-borderMuted bg-white/95 shadow-sm backdrop-blur transition-all duration-300 print:hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-24 items-center justify-between">
+          <div className="flex h-28 items-center justify-between gap-4">
             <a href="#top" className="group flex min-w-0 items-center gap-3 sm:gap-4">
               {isPremier && client.logoUrl ? (
                 <>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={client.logoUrl}
-                    alt=""
-                    className="hidden h-14 w-auto max-w-[120px] shrink-0 object-contain sm:block sm:h-16"
-                    width={120}
-                    height={64}
+                    alt={`${client.firmName} logo`}
+                    className="h-[4.25rem] w-auto max-w-[200px] shrink-0 object-contain object-left sm:h-20 sm:max-w-[280px] lg:h-[5.25rem] lg:max-w-[340px]"
+                    width={340}
+                    height={84}
+                    decoding="async"
                   />
-                  <div className="flex items-center justify-center space-x-1.5 border-r border-slate-200 py-1 pr-4 sm:hidden">
-                    <span className="font-cinzel text-2xl font-bold tracking-tight text-slate-900 transition group-hover:text-plg-crimson">
-                      P
-                    </span>
-                    <span className="inline-block h-7 w-[2px] bg-plg-crimson" />
-                    <span className="font-cinzel text-2xl font-bold tracking-tight text-slate-900 transition group-hover:text-plg-crimson">
-                      L
-                    </span>
-                    <span className="inline-block h-7 w-[2px] bg-plg-crimson" />
-                    <span className="font-cinzel text-2xl font-bold tracking-tight text-slate-900 transition group-hover:text-plg-crimson">
-                      G
-                    </span>
-                  </div>
+                  <div className="hidden h-12 w-px shrink-0 bg-slate-200 sm:block" aria-hidden />
                 </>
               ) : (
                 <div className="flex items-center justify-center space-x-1.5 border-r border-slate-200 py-1 pr-5">
@@ -94,7 +83,7 @@ export function Header({ client }: { client: ClientConfig }) {
                 </div>
               )}
               <div className="flex min-w-0 flex-col">
-                <span className="font-cinzel truncate text-base font-bold uppercase tracking-[0.16em] text-slate-900 sm:text-xl">
+                <span className="font-cinzel truncate text-sm font-bold uppercase tracking-[0.14em] text-slate-900 sm:text-lg lg:text-xl">
                   {client.shortName}
                 </span>
                 <div className="flex flex-wrap items-center gap-2">
