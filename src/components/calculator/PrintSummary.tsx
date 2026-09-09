@@ -8,24 +8,30 @@ export function PrintSummary({
   offerCheck,
   firmName,
   usState,
+  compact,
 }: {
   result: SettlementRange;
   offerCheck: OfferRealityCheck | null;
   firmName: string;
   usState: string;
+  compact?: boolean;
 }) {
   function handlePrint() {
     window.print();
   }
 
   return (
-    <div className="space-y-3">
+    <div className={compact ? "" : "space-y-3"}>
       <button
         type="button"
         onClick={handlePrint}
-        className="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]/30 print:hidden"
+        className={
+          compact
+            ? "flex w-full items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs font-bold tracking-wide text-slate-800 transition hover:bg-slate-100 print:hidden"
+            : "inline-flex w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-plg-crimson/30 print:hidden"
+        }
       >
-        Print / save summary
+        Print / Save PDF
       </button>
 
       <div className="hidden print:block print:space-y-4" id="print-summary">

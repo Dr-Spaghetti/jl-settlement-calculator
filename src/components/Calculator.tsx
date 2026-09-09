@@ -28,14 +28,77 @@ import { PrintSummary } from "@/components/calculator/PrintSummary";
 import { CountUpCurrency } from "@/components/calculator/CountUpCurrency";
 import { SignatureMoment } from "@/components/motion/SignatureMoment";
 import { prefersReducedMotion } from "@/lib/motion";
+import {
+  BoltIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PhoneIcon,
+  RotateCcwIcon,
+} from "@/components/icons";
 
 const inputClass =
-  "input-touch mt-1.5 w-full rounded-lg border border-slate-300/90 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none motion-safe:transition focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)]/20";
-const labelClass = "block text-sm font-medium text-slate-700";
-const helpClass = "mt-1 text-xs text-slate-500";
+  "input-touch mt-1.5 block w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm outline-none transition focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson";
+const labelClass =
+  "block text-xs font-bold uppercase tracking-wider text-slate-700";
+const helpClass = "mt-1 text-[11px] text-slate-500";
 const errorClass = "mt-1 text-xs font-medium text-red-600";
 
 type StepId = 1 | 2 | 3;
+
+type PresetId = "minor" | "moderate" | "severe";
+
+const PRESETS: Record<
+  PresetId,
+  {
+    label: string;
+    medicalBillsPast: number;
+    medicalBillsFuture: number;
+    lostWages: number;
+    otherOutOfPocket: number;
+    propertyDamage: number;
+    severity: Severity;
+    treatmentMonths: number;
+    careType: CareType;
+    permanency: Permanency;
+  }
+> = {
+  minor: {
+    label: "Minor Whiplash ($16.5k bills)",
+    medicalBillsPast: 12000,
+    medicalBillsFuture: 1500,
+    lostWages: 2000,
+    otherOutOfPocket: 500,
+    propertyDamage: 4500,
+    severity: "minor",
+    treatmentMonths: 2,
+    careType: "chiro",
+    permanency: "none",
+  },
+  moderate: {
+    label: "Moderate Fracture / PT ($48k bills)",
+    medicalBillsPast: 35000,
+    medicalBillsFuture: 8000,
+    lostWages: 6500,
+    otherOutOfPocket: 1200,
+    propertyDamage: 8500,
+    severity: "moderate",
+    treatmentMonths: 6,
+    careType: "md",
+    permanency: "possible",
+  },
+  severe: {
+    label: "Severe Surgery / Disc ($145k bills)",
+    medicalBillsPast: 110000,
+    medicalBillsFuture: 25000,
+    lostWages: 18000,
+    otherOutOfPocket: 3500,
+    propertyDamage: 12000,
+    severity: "severe",
+    treatmentMonths: 12,
+    careType: "surgery",
+    permanency: "rated",
+  },
+};
 
 function NumberField({
   id,
@@ -46,6 +109,7 @@ function NumberField({
   min = 0,
   error,
   optional,
+  required,
 }: {
   id: string;
   label: string;
@@ -55,14 +119,16 @@ function NumberField({
   min?: number;
   error?: string;
   optional?: boolean;
+  required?: boolean;
 }) {
   return (
     <div>
       <label htmlFor={id} className={labelClass}>
-        {label}
+        {label}{" "}
+        {required ? <span className="text-plg-crimson">*</span> : null}
       </label>
-      <div className="relative mt-1.5">
-        <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-slate-400">
+      <div className="relative mt-1.5 rounded-lg shadow-sm">
+        <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-sm font-semibold text-slate-400">
           $
         </span>
         <input
@@ -81,7 +147,7 @@ function NumberField({
             }
             onChange(Math.max(min, Number(raw) || 0));
           }}
-          className={`${inputClass} !mt-0 pl-7 ${error ? "border-red-400" : ""}`}
+          className={`${inputClass} !mt-0 pl-8 ${error ? "border-red-400" : ""}`}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? `${id}-error` : undefined}
         />
@@ -98,9 +164,9 @@ function NumberField({
 }
 
 const STEPS: { id: StepId; title: string; short: string }[] = [
-  { id: 1, title: "Economic damages", short: "Costs" },
-  { id: 2, title: "Injury & liability", short: "Injury" },
-  { id: 3, title: "Offer & limits", short: "Offer" },
+  { id: 1, title: "Economic Losses", short: "Economics" },
+  { id: 2, title: "Injury & Fault", short: "Injury" },
+  { id: 3, title: "Policy Limits", short: "Policy" },
 ];
 
 export function Calculator({
@@ -121,13 +187,13 @@ export function Calculator({
   const [careType, setCareType] = useState<CareType>("md");
   const [liabilityClarity, setLiabilityClarity] =
     useState<LiabilityClarity>("clear");
-  const [usState, setUsState] = useState(defaultState || "AZ");
+  const [usState, setUsState] = useState(defaultState || "WA");
   const [plaintiffFaultPercent, setPlaintiffFaultPercent] = useState(0);
   const [treatmentGap, setTreatmentGap] = useState<TreatmentGap>("none");
   const [permanency, setPermanency] = useState<Permanency>("none");
   const [formulaMode, setFormulaMode] = useState<FormulaMode>("demand");
   const [policyLimitPerPerson, setPolicyLimitPerPerson] = useState<number | "">(
-    ""
+    100000
   );
   const [policyLimitPerAccident, setPolicyLimitPerAccident] = useState<
     number | ""
@@ -135,6 +201,7 @@ export function Calculator({
   const [offerReceived, setOfferReceived] = useState<string>("");
   const [touched, setTouched] = useState(false);
   const [midPop, setMidPop] = useState(false);
+  const [activePreset, setActivePreset] = useState<PresetId | null>(null);
 
   const result = useMemo(
     () =>
@@ -204,8 +271,7 @@ export function Calculator({
       ? "Enter at least one economic damage amount to estimate a range."
       : undefined;
   const faultError =
-    touched &&
-    (plaintiffFaultPercent < 0 || plaintiffFaultPercent > 100)
+    touched && (plaintiffFaultPercent < 0 || plaintiffFaultPercent > 100)
       ? "Enter 0–100%"
       : undefined;
 
@@ -238,53 +304,131 @@ export function Calculator({
     setStep(id);
   }
 
-  const showPreFault =
-    result.faultPercentApplied > 0 || result.recoveryBarred;
+  function loadPreset(id: PresetId) {
+    const p = PRESETS[id];
+    setActivePreset(id);
+    setMedicalBillsPast(p.medicalBillsPast);
+    setMedicalBillsFuture(p.medicalBillsFuture);
+    setLostWages(p.lostWages);
+    setOtherOutOfPocket(p.otherOutOfPocket);
+    setPropertyDamage(p.propertyDamage);
+    setSeverity(p.severity);
+    setTreatmentMonths(p.treatmentMonths);
+    setCareType(p.careType);
+    setPermanency(p.permanency);
+    setTouched(true);
+  }
+
+  function resetCalculator() {
+    setActivePreset(null);
+    setMedicalBillsPast(12000);
+    setMedicalBillsFuture(3000);
+    setLostWages(4500);
+    setOtherOutOfPocket(800);
+    setPropertyDamage(6500);
+    setSeverity("moderate");
+    setTreatmentMonths(4);
+    setCareType("md");
+    setLiabilityClarity("clear");
+    setUsState(defaultState || "WA");
+    setPlaintiffFaultPercent(0);
+    setTreatmentGap("none");
+    setPermanency("none");
+    setFormulaMode("demand");
+    setPolicyLimitPerPerson(100000);
+    setPolicyLimitPerAccident("");
+    setOfferReceived("");
+    setStep(1);
+    setTouched(false);
+  }
+
+  const showPreFault = result.faultPercentApplied > 0 || result.recoveryBarred;
+
+  const liabilityButtons: { id: LiabilityClarity; label: string }[] = [
+    { id: "clear", label: "Clear Liability (Rear-ended, red light)" },
+    { id: "mixed", label: "Disputed / Contested" },
+    { id: "disputed", label: "Multi-Vehicle / Complex" },
+  ];
 
   return (
     <section
       id="calculator"
-      className="scroll-mt-20 bg-[var(--page-ground)] py-16 sm:py-20"
+      className="scroll-mt-28 bg-plg-cream py-12 sm:py-14"
       aria-labelledby="calculator-heading"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="max-w-2xl">
-          <h2
-            id="calculator-heading"
-            className="font-display text-2xl font-semibold tracking-tight text-[var(--brand-primary)] sm:text-3xl"
-          >
-            Estimate your settlement range
-          </h2>
-          <p className="mt-3 text-slate-600">
-            Range updates live as you step through costs and injury details.
-          </p>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 id="calculator-heading" className="sr-only">
+          Settlement calculator
+        </h2>
+
+        {/* Severity presets */}
+        <div className="mb-8 rounded-xl border border-plg-borderMuted bg-white p-4 shadow-sm sm:p-5">
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+            <div>
+              <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-plg-crimson">
+                <BoltIcon size={14} className="inline-block" /> Quick{" "}
+                {usState === "WA" ? "Washington" : ""} Accident Presets
+              </span>
+              <p className="mt-0.5 text-xs text-slate-500">
+                Load typical sample figures to see how multiplier dynamics change by
+                case severity:
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {(Object.keys(PRESETS) as PresetId[]).map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => loadPreset(id)}
+                  className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
+                    activePreset === id
+                      ? "border-plg-crimson bg-plg-warmIvory text-plg-crimson"
+                      : "border-slate-200 text-slate-700 hover:border-plg-crimson hover:bg-plg-warmIvory"
+                  }`}
+                >
+                  {PRESETS[id].label}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={resetCalculator}
+                className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-400 transition hover:text-slate-700"
+                title="Reset fields"
+              >
+                <RotateCcwIcon size={12} className="inline-block" /> Reset
+              </button>
+            </div>
+          </div>
         </div>
 
-        <nav className="mt-8" aria-label="Calculator steps">
-          <ol className="flex flex-wrap gap-2 sm:gap-3">
-            {STEPS.map((s) => {
-              const active = step === s.id;
-              const done = step > s.id;
-              return (
-                <li key={s.id}>
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+          {/* LEFT */}
+          <div className="space-y-6 lg:col-span-7">
+            <div
+              className="flex items-center justify-between rounded-xl border border-plg-borderMuted bg-white p-2 shadow-sm"
+              role="tablist"
+              aria-label="Calculator steps"
+            >
+              {STEPS.map((s) => {
+                const active = step === s.id;
+                return (
                   <button
+                    key={s.id}
                     type="button"
+                    role="tab"
+                    aria-selected={active}
                     onClick={() => jumpToStep(s.id)}
-                    className={`inline-flex min-h-[44px] items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium motion-safe:transition ${
+                    className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-2 py-3 text-xs font-semibold transition sm:px-4 sm:text-sm ${
                       active
-                        ? "text-white shadow-soft"
-                        : done
-                          ? "bg-white text-slate-800 ring-1 ring-slate-200"
-                          : "bg-white/70 text-slate-500 ring-1 ring-slate-200"
+                        ? "bg-plg-navy text-white shadow-sm"
+                        : "font-medium text-slate-600 hover:bg-plg-warmIvory"
                     }`}
-                    style={
-                      active ? { backgroundColor: "var(--brand-primary)" } : undefined
-                    }
-                    aria-current={active ? "step" : undefined}
                   >
                     <span
-                      className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold ${
-                        active ? "bg-white/20" : "bg-slate-100 text-slate-600"
+                      className={`flex h-5 w-5 items-center justify-center rounded-full text-xs ${
+                        active
+                          ? "bg-white/20 text-white"
+                          : "bg-slate-200 text-slate-700"
                       }`}
                     >
                       {s.id}
@@ -292,110 +436,163 @@ export function Calculator({
                     <span className="hidden sm:inline">{s.title}</span>
                     <span className="sm:hidden">{s.short}</span>
                   </button>
-                </li>
-              );
-            })}
-          </ol>
-        </nav>
+                );
+              })}
+            </div>
 
-        <div className="mt-8 grid items-start gap-8 lg:grid-cols-5">
-          <div className="space-y-4 lg:col-span-3">
-          <div className="space-y-6 rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] bg-white p-5 shadow-soft sm:p-6">
-            {step === 1 ? (
-              <fieldset onChange={markTouched}>
-                <legend className="legend-micro">Step 1 · Economic damages</legend>
-                {economicError ? (
-                  <p className={`mt-2 ${errorClass}`}>{economicError}</p>
-                ) : null}
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <NumberField
-                    id="medical-past"
-                    label="Medical bills (past)"
-                    help="ER, imaging, PT, specialists to date"
-                    value={medicalBillsPast}
-                    onChange={(n) => setMedicalBillsPast(typeof n === "number" ? n : 0)}
-                  />
-                  <NumberField
-                    id="medical-future"
-                    label="Medical bills (future)"
-                    help="Expected remaining care costs"
-                    value={medicalBillsFuture}
-                    onChange={(n) =>
-                      setMedicalBillsFuture(typeof n === "number" ? n : 0)
-                    }
-                  />
-                  <NumberField
-                    id="lost-wages"
-                    label="Lost wages / income"
-                    value={lostWages}
-                    onChange={(n) => setLostWages(typeof n === "number" ? n : 0)}
-                  />
-                  <NumberField
-                    id="other-oop"
-                    label="Other out-of-pocket"
-                    help="Travel, meds, household help, etc."
-                    value={otherOutOfPocket}
-                    onChange={(n) =>
-                      setOtherOutOfPocket(typeof n === "number" ? n : 0)
-                    }
-                  />
-                  <NumberField
-                    id="property"
-                    label="Property damage"
-                    help="Vehicle repair / total loss (added, not multiplied)"
-                    value={propertyDamage}
-                    onChange={(n) =>
-                      setPropertyDamage(typeof n === "number" ? n : 0)
-                    }
-                  />
-                </div>
-                <div className="mt-5 rounded-xl border border-slate-200 bg-[var(--page-ground)]/50 p-4">
-                  <p className="text-sm font-medium text-slate-800">
-                    Formula style
-                  </p>
-                  <p className="mt-1 text-xs text-slate-500">
-                    Choose how wages and other costs enter the multiplier math.
-                  </p>
-                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                    {(Object.keys(FORMULA_MODE_COPY) as FormulaMode[]).map((mode) => {
-                      const copy = FORMULA_MODE_COPY[mode];
-                      const active = formulaMode === mode;
-                      return (
-                        <button
-                          key={mode}
-                          type="button"
-                          onClick={() => {
-                            markTouched();
-                            setFormulaMode(mode);
-                          }}
-                          className={`rounded-lg border px-3 py-2.5 text-left text-sm motion-safe:transition ${
-                            active
-                              ? "border-[var(--brand-primary)] bg-white shadow-sm ring-2 ring-[var(--brand-primary)]/20"
-                              : "border-slate-200 bg-white/80 hover:border-slate-300"
-                          }`}
-                          aria-pressed={active}
-                        >
-                          <span className="font-semibold text-[var(--brand-primary)]">
-                            {copy.label}
-                          </span>
-                          <span className="mt-1 block text-xs leading-snug text-slate-500">
-                            {copy.short}
-                          </span>
-                        </button>
-                      );
-                    })}
+            <div className="rounded-2xl border border-plg-borderMuted bg-white p-6 shadow-plg-card sm:p-8">
+              {step === 1 ? (
+                <fieldset className="space-y-6" onChange={markTouched}>
+                  <div className="border-b border-slate-100 pb-4">
+                    <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+                      Step 1 of 3
+                    </span>
+                    <h3 className="font-serif mt-1 text-2xl font-bold text-slate-900">
+                      Direct Economic Damages (Special Damages)
+                    </h3>
+                    <p className="mt-1 text-xs text-slate-500">
+                      Enter tangible, out-of-pocket financial expenses from the collision.
+                    </p>
+                    {economicError ? (
+                      <p className={`mt-2 ${errorClass}`}>{economicError}</p>
+                    ) : null}
                   </div>
-                </div>
-              </fieldset>
-            ) : null}
 
-            {step === 2 ? (
-              <fieldset onChange={markTouched}>
-                <legend className="legend-micro">Step 2 · Injury & liability</legend>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <NumberField
+                      id="medical-past"
+                      label="Past Medical Bills ($)"
+                      help="ER, ambulance, imaging, therapy, specialists."
+                      value={medicalBillsPast}
+                      onChange={(n) =>
+                        setMedicalBillsPast(typeof n === "number" ? n : 0)
+                      }
+                      required
+                    />
+                    <NumberField
+                      id="medical-future"
+                      label="Estimated Future Care ($)"
+                      help="Follow-up therapy, injections, future surgery."
+                      value={medicalBillsFuture}
+                      onChange={(n) =>
+                        setMedicalBillsFuture(typeof n === "number" ? n : 0)
+                      }
+                    />
+                    <NumberField
+                      id="lost-wages"
+                      label="Lost Wages / Lost Income ($)"
+                      help="Missed workdays, sick leave used, PTO lost."
+                      value={lostWages}
+                      onChange={(n) => setLostWages(typeof n === "number" ? n : 0)}
+                    />
+                    <NumberField
+                      id="other-oop"
+                      label="Other Out-of-Pocket Costs ($)"
+                      help="Prescriptions, braces, travel to doctor visits."
+                      value={otherOutOfPocket}
+                      onChange={(n) =>
+                        setOtherOutOfPocket(typeof n === "number" ? n : 0)
+                      }
+                    />
+                  </div>
+
+                  <div className="border-t border-slate-100 pt-2">
+                    <NumberField
+                      id="property"
+                      label="Property Damage / Vehicle Repair or Total Loss ($)"
+                      help="Property damage is reimbursed 1:1 and is not multiplied by pain & suffering multipliers."
+                      value={propertyDamage}
+                      onChange={(n) =>
+                        setPropertyDamage(typeof n === "number" ? n : 0)
+                      }
+                    />
+                  </div>
+
+                  <div className="border-t border-slate-100 pt-3">
+                    <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-800">
+                      Settlement Formula Methodology
+                    </label>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      {(Object.keys(FORMULA_MODE_COPY) as FormulaMode[]).map(
+                        (mode) => {
+                          const copy = FORMULA_MODE_COPY[mode];
+                          const active = formulaMode === mode;
+                          return (
+                            <button
+                              key={mode}
+                              type="button"
+                              onClick={() => {
+                                markTouched();
+                                setFormulaMode(mode);
+                              }}
+                              className={`relative flex cursor-pointer items-start rounded-xl border-2 p-3.5 text-left transition ${
+                                active
+                                  ? "border-plg-crimson bg-plg-warmIvory/40"
+                                  : "border-slate-200 bg-white hover:bg-plg-warmIvory"
+                              }`}
+                              aria-pressed={active}
+                            >
+                              <span
+                                className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
+                                  active
+                                    ? "border-plg-crimson bg-plg-crimson"
+                                    : "border-slate-300"
+                                }`}
+                                aria-hidden
+                              >
+                                {active ? (
+                                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                                ) : null}
+                              </span>
+                              <span className="ml-3">
+                                <span className="block text-xs font-bold text-slate-900">
+                                  {copy.label}
+                                </span>
+                                <span className="mt-0.5 block text-[11px] text-slate-600">
+                                  {copy.short}
+                                </span>
+                              </span>
+                            </button>
+                          );
+                        }
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4">
+                    <span className="text-xs italic text-slate-500">
+                      Step 1 figures update the live range immediately.
+                    </span>
+                    <button
+                      type="button"
+                      onClick={goNext}
+                      className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-plg-crimson"
+                    >
+                      Continue to Injury Severity
+                      <ChevronRightIcon size={14} className="shrink-0" />
+                    </button>
+                  </div>
+                </fieldset>
+              ) : null}
+
+              {step === 2 ? (
+                <fieldset className="space-y-6" onChange={markTouched}>
+                  <div className="border-b border-slate-100 pb-4">
+                    <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+                      Step 2 of 3
+                    </span>
+                    <h3 className="font-serif mt-1 text-2xl font-bold text-slate-900">
+                      Injury Severity & Comparative Fault
+                    </h3>
+                    <p className="mt-1 text-xs text-slate-500">
+                      General damages are estimated from injury classification, care
+                      factors, and degree of responsibility.
+                    </p>
+                  </div>
+
                   <div>
-                    <label htmlFor="severity" className={labelClass}>
-                      Injury severity
+                    <label htmlFor="severity" className={`${labelClass} mb-1.5`}>
+                      Injury Category & Treatment Complexity
                     </label>
                     <select
                       id="severity"
@@ -410,55 +607,193 @@ export function Calculator({
                       ))}
                     </select>
                   </div>
-                  <div>
-                    <label htmlFor="treatment-months" className={labelClass}>
-                      Months of treatment
-                    </label>
+
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="treatment-months" className={labelClass}>
+                        Months of Treatment
+                      </label>
+                      <input
+                        id="treatment-months"
+                        type="number"
+                        min={0}
+                        max={120}
+                        step={1}
+                        className={`${inputClass} ${treatmentError ? "border-red-400" : ""}`}
+                        value={treatmentMonths}
+                        onChange={(e) =>
+                          setTreatmentMonths(
+                            Math.max(0, Number(e.target.value) || 0)
+                          )
+                        }
+                        aria-invalid={Boolean(treatmentError)}
+                      />
+                      {treatmentError ? (
+                        <p className={errorClass}>{treatmentError}</p>
+                      ) : (
+                        <p className={helpClass}>0–120 months of documented care.</p>
+                      )}
+                    </div>
+                    <div>
+                      <label htmlFor="care-type" className={labelClass}>
+                        Primary Care Type
+                      </label>
+                      <select
+                        id="care-type"
+                        className={inputClass}
+                        value={careType}
+                        onChange={(e) => setCareType(e.target.value as CareType)}
+                      >
+                        {(Object.keys(CARE_LABELS) as CareType[]).map((k) => (
+                          <option key={k} value={k}>
+                            {CARE_LABELS[k]}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="treatment-gap" className={labelClass}>
+                        Treatment Gap
+                      </label>
+                      <select
+                        id="treatment-gap"
+                        className={inputClass}
+                        value={treatmentGap}
+                        onChange={(e) =>
+                          setTreatmentGap(e.target.value as TreatmentGap)
+                        }
+                      >
+                        {(Object.keys(TREATMENT_GAP_LABELS) as TreatmentGap[]).map(
+                          (k) => (
+                            <option key={k} value={k}>
+                              {TREATMENT_GAP_LABELS[k]}
+                            </option>
+                          )
+                        )}
+                      </select>
+                      <p className={helpClass}>
+                        Gaps in care can reduce multiplier support (educational).
+                      </p>
+                    </div>
+                    <div>
+                      <label htmlFor="permanency" className={labelClass}>
+                        Permanency
+                      </label>
+                      <select
+                        id="permanency"
+                        className={inputClass}
+                        value={permanency}
+                        onChange={(e) =>
+                          setPermanency(e.target.value as Permanency)
+                        }
+                      >
+                        {(Object.keys(PERMANENCY_LABELS) as Permanency[]).map(
+                          (k) => (
+                            <option key={k} value={k}>
+                              {PERMANENCY_LABELS[k]}
+                            </option>
+                          )
+                        )}
+                      </select>
+                      <p className={helpClass}>
+                        Documented lasting impairment can support higher multipliers.
+                      </p>
+                    </div>
+                    <div>
+                      <label htmlFor="us-state" className={labelClass}>
+                        State Where Crash Occurred
+                      </label>
+                      <select
+                        id="us-state"
+                        className={inputClass}
+                        value={usState}
+                        onChange={(e) => setUsState(e.target.value)}
+                      >
+                        {US_STATES.map((s) => (
+                          <option key={s.code} value={s.code}>
+                            {s.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <span className="block text-xs font-bold uppercase tracking-wider text-slate-900">
+                          Your Assigned Fault Percentage
+                        </span>
+                        <span className="text-[11px] text-slate-500">
+                          {usState === "WA"
+                            ? "Washington RCW § 4.22.005 Pure Comparative Fault"
+                            : "Applied using this state’s comparative-fault category"}
+                        </span>
+                      </div>
+                      <span className="rounded bg-slate-100 px-3 py-1 text-sm font-bold text-slate-900">
+                        {plaintiffFaultPercent}%
+                      </span>
+                    </div>
                     <input
-                      id="treatment-months"
-                      type="number"
+                      id="plaintiff-fault"
+                      type="range"
                       min={0}
-                      max={120}
-                      step={1}
-                      className={`${inputClass} ${treatmentError ? "border-red-400" : ""}`}
-                      value={treatmentMonths}
+                      max={100}
+                      step={5}
+                      value={plaintiffFaultPercent}
                       onChange={(e) =>
-                        setTreatmentMonths(Math.max(0, Number(e.target.value) || 0))
+                        setPlaintiffFaultPercent(Number(e.target.value) || 0)
                       }
-                      aria-invalid={Boolean(treatmentError)}
+                      className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200"
+                      aria-invalid={Boolean(faultError)}
                     />
-                    {treatmentError ? (
-                      <p className={errorClass}>{treatmentError}</p>
-                    ) : null}
+                    {faultError ? (
+                      <p className={errorClass}>{faultError}</p>
+                    ) : (
+                      <div className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-[11px] text-slate-600">
+                        <strong>Legal note:</strong> Your share of fault typically reduces
+                        recoverable damages. WA pure comparative negligence allows recovery
+                        even above 50% fault (award reduced by your %).
+                      </div>
+                    )}
                   </div>
+
                   <div>
-                    <label htmlFor="care-type" className={labelClass}>
-                      Primary care type
+                    <label className={`${labelClass} mb-1.5`}>
+                      Police Report & Liability Assessment
                     </label>
-                    <select
-                      id="care-type"
-                      className={inputClass}
-                      value={careType}
-                      onChange={(e) => setCareType(e.target.value as CareType)}
-                    >
-                      {(Object.keys(CARE_LABELS) as CareType[]).map((k) => (
-                        <option key={k} value={k}>
-                          {CARE_LABELS[k]}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="liability" className={labelClass}>
-                      Liability clarity
-                    </label>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                      {liabilityButtons.map((btn) => {
+                        const active = liabilityClarity === btn.id;
+                        return (
+                          <button
+                            key={btn.id}
+                            type="button"
+                            onClick={() => {
+                              markTouched();
+                              setLiabilityClarity(btn.id);
+                            }}
+                            className={`rounded-lg px-3 py-2.5 text-xs font-semibold transition ${
+                              active
+                                ? "border-2 border-plg-crimson bg-plg-warmIvory text-plg-crimson"
+                                : "border border-slate-200 font-medium text-slate-600 hover:border-slate-400"
+                            }`}
+                            aria-pressed={active}
+                          >
+                            {btn.label}
+                          </button>
+                        );
+                      })}
+                    </div>
                     <select
                       id="liability"
-                      className={inputClass}
+                      className="sr-only"
                       value={liabilityClarity}
                       onChange={(e) =>
                         setLiabilityClarity(e.target.value as LiabilityClarity)
                       }
+                      tabIndex={-1}
+                      aria-hidden
                     >
                       {(Object.keys(LIABILITY_LABELS) as LiabilityClarity[]).map(
                         (k) => (
@@ -469,117 +804,115 @@ export function Calculator({
                       )}
                     </select>
                   </div>
-                  <div>
-                    <label htmlFor="treatment-gap" className={labelClass}>
-                      Treatment gap
-                    </label>
-                    <select
-                      id="treatment-gap"
-                      className={inputClass}
-                      value={treatmentGap}
-                      onChange={(e) =>
-                        setTreatmentGap(e.target.value as TreatmentGap)
-                      }
-                    >
-                      {(Object.keys(TREATMENT_GAP_LABELS) as TreatmentGap[]).map(
-                        (k) => (
-                          <option key={k} value={k}>
-                            {TREATMENT_GAP_LABELS[k]}
-                          </option>
-                        )
-                      )}
-                    </select>
-                    <p className={helpClass}>
-                      Gaps in care can reduce multiplier support (educational).
-                    </p>
-                  </div>
-                  <div>
-                    <label htmlFor="permanency" className={labelClass}>
-                      Permanency
-                    </label>
-                    <select
-                      id="permanency"
-                      className={inputClass}
-                      value={permanency}
-                      onChange={(e) =>
-                        setPermanency(e.target.value as Permanency)
-                      }
-                    >
-                      {(Object.keys(PERMANENCY_LABELS) as Permanency[]).map((k) => (
-                        <option key={k} value={k}>
-                          {PERMANENCY_LABELS[k]}
-                        </option>
-                      ))}
-                    </select>
-                    <p className={helpClass}>
-                      Documented lasting impairment can support higher multipliers.
-                    </p>
-                  </div>
-                  <div>
-                    <label htmlFor="us-state" className={labelClass}>
-                      State where crash occurred
-                    </label>
-                    <select
-                      id="us-state"
-                      className={inputClass}
-                      value={usState}
-                      onChange={(e) => setUsState(e.target.value)}
-                    >
-                      {US_STATES.map((s) => (
-                        <option key={s.code} value={s.code}>
-                          {s.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="plaintiff-fault" className={labelClass}>
-                      Your estimated fault %
-                    </label>
-                    <input
-                      id="plaintiff-fault"
-                      type="number"
-                      min={0}
-                      max={100}
-                      step={1}
-                      className={`${inputClass} ${faultError ? "border-red-400" : ""}`}
-                      value={plaintiffFaultPercent}
-                      onChange={(e) =>
-                        setPlaintiffFaultPercent(
-                          Math.max(0, Math.min(100, Number(e.target.value) || 0))
-                        )
-                      }
-                      aria-invalid={Boolean(faultError)}
-                    />
-                    {faultError ? (
-                      <p className={errorClass}>{faultError}</p>
-                    ) : (
-                      <p className={helpClass}>
-                        Applied using this state&apos;s comparative-fault category
-                        (reduces or bars recoverable dollars).
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </fieldset>
-            ) : null}
 
-            {step === 3 ? (
-              <fieldset onChange={markTouched}>
-                <legend className="legend-micro">
-                  Step 3 · Offer & policy limits (optional)
-                </legend>
-                <p className="mt-2 text-sm text-slate-600">
-                  Enter an insurer offer and known BI limits to compare against the
-                  post-fault mid estimate. Leave blank to skip.
-                </p>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div className="flex items-center justify-between border-t border-slate-100 pt-4">
+                    <button
+                      type="button"
+                      onClick={goBack}
+                      className="flex items-center gap-1.5 text-xs font-bold text-slate-600 transition hover:text-slate-900"
+                    >
+                      <ChevronLeftIcon size={14} className="shrink-0" /> Back to Step 1
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goNext}
+                      className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-plg-crimson"
+                    >
+                      Continue to Insurance Limits
+                      <ChevronRightIcon size={14} className="shrink-0" />
+                    </button>
+                  </div>
+                </fieldset>
+              ) : null}
+
+              {step === 3 ? (
+                <fieldset className="space-y-6" onChange={markTouched}>
+                  <div className="border-b border-slate-100 pb-4">
+                    <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+                      Step 3 of 3
+                    </span>
+                    <h3 className="font-serif mt-1 text-2xl font-bold text-slate-900">
+                      Insurance Policy Limits & Offer Reality Check
+                    </h3>
+                    <p className="mt-1 text-xs text-slate-500">
+                      Settlements are frequently capped by applicable policy maximums.
+                      Enter known BI limits and any insurer offer.
+                    </p>
+                  </div>
+
                   <div>
-                    <label htmlFor="offer" className={labelClass}>
-                      Offer received
+                    <label htmlFor="policy-preset" className={`${labelClass} mb-1.5`}>
+                      At-Fault Driver&apos;s Bodily Injury (BI) Coverage
                     </label>
-                    <div className="relative mt-1.5">
-                      <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-slate-400">
+                    <select
+                      id="policy-preset"
+                      className={inputClass}
+                      value={
+                        policyLimitPerPerson === ""
+                          ? "unknown"
+                          : String(policyLimitPerPerson)
+                      }
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        if (v === "unknown") {
+                          setPolicyLimitPerPerson("");
+                        } else {
+                          setPolicyLimitPerPerson(Number(v));
+                        }
+                      }}
+                    >
+                      <option value="25000">
+                        Statutory minimum / $25,000 per person
+                      </option>
+                      <option value="50000">$50,000 Policy Limit</option>
+                      <option value="100000">
+                        $100,000 Policy Limit (Typical middle-tier)
+                      </option>
+                      <option value="250000">$250,000 Policy Limit</option>
+                      <option value="500000">$500,000 Policy Limit</option>
+                      <option value="1000000">
+                        $1,000,000+ Commercial / Umbrella
+                      </option>
+                      <option value="unknown">Unknown / Multiple Coverage Layers</option>
+                    </select>
+                    <p className={helpClass}>
+                      {usState === "WA" ? (
+                        <>
+                          <strong>Washington Minimum:</strong> WA requires $25,000 bodily
+                          injury liability per person. If your claim exceeds this, ask about
+                          UIM and umbrella policies.
+                        </>
+                      ) : (
+                        "Leave unknown if you do not know limits yet — the range still updates."
+                      )}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <NumberField
+                      id="policy-per-person"
+                      label="BI Limit Per Person ($)"
+                      help="Caps recoverable range when set"
+                      value={policyLimitPerPerson}
+                      onChange={setPolicyLimitPerPerson}
+                      optional
+                    />
+                    <NumberField
+                      id="policy-per-accident"
+                      label="BI Limit Per Accident ($)"
+                      help="Shown as a note; not used to cap the estimate"
+                      value={policyLimitPerAccident}
+                      onChange={setPolicyLimitPerAccident}
+                      optional
+                    />
+                  </div>
+
+                  <div className="rounded-xl border border-plg-borderMuted bg-plg-warmIvory/60 p-4">
+                    <label htmlFor="offer" className={`${labelClass} mb-1.5`}>
+                      Has the insurance adjuster made an initial settlement offer?
+                    </label>
+                    <div className="relative rounded-lg shadow-sm sm:w-2/3">
+                      <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 font-semibold text-slate-400">
                         $
                       </span>
                       <input
@@ -587,9 +920,9 @@ export function Calculator({
                         type="number"
                         inputMode="decimal"
                         min={0}
-                        step={100}
-                        placeholder="Leave blank if none"
-                        className={`${inputClass} !mt-0 pl-7 ${!offerValid ? "border-red-400" : ""}`}
+                        step={500}
+                        placeholder="Optional (e.g. 18000)"
+                        className={`${inputClass} !mt-0 pl-8 ${!offerValid ? "border-red-400" : ""}`}
                         value={offerReceived}
                         onChange={(e) => setOfferReceived(e.target.value)}
                         aria-invalid={!offerValid}
@@ -600,270 +933,211 @@ export function Calculator({
                         Enter a valid offer amount (0 or more).
                       </p>
                     ) : (
-                      <p className={helpClass}>
-                        Compared to post-fault Mid in the Offer Reality Check.
+                      <p className={`${helpClass} mt-1.5`}>
+                        If provided, we compare this offer against your educational mid
+                        estimate.
                       </p>
                     )}
                   </div>
-                  <NumberField
-                    id="policy-per-person"
-                    label="BI limit per person"
-                    help="Caps recoverable range when set"
-                    value={policyLimitPerPerson}
-                    onChange={setPolicyLimitPerPerson}
-                    optional
-                  />
-                  <NumberField
-                    id="policy-per-accident"
-                    label="BI limit per accident"
-                    help="Shown as a note; not used to cap the estimate"
-                    value={policyLimitPerAccident}
-                    onChange={setPolicyLimitPerAccident}
-                    optional
-                  />
-                </div>
-              </fieldset>
-            ) : null}
 
-            <div className="flex flex-wrap items-center gap-3 border-t border-slate-100 pt-4">
-              {step > 1 ? (
-                <button
-                  type="button"
-                  onClick={goBack}
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50"
-                >
-                  Back
-                </button>
+                  <div className="flex items-center justify-between border-t border-slate-100 pt-4">
+                    <button
+                      type="button"
+                      onClick={goBack}
+                      className="flex items-center gap-1.5 text-xs font-bold text-slate-600 transition hover:text-slate-900"
+                    >
+                      <ChevronLeftIcon size={14} className="shrink-0" /> Back to Step 2
+                    </button>
+                    <a
+                      href="#results"
+                      onClick={markTouched}
+                      className="flex items-center gap-2 rounded-lg border border-slate-300 bg-plg-warmIvory px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 transition hover:bg-slate-200 lg:hidden"
+                    >
+                      View Live Estimate
+                    </a>
+                  </div>
+                </fieldset>
               ) : null}
-              {step < 3 ? (
-                <button
-                  type="button"
-                  onClick={goNext}
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-soft hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                  style={{ backgroundColor: "var(--brand-primary)" }}
-                >
-                  Continue
-                </button>
-              ) : (
-                <a
-                  href="#results"
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-soft hover:opacity-95 lg:hidden"
-                  style={{ backgroundColor: "var(--brand-primary)" }}
-                  onClick={markTouched}
-                >
-                  View live estimate
-                </a>
-              )}
-              <p className="text-xs text-slate-500">
-                Estimate updates instantly as you type.
-              </p>
             </div>
+
           </div>
 
-          {/* Quiet step guidance — caption weight only; fills left column without a competing card */}
-          <aside
-            className="rounded-xl border border-[color-mix(in_srgb,var(--brand-primary)_8%,transparent)] bg-[var(--page-ground)]/80 px-4 py-3"
-            aria-label="While you estimate"
-          >
-            <p className="legend-micro">While you estimate</p>
-            <ul className="mt-2.5 divide-y divide-slate-200/80">
-              {(step === 1
-                ? [
-                    "Specials (medical + wages + OOP) drive the multiplier base.",
-                    "Property damage is added after multipliers — not multiplied.",
-                    "Demand vs settlement style only changes how wages enter the math.",
-                  ]
-                : step === 2
-                  ? [
-                      "Severity and care type set the starting multiplier band.",
-                      "Your fault % reduces recoverable dollars by state rules.",
-                      "Permanency and treatment gaps quietly shift the levers.",
-                    ]
-                  : [
-                      "Offer Reality Check compares an insurer offer to Mid.",
-                      "Per-person BI limits can cap what is realistically collectible.",
-                      "Leave blanks if you do not know limits yet — range still updates.",
-                    ]
-              ).map((line) => (
-                <li key={line} className="py-2 text-sm leading-snug text-slate-500 first:pt-0 last:pb-0">
-                  {line}
-                </li>
-              ))}
-            </ul>
-            {step === 2 ? (
-              <p className="mt-2 border-t border-slate-200/80 pt-2 text-xs tabular-nums text-slate-500">
-                Entered so far: medical{" "}
-                {formatCurrency(medicalBillsPast + medicalBillsFuture)} · wages{" "}
-                {formatCurrency(lostWages)}
-              </p>
-            ) : null}
-            {step === 3 && hasEconomic ? (
-              <p className="mt-2 border-t border-slate-200/80 pt-2 text-xs tabular-nums text-slate-500">
-                Current Mid recoverable: {formatCurrency(result.recoverableMid)}
-              </p>
-            ) : null}
-          </aside>
-          </div>
-
-          <div className="lg:col-span-2">
-            <div
-              id="results"
-              className="results-gold-edge sticky top-24 scroll-mt-24 space-y-4 rounded-2xl border border-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] bg-white p-5 shadow-card sm:p-6"
-              aria-live="polite"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-display text-lg font-semibold text-[var(--brand-primary)]">
-                  Your live range
-                </h3>
-                <span className="rounded-full bg-[var(--page-ground)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--brand-primary)]">
-                  Live
-                </span>
-              </div>
-
-              <SignatureMoment placement="result" className="min-h-0" />
-
-              {!hasEconomic ? (
-                <p className="text-sm text-slate-500">
-                  Enter at least one economic damage amount to see a low / mid / high range.
-                </p>
-              ) : (
-                <>
-                  <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
-                    {showPreFault
-                      ? "Recoverable after comparative fault"
-                      : "Estimated range"}
-                  </p>
-                  <dl className="grid grid-cols-3 items-end gap-2 text-center">
-                    <div className="rounded-xl bg-[var(--page-ground)] p-3">
-                      <dt className="text-[10px] font-medium uppercase tracking-wide text-slate-500">
-                        Low
-                      </dt>
-                      <dd className="mt-1 text-sm font-semibold tabular-nums text-slate-700 sm:text-base">
-                        <CountUpCurrency value={result.recoverableLow} />
-                      </dd>
-                    </div>
-                    <div
-                      className={`relative rounded-xl bg-[var(--brand-primary)] px-2 py-4 text-white shadow-soft sm:px-3 ${
-                        midPop ? "motion-safe:animate-mid-pop" : ""
-                      }`}
-                    >
-                      <div
-                        className="pointer-events-none absolute inset-x-3 top-0 h-0.5 rounded-full"
-                        style={{ backgroundColor: "var(--brand-secondary)" }}
-                        aria-hidden
-                      />
-                      <dt className="text-[10px] font-medium uppercase tracking-wide text-white/75">
-                        Mid
-                      </dt>
-                      <dd className="mt-1 text-xl font-bold tabular-nums sm:text-2xl">
-                        <CountUpCurrency value={result.recoverableMid} />
-                      </dd>
-                    </div>
-                    <div className="rounded-xl bg-[var(--page-ground)] p-3">
-                      <dt className="text-[10px] font-medium uppercase tracking-wide text-slate-500">
-                        High
-                      </dt>
-                      <dd className="mt-1 text-sm font-semibold tabular-nums text-slate-700 sm:text-base">
-                        <CountUpCurrency value={result.recoverableHigh} />
-                      </dd>
-                    </div>
-                  </dl>
-
-                  <div className="space-y-2.5">
-                    {result.recoveryBarred ? (
-                      <p className="text-xs leading-snug text-amber-900" role="status">
-                        <span className="font-semibold">Recovery may be barred.</span> At{" "}
-                        {result.faultPercentApplied}% plaintiff fault under {usState}
-                        &apos;s rules, recoverable dollars are shown as $0.
-                      </p>
-                    ) : null}
-
-                    {showPreFault ? (
-                      <p className="text-xs tabular-nums leading-snug text-slate-500">
-                        Pre-fault: Low {formatCurrency(result.low)} · Mid{" "}
-                        {formatCurrency(result.mid)} · High {formatCurrency(result.high)}
-                        {result.faultPercentApplied > 0
-                          ? ` · Fault ${result.faultPercentApplied}%`
-                          : ""}
-                      </p>
-                    ) : null}
-
-                    {result.cappedMid != null ? (
-                      <p className="text-xs tabular-nums leading-snug text-slate-500">
-                        Policy-capped: Low {formatCurrency(result.cappedLow ?? 0)} · Mid{" "}
-                        {formatCurrency(result.cappedMid)} · High{" "}
-                        {formatCurrency(result.cappedHigh ?? 0)}
-                        {result.policyLimitPerPerson != null
-                          ? ` · Limit ${formatCurrency(result.policyLimitPerPerson)}`
-                          : ""}
-                        {result.policyLimitPerAccident != null
-                          ? ` · Per-accident noted ${formatCurrency(result.policyLimitPerAccident)}`
-                          : ""}
-                      </p>
-                    ) : null}
-
-                    {result.policyLimitsMayBind ? (
-                      <p className="text-xs leading-snug text-[var(--brand-primary)]" role="status">
-                        <span className="font-semibold">Policy limits may bind.</span>{" "}
-                        Post-fault Mid ({formatCurrency(result.recoverableMid)}) exceeds
-                        the per-person BI limit (
-                        {formatCurrency(result.policyLimitPerPerson ?? 0)}).
-                      </p>
-                    ) : null}
+          {/* RIGHT results */}
+          <div className="lg:col-span-5">
+            <div className="sticky top-28 space-y-5">
+              <div
+                id="results"
+                className="scroll-mt-28 overflow-hidden rounded-2xl border-2 border-slate-900 bg-white shadow-plg-panel"
+                aria-live="polite"
+              >
+                <div className="flex items-center justify-between border-b border-slate-800 bg-plg-navy px-6 py-4 text-white">
+                  <div>
+                    <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-plg-gold">
+                      Confidential Analysis
+                    </span>
+                    <h3 className="font-serif text-lg font-bold">
+                      Estimated Settlement Range
+                    </h3>
                   </div>
+                </div>
 
-                  {offerCheck ? (
-                    <OfferGauge check={offerCheck} />
-                  ) : (
-                    <p className="border-t border-dashed border-slate-200 pt-2.5 text-xs text-slate-500">
-                      Enter an offer in step 3 to see the Offer Reality Check.
+                <div className="bg-gradient-to-b from-white to-plg-cream/50 p-6">
+                  <SignatureMoment placement="result" className="min-h-0" />
+
+                  {!hasEconomic ? (
+                    <p className="text-sm text-slate-500">
+                      Enter at least one economic damage amount to see a low / mid / high
+                      range.
                     </p>
+                  ) : (
+                    <>
+                      <p className="mb-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                        {showPreFault
+                          ? "Recoverable after comparative fault"
+                          : "Estimated range"}
+                      </p>
+
+                      <div className="mb-4 grid grid-cols-3 items-end gap-2.5">
+                        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:border-slate-300">
+                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                            Conservative
+                          </span>
+                          <span className="block text-base font-extrabold text-slate-700 sm:text-lg">
+                            <CountUpCurrency value={result.recoverableLow} />
+                          </span>
+                          <span className="mt-0.5 block text-[10px] text-slate-400">
+                            {result.multiplierLow}× Multiplier
+                          </span>
+                        </div>
+
+                        <div
+                          className={`rounded-xl border border-slate-700 bg-slate-900 p-3.5 text-center text-white shadow-md ring-2 ring-plg-crimson/40 ${
+                            midPop ? "motion-safe:animate-mid-pop" : ""
+                          }`}
+                        >
+                          <span className="mb-1 block text-[10px] font-medium uppercase tracking-wider text-plg-gold">
+                            Estimated Mid
+                          </span>
+                          <span className="block text-xl font-black text-white sm:text-2xl">
+                            <CountUpCurrency value={result.recoverableMid} />
+                          </span>
+                          <span className="mt-0.5 block text-[10px] text-slate-300">
+                            {result.multiplierMid}× Multiplier
+                          </span>
+                        </div>
+
+                        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:border-slate-300">
+                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                            Trial / Strong
+                          </span>
+                          <span className="block text-base font-extrabold text-slate-700 sm:text-lg">
+                            <CountUpCurrency value={result.recoverableHigh} />
+                          </span>
+                          <span className="mt-0.5 block text-[10px] text-slate-400">
+                            {result.multiplierHigh}× Multiplier
+                          </span>
+                        </div>
+                      </div>
+
+                      {result.policyLimitsMayBind ? (
+                        <div
+                          className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"
+                          role="status"
+                        >
+                          <strong>Policy Limit Cap:</strong> Value exceeds at-fault limit (
+                          {formatCurrency(result.policyLimitPerPerson ?? 0)}). Full recovery
+                          may require UIM or excess coverage.
+                        </div>
+                      ) : null}
+
+                      {result.recoveryBarred ? (
+                        <p className="mb-3 text-xs leading-snug text-amber-900" role="status">
+                          <span className="font-semibold">Recovery may be barred.</span> At{" "}
+                          {result.faultPercentApplied}% plaintiff fault under {usState}
+                          &apos;s rules, recoverable dollars are shown as $0.
+                        </p>
+                      ) : null}
+
+                      {showPreFault ? (
+                        <p className="mb-3 text-xs tabular-nums leading-snug text-slate-500">
+                          Pre-fault: Low {formatCurrency(result.low)} · Mid{" "}
+                          {formatCurrency(result.mid)} · High {formatCurrency(result.high)}
+                          {result.faultPercentApplied > 0
+                            ? ` · Fault ${result.faultPercentApplied}%`
+                            : ""}
+                        </p>
+                      ) : null}
+
+                      {result.cappedMid != null ? (
+                        <p className="mb-3 text-xs tabular-nums leading-snug text-slate-500">
+                          Policy-capped: Low {formatCurrency(result.cappedLow ?? 0)} · Mid{" "}
+                          {formatCurrency(result.cappedMid)} · High{" "}
+                          {formatCurrency(result.cappedHigh ?? 0)}
+                        </p>
+                      ) : null}
+
+                      {offerCheck ? (
+                        <div className="mb-4">
+                          <OfferGauge check={offerCheck} />
+                        </div>
+                      ) : null}
+
+                      <div className="mb-5 overflow-hidden rounded-xl border border-slate-200 bg-white">
+                        <details>
+                          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-2.5 text-left text-xs font-bold text-slate-800 transition hover:bg-slate-50 marker:content-none [&::-webkit-details-marker]:hidden">
+                            <span className="flex items-center gap-1.5">
+                              <span className="text-plg-crimson" aria-hidden>
+                                ⌘
+                              </span>
+                              Show Line-by-Line Math Breakdown
+                            </span>
+                            <span className="text-xs text-slate-400" aria-hidden>
+                              ▾
+                            </span>
+                          </summary>
+                          <div className="border-t border-slate-100 bg-slate-50/50 px-2 pb-2 pt-2">
+                            <BreakdownPanel result={result} usState={usState} />
+                          </div>
+                        </details>
+                      </div>
+
+                      <div className="space-y-2.5 print:hidden">
+                        <a
+                          href={client.ctaUrl}
+                          className="flex w-full items-center justify-center gap-2 rounded-xl bg-plg-crimson px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:bg-plg-crimsonDark hover:shadow-lg"
+                        >
+                          {client.ctaText} — Review With An Attorney
+                        </a>
+                        <div className="grid grid-cols-2 gap-2">
+                          <a
+                            href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
+                            className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-3 py-2.5 text-xs font-bold tracking-wide text-white transition hover:bg-slate-800"
+                          >
+                            <PhoneIcon size={14} className="text-plg-gold" />
+                            {client.phone}
+                          </a>
+                          <PrintSummary
+                            compact
+                            result={result}
+                            offerCheck={offerCheck}
+                            firmName={client.firmName}
+                            usState={usState}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="mt-4 border-t border-slate-200 pt-4 text-center">
+                        <p className="text-[11px] leading-normal text-slate-500">
+                          <strong>No upfront attorney fees.</strong> For qualifying
+                          contingency cases, you pay nothing unless {client.shortName}{" "}
+                          settles or wins your case. Educational estimate only — not a
+                          guarantee or legal advice.
+                        </p>
+                      </div>
+                    </>
                   )}
-
-                  <details className="rounded-xl border border-slate-200/80 bg-[var(--page-ground)]/40">
-                    <summary className="cursor-pointer list-none px-3 py-2.5 text-xs font-semibold text-slate-600 marker:content-none [&::-webkit-details-marker]:hidden">
-                      <span className="flex items-center justify-between gap-2">
-                        <span>Show math / levers</span>
-                        <span className="text-slate-400" aria-hidden>
-                          +
-                        </span>
-                      </span>
-                    </summary>
-                    <div className="border-t border-slate-200/80 px-2 pb-2 pt-2">
-                      <BreakdownPanel result={result} usState={usState} />
-                    </div>
-                  </details>
-
-                  <PrintSummary
-                    result={result}
-                    offerCheck={offerCheck}
-                    firmName={client.firmName}
-                    usState={usState}
-                  />
-
-                  <div className="flex flex-col gap-2 print:hidden sm:flex-row">
-                    <a
-                      href={client.ctaUrl}
-                      className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-white"
-                      style={{ backgroundColor: "var(--brand-secondary)" }}
-                    >
-                      {client.ctaText}
-                    </a>
-                    <a
-                      href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
-                      className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-primary)]"
-                    >
-                      Call {client.phone}
-                    </a>
-                  </div>
-
-                  <p className="text-xs leading-relaxed text-slate-500">
-                    Educational estimate only — not a guarantee, valuation opinion, or
-                    legal advice. Policy limits, venue, prior injuries, and proof quality
-                    can move outcomes substantially.
-                  </p>
-                </>
-              )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

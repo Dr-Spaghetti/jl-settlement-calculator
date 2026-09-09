@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Washington Car Accident Settlement Calculator | Premier Law Group PLLC</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            plg: {
+              crimson: '#8C1D24',
+              crimsonDark: '#6F141A',
+              crimsonLight: '#AB232C',
+              gold: '#C5A880',
+              goldLight: '#E8DEC8',
+              navy: '#0F172A',
+              charcoal: '#1E293B',
+              slate: '#334155',
+              cream: '#F9F8F6',
+              warmIvory: '#F4F1EA',
+              borderMuted: '#E5DFD5'
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            cinzel: ['"Cinzel"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          },
+          boxShadow: {
+            'plg-card': '0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(140, 29, 36, 0.04)',
+            'plg-glow': '0 0 25px rgba(140, 29, 36, 0.15)',
+            'plg-panel': '0 20px 40px -10px rgba(15, 23, 42, 0.12)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #F4F1EA; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #8C1D24; }
+
+    /* Custom range slider thumb styling */
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #8C1D24;
+      border: 3px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    input[type=range]::-moz-range-thumb {
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #8C1D24;
+      border: 3px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+
+    /* Print styles for client summary report */
+    @media print {
+      body { background: white !important; color: black !important; }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      .card-shadow { box-shadow: none !important; border: 1px solid #ccc !important; }
+      header, footer, #calculator-steps, .floating-cta { display: none !important; }
+      #print-report { display: block !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-plg-cream text-plg-charcoal font-sans antialiased selection:bg-plg-crimson selection:text-white">
+
+  <div class="bg-plg-navy text-white text-xs border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div class="flex items-center space-x-2 text-slate-300">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-plg-crimson text-white tracking-wider uppercase">
+          Washington State
+        </span>
+        <span class="text-slate-300">Serving Seattle • Bellevue • Federal Way • Renton</span>
+      </div>
+      <div class="flex items-center space-x-6 text-slate-300 text-xs">
+        <span class="hidden md:inline"><i class="fa-solid fa-scale-balanced text-plg-gold mr-1.5"></i>RCW § 4.22.005 Pure Comparative Negligence</span>
+        <a href="tel:2062851743" class="text-white hover:text-plg-gold font-semibold flex items-center transition">
+          <i class="fa-solid fa-phone-volume text-plg-crimson mr-1.5"></i>(206) 285-1743
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <header class="bg-white/95 backdrop-blur sticky top-0 z-40 border-b border-plg-borderMuted shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-24">
+        
+        <!-- Authentic Premier Law Group Monogram Logo Component -->
+        <a href="#top" class="flex items-center gap-4 group">
+          <div class="flex items-center justify-center space-x-1.5 py-1 px-2 border-r border-slate-200 pr-5">
+            <!-- Custom P | L | G Monogram with Signature Crimson Vertical Dividers -->
+            <span class="font-cinzel text-3xl font-bold tracking-tight text-slate-900 group-hover:text-plg-crimson transition">P</span>
+            <span class="w-[2px] h-8 bg-plg-crimson inline-block"></span>
+            <span class="font-cinzel text-3xl font-bold tracking-tight text-slate-900 group-hover:text-plg-crimson transition">L</span>
+            <span class="w-[2px] h-8 bg-plg-crimson inline-block"></span>
+            <span class="font-cinzel text-3xl font-bold tracking-tight text-slate-900 group-hover:text-plg-crimson transition">G</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-cinzel text-lg sm:text-xl font-bold tracking-[0.16em] text-slate-900 uppercase">
+              Premier Law Group
+            </span>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold tracking-[0.25em] text-slate-500 uppercase">PLLC</span>
+              <span class="text-[10px] text-slate-400">•</span>
+              <span class="text-[11px] font-medium text-plg-crimson italic">Big Enough to Win. Small Enough to Care.</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Header Navigation & Action -->
+        <div class="flex items-center space-x-4 sm:space-x-6">
+          <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-slate-700">
+            <a href="#calculator" class="hover:text-plg-crimson transition">Calculator</a>
+            <a href="#how-it-works" class="hover:text-plg-crimson transition">The Formula</a>
+            <a href="#settlement-ranges" class="hover:text-plg-crimson transition">WA Ranges</a>
+            <a href="#faq" class="hover:text-plg-crimson transition">FAQ</a>
+          </nav>
+          
+          <button onclick="openModal('consultModal')" class="bg-plg-crimson hover:bg-plg-crimsonDark text-white px-5 py-2.5 rounded-lg text-sm font-semibold tracking-wide shadow-sm hover:shadow transition flex items-center gap-2">
+            <span>Free Attorney Consultation</span>
+            <i class="fa-solid fa-arrow-right text-xs opacity-80"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <!-- Disclaimer pill strip -->
+    <div class="bg-plg-warmIvory/80 border-t border-plg-borderMuted py-1 px-4 text-center">
+      <p class="text-[11px] text-slate-600">
+        <strong class="text-plg-crimson font-semibold">Educational Calculator:</strong> Provides simulated ranges based on WA insurance carrier settlement formulas. No attorney-client relationship is created.
+      </p>
+    </div>
+  </header>
+
+  <section class="relative overflow-hidden bg-gradient-to-b from-white via-plg-cream to-plg-warmIvory/50 pt-12 pb-16 border-b border-plg-borderMuted">
+    <div class="absolute inset-0 bg-[radial-gradient(#8C1D24_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03]"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center">
+        
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-plg-borderMuted shadow-sm text-xs font-semibold text-slate-700 mb-6">
+          <span class="w-2 h-2 rounded-full bg-plg-crimson animate-pulse"></span>
+          <span>Washington State Personal Injury Evaluation Framework (2026 Updated)</span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-slate-900 font-bold tracking-tight leading-[1.15] mb-6">
+          Washington Car Accident <br class="hidden sm:inline" />
+          <span class="text-plg-crimson italic font-serif">Settlement Calculator</span>
+        </h1>
+        
+        <p class="text-lg sm:text-xl text-slate-600 font-normal leading-relaxed mb-8 max-w-2xl mx-auto">
+          Built on real Washington State insurance valuation models, Puget Sound jury analytics, and Washington's pure comparative fault laws.
+        </p>
+
+        <!-- Trust Badges Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto pt-4 border-t border-slate-200/80">
+          <div class="flex items-center justify-center gap-2.5 p-2 text-left">
+            <i class="fa-solid fa-shield-halved text-plg-crimson text-xl"></i>
+            <div>
+              <div class="text-xs font-bold text-slate-900 uppercase tracking-wider">100% Private</div>
+              <div class="text-[11px] text-slate-500">Zero data stored on servers</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-2.5 p-2 text-left">
+            <i class="fa-solid fa-gavel text-plg-crimson text-xl"></i>
+            <div>
+              <div class="text-xs font-bold text-slate-900 uppercase tracking-wider">WA Specific</div>
+              <div class="text-[11px] text-slate-500">RCW 4.22.005 comparative rules</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-2.5 p-2 text-left">
+            <i class="fa-solid fa-hand-holding-dollar text-plg-crimson text-xl"></i>
+            <div>
+              <div class="text-xs font-bold text-slate-900 uppercase tracking-wider">Zero Fee Unless We Win</div>
+              <div class="text-[11px] text-slate-500">Contingency legal fee model</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-2.5 p-2 text-left">
+            <i class="fa-solid fa-award text-plg-crimson text-xl"></i>
+            <div>
+              <div class="text-xs font-bold text-slate-900 uppercase tracking-wider">Avvo 10.0 Rated</div>
+              <div class="text-[11px] text-slate-500">Premier trial attorneys</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <main id="calculator" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!-- Quick Scenario Presets for instant helpful benchmarks -->
+    <div class="mb-8 p-4 sm:p-5 bg-white rounded-xl border border-plg-borderMuted shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-plg-crimson flex items-center gap-1.5">
+            <i class="fa-solid fa-bolt"></i> Quick Washington Accident Presets
+          </span>
+          <p class="text-xs text-slate-500 mt-0.5">Load typical sample figures to see how multiplier dynamics change by case severity:</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="loadPreset('minor')" class="text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-200 hover:border-plg-crimson hover:bg-plg-warmIvory transition text-slate-700">
+            Minor Whiplash ($16.5k bills)
+          </button>
+          <button onclick="loadPreset('moderate')" class="text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-200 hover:border-plg-crimson hover:bg-plg-warmIvory transition text-slate-700">
+            Moderate Fracture / PT ($48k bills)
+          </button>
+          <button onclick="loadPreset('severe')" class="text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-200 hover:border-plg-crimson hover:bg-plg-warmIvory transition text-slate-700">
+            Severe Surgery / Disc ($145k bills)
+          </button>
+          <button onclick="resetCalculator()" class="text-xs font-medium px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-700 transition" title="Clear all fields">
+            <i class="fa-solid fa-rotate-left mr-1"></i>Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- LEFT COLUMN: Step Wizard Form (7 Columns) -->
+      <div class="lg:col-span-7 space-y-6">
+        
+        <!-- Step Indicator Header Tabs -->
+        <div class="bg-white rounded-xl border border-plg-borderMuted p-2 shadow-sm flex items-center justify-between">
+          <button id="tab-btn-1" onclick="goToStep(1)" class="flex-1 py-3 px-2 sm:px-4 rounded-lg flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold transition bg-plg-navy text-white shadow-sm">
+            <span class="w-5 h-5 rounded-full bg-white/20 text-white flex items-center justify-center text-xs">1</span>
+            <span>Economic Losses</span>
+          </button>
+          <button id="tab-btn-2" onclick="goToStep(2)" class="flex-1 py-3 px-2 sm:px-4 rounded-lg flex items-center justify-center gap-2 text-xs sm:text-sm font-medium transition text-slate-600 hover:bg-plg-warmIvory">
+            <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-xs">2</span>
+            <span>Injury & Fault</span>
+          </button>
+          <button id="tab-btn-3" onclick="goToStep(3)" class="flex-1 py-3 px-2 sm:px-4 rounded-lg flex items-center justify-center gap-2 text-xs sm:text-sm font-medium transition text-slate-600 hover:bg-plg-warmIvory">
+            <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-xs">3</span>
+            <span>Policy Limits</span>
+          </button>
+        </div>
+
+        <!-- FORM CONTAINER -->
+        <div class="bg-white rounded-2xl border border-plg-borderMuted shadow-plg-card p-6 sm:p-8">
+          
+          <!-- =================== STEP 1: ECONOMIC LOSSES =================== -->
+          <div id="step-content-1" class="space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-plg-crimson">Step 1 of 3</span>
+              <h2 class="font-serif text-2xl font-bold text-slate-900 mt-1">Direct Economic Damages (Special Damages)</h2>
+              <p class="text-xs text-slate-500 mt-1">Enter your tangible, out-of-pocket financial expenses resulting from the collision.</p>
+            </div>
+
+            <!-- Medical Expenses Subgrid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Past Medical Bills ($) <span class="text-plg-crimson">*</span>
+                </label>
+                <div class="relative rounded-lg shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-semibold">$</div>
+                  <input type="number" id="input-med-past" value="12000" min="0" step="100" oninput="calculateSettlement()" 
+                    class="block w-full rounded-lg border border-slate-300 pl-8 pr-3 py-2.5 text-slate-900 font-semibold focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson transition text-sm">
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">ER, ambulance, imaging, therapy, specialists.</p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Estimated Future Care ($)
+                </label>
+                <div class="relative rounded-lg shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-semibold">$</div>
+                  <input type="number" id="input-med-future" value="3000" min="0" step="100" oninput="calculateSettlement()" 
+                    class="block w-full rounded-lg border border-slate-300 pl-8 pr-3 py-2.5 text-slate-900 font-semibold focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson transition text-sm">
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Follow-up therapy, injections, future surgery.</p>
+              </div>
+            </div>
+
+            <!-- Wage & OOP Subgrid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Lost Wages / Lost Income ($)
+                </label>
+                <div class="relative rounded-lg shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-semibold">$</div>
+                  <input type="number" id="input-wages" value="4500" min="0" step="100" oninput="calculateSettlement()" 
+                    class="block w-full rounded-lg border border-slate-300 pl-8 pr-3 py-2.5 text-slate-900 font-semibold focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson transition text-sm">
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Missed workdays, sick leave used, PTO lost.</p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Other Out-of-Pocket Costs ($)
+                </label>
+                <div class="relative rounded-lg shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-semibold">$</div>
+                  <input type="number" id="input-oop" value="800" min="0" step="50" oninput="calculateSettlement()" 
+                    class="block w-full rounded-lg border border-slate-300 pl-8 pr-3 py-2.5 text-slate-900 font-semibold focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson transition text-sm">
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Prescriptions, braces, travel to doctor visits.</p>
+              </div>
+            </div>
+
+            <!-- Property Damage -->
+            <div class="pt-2 border-t border-slate-100">
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                Property Damage / Vehicle Repair or Total Loss ($)
+              </label>
+              <div class="relative rounded-lg shadow-sm sm:w-2/3">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-semibold">$</div>
+                <input type="number" id="input-property" value="6500" min="0" step="100" oninput="calculateSettlement()" 
+                  class="block w-full rounded-lg border border-slate-300 pl-8 pr-3 py-2.5 text-slate-900 font-semibold focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson transition text-sm">
+              </div>
+              <p class="text-[11px] text-slate-500 mt-1.5">
+                <i class="fa-solid fa-circle-info text-plg-crimson mr-1"></i>
+                <strong>Legal distinction:</strong> Property damage is reimbursed 1:1 and is <em>not</em> multiplied by pain & suffering multipliers.
+              </p>
+            </div>
+
+            <!-- Formula Style Selection (Demand-Style vs Adjuster-Style) -->
+            <div class="pt-3 border-t border-slate-100">
+              <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
+                Settlement Formula Methodology
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label class="cursor-pointer flex items-start p-3.5 rounded-xl border-2 transition relative bg-plg-warmIvory/40 hover:bg-plg-warmIvory border-plg-crimson" id="label-formula-demand">
+                  <input type="radio" name="formula_style" value="demand" checked onchange="setFormulaStyle('demand')" class="mt-0.5 text-plg-crimson focus:ring-plg-crimson">
+                  <div class="ml-3">
+                    <span class="block text-xs font-bold text-slate-900">Demand Method (Plaintiff Firm)</span>
+                    <span class="block text-[11px] text-slate-600 mt-0.5">Multiplies (Medicals + Lost Wages + OOP). Preferred by trial advocates.</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer flex items-start p-3.5 rounded-xl border-2 transition relative bg-white hover:bg-plg-warmIvory border-slate-200" id="label-formula-adjuster">
+                  <input type="radio" name="formula_style" value="adjuster" onchange="setFormulaStyle('adjuster')" class="mt-0.5 text-plg-crimson focus:ring-plg-crimson">
+                  <div class="ml-3">
+                    <span class="block text-xs font-bold text-slate-900">Adjuster Method (Insurance Software)</span>
+                    <span class="block text-[11px] text-slate-600 mt-0.5">Multiplies only Medicals; adds lost wages & other expenses flat afterwards.</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-4">
+              <span class="text-xs text-slate-500 italic">Step 1 figures update the live range immediately.</span>
+              <button type="button" onclick="goToStep(2)" class="bg-slate-900 hover:bg-plg-crimson text-white px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition flex items-center gap-2">
+                <span>Continue to Injury Severity</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- =================== STEP 2: INJURY & LIABILITY =================== -->
+          <div id="step-content-2" class="space-y-6 hidden">
+            <div class="border-b border-slate-100 pb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-plg-crimson">Step 2 of 3</span>
+              <h2 class="font-serif text-2xl font-bold text-slate-900 mt-1">Injury Severity & WA Comparative Fault</h2>
+              <p class="text-xs text-slate-500 mt-1">General damages (pain and suffering) are calculated based on injury classification and degree of responsibility.</p>
+            </div>
+
+            <!-- Injury Severity Dropdown -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                Injury Category & Treatment Complexity
+              </label>
+              <select id="select-severity" onchange="onSeverityChange()" 
+                class="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson bg-white">
+                <option value="soft_tissue">Minor Soft-Tissue (Whiplash, sprains, 4-8 weeks care) • 1.5x - 2.5x</option>
+                <option value="moderate" selected>Moderate Injury (Hairline fractures, disc bulge, extensive PT/injections) • 2.0x - 3.5x</option>
+                <option value="severe">Severe Injury (Surgical intervention, displaced fractures, long disability) • 3.0x - 4.5x</option>
+                <option value="catastrophic">Catastrophic / Permanent Impairment (TBI, paralysis, permanent loss) • 4.5x - 7.0x</option>
+              </select>
+            </div>
+
+            <!-- Multiplier Fine-Tuning Slider -->
+            <div class="bg-plg-warmIvory/60 p-4 rounded-xl border border-plg-borderMuted">
+              <div class="flex justify-between items-center mb-2">
+                <label class="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                  Multiplier Leverage (Pain & Suffering Factor):
+                </label>
+                <span id="label-multiplier-val" class="text-sm font-bold text-plg-crimson bg-white px-2.5 py-0.5 rounded border border-plg-borderMuted">
+                  2.75x (Mid)
+                </span>
+              </div>
+              <input type="range" id="slider-multiplier" min="1.5" max="5.0" step="0.1" value="2.75" oninput="calculateSettlement()" 
+                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+                <span>1.5x (Minimal disruption)</span>
+                <span>3.0x (Standard moderate)</span>
+                <span>5.0x+ (Severe permanent impact)</span>
+              </div>
+            </div>
+
+            <!-- Washington State Pure Comparative Fault Slider (RCW 4.22.005) -->
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-3">
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">
+                    Your Assigned Fault Percentage
+                  </span>
+                  <span class="text-[11px] text-slate-500">
+                    Washington RCW § 4.22.005 Pure Comparative Fault
+                  </span>
+                </div>
+                <span id="label-fault-val" class="text-sm font-bold text-slate-900 bg-slate-100 px-3 py-1 rounded">
+                  0% (100% Other Driver's Fault)
+                </span>
+              </div>
+              <input type="range" id="slider-fault" min="0" max="80" step="5" value="0" oninput="calculateSettlement()" 
+                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+              <div class="bg-slate-50 rounded-lg p-2.5 text-[11px] text-slate-600 border border-slate-200">
+                <i class="fa-solid fa-scale-balanced text-plg-crimson mr-1"></i>
+                <strong>WA Legal Note:</strong> Unlike states with 50% or 51% bars, Washington permits you to collect damages even if you were 40%, 60%, or 80% at fault—your gross award is simply reduced by your percentage of fault.
+              </div>
+            </div>
+
+            <!-- Liability Clarity -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                Police Report & Liability Assessment
+              </label>
+              <div class="grid grid-cols-3 gap-3">
+                <button type="button" onclick="setLiabilityClarity('clear')" id="btn-liab-clear" class="py-2.5 px-3 text-xs font-semibold rounded-lg border-2 border-plg-crimson bg-plg-warmIvory text-plg-crimson">
+                  Clear Liability (Rear-ended, red light)
+                </button>
+                <button type="button" onclick="setLiabilityClarity('contested')" id="btn-liab-contested" class="py-2.5 px-3 text-xs font-medium rounded-lg border border-slate-200 text-slate-600 hover:border-slate-400">
+                  Disputed / Contested
+                </button>
+                <button type="button" onclick="setLiabilityClarity('complex')" id="btn-liab-complex" class="py-2.5 px-3 text-xs font-medium rounded-lg border border-slate-200 text-slate-600 hover:border-slate-400">
+                  Multi-Vehicle / Commercial Truck
+                </button>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+              <button type="button" onclick="goToStep(1)" class="text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>Back to Step 1</span>
+              </button>
+              <button type="button" onclick="goToStep(3)" class="bg-slate-900 hover:bg-plg-crimson text-white px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition flex items-center gap-2">
+                <span>Continue to Insurance Limits</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- =================== STEP 3: OFFER & LIMITS =================== -->
+          <div id="step-content-3" class="space-y-6 hidden">
+            <div class="border-b border-slate-100 pb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-plg-crimson">Step 3 of 3</span>
+              <h2 class="font-serif text-2xl font-bold text-slate-900 mt-1">Insurance Policy Limits & Offer Reality Check</h2>
+              <p class="text-xs text-slate-500 mt-1">No matter how catastrophic an injury, insurance settlements are frequently capped by the applicable policy maximums.</p>
+            </div>
+
+            <!-- At-Fault Driver Bodily Injury Policy Limits -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                At-Fault Driver's Bodily Injury (BI) Coverage
+              </label>
+              <select id="select-policy-limit" onchange="calculateSettlement()" 
+                class="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson bg-white">
+                <option value="25000">Washington State Statutory Minimum ($25,000 per person / $50,000 per crash)</option>
+                <option value="50000">$50,000 Policy Limit</option>
+                <option value="100000" selected>$100,000 Policy Limit (Typical middle-tier)</option>
+                <option value="250000">$250,000 Policy Limit</option>
+                <option value="500000">$500,000 Policy Limit</option>
+                <option value="1000000">$1,000,000+ Commercial Truck / Umbrella Policy</option>
+                <option value="9999999">Unknown / Multiple Coverage Layers</option>
+              </select>
+              <p class="text-[11px] text-slate-500 mt-1">
+                <strong>Washington Minimum:</strong> WA only requires $25,000 bodily injury liability. If your claim exceeds this, Premier Law Group searches for your Underinsured Motorist (UIM) and umbrella policies.
+              </p>
+            </div>
+
+            <!-- Insurance Current Offer Comparison Input -->
+            <div class="bg-plg-warmIvory/60 p-4 rounded-xl border border-plg-borderMuted">
+              <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+                Has the insurance adjuster made an initial settlement offer?
+              </label>
+              <div class="relative rounded-lg shadow-sm sm:w-2/3">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-semibold">$</div>
+                <input type="number" id="input-insurance-offer" placeholder="Optional (e.g. 18000)" min="0" step="500" oninput="calculateSettlement()" 
+                  class="block w-full rounded-lg border border-slate-300 pl-8 pr-3 py-2 text-slate-900 font-semibold focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson transition text-sm">
+              </div>
+              <p class="text-[11px] text-slate-500 mt-1.5">
+                If provided, we will compare this offer against your realistic Washington claim value range.
+              </p>
+            </div>
+
+            <!-- Offer Evaluation Feedback Box -->
+            <div id="offer-feedback-box" class="p-4 rounded-xl border transition hidden">
+              <!-- Dynamically populated via JS -->
+            </div>
+
+            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+              <button type="button" onclick="goToStep(2)" class="text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>Back to Step 2</span>
+              </button>
+              <button type="button" onclick="printSummaryReport()" class="bg-plg-warmIvory hover:bg-slate-200 text-slate-900 px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition flex items-center gap-2 border border-slate-300">
+                <i class="fa-solid fa-print text-xs"></i>
+                <span>Print Formal Evaluation</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Educational Note Box beneath wizard -->
+        <div class="bg-plg-warmIvory border border-plg-borderMuted rounded-xl p-4 text-xs text-slate-700 flex items-start gap-3">
+          <i class="fa-solid fa-lightbulb text-plg-gold text-lg mt-0.5"></i>
+          <div>
+            <strong class="font-bold text-slate-900 block mb-0.5">How Premier Law Group values Washington cases:</strong>
+            <p>Insurance algorithms like Colossus devalue soft-tissue injuries by default. Our attorneys examine venue trends across King, Snohomish, and Pierce County courts to build evidence that forces adjusters to top-tier multiplier valuations.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: Sticky Valuation Dashboard (5 Columns) -->
+      <div class="lg:col-span-5 sticky top-28 space-y-5">
+        
+        <div class="bg-white rounded-2xl border-2 border-slate-900 shadow-plg-panel overflow-hidden">
+          
+          <!-- Card Header -->
+          <div class="bg-plg-navy px-6 py-4 flex justify-between items-center text-white border-b border-slate-800">
+            <div>
+              <span class="text-[10px] font-bold tracking-[0.2em] text-plg-gold uppercase block">Confidential Analysis</span>
+              <h3 class="font-serif text-lg font-bold">Estimated Settlement Range</h3>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 text-[11px] font-semibold tracking-wide text-emerald-300 border border-white/10">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live
+            </span>
+          </div>
+
+          <!-- Main Valuations Display -->
+          <div class="p-6 bg-gradient-to-b from-white to-plg-cream/50">
+            
+            <div class="grid grid-cols-3 gap-2.5 items-end mb-4">
+              <!-- LOW -->
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-slate-300">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Conservative</span>
+                <span id="display-low" class="text-base sm:text-lg font-extrabold text-slate-700 block">$57,300</span>
+                <span class="text-[10px] text-slate-400 mt-0.5 block">1.8x Multiplier</span>
+              </div>
+              
+              <!-- MID (Featured) -->
+              <div class="bg-slate-900 text-white rounded-xl p-3.5 text-center shadow-md relative -top-1 border border-slate-700">
+                <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-plg-crimson text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded tracking-wider shadow">
+                  Realistic Mid
+                </div>
+                <span class="text-[10px] font-medium uppercase tracking-wider text-plg-gold block mb-1">Estimated Mid</span>
+                <span id="display-mid" class="text-xl sm:text-2xl font-black text-white block">$72,500</span>
+                <span id="display-mid-mult" class="text-[10px] text-slate-300 mt-0.5 block">2.75x Multiplier</span>
+              </div>
+
+              <!-- HIGH -->
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-slate-300">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Trial / Strong</span>
+                <span id="display-high" class="text-base sm:text-lg font-extrabold text-slate-700 block">$87,700</span>
+                <span class="text-[10px] text-slate-400 mt-0.5 block">3.6x Multiplier</span>
+              </div>
+            </div>
+
+            <!-- Policy Barrier Alert (Conditionally shown if value > limit) -->
+            <div id="policy-warning" class="hidden mb-4 p-3 bg-amber-50 rounded-lg border border-amber-200 text-xs text-amber-900">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i>
+              <strong>Policy Limit Cap:</strong> Value exceeds at-fault limit (<span id="warn-policy-val">$100,000</span>). Full recovery requires pursuing UIM or excess coverage.
+            </div>
+
+            <!-- Collapsible Math Breakdown Accordion -->
+            <div class="border border-slate-200 rounded-xl overflow-hidden mb-5 bg-white">
+              <button type="button" onclick="toggleMathAccordion()" class="w-full px-4 py-2.5 text-left text-xs font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition">
+                <span class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-calculator text-plg-crimson"></i>
+                  <span>Show Line-by-Line Math Breakdown</span>
+                </span>
+                <i id="math-accordion-icon" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+              </button>
+              
+              <div id="math-accordion-content" class="hidden px-4 pb-3 pt-1 text-xs border-t border-slate-100 space-y-1.5 bg-slate-50/50">
+                <div class="flex justify-between text-slate-600">
+                  <span>Economic Base (Medicals + Lost Wages + OOP):</span>
+                  <span id="math-economic-base" class="font-semibold text-slate-900">$20,300</span>
+                </div>
+                <div class="flex justify-between text-slate-600">
+                  <span>Estimated Pain & Suffering (General Damages):</span>
+                  <span id="math-general-damages" class="font-semibold text-slate-900">$45,700</span>
+                </div>
+                <div class="flex justify-between text-slate-600">
+                  <span>Property Damage (Vehicle 1:1, non-multiplied):</span>
+                  <span id="math-property" class="font-semibold text-slate-900">$6,500</span>
+                </div>
+                <div id="math-fault-row" class="flex justify-between text-red-700 font-medium hidden">
+                  <span>Comparative Fault Reduction (<span id="math-fault-pct">0%</span>):</span>
+                  <span id="math-fault-deduction">-$0</span>
+                </div>
+                <div class="border-t border-slate-200 pt-1.5 flex justify-between font-bold text-slate-900 text-[13px]">
+                  <span>Calculated Gross Settlement Midpoint:</span>
+                  <span id="math-net-total" class="text-plg-crimson">$72,500</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Primary CTAs -->
+            <div class="space-y-2.5">
+              <button onclick="openModal('consultModal')" class="w-full bg-plg-crimson hover:bg-plg-crimsonDark text-white py-3.5 px-4 rounded-xl text-sm font-bold tracking-wide shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-comments"></i>
+                <span>Review My Case With An Attorney (Free)</span>
+              </button>
+              
+              <div class="grid grid-cols-2 gap-2">
+                <a href="tel:2062851743" class="w-full bg-slate-900 hover:bg-slate-800 text-white py-2.5 px-3 rounded-xl text-xs font-bold tracking-wide transition flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-phone text-plg-gold text-xs"></i>
+                  <span>(206) 285-1743</span>
+                </a>
+                <button onclick="printSummaryReport()" class="w-full bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 py-2.5 px-3 rounded-xl text-xs font-bold tracking-wide transition flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-file-arrow-down text-slate-600"></i>
+                  <span>Print / Save PDF</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Guarantee Notice -->
+            <div class="mt-4 pt-4 border-t border-slate-200 text-center">
+              <p class="text-[11px] text-slate-500 leading-normal">
+                <strong>No upfront costs or fees.</strong> You pay nothing unless Premier Law Group settles or wins your case.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Free Book Incentive -->
+          <div class="bg-plg-warmIvory p-3.5 border-t border-plg-borderMuted flex items-center gap-3">
+            <div class="w-10 h-12 bg-plg-crimson text-white rounded flex items-center justify-center font-cinzel text-xs font-bold shrink-0 shadow-sm">
+              BOOK
+            </div>
+            <div class="text-[11px] text-slate-700">
+              <strong class="font-bold text-slate-900">Complimentary Guide Included:</strong>
+              <p class="text-slate-600">Attorney Jason Epstein's book <em>"The Truth About Washington Auto Accidents"</em> with every case review.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Real Attorney Card -->
+        <div class="bg-white rounded-xl border border-plg-borderMuted p-4 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-slate-900 text-plg-gold flex items-center justify-center font-cinzel text-lg font-bold shrink-0 border border-plg-gold/40">
+            JE
+          </div>
+          <div class="text-xs">
+            <div class="font-bold text-slate-900">Jason Epstein, Managing Partner</div>
+            <div class="text-slate-500">20+ Years Practicing Washington Injury Law</div>
+            <div class="text-plg-crimson font-medium mt-0.5">Avvo Rating: 10.0 "Superb"</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <section id="how-it-works" class="py-16 bg-white border-t border-plg-borderMuted">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-12">
+        <span class="text-xs font-bold uppercase tracking-wider text-plg-crimson">Transparency In Legal Analytics</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-1 mb-3">
+          How Insurance Companies and Lawyers Calculate Your Settlement
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+          Insurance adjusters use automated software (such as Colossus or ClaimIQ), while trial lawyers evaluate jury verdict trends in King County, Pierce County, and Snohomish County courts. Both rely on the classical Multiplier Framework.
+        </p>
+      </div>
+
+      <!-- 4 Pillars Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        
+        <div class="p-6 rounded-xl border border-slate-200 bg-plg-cream/50 hover:bg-white hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-lg bg-plg-navy text-white flex items-center justify-center font-bold text-sm mb-4 font-serif">
+            1
+          </div>
+          <h3 class="font-serif font-bold text-lg text-slate-900 mb-2">Total Economic Base</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Tangible damages include past hospital bills, future physical therapy, documented lost income, and out-of-pocket medical devices.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl border border-slate-200 bg-plg-cream/50 hover:bg-white hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-lg bg-plg-crimson text-white flex items-center justify-center font-bold text-sm mb-4 font-serif">
+            2
+          </div>
+          <h3 class="font-serif font-bold text-lg text-slate-900 mb-2">The Multiplier Band</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Pain, emotional distress, and disruption to daily lifestyle are represented by a severity multiplier, generally ranging from 1.5x up to 5.0x+.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl border border-slate-200 bg-plg-cream/50 hover:bg-white hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-lg bg-plg-navy text-white flex items-center justify-center font-bold text-sm mb-4 font-serif">
+            3
+          </div>
+          <h3 class="font-serif font-bold text-lg text-slate-900 mb-2">Adjust for Case Levers</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Pre-existing conditions, gaps in treatment, police citations, witness credibility, and venue demographics push the multiplier up or down.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl border border-slate-200 bg-plg-cream/50 hover:bg-white hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-lg bg-plg-crimson text-white flex items-center justify-center font-bold text-sm mb-4 font-serif">
+            4
+          </div>
+          <h3 class="font-serif font-bold text-lg text-slate-900 mb-2">Apply Policy Reality</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Insurance carriers cannot pay beyond bodily injury limits without bad faith. Identifying underinsured motorist (UIM) coverage is essential.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Formula Comparison Banner -->
+      <div class="bg-plg-navy text-white rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-plg-panel">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="text-xs font-bold text-plg-gold uppercase tracking-wider">Formula Architectures</span>
+            <h4 class="font-serif text-2xl font-bold text-white mt-1 mb-4">Demand Formula vs Adjuster Formula</h4>
+            
+            <div class="space-y-4 text-xs font-mono">
+              <div class="p-3 bg-white/5 rounded-lg border border-white/10">
+                <span class="text-plg-gold font-bold block mb-1">Plaintiff Demand Model:</span>
+                <code>Gross = [(Medical Specials + Lost Wages + OOP) × Multiplier] + Property Damage</code>
+              </div>
+              <div class="p-3 bg-white/5 rounded-lg border border-white/10">
+                <span class="text-slate-300 font-bold block mb-1">Insurance Adjuster Model:</span>
+                <code>Gross = (Medical Specials × Multiplier) + Lost Wages + OOP + Property Damage</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white/10 p-6 rounded-xl border border-white/10 backdrop-blur">
+            <h5 class="font-serif text-lg font-bold text-white mb-2">Why Hire Premier Law Group?</h5>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              Insurance companies deploy adjusters whose sole performance metric is reducing claim payouts. Studies consistently reveal that represented accident victims recover on average <strong>3.5x higher net settlements</strong> than unrepresented claimants dealing directly with an adjuster.
+            </p>
+            <div class="flex items-center gap-3 text-xs text-plg-gold">
+              <i class="fa-solid fa-check-double text-plg-crimson"></i>
+              <span>We handle medical lien negotiations to maximize your take-home recovery.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="settlement-ranges" class="py-16 bg-plg-warmIvory/60 border-t border-plg-borderMuted">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-xs font-bold uppercase tracking-wider text-plg-crimson">Washington Benchmarks</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-1 mb-3">
+          Typical Washington Settlement Ranges by Injury Type
+        </h2>
+        <p class="text-slate-600 text-xs sm:text-sm">
+          Illustrative bands based on Puget Sound regional data. Actual results depend entirely on liability facts, coverage limits, and medical documentation.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-plg-borderMuted shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-plg-navy text-white text-[11px] sm:text-xs uppercase tracking-wider">
+                <th class="py-4 px-5 font-semibold">Injury Classification</th>
+                <th class="py-4 px-5 font-semibold">Typical Medical Specials</th>
+                <th class="py-4 px-5 font-semibold">Usual Multiplier</th>
+                <th class="py-4 px-5 font-semibold">Washington Range*</th>
+                <th class="py-4 px-5 font-semibold">Key Legal Considerations</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr class="hover:bg-plg-warmIvory/30 transition">
+                <td class="py-4 px-5 font-bold text-slate-900 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Whiplash & Minor Soft Tissue
+                </td>
+                <td class="py-4 px-5 font-mono">$2,500 – $9,000</td>
+                <td class="py-4 px-5 font-semibold text-plg-crimson">1.5× – 2.5×</td>
+                <td class="py-4 px-5 font-bold text-slate-900">$8,000 – $28,000</td>
+                <td class="py-4 px-5 text-xs text-slate-500">Gaps in chiropractic or physical therapy can harm valuation.</td>
+              </tr>
+              <tr class="hover:bg-plg-warmIvory/30 transition">
+                <td class="py-4 px-5 font-bold text-slate-900 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+                  Moderate Bone Fracture / Disc Bulge
+                </td>
+                <td class="py-4 px-5 font-mono">$10,000 – $35,000</td>
+                <td class="py-4 px-5 font-semibold text-plg-crimson">2.0× – 3.5×</td>
+                <td class="py-4 px-5 font-bold text-slate-900">$30,000 – $110,000</td>
+                <td class="py-4 px-5 text-xs text-slate-500">Objective diagnostic imaging (MRI, CT scans) significantly strengthens multipliers.</td>
+              </tr>
+              <tr class="hover:bg-plg-warmIvory/30 transition">
+                <td class="py-4 px-5 font-bold text-slate-900 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  Severe Injury (Surgery / Concussion)
+                </td>
+                <td class="py-4 px-5 font-mono">$35,000 – $150,000+</td>
+                <td class="py-4 px-5 font-semibold text-plg-crimson">3.0× – 4.5×</td>
+                <td class="py-4 px-5 font-bold text-slate-900">$120,000 – $500,000+</td>
+                <td class="py-4 px-5 text-xs text-slate-500">Often exceeds at-fault driver's $25,000 minimum limits; triggering UIM investigation.</td>
+              </tr>
+              <tr class="hover:bg-plg-warmIvory/30 transition">
+                <td class="py-4 px-5 font-bold text-slate-900 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-purple-600"></span>
+                  Catastrophic / Permanent Disability
+                </td>
+                <td class="py-4 px-5 font-mono">$150,000 – $1,000,000+</td>
+                <td class="py-4 px-5 font-semibold text-plg-crimson">4.5× – 7.0×+</td>
+                <td class="py-4 px-5 font-bold text-slate-900">$600,000 – $5M+</td>
+                <td class="py-4 px-5 text-xs text-slate-500">Requires structured settlements, life-care planners, and vocational economic experts.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bg-slate-50 px-5 py-3 text-[11px] text-slate-500 border-t border-slate-100 flex items-center justify-between">
+          <span>*Values are educational approximations. Every case has unique medical proof and venue considerations.</span>
+          <a href="#calculator" class="text-plg-crimson font-bold hover:underline">Recalculate Your Numbers &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="py-16 bg-plg-navy text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#C5A880_1px,transparent_1px)] [background-size:32px_32px] opacity-10"></div>
+    
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 text-plg-gold text-xs uppercase tracking-widest font-bold mb-3">
+        <i class="fa-solid fa-handshake-simple"></i> Premier Law Group PLLC
+      </div>
+      <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight mb-4">
+        Ready to Discuss Your Case with an Attorney?
+      </h2>
+      <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 font-light">
+        A calculator provides helpful guidelines, but an insurance adjuster won’t cut a fair check without legal leverage. Get a free, confidential case review from attorney Jason Epstein’s team.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button onclick="openModal('consultModal')" class="w-full sm:w-auto bg-plg-crimson hover:bg-plg-crimsonDark text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm tracking-wide">
+          <i class="fa-solid fa-clipboard-check"></i>
+          <span>Request Free Case Evaluation</span>
+        </button>
+        <a href="tel:2062851743" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-8 py-3.5 rounded-xl transition flex items-center justify-center gap-2 text-sm">
+          <i class="fa-solid fa-phone text-plg-gold"></i>
+          <span>Call (206) 285-1743</span>
+        </a>
+      </div>
+      
+      <p class="text-[11px] text-slate-400 mt-6">
+        No obligations • 100% Confidential • Bellevue & Seattle Offices with Remote Consultations
+      </p>
+    </div>
+  </section>
+
+  <section id="faq" class="py-16 bg-white border-t border-plg-borderMuted">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold uppercase tracking-wider text-plg-crimson">Frequently Asked Questions</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-1 mb-2">
+          Washington Car Accident Claims
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500">
+          Straightforward answers from experienced Washington personal injury attorneys.
+        </p>
+      </div>
+
+      <div class="space-y-4" id="faq-container">
+        
+        <!-- FAQ Item 1 -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden transition">
+          <button type="button" onclick="toggleFaq(1)" class="w-full text-left p-5 bg-white hover:bg-slate-50 flex justify-between items-center transition">
+            <span class="font-serif font-bold text-base text-slate-900">How does Washington's pure comparative fault rule (RCW 4.22.005) work?</span>
+            <i id="faq-icon-1" class="fa-solid fa-plus text-slate-400 text-xs"></i>
+          </button>
+          <div id="faq-answer-1" class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+            Washington is a "pure comparative negligence" state. Under RCW § 4.22.005, your recovery is reduced by your exact percentage of responsibility, but you are never barred from recovering compensation. For example, if your total damages are $100,000 and you are determined to have been 25% at fault, you can still collect $75,000 from the other driver. Even if you are 80% at fault, you may collect 20%.
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden transition">
+          <button type="button" onclick="toggleFaq(2)" class="w-full text-left p-5 bg-white hover:bg-slate-50 flex justify-between items-center transition">
+            <span class="font-serif font-bold text-base text-slate-900">Are there damage caps on pain and suffering in Washington?</span>
+            <i id="faq-icon-2" class="fa-solid fa-plus text-slate-400 text-xs"></i>
+          </button>
+          <div id="faq-answer-2" class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+            <strong>No.</strong> Washington is one of the strongest pro-consumer states in the nation. In the landmark case <em>Sofie v. Fibreboard Corp.</em>, the Washington Supreme Court ruled that statutory caps on non-economic damages (pain and suffering) violate the constitutional right to a trial by jury. There is no artificial government cap on what a Washington jury can award you.
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden transition">
+          <button type="button" onclick="toggleFaq(3)" class="w-full text-left p-5 bg-white hover:bg-slate-50 flex justify-between items-center transition">
+            <span class="font-serif font-bold text-base text-slate-900">What is the statute of limitations for personal injury in WA?</span>
+            <i id="faq-icon-3" class="fa-solid fa-plus text-slate-400 text-xs"></i>
+          </button>
+          <div id="faq-answer-3" class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+            Under RCW § 4.16.080, Washington has a <strong>three-year statute of limitations</strong> from the date of the collision to file a formal lawsuit. If a government entity or transit vehicle (like King County Metro or Sound Transit) was involved, earlier administrative tort claims notices are mandatory.
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden transition">
+          <button type="button" onclick="toggleFaq(4)" class="w-full text-left p-5 bg-white hover:bg-slate-50 flex justify-between items-center transition">
+            <span class="font-serif font-bold text-base text-slate-900">What if the at-fault driver only has Washington minimum $25,000 liability?</span>
+            <i id="faq-icon-4" class="fa-solid fa-plus text-slate-400 text-xs"></i>
+          </button>
+          <div id="faq-answer-4" class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+            Washington requires only $25,000 per person in bodily injury liability, which is quickly depleted after a brief ER visit. When this occurs, Premier Law Group investigates your own auto insurance policy for Underinsured Motorist (UIM) and Personal Injury Protection (PIP) benefits, which step in to pay the remainder of your fair settlement.
+          </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden transition">
+          <button type="button" onclick="toggleFaq(5)" class="w-full text-left p-5 bg-white hover:bg-slate-50 flex justify-between items-center transition">
+            <span class="font-serif font-bold text-base text-slate-900">How much does it cost to hire Premier Law Group?</span>
+            <i id="faq-icon-5" class="fa-solid fa-plus text-slate-400 text-xs"></i>
+          </button>
+          <div id="faq-answer-5" class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+            We handle motor vehicle injury cases strictly on a <strong>contingency fee basis</strong>. That means you pay zero dollars upfront, and we advance all case and expert costs. If we do not win or settle your case, you owe us nothing.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="bg-plg-navy text-slate-400 text-xs border-t border-slate-800">
+    <!-- Mandatory Disclaimer Box -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-b border-slate-800 text-[11px] leading-relaxed text-slate-400">
+      <h5 class="text-slate-200 font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+        <i class="fa-solid fa-shield-cat text-plg-gold"></i> Important Legal Disclaimer
+      </h5>
+      <p class="mb-2">
+        This settlement calculator provides general educational estimations based on commonly utilized mathematical models and historical litigation ranges in Washington State. The results generated do not constitute formal legal advice, a case valuation guarantee, or a prediction of any specific claim outcome. 
+      </p>
+      <p>
+        Use of this tool does not establish an attorney-client relationship with Premier Law Group PLLC. Every legal claim is unique, and settlement values depend on factors including independent medical proof, insurance policy maximums, venue jurisdiction, witness credibility, and comparative negligence. Consult a licensed Washington personal injury attorney at (206) 285-1743 regarding your specific legal rights.
+      </p>
+    </div>
+
+    <!-- Main Footer Links -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <!-- Column 1: Brand & Contact -->
+        <div class="space-y-3 md:col-span-2">
+          <div class="flex items-center space-x-2">
+            <span class="font-cinzel text-xl font-bold text-white">P</span>
+            <span class="w-[2px] h-5 bg-plg-crimson inline-block"></span>
+            <span class="font-cinzel text-xl font-bold text-white">L</span>
+            <span class="w-[2px] h-5 bg-plg-crimson inline-block"></span>
+            <span class="font-cinzel text-xl font-bold text-white">G</span>
+            <span class="font-cinzel text-sm font-bold text-white tracking-wider ml-2">Premier Law Group PLLC</span>
+          </div>
+          <p class="text-xs text-slate-400 max-w-sm">
+            Big Enough to Win. Small Enough to Care. Dedicated personal injury advocacy across the Puget Sound region and all of Washington State.
+          </p>
+          <div class="pt-2 text-xs space-y-1 text-slate-300">
+            <div><strong class="text-white">Headquarters:</strong> 1408 140th Pl NE, Ste A, Bellevue, WA 98007</div>
+            <div><strong class="text-white">Seattle Office:</strong> Downtown Seattle & Meeting Locations Across King County</div>
+            <div><strong class="text-white">Direct Line:</strong> <a href="tel:2062851743" class="text-plg-gold hover:underline font-semibold">(206) 285-1743</a></div>
+            <div><strong class="text-white">Website:</strong> <a href="https://plg-pllc.com" target="_blank" rel="noopener" class="text-slate-300 hover:text-white underline">plg-pllc.com</a></div>
+          </div>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-3">Tool Navigation</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#calculator" class="hover:text-white transition">Settlement Calculator</a></li>
+            <li><a href="#how-it-works" class="hover:text-white transition">How the Math Works</a></li>
+            <li><a href="#settlement-ranges" class="hover:text-white transition">Washington Settlement Ranges</a></li>
+            <li><a href="#faq" class="hover:text-white transition">Injury Claim FAQ</a></li>
+            <li><a href="javascript:void(0)" onclick="openModal('consultModal')" class="text-plg-gold hover:underline font-semibold">Book Free Review</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Washington Practice Areas -->
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-3">Washington Practice</h4>
+          <ul class="space-y-2 text-xs">
+            <li>Car Accidents & Rear-End Collisions</li>
+            <li>Commercial Truck & Semi Crashes</li>
+            <li>Motorcycle & Bicycle Accidents</li>
+            <li>Pedestrian Crosswalk Injuries</li>
+            <li>Wrongful Death Claims</li>
+            <li>Traumatic Brain Injuries (TBI)</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-12 pt-6 border-t border-slate-800 text-center text-slate-500 text-[11px] flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p>&copy; 2026 Premier Law Group PLLC. All Rights Reserved. Washington Personal Injury Attorneys.</p>
+        <p class="text-slate-500">1408 140th Pl NE, Bellevue, WA 98007 • (206) 285-1743</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="consultModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-plg-borderMuted transform scale-95 transition-transform duration-200" id="consultModalBox">
+      
+      <!-- Modal Header -->
+      <div class="bg-plg-navy px-6 py-4 flex justify-between items-center text-white border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <span class="font-cinzel text-lg font-bold text-plg-gold">P | L | G</span>
+          <span class="text-xs uppercase tracking-wider font-semibold text-slate-200">Free Case Review</span>
+        </div>
+        <button onclick="closeModal('consultModal')" class="text-slate-400 hover:text-white transition p-1 text-base">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 sm:p-7 space-y-4">
+        <div class="text-left">
+          <h3 class="font-serif text-2xl font-bold text-slate-900">Have an Attorney Review Your Claim</h3>
+          <p class="text-xs text-slate-600 mt-1">
+            Fill out this brief form to receive a complimentary case evaluation from Premier Law Group and a free digital copy of <em>The Truth About Washington Auto Accidents</em>.
+          </p>
+        </div>
+
+        <form id="lead-form" onsubmit="handleFormSubmit(event)" class="space-y-3 text-left">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Your Full Name <span class="text-plg-crimson">*</span></label>
+            <input type="text" required id="lead-name" placeholder="John Doe" class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Phone Number <span class="text-plg-crimson">*</span></label>
+              <input type="tel" required id="lead-phone" placeholder="(206) 555-0199" class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Email Address <span class="text-plg-crimson">*</span></label>
+              <input type="email" required id="lead-email" placeholder="john@example.com" class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Crash Details / Notes (Optional)</label>
+            <textarea id="lead-notes" rows="2" placeholder="Briefly describe what happened, location in WA, or injuries sustained..." class="w-full text-xs sm:text-sm px-3.5 py-2 rounded-lg border border-slate-300 focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson"></textarea>
+          </div>
+
+          <div class="p-3 bg-plg-warmIvory rounded-lg text-[11px] text-slate-600 flex items-start gap-2">
+            <i class="fa-solid fa-lock text-plg-crimson mt-0.5"></i>
+            <span><strong>Your Privacy Guaranteed:</strong> Information is held strictly confidential under attorney-client privilege. Never sold or shared.</span>
+          </div>
+
+          <button type="submit" class="w-full bg-plg-crimson hover:bg-plg-crimsonDark text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm tracking-wide shadow-md transition">
+            Submit Case Evaluation Request
+          </button>
+        </form>
+
+        <div id="form-success" class="hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs text-center space-y-2">
+          <i class="fa-solid fa-circle-check text-2xl text-emerald-600"></i>
+          <p class="font-bold text-sm">Thank You! Your Request Has Been Received.</p>
+          <p>An intake attorney from Premier Law Group PLLC will reach out shortly. We have also queued your free copy of <em>The Truth About Washington Auto Accidents</em>.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="print-report" class="hidden print-only p-8 max-w-3xl mx-auto bg-white text-slate-900">
+    <div class="border-b-2 border-slate-900 pb-4 mb-6 flex justify-between items-center">
+      <div>
+        <h1 class="font-serif text-2xl font-bold">PREMIER LAW GROUP PLLC</h1>
+        <p class="text-xs text-slate-600">Washington Car Accident Settlement Worksheet (Client Copy)</p>
+        <p class="text-xs text-slate-600">Bellevue • Seattle • Federal Way • Renton | (206) 285-1743</p>
+      </div>
+      <div class="text-right text-xs">
+        <p id="print-date">Date: 2026-09-09</p>
+        <p class="text-slate-500 font-mono">Confidential Case Estimate</p>
+      </div>
+    </div>
+
+    <div class="space-y-4 text-xs">
+      <div class="border p-4 rounded bg-slate-50">
+        <h3 class="font-bold text-sm mb-2 text-slate-800">1. Economic Damages (Specials)</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div>Past Medical Bills: <span id="print-med-past" class="font-bold">$0</span></div>
+          <div>Future Medical Care: <span id="print-med-future" class="font-bold">$0</span></div>
+          <div>Lost Wages & Earnings: <span id="print-wages" class="font-bold">$0</span></div>
+          <div>Out-of-Pocket Costs: <span id="print-oop" class="font-bold">$0</span></div>
+          <div>Vehicle / Property Damage: <span id="print-property" class="font-bold">$0</span></div>
+          <div>Total Economic Base: <span id="print-total-economic" class="font-bold">$0</span></div>
+        </div>
+      </div>
+
+      <div class="border p-4 rounded bg-slate-50">
+        <h3 class="font-bold text-sm mb-2 text-slate-800">2. Injury Multiplier & Washington Fault Ratio</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div>Severity Multiplier: <span id="print-multiplier" class="font-bold">2.75x</span></div>
+          <div>Calculated Pain & Suffering: <span id="print-pain-suffering" class="font-bold">$0</span></div>
+          <div>Assigned Fault (RCW 4.22.005): <span id="print-fault" class="font-bold">0%</span></div>
+          <div>At-Fault Policy Limit: <span id="print-limit" class="font-bold">$100,000</span></div>
+        </div>
+      </div>
+
+      <div class="border-2 border-slate-900 p-5 rounded text-center my-4 bg-slate-100">
+        <span class="text-xs uppercase font-bold text-slate-600 block">Projected Realistic Midpoint Settlement</span>
+        <span id="print-final-mid" class="text-3xl font-black text-slate-900 block my-1">$72,500</span>
+        <span class="text-[11px] text-slate-500">Range: <span id="print-range-low">$57,300</span> to <span id="print-range-high">$87,700</span></span>
+      </div>
+
+      <div class="text-[10px] text-slate-500 border-t pt-4 space-y-1">
+        <p><strong>Disclaimer:</strong> This printed summary is provided for educational and preliminary negotiation preparation purposes only. It is not an official legal guarantee or settlement offer. Premier Law Group PLLC handles personal injury matters with contingency representation (no fee unless money is recovered). Call (206) 285-1743 for representation inquiries.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State variables
+    let currentStep = 1;
+    let formulaStyle = 'demand'; // 'demand' or 'adjuster'
+    let liabilityClarity = 'clear';
+
+    // Step navigation
+    function goToStep(stepNumber) {
+      currentStep = stepNumber;
+      
+      // Update Step button appearances
+      for (let i = 1; i <= 3; i++) {
+        const btn = document.getElementById(`tab-btn-${i}`);
+        const content = document.getElementById(`step-content-${i}`);
+        
+        if (i === stepNumber) {
+          btn.className = "flex-1 py-3 px-2 sm:px-4 rounded-lg flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold transition bg-plg-navy text-white shadow-sm";
+          const badge = btn.querySelector('span:first-child');
+          badge.className = "w-5 h-5 rounded-full bg-white/20 text-white flex items-center justify-center text-xs";
+          content.classList.remove('hidden');
+        } else {
+          btn.className = "flex-1 py-3 px-2 sm:px-4 rounded-lg flex items-center justify-center gap-2 text-xs sm:text-sm font-medium transition text-slate-600 hover:bg-plg-warmIvory";
+          const badge = btn.querySelector('span:first-child');
+          badge.className = "w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-xs";
+          content.classList.add('hidden');
+        }
+      }
+    }
+
+    // Formula style toggle
+    function setFormulaStyle(style) {
+      formulaStyle = style;
+      const labelDemand = document.getElementById('label-formula-demand');
+      const labelAdjuster = document.getElementById('label-formula-adjuster');
+      
+      if (style === 'demand') {
+        labelDemand.classList.add('border-plg-crimson', 'bg-plg-warmIvory/40');
+        labelDemand.classList.remove('border-slate-200', 'bg-white');
+        labelAdjuster.classList.remove('border-plg-crimson', 'bg-plg-warmIvory/40');
+        labelAdjuster.classList.add('border-slate-200', 'bg-white');
+      } else {
+        labelAdjuster.classList.add('border-plg-crimson', 'bg-plg-warmIvory/40');
+        labelAdjuster.classList.remove('border-slate-200', 'bg-white');
+        labelDemand.classList.remove('border-plg-crimson', 'bg-plg-warmIvory/40');
+        labelDemand.classList.add('border-slate-200', 'bg-white');
+      }
+      calculateSettlement();
+    }
+
+    // Severity Dropdown change
+    function onSeverityChange() {
+      const severity = document.getElementById('select-severity').value;
+      const slider = document.getElementById('slider-multiplier');
+      
+      if (severity === 'soft_tissue') {
+        slider.min = "1.5";
+        slider.max = "3.0";
+        slider.value = "2.0";
+      } else if (severity === 'moderate') {
+        slider.min = "2.0";
+        slider.max = "4.0";
+        slider.value = "2.75";
+      } else if (severity === 'severe') {
+        slider.min = "3.0";
+        slider.max = "5.0";
+        slider.value = "3.75";
+      } else if (severity === 'catastrophic') {
+        slider.min = "4.5";
+        slider.max = "7.0";
+        slider.value = "5.5";
+      }
+      calculateSettlement();
+    }
+
+    // Liability clarity
+    function setLiabilityClarity(clarity) {
+      liabilityClarity = clarity;
+      ['clear', 'contested', 'complex'].forEach(c => {
+        const btn = document.getElementById(`btn-liab-${c}`);
+        if (c === clarity) {
+          btn.className = "py-2.5 px-3 text-xs font-semibold rounded-lg border-2 border-plg-crimson bg-plg-warmIvory text-plg-crimson";
+        } else {
+          btn.className = "py-2.5 px-3 text-xs font-medium rounded-lg border border-slate-200 text-slate-600 hover:border-slate-400";
+        }
+      });
+      calculateSettlement();
+    }
+
+    function calculateSettlement() {
+      // 1. Gather Economic Inputs
+      const medPast = parseFloat(document.getElementById('input-med-past').value) || 0;
+      const medFuture = parseFloat(document.getElementById('input-med-future').value) || 0;
+      const totalMedicals = medPast + medFuture;
+      
+      const wages = parseFloat(document.getElementById('input-wages').value) || 0;
+      const oop = parseFloat(document.getElementById('input-oop').value) || 0;
+      const propertyDamage = parseFloat(document.getElementById('input-property').value) || 0;
+      
+      // 2. Gather Multiplier & Fault
+      const multiplierMid = parseFloat(document.getElementById('slider-multiplier').value) || 2.75;
+      document.getElementById('label-multiplier-val').innerText = `${multiplierMid.toFixed(2)}x (Mid)`;
+      document.getElementById('display-mid-mult').innerText = `${multiplierMid.toFixed(2)}x Multiplier`;
+
+      const faultPct = parseFloat(document.getElementById('slider-fault').value) || 0;
+      document.getElementById('label-fault-val').innerText = `${faultPct}% ${faultPct === 0 ? "(100% Other Driver's Fault)" : "Your Responsibility"}`;
+
+      // 3. Multiplier Spectrum (Low = ~0.75 of mid, High = ~1.25 of mid)
+      const multiplierLow = Math.max(1.3, multiplierMid * 0.8);
+      const multiplierHigh = multiplierMid * 1.25;
+
+      // 4. Calculate Base Damages by Formula Style
+      let painSufferingMid, painSufferingLow, painSufferingHigh;
+      let totalEconomicBase;
+
+      if (formulaStyle === 'demand') {
+        // Demand style multiplies medicals + wages + oop
+        totalEconomicBase = totalMedicals + wages + oop;
+        painSufferingMid = totalEconomicBase * (multiplierMid - 1);
+        painSufferingLow = totalEconomicBase * (multiplierLow - 1);
+        painSufferingHigh = totalEconomicBase * (multiplierHigh - 1);
+      } else {
+        // Adjuster style multiplies ONLY medical specials
+        totalEconomicBase = totalMedicals;
+        painSufferingMid = totalMedicals * (multiplierMid - 1);
+        painSufferingLow = totalMedicals * (multiplierLow - 1);
+        painSufferingHigh = totalMedicals * (multiplierHigh - 1);
+      }
+
+      // Safety checks for positive figures
+      painSufferingMid = Math.max(0, painSufferingMid);
+      painSufferingLow = Math.max(0, painSufferingLow);
+      painSufferingHigh = Math.max(0, painSufferingHigh);
+
+      // Gross Total before fault deduction
+      let grossTotalMid = (totalMedicals + wages + oop) + painSufferingMid + propertyDamage;
+      let grossTotalLow = (totalMedicals + wages + oop) + painSufferingLow + propertyDamage;
+      let grossTotalHigh = (totalMedicals + wages + oop) + painSufferingHigh + propertyDamage;
+
+      // Deduct Comparative Fault under WA RCW 4.22.005
+      const faultDeductionMid = grossTotalMid * (faultPct / 100);
+      const netMid = Math.round(grossTotalMid - faultDeductionMid);
+      const netLow = Math.round(grossTotalLow - (grossTotalLow * (faultPct / 100)));
+      const netHigh = Math.round(grossTotalHigh - (grossTotalHigh * (faultPct / 100)));
+
+      // 5. Update UI Displays
+      document.getElementById('display-low').innerText = formatCurrency(netLow);
+      document.getElementById('display-mid').innerText = formatCurrency(netMid);
+      document.getElementById('display-high').innerText = formatCurrency(netHigh);
+
+      // Line-by-line math drawer
+      document.getElementById('math-economic-base').innerText = formatCurrency(totalMedicals + wages + oop);
+      document.getElementById('math-general-damages').innerText = formatCurrency(Math.round(painSufferingMid));
+      document.getElementById('math-property').innerText = formatCurrency(propertyDamage);
+      
+      const faultRow = document.getElementById('math-fault-row');
+      if (faultPct > 0) {
+        faultRow.classList.remove('hidden');
+        document.getElementById('math-fault-pct').innerText = `${faultPct}%`;
+        document.getElementById('math-fault-deduction').innerText = `-${formatCurrency(Math.round(faultDeductionMid))}`;
+      } else {
+        faultRow.classList.add('hidden');
+      }
+      document.getElementById('math-net-total').innerText = formatCurrency(netMid);
+
+      // 6. Policy Limits Check
+      const policyLimit = parseFloat(document.getElementById('select-policy-limit').value) || 100000;
+      const policyWarning = document.getElementById('policy-warning');
+      if (netMid > policyLimit && policyLimit < 9000000) {
+        policyWarning.classList.remove('hidden');
+        document.getElementById('warn-policy-val').innerText = formatCurrency(policyLimit);
+      } else {
+        policyWarning.classList.add('hidden');
+      }
+
+      // 7. Insurance Offer Check (if entered)
+      checkInsuranceOffer(netLow, netMid, netHigh);
+
+      // 8. Update printable summary values
+      updatePrintValues(medPast, medFuture, wages, oop, propertyDamage, totalMedicals + wages + oop, multiplierMid, painSufferingMid, faultPct, policyLimit, netLow, netMid, netHigh);
+    }
+
+    function formatCurrency(amount) {
+      return '$' + Math.round(amount).toLocaleString();
+    }
+
+    // Offer Comparison Feedback Logic
+    function checkInsuranceOffer(low, mid, high) {
+      const offerInput = document.getElementById('input-insurance-offer');
+      const offerFeedback = document.getElementById('offer-feedback-box');
+      const offerVal = parseFloat(offerInput.value);
+
+      if (!offerVal || isNaN(offerVal) || offerVal <= 0) {
+        offerFeedback.classList.add('hidden');
+        return;
+      }
+
+      offerFeedback.classList.remove('hidden');
+
+      if (offerVal < low) {
+        const gap = low - offerVal;
+        offerFeedback.className = "p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-900 space-y-1.5";
+        offerFeedback.innerHTML = `
+          <div class="flex items-center gap-2 font-bold text-red-800 text-sm">
+            <i class="fa-solid fa-circle-exclamation text-red-600"></i>
+            <span>Warning: Potential "Lowball" Insurance Offer</span>
+          </div>
+          <p>The insurer's offer of <strong>${formatCurrency(offerVal)}</strong> is <strong>${formatCurrency(gap)} below</strong> our conservative range (${formatCurrency(low)}). Insurance adjusters often make hasty early offers before future medical costs or full pain and suffering have been evaluated.</p>
+        `;
+      } else if (offerVal >= low && offerVal <= mid) {
+        offerFeedback.className = "p-4 rounded-xl border border-amber-200 bg-amber-50 text-xs text-amber-900 space-y-1.5";
+        offerFeedback.innerHTML = `
+          <div class="flex items-center gap-2 font-bold text-amber-800 text-sm">
+            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+            <span>Offer Falls in Conservative Band</span>
+          </div>
+          <p>The insurer's offer of <strong>${formatCurrency(offerVal)}</strong> covers minimum damages, but sits below the realistic Washington midpoint of <strong>${formatCurrency(mid)}</strong>. Premier Law Group frequently helps clients negotiate the remaining ${formatCurrency(mid - offerVal)} difference.</p>
+        `;
+      } else {
+        offerFeedback.className = "p-4 rounded-xl border border-emerald-200 bg-emerald-50 text-xs text-emerald-900 space-y-1.5";
+        offerFeedback.innerHTML = `
+          <div class="flex items-center gap-2 font-bold text-emerald-800 text-sm">
+            <i class="fa-solid fa-circle-check text-emerald-600"></i>
+            <span>Competitive Offer Detected</span>
+          </div>
+          <p>The insurer's offer of <strong>${formatCurrency(offerVal)}</strong> is at or above the projected midpoint (${formatCurrency(mid)}). Ensure all medical liens and future surgeries are thoroughly accounted for before signing any release.</p>
+        `;
+      }
+    }
+
+    function loadPreset(type) {
+      if (type === 'minor') {
+        document.getElementById('input-med-past').value = 4500;
+        document.getElementById('input-med-future').value = 1000;
+        document.getElementById('input-wages').value = 1200;
+        document.getElementById('input-oop').value = 350;
+        document.getElementById('input-property').value = 3200;
+        document.getElementById('select-severity').value = 'soft_tissue';
+        onSeverityChange();
+      } else if (type === 'moderate') {
+        document.getElementById('input-med-past').value = 18000;
+        document.getElementById('input-med-future').value = 6500;
+        document.getElementById('input-wages').value = 5200;
+        document.getElementById('input-oop').value = 1100;
+        document.getElementById('input-property').value = 8500;
+        document.getElementById('select-severity').value = 'moderate';
+        onSeverityChange();
+      } else if (type === 'severe') {
+        document.getElementById('input-med-past').value = 85000;
+        document.getElementById('input-med-future').value = 40000;
+        document.getElementById('input-wages').value = 24000;
+        document.getElementById('input-oop').value = 3500;
+        document.getElementById('input-property').value = 19000;
+        document.getElementById('select-severity').value = 'severe';
+        onSeverityChange();
+      }
+      calculateSettlement();
+      goToStep(1);
+    }
+
+    function resetCalculator() {
+      document.getElementById('input-med-past').value = 12000;
+      document.getElementById('input-med-future').value = 3000;
+      document.getElementById('input-wages').value = 4500;
+      document.getElementById('input-oop').value = 800;
+      document.getElementById('input-property').value = 6500;
+      document.getElementById('input-insurance-offer').value = '';
+      document.getElementById('select-severity').value = 'moderate';
+      document.getElementById('slider-fault').value = 0;
+      document.getElementById('select-policy-limit').value = '100000';
+      setFormulaStyle('demand');
+      setLiabilityClarity('clear');
+      onSeverityChange();
+      calculateSettlement();
+      goToStep(1);
+    }
+
+    // Toggle Math Accordion
+    function toggleMathAccordion() {
+      const content = document.getElementById('math-accordion-content');
+      const icon = document.getElementById('math-accordion-icon');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        content.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // FAQ Accordion Handler
+    function toggleFaq(id) {
+      const answer = document.getElementById(`faq-answer-${id}`);
+      const icon = document.getElementById(`faq-icon-${id}`);
+      if (answer.classList.contains('hidden')) {
+        answer.classList.remove('hidden');
+        icon.classList.remove('fa-plus');
+        icon.classList.add('fa-minus');
+      } else {
+        answer.classList.add('hidden');
+        icon.classList.remove('fa-minus');
+        icon.classList.add('fa-plus');
+      }
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      const box = document.getElementById(`${id}Box`);
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        box.classList.remove('scale-95');
+        box.classList.add('scale-100');
+      }, 10);
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      const box = document.getElementById(`${id}Box`);
+      modal.classList.add('opacity-0');
+      box.classList.remove('scale-100');
+      box.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    // Lead Form submission handler (client-side simulation)
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      document.getElementById('lead-form').classList.add('hidden');
+      document.getElementById('form-success').classList.remove('hidden');
+    }
+
+    // Update printable summary view elements
+    function updatePrintValues(medPast, medFuture, wages, oop, prop, totalEco, mult, painSuffering, fault, limit, low, mid, high) {
+      document.getElementById('print-date').innerText = "Generated: " + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      document.getElementById('print-med-past').innerText = formatCurrency(medPast);
+      document.getElementById('print-med-future').innerText = formatCurrency(medFuture);
+      document.getElementById('print-wages').innerText = formatCurrency(wages);
+      document.getElementById('print-oop').innerText = formatCurrency(oop);
+      document.getElementById('print-property').innerText = formatCurrency(prop);
+      document.getElementById('print-total-economic').innerText = formatCurrency(totalEco);
+      document.getElementById('print-multiplier').innerText = `${mult.toFixed(2)}x`;
+      document.getElementById('print-pain-suffering').innerText = formatCurrency(Math.round(painSuffering));
+      document.getElementById('print-fault').innerText = `${fault}%`;
+      document.getElementById('print-limit').innerText = limit >= 9000000 ? "Multiple/Excess" : formatCurrency(limit);
+      document.getElementById('print-final-mid').innerText = formatCurrency(mid);
+      document.getElementById('print-range-low').innerText = formatCurrency(low);
+      document.getElementById('print-range-high').innerText = formatCurrency(high);
+    }
+
+    function printSummaryReport() {
+      window.print();
+    }
+
+    // Initial calculation on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateSettlement();
+    });
+  </script>
+</body>
+</html>

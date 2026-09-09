@@ -1,32 +1,36 @@
 {
   "id": "premier-law-group",
-  "firmName": "Premier Law Group PLLC",
+  "firmName": "Premier Law Group, PLLC",
   "shortName": "Premier Law Group",
   "logoUrl": "/logo-premier-law-group.png",
-  "primaryColor": "#1A1A1A",
-  "secondaryColor": "#A11F28",
+  "primaryColor": "#0F172A",
+  "secondaryColor": "#8C1D24",
   "phone": "(206) 285-1743",
-  "email": "info@plg-pllc.com",
+  "email": "",
   "website": "https://plg-pllc.com/",
-  "ctaText": "Talk With An Attorney For Free",
-  "ctaUrl": "https://plg-pllc.com/",
+  "ctaText": "Free Consultation",
+  "ctaUrl": "https://plg-pllc.com/contact-us/",
   "city": "Bellevue",
   "state": "WA",
-  "tagline": "Big Enough to Win. Small Enough to Care. \u2014 Washington car accident estimates you can actually use.",
-  "heroEyebrow": "Free educational estimate \u00b7 Bellevue \u00b7 Seattle \u00b7 Federal Way \u00b7 Renton",
-  "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Results are illustrative ranges based on common valuation methods and do not predict any particular outcome. Consult a licensed attorney at Premier Law Group PLLC or in your jurisdiction for advice about your situation.",
+  "tagline": "Big Enough to Win. Small Enough to Care. Educational car accident settlement estimates for Washington injury victims.",
+  "heroEyebrow": "Washington State Personal Injury Evaluation Framework",
+  "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Results are illustrative ranges based on common valuation methods and do not predict any particular outcome. Consult a licensed Washington attorney at Premier Law Group, PLLC, or in your jurisdiction for advice about your situation.",
   "trustStats": [
     {
-      "value": "Browser-only",
-      "label": "All math runs on your device"
+      "value": "100% Private",
+      "label": "Zero data stored on servers"
     },
     {
-      "value": "No PII",
-      "label": "Nothing collected or stored"
+      "value": "WA Specific",
+      "label": "RCW 4.22.005 comparative rules"
     },
     {
-      "value": "Educational",
-      "label": "Not a case valuation or legal advice"
+      "value": "Zero fee unless we win",
+      "label": "Contingency legal fee model"
+    },
+    {
+      "value": "Free consultation",
+      "label": "4 offices · Bellevue · Seattle · Federal Way · Renton"
     }
   ]
 }
