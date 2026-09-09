@@ -175,7 +175,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
           id="faq-heading"
           className="font-serif mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl"
         >
-          Frequently asked questions
+          Frequently Asked Questions
         </h2>
         <p className="mt-3 text-sm text-slate-600">
           Educational answers only — not legal advice. Rules and deadlines can vary; confirm
