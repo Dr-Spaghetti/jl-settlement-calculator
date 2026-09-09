@@ -24,7 +24,7 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="scroll-mt-28 border-t border-plg-borderMuted bg-white py-16"
+      className="scroll-mt-28 border-t border-plg-borderMuted bg-transparent py-16"
       aria-labelledby="how-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -45,16 +45,14 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <ol className="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <ol className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <li
               key={step.title}
-              className="rounded-xl border border-slate-200 bg-plg-cream/50 p-6 transition hover:bg-white hover:shadow-md"
+              className="relative rounded-xl border border-slate-200 bg-transparent px-5 pb-6 pt-8 text-center shadow-sm transition hover:shadow-md"
             >
               <div
-                className={`mb-4 flex h-10 w-10 items-center justify-center rounded-lg font-serif text-sm font-bold text-white ${
-                  i % 2 === 0 ? "bg-plg-navy" : "bg-plg-crimson"
-                }`}
+                className="absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-plg-crimson text-sm font-bold text-white shadow-sm"
                 aria-hidden
               >
                 {i + 1}
