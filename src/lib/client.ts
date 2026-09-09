@@ -64,6 +64,17 @@ export function getClientCssVars(
   const accent = client.accentColor?.trim() || DEFAULT_GOLD;
   const ground = client.pageGround?.trim() || DEFAULT_GROUND;
 
+  const isDj = client.id === "djougourian-law";
+  const warmIvory = isDj
+    ? `color-mix(in srgb, ${accent} 18%, white)`
+    : "#F4F1EA";
+  const surface = isDj
+    ? `color-mix(in srgb, ${secondary} 7%, white)`
+    : "#FFFFFF";
+  const borderMuted = isDj
+    ? `color-mix(in srgb, ${secondary} 22%, #E5DFD5)`
+    : "#E5DFD5";
+
   return {
     "--brand-primary": primary,
     "--brand-secondary": secondary,
@@ -76,6 +87,9 @@ export function getClientCssVars(
     "--plg-gold-light": `color-mix(in srgb, ${accent} 42%, white)`,
     "--plg-navy": primary,
     "--plg-charcoal": primary === "#212529" ? "#212529" : "#1E293B",
+    "--plg-warm-ivory": warmIvory,
+    "--plg-surface": surface,
+    "--plg-border-muted": borderMuted,
   };
 }
 

@@ -14,7 +14,7 @@
   "city": "Burbank",
   "state": "CA",
   "entitySuffix": "PLC",
-  "servingAreas": "Burbank · Los Angeles · Southern California",
+  "servingAreas": "Burbank \u00b7 Los Angeles \u00b7 Southern California",
   "tagline": "Aggressive representation for the injured.",
   "heroEyebrow": "California Personal Injury Evaluation Framework",
   "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Results are illustrative ranges based on common valuation methods and do not predict any particular outcome. Consult a licensed California attorney at Djougourian Law Corporation, or in your jurisdiction, for advice about your situation.",
@@ -35,5 +35,6 @@
       "value": "Contingency",
       "label": "Fee terms discussed at consult"
     }
-  ]
+  ],
+  "pageGround": "#E6F3EB"
 }

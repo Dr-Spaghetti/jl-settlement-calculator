@@ -25,8 +25,9 @@ const config: Config = {
           charcoal: "var(--plg-charcoal)",
           slate: "#334155",
           cream: "var(--page-ground)",
-          warmIvory: "#F4F1EA",
-          borderMuted: "#E5DFD5",
+          warmIvory: "var(--plg-warm-ivory)",
+          borderMuted: "var(--plg-border-muted)",
+          surface: "var(--plg-surface)",
         },
       },
       fontFamily: {

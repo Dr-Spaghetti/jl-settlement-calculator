@@ -15,6 +15,9 @@
   --plg-gold-light: #e8dec8;
   --plg-navy: #0f172a;
   --plg-charcoal: #1e293b;
+  --plg-warm-ivory: #f4f1ea;
+  --plg-surface: #ffffff;
+  --plg-border-muted: #e5dfd5;
 }
 
 html {
@@ -186,4 +189,38 @@ input[type="range"]::-moz-range-thumb {
 
 .signature-moment-slot {
   display: none;
+}
+
+
+/* Djougourian: more green/amber, less plain white (Premier unaffected) */
+html.theme-djougourian {
+  --page-ground: #e6f3eb;
+}
+html.theme-djougourian body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 10% -10%, color-mix(in srgb, var(--plg-crimson) 16%, transparent), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, color-mix(in srgb, var(--plg-gold) 22%, transparent), transparent 50%);
+  background-color: var(--page-ground);
+}
+html.theme-djougourian .bg-white {
+  background-color: var(--plg-surface) !important;
+}
+html.theme-djougourian .bg-white\/95,
+html.theme-djougourian .bg-white\/60 {
+  background-color: color-mix(in srgb, var(--plg-surface) 92%, transparent) !important;
+}
+html.theme-djougourian .from-white {
+  --tw-gradient-from: color-mix(in srgb, var(--plg-crimson) 8%, white) var(--tw-gradient-from-position) !important;
+}
+html.theme-djougourian .via-plg-cream {
+  --tw-gradient-via: color-mix(in srgb, var(--plg-crimson) 12%, white) var(--tw-gradient-via-position) !important;
+}
+html.theme-djougourian .to-plg-warmIvory\/50 {
+  --tw-gradient-to: color-mix(in srgb, var(--plg-gold) 28%, white) var(--tw-gradient-to-position) !important;
+}
+html.theme-djougourian ::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--plg-crimson) 10%, white);
+}
+html.theme-djougourian ::-webkit-scrollbar-thumb:hover {
+  background: var(--plg-gold);
 }

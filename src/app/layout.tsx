@@ -87,7 +87,10 @@ export default function RootLayout({
       };
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html
+      lang="en"
+      className={`scroll-smooth${useDj ? " theme-djougourian" : ""}`}
+    >
       <body
         className={`${plusJakarta.variable} ${cormorant.variable} ${cinzel.variable} ${montserrat.variable} ${roboto.variable} bg-plg-cream font-sans text-plg-charcoal antialiased`}
         style={{ ...cssVars, ...fontVars }}
