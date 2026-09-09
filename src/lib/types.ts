@@ -39,8 +39,14 @@ export interface ClientConfig {
   firmName: string;
   shortName: string;
   logoUrl: string;
+  /** Navy / charcoal / header role */
   primaryColor: string;
+  /** Crimson / green CTA role */
   secondaryColor: string;
+  /** Optional gold / amber scarce accent (defaults to Premier gold) */
+  accentColor?: string;
+  /** Optional page background override */
+  pageGround?: string;
   phone: string;
   /** Optional — omit or blank when no verified public firm email */
   email?: string;
@@ -51,6 +57,10 @@ export interface ClientConfig {
   state: string;
   tagline: string;
   attorneyDisclaimer: string;
+  /** Entity designation shown in header (e.g. PLLC, PLC) */
+  entitySuffix?: string;
+  /** Cities / regions line in the top bar */
+  servingAreas?: string;
   /** Optional eyebrow above the hero H1 (e.g. "Free educational estimate") */
   heroEyebrow?: string;
   /** Optional trust strip stats shown under hero / above calculator */

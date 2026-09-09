@@ -367,7 +367,12 @@ export function Calculator({
             <div>
               <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-plg-crimson">
                 <BoltIcon size={14} className="inline-block" /> Quick{" "}
-                {usState === "WA" ? "Washington" : ""} Accident Presets
+                {usState === "WA"
+                  ? "Washington "
+                  : usState === "CA"
+                    ? "California "
+                    : ""}
+                Accident Presets
               </span>
               <p className="mt-0.5 text-xs text-slate-500">
                 Load typical sample figures to see how multiplier dynamics change by
@@ -727,7 +732,9 @@ export function Calculator({
                         <span className="text-[11px] text-slate-500">
                           {usState === "WA"
                             ? "Washington RCW § 4.22.005 Pure Comparative Fault"
-                            : "Applied using this state’s comparative-fault category"}
+                            : usState === "CA"
+                              ? "California Pure Comparative Fault"
+                              : "Applied using this state’s comparative-fault category"}
                         </span>
                       </div>
                       <span className="rounded bg-slate-100 px-3 py-1 text-sm font-bold text-slate-900">
@@ -752,8 +759,23 @@ export function Calculator({
                     ) : (
                       <div className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-[11px] text-slate-600">
                         <strong>Legal note:</strong> Your share of fault typically reduces
-                        recoverable damages. WA pure comparative negligence allows recovery
-                        even above 50% fault (award reduced by your %).
+                        recoverable damages.{" "}
+                        {usState === "WA" ? (
+                          <>
+                            WA pure comparative negligence allows recovery even above 50%
+                            fault (award reduced by your %).
+                          </>
+                        ) : usState === "CA" ? (
+                          <>
+                            California pure comparative negligence allows recovery even
+                            above 50% fault (award reduced by your %).
+                          </>
+                        ) : (
+                          <>
+                            Comparative-fault rules vary by state — see the note for your
+                            selected state.
+                          </>
+                        )}
                       </div>
                     )}
                   </div>
@@ -881,6 +903,14 @@ export function Calculator({
                           <strong>Washington Minimum:</strong> WA requires $25,000 bodily
                           injury liability per person. If your claim exceeds this, ask about
                           UIM and umbrella policies.
+                        </>
+                      ) : usState === "CA" ? (
+                        <>
+                          <strong>California note:</strong> California requires minimum
+                          bodily injury liability coverage; limits and UIM options vary.
+                          Leave unknown if you do not know limits yet — the range still
+                          updates. Ask counsel about current statutory minimums and excess
+                          coverage.
                         </>
                       ) : (
                         "Leave unknown if you do not know limits yet — the range still updates."

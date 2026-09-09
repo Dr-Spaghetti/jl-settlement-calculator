@@ -3,6 +3,19 @@ import type { ClientConfig } from "@/lib/types";
 export function Footer({ client }: { client: ClientConfig }) {
   const year = new Date().getFullYear();
   const email = client.email?.trim();
+  const state = client.state.toUpperCase();
+  const rangesLabel =
+    state === "WA" ? "WA ranges" : state === "CA" ? "CA ranges" : "Ranges";
+  const footerTag =
+    state === "WA"
+      ? "Big Enough to Win. Small Enough to Care."
+      : client.tagline;
+  const locationLine =
+    client.servingAreas?.trim() ||
+    (state === "WA"
+      ? `${client.city}, ${client.state} · Seattle · Federal Way · Renton`
+      : `${client.city}, ${client.state}`);
+
   return (
     <footer className="border-t border-slate-800 bg-plg-navy pb-24 text-slate-300 md:pb-0">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -11,12 +24,7 @@ export function Footer({ client }: { client: ClientConfig }) {
             <p className="font-cinzel text-base font-bold uppercase tracking-[0.12em] text-white">
               {client.shortName}
             </p>
-            <p className="mt-2 text-sm text-slate-400">
-              {client.city}, {client.state}
-              {client.state.toUpperCase() === "WA"
-                ? " · Seattle · Federal Way · Renton"
-                : ""}
-            </p>
+            <p className="mt-2 text-sm text-slate-400">{locationLine}</p>
             <p className="mt-1 text-sm">
               <a
                 className="font-semibold text-white transition hover:text-plg-gold"
@@ -32,9 +40,7 @@ export function Footer({ client }: { client: ClientConfig }) {
                 </a>
               </p>
             ) : null}
-            <p className="mt-3 text-xs italic text-plg-gold">
-              Big Enough to Win. Small Enough to Care.
-            </p>
+            <p className="mt-3 text-xs italic text-plg-gold">{footerTag}</p>
           </div>
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
@@ -53,7 +59,7 @@ export function Footer({ client }: { client: ClientConfig }) {
               </li>
               <li>
                 <a href="#settlement-ranges" className="transition hover:text-white">
-                  WA ranges
+                  {rangesLabel}
                 </a>
               </li>
               <li>

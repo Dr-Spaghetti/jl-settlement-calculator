@@ -4,6 +4,9 @@ import type { ClientConfig } from "./types";
 
 const CLIENTS_DIR = path.join(process.cwd(), "clients");
 
+const DEFAULT_GOLD = "#C5A880";
+const DEFAULT_GROUND = "#F9F8F6";
+
 function readJson<T>(filePath: string): T {
   const raw = readFileSync(filePath, "utf8");
   return JSON.parse(raw) as T;
@@ -47,11 +50,42 @@ export function getActiveClient(): ClientConfig {
   return readJson<ClientConfig>(fallback);
 }
 
+/**
+ * Map client brand colors onto CSS variables used by Tailwind `plg-*` tokens.
+ * - primary → navy / charcoal (header, panels)
+ * - secondary → crimson / CTA green
+ * - accent → gold / amber scarce accent
+ */
 export function getClientCssVars(
   client: ClientConfig
 ): Record<string, string> {
+  const primary = client.primaryColor;
+  const secondary = client.secondaryColor;
+  const accent = client.accentColor?.trim() || DEFAULT_GOLD;
+  const ground = client.pageGround?.trim() || DEFAULT_GROUND;
+
   return {
-    "--brand-primary": client.primaryColor,
-    "--brand-secondary": client.secondaryColor,
+    "--brand-primary": primary,
+    "--brand-secondary": secondary,
+    "--brand-accent": accent,
+    "--page-ground": ground,
+    "--plg-crimson": secondary,
+    "--plg-crimson-dark": `color-mix(in srgb, ${secondary} 78%, black)`,
+    "--plg-crimson-light": `color-mix(in srgb, ${secondary} 85%, white)`,
+    "--plg-gold": accent,
+    "--plg-gold-light": `color-mix(in srgb, ${accent} 42%, white)`,
+    "--plg-navy": primary,
+    "--plg-charcoal": primary === "#212529" ? "#212529" : "#1E293B",
   };
+}
+
+export function clientUsesDjFonts(client: ClientConfig): boolean {
+  return client.id === "djougourian-law";
+}
+
+export function stateRegionLabel(state: string): string {
+  const s = state.toUpperCase();
+  if (s === "WA") return "Washington";
+  if (s === "CA") return "California";
+  return state;
 }

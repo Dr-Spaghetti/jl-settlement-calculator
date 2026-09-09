@@ -9,7 +9,9 @@ type FaqItem = {
 function buildFaqs(client: ClientConfig): FaqItem[] {
   const phone = client.phone;
   const tel = phone.replace(/[^\d+]/g, "");
-  const isWa = client.state.toUpperCase() === "WA";
+  const state = client.state.toUpperCase();
+  const isWa = state === "WA";
+  const isCa = state === "CA";
 
   const base: FaqItem[] = [
     {
@@ -62,6 +64,46 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
             site, you don’t pay a penny unless they win your case. Free consultations are
             offered for vehicle accident, personal injury, and wrongful death matters. Fee
             terms are set in a written agreement—ask during your consult.
+          </>
+        ),
+      }
+    );
+  } else if (isCa) {
+    base.push(
+      {
+        q: "How long do I have to file a personal injury claim in California?",
+        a: (
+          <>
+            California personal injury deadlines are strict and fact-dependent. Many injury
+            claims against private parties are discussed under a roughly two-year framework,
+            but exceptions, notice rules, and different claim types can change the timeline.
+            This is educational information only—not a determination of your filing deadline.
+            Confirm timing with a licensed California attorney before relying on any date.
+          </>
+        ),
+      },
+      {
+        q: "Does my percentage of fault reduce a California car accident settlement?",
+        a: (
+          <>
+            California generally follows pure comparative negligence: your share of fault
+            typically reduces recoverable damages by that percentage but does not
+            automatically bar recovery even if you are mostly at fault. Enter your estimated
+            fault % and set the state to CA in the calculator to see an educational
+            recoverable range after that reduction. Insurers may still dispute fault share—
+            this tool does not decide liability.
+          </>
+        ),
+      },
+      {
+        q: "What does it cost to hire a personal injury lawyer?",
+        a: (
+          <>
+            Many California personal injury lawyers work on contingency, meaning attorney
+            fees are typically a percentage of any recovery and discussed up front.{" "}
+            {client.shortName} offers a free consultation so you can ask about fee
+            arrangements for your matter. This calculator is free and educational only—
+            fee terms are set in a written agreement.
           </>
         ),
       }

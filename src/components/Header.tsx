@@ -9,18 +9,30 @@ function telHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
 
-function shortTagline(tagline: string): string {
+function shortTagline(tagline: string, fallback: string): string {
   const match = tagline.match(/^([^.]+\.[^.]*\.)/);
-  return match ? match[1].trim() : "Big Enough to Win. Small Enough to Care.";
+  if (match) return match[1].trim();
+  const first = tagline.split(/[.!?]/)[0]?.trim();
+  return first || fallback;
 }
 
 export function Header({ client }: { client: ClientConfig }) {
+  const state = client.state.toUpperCase();
   const cities =
-    client.state.toUpperCase() === "WA"
+    client.servingAreas?.trim() ||
+    (state === "WA"
       ? "Serving Seattle • Bellevue • Federal Way • Renton"
-      : `Serving ${client.city}, ${client.state}`;
-  const tag = shortTagline(client.tagline);
-  const isPremier = client.id === "premier-law-group";
+      : `Serving ${client.city}, ${client.state}`);
+  const tag = shortTagline(
+    client.tagline,
+    state === "WA"
+      ? "Big Enough to Win. Small Enough to Care."
+      : client.tagline
+  );
+  const entity = client.entitySuffix?.trim() || (state === "CA" ? "PLC" : "PLLC");
+  const showLogo = Boolean(client.logoUrl);
+  const rangesLabel =
+    state === "WA" ? "WA Ranges" : state === "CA" ? "CA Ranges" : "Ranges";
 
   return (
     <>
@@ -28,20 +40,30 @@ export function Header({ client }: { client: ClientConfig }) {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-2 sm:flex-row sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 text-slate-300">
             <span className="inline-flex items-center rounded bg-plg-crimson px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
-              {client.state.toUpperCase() === "WA"
+              {state === "WA"
                 ? "Washington State"
-                : client.state}
+                : state === "CA"
+                  ? "California"
+                  : client.state}
             </span>
             <span className="text-slate-300">{cities}</span>
           </div>
           <div className="flex items-center space-x-6 text-xs text-slate-300">
-            {client.state.toUpperCase() === "WA" ? (
+            {state === "WA" ? (
               <span className="hidden md:inline">
                 <ScaleIcon
                   size={14}
                   className="mr-1.5 inline-block align-[-2px] text-plg-gold"
                 />
                 RCW § 4.22.005 Pure Comparative Negligence
+              </span>
+            ) : state === "CA" ? (
+              <span className="hidden md:inline">
+                <ScaleIcon
+                  size={14}
+                  className="mr-1.5 inline-block align-[-2px] text-plg-gold"
+                />
+                California Pure Comparative Negligence
               </span>
             ) : null}
             <a
@@ -62,7 +84,7 @@ export function Header({ client }: { client: ClientConfig }) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-28 items-center justify-between gap-4">
             <a href="#top" className="group flex min-w-0 items-center gap-3 sm:gap-4">
-              {isPremier && client.logoUrl ? (
+              {showLogo ? (
                 <>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -88,7 +110,7 @@ export function Header({ client }: { client: ClientConfig }) {
                 </span>
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500">
-                    PLLC
+                    {entity}
                   </span>
                   <span className="text-[10px] text-slate-400">•</span>
                   <span className="truncate text-[11px] font-medium italic text-plg-crimson">
@@ -113,7 +135,7 @@ export function Header({ client }: { client: ClientConfig }) {
                   href="#settlement-ranges"
                   className="transition hover:text-plg-crimson"
                 >
-                  WA Ranges
+                  {rangesLabel}
                 </a>
                 <a href="#faq" className="transition hover:text-plg-crimson">
                   FAQ

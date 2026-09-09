@@ -16,17 +16,21 @@ const TRUST_ICONS: ComponentType<IconProps>[] = [
 ];
 
 export function Hero({ client }: { client: ClientConfig }) {
+  const state = client.state.toUpperCase();
+
   const trust =
     client.trustStats?.length === 4
       ? client.trustStats
       : [
           { value: "100% Private", label: "Zero data stored on servers" },
           {
-            value: "WA Specific",
+            value: state === "CA" ? "CA Comparative" : "WA Specific",
             label:
-              client.state.toUpperCase() === "WA"
+              state === "WA"
                 ? "RCW 4.22.005 comparative rules"
-                : `${client.state} comparative rules`,
+                : state === "CA"
+                  ? "Pure comparative fault education"
+                  : `${client.state} comparative rules`,
           },
           { value: "Zero fee unless we win", label: "Contingency legal fee model" },
           {
@@ -36,9 +40,18 @@ export function Hero({ client }: { client: ClientConfig }) {
         ];
 
   const supportCopy =
-    client.state.toUpperCase() === "WA"
+    state === "WA"
       ? "An educational estimate using common valuation concepts and Washington’s pure comparative fault laws (RCW 4.22.005). Illustrative ranges only — not a case valuation or legal advice."
-      : client.tagline;
+      : state === "CA"
+        ? "An educational estimate using common valuation concepts and California’s pure comparative fault rules. Your share of fault may reduce recoverable damages, but does not automatically bar recovery. Illustrative ranges only — not a case valuation or legal advice."
+        : client.tagline;
+
+  const titleLead =
+    state === "WA"
+      ? "Washington Car Accident"
+      : state === "CA"
+        ? "California Car Accident"
+        : "Car Accident";
 
   return (
     <section
@@ -47,17 +60,22 @@ export function Hero({ client }: { client: ClientConfig }) {
       aria-labelledby="hero-heading"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(#8C1D24_1px,transparent_1px)] opacity-[0.03] [background-size:24px_24px]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--plg-crimson)_1px,transparent_1px)] opacity-[0.03] [background-size:24px_24px]"
         aria-hidden
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
+          {client.heroEyebrow ? (
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-plg-crimson">
+              {client.heroEyebrow}
+            </p>
+          ) : null}
           <h1
             id="hero-heading"
             className="font-serif mb-6 text-5xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl"
           >
-            {client.state.toUpperCase() === "WA" ? "Washington Car Accident" : "Car Accident"}{" "}
+            {titleLead}{" "}
             <br className="hidden sm:inline" />
             <span className="font-serif italic text-plg-crimson">Settlement Calculator</span>
           </h1>

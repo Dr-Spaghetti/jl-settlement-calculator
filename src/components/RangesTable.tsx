@@ -1,6 +1,16 @@
+import type { ClientConfig } from "@/lib/types";
 import { EDUCATIONAL_RANGES } from "@/lib/calculator";
+import { stateRegionLabel } from "@/lib/client";
 
-export function RangesTable() {
+export function RangesTable({ client }: { client?: ClientConfig }) {
+  const region = client ? stateRegionLabel(client.state) : "Educational";
+  const eyebrow =
+    client?.state.toUpperCase() === "WA"
+      ? "Washington Benchmarks"
+      : client?.state.toUpperCase() === "CA"
+        ? "California Educational Benchmarks"
+        : `${region} Benchmarks`;
+
   return (
     <section
       id="settlement-ranges"
@@ -10,7 +20,7 @@ export function RangesTable() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
-            Washington Benchmarks
+            {eyebrow}
           </span>
           <h2
             id="ranges-heading"

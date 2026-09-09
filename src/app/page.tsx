@@ -21,7 +21,7 @@ export default function HomePage() {
         <Hero client={client} />
         <Calculator defaultState={client.state} client={client} />
         <HowItWorks />
-        <RangesTable />
+        <RangesTable client={client} />
         <Testimonials client={client} />
         <CTASection client={client} />
         <FAQ client={client} />
