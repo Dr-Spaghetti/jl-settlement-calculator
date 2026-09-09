@@ -979,10 +979,6 @@ export function Calculator({
                       Estimated Settlement Range
                     </h3>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/10 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-emerald-300">
-                    <span className="h-2 w-2 animate-ping rounded-full bg-emerald-400" />{" "}
-                    Live
-                  </span>
                 </div>
 
                 <div className="bg-gradient-to-b from-white to-plg-cream/50 p-6">
@@ -1015,13 +1011,10 @@ export function Calculator({
                         </div>
 
                         <div
-                          className={`relative -top-1 rounded-xl border border-slate-700 bg-slate-900 p-3.5 text-center text-white shadow-md ${
+                          className={`rounded-xl border border-slate-700 bg-slate-900 p-3.5 text-center text-white shadow-md ring-2 ring-plg-crimson/40 ${
                             midPop ? "motion-safe:animate-mid-pop" : ""
                           }`}
                         >
-                          <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded bg-plg-crimson px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white shadow">
-                            Realistic Mid
-                          </div>
                           <span className="mb-1 block text-[10px] font-medium uppercase tracking-wider text-plg-gold">
                             Estimated Mid
                           </span>
