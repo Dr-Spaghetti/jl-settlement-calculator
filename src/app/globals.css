@@ -158,7 +158,7 @@ input[type="range"]::-moz-range-thumb {
     transform: scale(1);
   }
   40% {
-    transform: scale(1.04);
+    transform: scale(1.02);
   }
   100% {
     transform: scale(1);
@@ -277,8 +277,9 @@ html.theme-djougourian .dj-results-shell {
   color: #e9efe9;
 }
 html.theme-djougourian .dj-results-mid {
-  background: var(--dj-primary-container, #0b3d2e);
-  border-color: #1b6b50;
+  background: var(--dj-primary-container, #064E3B);
+  border-color: #10B981;
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.25), 0 10px 25px -5px rgba(6, 78, 59, 0.35);
 }
 html.theme-djougourian .dj-results-tier {
   background: var(--dj-inverse-elevated, #1f3027);
@@ -288,8 +289,8 @@ html.theme-djougourian .dj-mint {
   color: var(--dj-mint, #85d9b6);
 }
 html.theme-djougourian .dj-logo-dark {
-  /* Keep original dark logo (no invert) for light header */
-  filter: none;
+  /* White treatment for dark forest header */
+  filter: brightness(0) invert(1);
   opacity: 1;
 }
 

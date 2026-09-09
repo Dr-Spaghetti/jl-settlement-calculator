@@ -1177,13 +1177,13 @@ export function Calculator({
 
                       <div
                         className={`mb-4 grid grid-cols-3 items-stretch gap-2 ${
-                          isDj ? "gap-2 sm:gap-2.5" : "items-end gap-2.5"
+                          isDj ? "min-w-0 gap-2 sm:gap-2.5" : "items-end gap-2.5"
                         }`}
                       >
                         <div
                           className={`rounded-xl border text-center transition ${
                             isDj
-                              ? "dj-results-tier border-[#2b4236] bg-[#1f3027] p-2.5 sm:p-3"
+                              ? "dj-results-tier min-w-0 overflow-hidden border-[#2b4236] bg-[#1f3027] p-2.5 sm:p-3"
                               : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
                           }`}
                         >
@@ -1215,7 +1215,7 @@ export function Calculator({
                         <div
                           className={`rounded-xl border text-center text-white shadow-md ${
                             isDj
-                              ? "dj-results-mid relative z-10 border-[#10B981]/50 bg-[#064E3B] p-4 shadow-lg sm:p-5"
+                              ? "dj-results-mid min-w-0 overflow-hidden border-[#10B981]/50 bg-[#064E3B] p-2.5 shadow-lg sm:p-3.5"
                               : "border-slate-700 bg-slate-900 p-3.5 ring-2 ring-plg-crimson/40"
                           } ${midPop ? "motion-safe:animate-mid-pop" : ""}`}
                         >
@@ -1231,7 +1231,7 @@ export function Calculator({
                           <span
                             className={`block font-black text-white ${
                               isDj
-                                ? "text-2xl tabular-nums sm:text-3xl"
+                                ? "max-w-full truncate text-[clamp(0.95rem,3.6vw,1.35rem)] leading-none tabular-nums tracking-tight sm:text-xl lg:text-2xl"
                                 : "text-xl sm:text-2xl"
                             }`}
                           >
@@ -1249,7 +1249,7 @@ export function Calculator({
                         <div
                           className={`rounded-xl border text-center transition ${
                             isDj
-                              ? "dj-results-tier border-[#2b4236] bg-[#1f3027] p-2.5 sm:p-3"
+                              ? "dj-results-tier min-w-0 overflow-hidden border-[#2b4236] bg-[#1f3027] p-2.5 sm:p-3"
                               : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
                           }`}
                         >
