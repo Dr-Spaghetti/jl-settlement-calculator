@@ -3,10 +3,6 @@ import type { ClientConfig } from "@/lib/types";
 const TRUST_ICONS = ["🛡", "⚖", "💰", "🏢"] as const;
 
 export function Hero({ client }: { client: ClientConfig }) {
-  const eyebrow =
-    client.heroEyebrow?.trim() ||
-    `Free educational estimate · ${client.city}, ${client.state}`;
-
   const trust =
     client.trustStats?.length === 4
       ? client.trustStats
@@ -44,14 +40,9 @@ export function Hero({ client }: { client: ClientConfig }) {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-plg-borderMuted bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-plg-crimson" />
-            <span>{eyebrow}</span>
-          </div>
-
           <h1
             id="hero-heading"
-            className="font-serif mb-6 text-4xl font-bold leading-[1.15] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
+            className="font-serif mb-6 text-5xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl"
           >
             {client.state.toUpperCase() === "WA" ? "Washington Car Accident" : "Car Accident"}{" "}
             <br className="hidden sm:inline" />
