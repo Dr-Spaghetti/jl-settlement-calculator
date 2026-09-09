@@ -953,21 +953,6 @@ export function Calculator({
               ) : null}
             </div>
 
-            <div className="flex items-start gap-3 rounded-xl border border-plg-borderMuted bg-plg-warmIvory p-4 text-xs text-slate-700">
-              <span className="mt-0.5 text-lg text-plg-gold" aria-hidden>
-                💡
-              </span>
-              <div>
-                <strong className="mb-0.5 block font-bold text-slate-900">
-                  How {client.shortName} approaches case valuation:
-                </strong>
-                <p>
-                  Soft-tissue claims are often undervalued by default insurance software.
-                  Documented care, objective imaging, and clear liability help support
-                  stronger multiplier bands — then talk with an attorney about your facts.
-                </p>
-              </div>
-            </div>
           </div>
 
           {/* RIGHT results */}
