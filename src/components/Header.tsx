@@ -1,4 +1,9 @@
 import type { ClientConfig } from "@/lib/types";
+import {
+  ArrowRightIcon,
+  PhoneIcon,
+  ScaleIcon,
+} from "@/components/icons";
 
 function telHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
@@ -32,9 +37,10 @@ export function Header({ client }: { client: ClientConfig }) {
           <div className="flex items-center space-x-6 text-xs text-slate-300">
             {client.state.toUpperCase() === "WA" ? (
               <span className="hidden md:inline">
-                <span className="mr-1.5 text-plg-gold" aria-hidden>
-                  ⚖
-                </span>
+                <ScaleIcon
+                  size={14}
+                  className="mr-1.5 inline-block align-[-2px] text-plg-gold"
+                />
                 RCW § 4.22.005 Pure Comparative Negligence
               </span>
             ) : null}
@@ -42,9 +48,10 @@ export function Header({ client }: { client: ClientConfig }) {
               href={telHref(client.phone)}
               className="flex items-center font-semibold text-white transition hover:text-plg-gold"
             >
-              <span className="mr-1.5 text-plg-crimson" aria-hidden>
-                ☎
-              </span>
+              <PhoneIcon
+                size={14}
+                className="mr-1.5 inline-block align-[-2px] text-plg-crimson"
+              />
               {client.phone}
             </a>
           </div>
@@ -130,9 +137,7 @@ export function Header({ client }: { client: ClientConfig }) {
               >
                 <span className="hidden sm:inline">{client.ctaText}</span>
                 <span className="sm:hidden">Consult</span>
-                <span className="text-xs opacity-80" aria-hidden>
-                  →
-                </span>
+                <ArrowRightIcon size={14} className="opacity-80" />
               </a>
             </div>
           </div>

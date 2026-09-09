@@ -1,6 +1,19 @@
+import type { ComponentType } from "react";
 import type { ClientConfig } from "@/lib/types";
+import type { IconProps } from "@/components/icons";
+import {
+  BuildingIcon,
+  CurrencyIcon,
+  ScaleIcon,
+  ShieldIcon,
+} from "@/components/icons";
 
-const TRUST_ICONS = ["🛡", "⚖", "💰", "🏢"] as const;
+const TRUST_ICONS: ComponentType<IconProps>[] = [
+  ShieldIcon,
+  ScaleIcon,
+  CurrencyIcon,
+  BuildingIcon,
+];
 
 export function Hero({ client }: { client: ClientConfig }) {
   const trust =
@@ -54,22 +67,27 @@ export function Hero({ client }: { client: ClientConfig }) {
           </p>
 
           <div className="mx-auto grid max-w-3xl grid-cols-2 gap-4 border-t border-slate-200/80 pt-4 sm:grid-cols-4">
-            {trust.map((stat, i) => (
-              <div
-                key={`${stat.value}-${stat.label}`}
-                className="flex items-center justify-center gap-2.5 p-2 text-left"
-              >
-                <span className="text-xl text-plg-crimson" aria-hidden>
-                  {TRUST_ICONS[i] ?? "•"}
-                </span>
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-900">
-                    {stat.value}
+            {trust.map((stat, i) => {
+              const Icon = TRUST_ICONS[i] ?? ShieldIcon;
+              return (
+                <div
+                  key={`${stat.value}-${stat.label}`}
+                  className="flex items-center justify-center gap-2.5 p-2 text-left"
+                >
+                  <Icon
+                    size={20}
+                    className="shrink-0 text-plg-crimson"
+                    aria-hidden
+                  />
+                  <div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-900">
+                      {stat.value}
+                    </div>
+                    <div className="text-[11px] text-slate-500">{stat.label}</div>
                   </div>
-                  <div className="text-[11px] text-slate-500">{stat.label}</div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

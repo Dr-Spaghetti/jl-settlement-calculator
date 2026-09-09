@@ -1,4 +1,5 @@
 import { WORKED_EXAMPLE } from "@/lib/calculator";
+import { CheckIcon } from "@/components/icons";
 
 export function HowItWorks() {
   const steps = [
@@ -107,9 +108,7 @@ export function HowItWorks() {
                 attorney — not a verdict or guarantee.
               </p>
               <div className="flex items-center gap-3 text-xs text-plg-gold">
-                <span className="text-plg-crimson" aria-hidden>
-                  ✓
-                </span>
+                <CheckIcon size={16} className="shrink-0 text-plg-crimson" />
                 <span>
                   Contingency fee for many injury cases — no attorney fee unless the firm
                   wins.

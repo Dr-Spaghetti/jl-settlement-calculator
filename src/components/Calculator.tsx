@@ -28,6 +28,13 @@ import { PrintSummary } from "@/components/calculator/PrintSummary";
 import { CountUpCurrency } from "@/components/calculator/CountUpCurrency";
 import { SignatureMoment } from "@/components/motion/SignatureMoment";
 import { prefersReducedMotion } from "@/lib/motion";
+import {
+  BoltIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PhoneIcon,
+  RotateCcwIcon,
+} from "@/components/icons";
 
 const inputClass =
   "input-touch mt-1.5 block w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm outline-none transition focus:border-plg-crimson focus:ring-1 focus:ring-plg-crimson";
@@ -359,7 +366,7 @@ export function Calculator({
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
             <div>
               <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-plg-crimson">
-                <span aria-hidden>⚡</span> Quick{" "}
+                <BoltIcon size={14} className="inline-block" /> Quick{" "}
                 {usState === "WA" ? "Washington" : ""} Accident Presets
               </span>
               <p className="mt-0.5 text-xs text-slate-500">
@@ -385,10 +392,10 @@ export function Calculator({
               <button
                 type="button"
                 onClick={resetCalculator}
-                className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-400 transition hover:text-slate-700"
+                className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-400 transition hover:text-slate-700"
                 title="Reset fields"
               >
-                ↺ Reset
+                <RotateCcwIcon size={12} className="inline-block" /> Reset
               </button>
             </div>
           </div>
@@ -562,7 +569,7 @@ export function Calculator({
                       className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-plg-crimson"
                     >
                       Continue to Injury Severity
-                      <span aria-hidden>→</span>
+                      <ChevronRightIcon size={14} className="shrink-0" />
                     </button>
                   </div>
                 </fieldset>
@@ -804,7 +811,7 @@ export function Calculator({
                       onClick={goBack}
                       className="flex items-center gap-1.5 text-xs font-bold text-slate-600 transition hover:text-slate-900"
                     >
-                      ← Back to Step 1
+                      <ChevronLeftIcon size={14} className="shrink-0" /> Back to Step 1
                     </button>
                     <button
                       type="button"
@@ -812,7 +819,7 @@ export function Calculator({
                       className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-plg-crimson"
                     >
                       Continue to Insurance Limits
-                      <span aria-hidden>→</span>
+                      <ChevronRightIcon size={14} className="shrink-0" />
                     </button>
                   </div>
                 </fieldset>
@@ -939,7 +946,7 @@ export function Calculator({
                       onClick={goBack}
                       className="flex items-center gap-1.5 text-xs font-bold text-slate-600 transition hover:text-slate-900"
                     >
-                      ← Back to Step 2
+                      <ChevronLeftIcon size={14} className="shrink-0" /> Back to Step 2
                     </button>
                     <a
                       href="#results"
@@ -1113,9 +1120,7 @@ export function Calculator({
                             href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
                             className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-3 py-2.5 text-xs font-bold tracking-wide text-white transition hover:bg-slate-800"
                           >
-                            <span className="text-plg-gold" aria-hidden>
-                              ☎
-                            </span>
+                            <PhoneIcon size={14} className="text-plg-gold" />
                             {client.phone}
                           </a>
                           <PrintSummary
