@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import type { ClientConfig } from "@/lib/types";
+import { clientUsesDjFonts } from "@/lib/client";
 import type { IconProps } from "@/components/icons";
 import {
   BuildingIcon,
@@ -16,6 +17,7 @@ const TRUST_ICONS: ComponentType<IconProps>[] = [
 ];
 
 export function Hero({ client }: { client: ClientConfig }) {
+  const isDj = clientUsesDjFonts(client);
   const state = client.state.toUpperCase();
 
   const trust =
@@ -52,6 +54,75 @@ export function Hero({ client }: { client: ClientConfig }) {
       : state === "CA"
         ? "California Car Accident"
         : "Car Accident";
+
+  if (isDj) {
+    const shortSupport =
+      "Educational California settlement ranges — illustrative only, not legal advice.";
+
+    return (
+      <section
+        id="top"
+        className="relative overflow-hidden border-b border-[#d8dfdb] bg-gradient-to-b from-[#091b15] via-[#0d261e] to-[#eef2ef] pb-8 pt-8 sm:pb-10 sm:pt-9"
+        aria-labelledby="hero-heading"
+      >
+        <div
+          className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-[#1b5e47]/20 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-[#144233]/20 blur-3xl"
+          aria-hidden
+        />
+
+        <div className="relative mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h1
+              id="hero-heading"
+              className="font-display mb-4 text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[56px] lg:leading-[1.08]"
+            >
+              {titleLead}{" "}
+              <span className="font-display italic text-[#85d9b6]">
+                Settlement Calculator
+              </span>
+            </h1>
+
+            <p className="mx-auto mb-5 max-w-2xl text-sm font-normal leading-relaxed text-[#c3d5cb] sm:text-base">
+              {shortSupport}
+            </p>
+
+            <div className="mb-6 flex justify-center">
+              <a
+                href="#calculator"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#047857] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_10px_rgba(4,120,87,0.35)] transition hover:bg-[#064E3B]"
+              >
+                Start estimate
+              </a>
+            </div>
+
+            <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-2">
+              {trust.map((stat, i) => {
+                const Icon = TRUST_ICONS[i] ?? ShieldIcon;
+                return (
+                  <div
+                    key={`${stat.value}-${stat.label}`}
+                    className="inline-flex items-center gap-2 rounded-full border border-[#225542] bg-[#113126]/90 px-3 py-1.5 text-left"
+                  >
+                    <Icon size={14} className="shrink-0 text-[#85d9b6]" aria-hidden />
+                    <div className="min-w-0">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-white">
+                        {stat.value}
+                      </div>
+                      <div className="truncate text-[10px] text-[#a3bdb2]">{stat.label}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

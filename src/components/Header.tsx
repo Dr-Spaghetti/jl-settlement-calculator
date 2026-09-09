@@ -134,15 +134,6 @@ export function Header({ client }: { client: ClientConfig }) {
             </div>
           </div>
 
-          <div className="border-t border-[#193d30] bg-[#0d221b] px-4 py-2">
-            <p className="mx-auto flex max-w-[1200px] items-center justify-center gap-2 rounded-full border border-[#1f4b3c] bg-[#133026] px-4 py-1 text-center text-[11px] text-[#b9cdc3]">
-              <strong className="font-semibold text-white">
-                Educational Calculator:
-              </strong>{" "}
-              Provides educational, illustrative ranges — not a prediction of your case.
-              No attorney-client relationship is created.
-            </p>
-          </div>
         </header>
       </>
     );
