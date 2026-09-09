@@ -36,7 +36,7 @@ export function Hero({ client }: { client: ClientConfig }) {
         <div className="mt-8 flex flex-wrap gap-3">
           <a
             href="#calculator"
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold text-[var(--brand-primary)] shadow-card motion-safe:transition hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--brand-primary)]"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold text-white shadow-card motion-safe:transition hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--brand-primary)]"
             style={{ backgroundColor: "var(--brand-secondary)" }}
           >
             Start the calculator

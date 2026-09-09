@@ -844,7 +844,7 @@ export function Calculator({
                   <div className="flex flex-col gap-2 print:hidden sm:flex-row">
                     <a
                       href={client.ctaUrl}
-                      className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-[var(--brand-primary)]"
+                      className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-white"
                       style={{ backgroundColor: "var(--brand-secondary)" }}
                     >
                       {client.ctaText}

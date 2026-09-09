@@ -21,7 +21,7 @@ export function CTASection({ client }: { client: ClientConfig }) {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
             href={client.ctaUrl}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold text-[var(--brand-primary)] shadow-card motion-safe:transition hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold text-white shadow-card motion-safe:transition hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             style={{ backgroundColor: "var(--brand-secondary)" }}
           >
             {client.ctaText}
