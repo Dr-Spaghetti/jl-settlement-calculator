@@ -3,9 +3,9 @@
   "firmName": "Djougourian Law Corporation",
   "shortName": "Djougourian Law Corp",
   "logoUrl": "/logo-djougourian.png",
-  "primaryColor": "#062e22",
-  "secondaryColor": "#047857",
-  "accentColor": "#D97706",
+  "primaryColor": "#0A0A0A",
+  "secondaryColor": "#C9A227",
+  "accentColor": "#C9A227",
   "phone": "(818) 530-0000",
   "email": "arthur@djlawcorp.com",
   "website": "https://djlawcorp.com/",
@@ -13,15 +13,17 @@
   "ctaUrl": "https://djlawcorp.com/contact",
   "city": "Burbank",
   "state": "CA",
+  "officeAddress": "",
+  "responsibleAttorney": "",
   "entitySuffix": "Corp",
-  "servingAreas": "Burbank \u00b7 Los Angeles \u00b7 Southern California",
+  "servingAreas": "Burbank · Los Angeles · Southern California",
   "tagline": "Aggressive representation for the injured.",
   "heroEyebrow": "California Personal Injury Evaluation Framework",
-  "attorneyDisclaimer": "This calculator provides educational estimates only and is not legal advice. No attorney-client relationship is formed by using this tool. Results are illustrative ranges based on common valuation methods and do not predict any particular outcome. Consult a licensed California attorney at Djougourian Law Corporation, or in your jurisdiction, for advice about your situation.",
+  "attorneyDisclaimer": "Educational estimate only — not legal advice and not a guarantee or prediction of any result. Using this calculator does not create an attorney-client relationship.",
   "trustStats": [
     {
-      "value": "100% Private",
-      "label": "Zero data stored on servers"
+      "value": "Browser-only",
+      "label": "Inputs are not sent or stored"
     },
     {
       "value": "CA Comparative",
@@ -32,9 +34,9 @@
       "label": "No-obligation case review"
     },
     {
-      "value": "Contingency",
-      "label": "Fee terms discussed at consult"
+      "value": "Educational",
+      "label": "Not a guarantee or legal advice"
     }
   ],
-  "pageGround": "#eef2ef"
+  "pageGround": "#0A0A0A"
 }

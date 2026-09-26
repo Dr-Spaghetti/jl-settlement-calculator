@@ -57,20 +57,20 @@ export function Hero({ client }: { client: ClientConfig }) {
 
   if (isDj) {
     const shortSupport =
-      "Educational California settlement ranges — illustrative only, not legal advice.";
+      "Educational California settlement ranges — illustrative only. Not a guarantee of any result and not legal advice.";
 
     return (
       <section
         id="top"
-        className="relative overflow-hidden border-b border-[#d8dfdb] bg-gradient-to-b from-[#091b15] via-[#0d261e] to-[#eef2ef] pb-8 pt-8 sm:pb-10 sm:pt-9"
+        className="relative overflow-hidden border-b border-[#C9A227]/30 bg-[#0A0A0A] pb-8 pt-8 sm:pb-10 sm:pt-9"
         aria-labelledby="hero-heading"
       >
         <div
-          className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-[#1b5e47]/20 blur-3xl"
+          className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-[#C9A227]/10 blur-3xl"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-[#144233]/20 blur-3xl"
+          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-[#C9A227]/[0.07] blur-3xl"
           aria-hidden
         />
 
@@ -81,19 +81,19 @@ export function Hero({ client }: { client: ClientConfig }) {
               className="font-display mb-4 text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[56px] lg:leading-[1.08]"
             >
               {titleLead}{" "}
-              <span className="font-display italic text-[#85d9b6]">
+              <span className="font-display italic text-[#C9A227]">
                 Settlement Calculator
               </span>
             </h1>
 
-            <p className="mx-auto mb-5 max-w-2xl text-sm font-normal leading-relaxed text-[#c3d5cb] sm:text-base">
+            <p className="mx-auto mb-5 max-w-2xl text-sm font-normal leading-relaxed text-[#E7E5E4] sm:text-base">
               {shortSupport}
             </p>
 
             <div className="mb-6 flex justify-center">
               <a
                 href="#calculator"
-                className="inline-flex items-center gap-2 rounded-lg bg-[#047857] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_10px_rgba(4,120,87,0.35)] transition hover:bg-[#064E3B]"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#C9A227] px-5 py-2.5 text-sm font-semibold text-[#0A0A0A] shadow-[0_2px_10px_rgba(201,162,39,0.3)] transition hover:bg-[#D4AF37]"
               >
                 Start estimate
               </a>
@@ -105,14 +105,14 @@ export function Hero({ client }: { client: ClientConfig }) {
                 return (
                   <div
                     key={`${stat.value}-${stat.label}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#225542] bg-[#113126]/90 px-3 py-1.5 text-left"
+                    className="inline-flex items-center gap-2 rounded-full border border-[#3A3426] bg-[#141414] px-3 py-1.5 text-left"
                   >
-                    <Icon size={14} className="shrink-0 text-[#85d9b6]" aria-hidden />
+                    <Icon size={14} className="shrink-0 text-[#C9A227]" aria-hidden />
                     <div className="min-w-0">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-white">
+                      <div className="text-xs font-semibold uppercase tracking-wider text-white">
                         {stat.value}
                       </div>
-                      <div className="truncate text-[10px] text-[#a3bdb2]">{stat.label}</div>
+                      <div className="truncate text-xs text-[#D6D3D1]">{stat.label}</div>
                     </div>
                   </div>
                 );

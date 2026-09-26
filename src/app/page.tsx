@@ -9,10 +9,12 @@ import { CTASection } from "@/components/CTASection";
 import { Testimonials } from "@/components/Testimonials";
 import { ProfessionalDisclaimer } from "@/components/ProfessionalDisclaimer";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
-import { getActiveClient } from "@/lib/client";
+import { DjLegalDisclaimer } from "@/components/dj/DjLegalDisclaimer";
+import { getActiveClient, clientUsesDjFonts } from "@/lib/client";
 
 export default function HomePage() {
   const client = getActiveClient();
+  const isDj = clientUsesDjFonts(client);
 
   return (
     <>
@@ -20,12 +22,16 @@ export default function HomePage() {
       <main>
         <Hero client={client} />
         <Calculator defaultState={client.state} client={client} />
-        <HowItWorks />
+        <HowItWorks dj={isDj} />
         <RangesTable client={client} />
         <Testimonials client={client} />
         <CTASection client={client} />
         <FAQ client={client} />
-        <ProfessionalDisclaimer client={client} />
+        {isDj ? (
+          <DjLegalDisclaimer client={client} />
+        ) : (
+          <ProfessionalDisclaimer client={client} />
+        )}
       </main>
       <Footer client={client} />
       <StickyMobileCTA client={client} />

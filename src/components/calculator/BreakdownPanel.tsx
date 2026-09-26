@@ -17,16 +17,16 @@ export function BreakdownPanel({
   dark?: boolean;
 }) {
   const formula = FORMULA_MODE_COPY[result.formulaMode];
-  const muted = dark ? "text-[#cadbd2]/80" : "text-slate-500";
+  const muted = dark ? "text-[#D6D3D1]" : "text-slate-500";
   const strong = dark ? "text-white" : "text-slate-800";
-  const label = dark ? "text-[#97f5cc]" : "text-slate-500";
-  const border = dark ? "border-[#294234]" : "border-slate-200/80";
+  const label = dark ? "text-[#C9A227]" : "text-slate-500";
+  const border = dark ? "border-[#3A3426]" : "border-slate-200/80";
 
   return (
     <div
       className={
         dark
-          ? "rounded-xl border border-[#23382c] bg-[#14221b] p-4 text-sm text-[#cadbd2]"
+          ? "rounded-xl border border-[#3A3426] bg-[#141414] p-4 text-sm text-[#E7E5E4]"
           : "rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm text-slate-600"
       }
     >
@@ -60,12 +60,12 @@ export function BreakdownPanel({
           </dd>
         </div>
         <div className={`flex justify-between gap-3 border-t pt-1.5 ${border}`}>
-          <dt className={`font-medium ${dark ? "text-[#97f5cc]" : "text-slate-800"}`}>
+          <dt className={`font-medium ${dark ? "text-[#C9A227]" : "text-slate-800"}`}>
             {result.formulaMode === "adjuster"
               ? "Multiplied base (medical)"
               : "Specials (multiplied)"}
           </dt>
-          <dd className={`font-semibold tabular-nums ${dark ? "text-[#97f5cc]" : "text-slate-900"}`}>
+          <dd className={`font-semibold tabular-nums ${dark ? "text-[#C9A227]" : "text-slate-900"}`}>
             {formatCurrency(result.multipliedBase)}
           </dd>
         </div>

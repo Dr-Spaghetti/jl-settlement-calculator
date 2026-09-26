@@ -192,47 +192,65 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ==========================================================================
-   Djougourian Executive Legal theme (Premier unaffected — no theme class)
+   Djougourian theme: black + gold primary, white details
+   (Premier unaffected: rules only apply under html.theme-djougourian)
+   Gold #C9A227 on #0A0A0A = 8.2:1; #0A0A0A on gold = 8.2:1;
+   deep gold #7A5F12 on white = 6.0:1 (used for gold-toned text on white)
    ========================================================================== */
 html.theme-djougourian {
-  --page-ground: #eef2ef;
+  --page-ground: #0a0a0a;
+  --dj-black: #0a0a0a;
+  --dj-surface: #141414;
+  --dj-border: #3a3426;
+  --dj-gold: #c9a227;
+  --dj-gold-hover: #d4af37;
+  --dj-gold-deep: #7a5f12;
   font-feature-settings: "tnum" 1, "cv05" 1;
 }
 
 html.theme-djougourian body {
-  background-color: var(--page-ground);
+  background-color: var(--dj-black);
   background-image: none;
-  color: #0f172a;
+  color: #ffffff;
 }
 
 html.theme-djougourian ::selection {
-  background: #047857;
-  color: white;
+  background: var(--dj-gold);
+  color: #0a0a0a;
 }
 
 html.theme-djougourian ::-webkit-scrollbar-track {
-  background: #e5eae6;
+  background: #141414;
+}
+html.theme-djougourian ::-webkit-scrollbar-thumb {
+  background: #3a3426;
 }
 html.theme-djougourian ::-webkit-scrollbar-thumb:hover {
-  background: #047857;
+  background: var(--dj-gold);
 }
 
+/* Focus: gold ring on dark, black ring on white cards (both >= 3:1) */
 html.theme-djougourian :focus-visible {
-  outline-color: #047857;
+  outline-color: var(--dj-gold);
+}
+html.theme-djougourian .bg-white :focus-visible {
+  outline-color: #0a0a0a;
 }
 
-/* Soft sage surfaces — cards stay white; section grounds stay sage */
 html.theme-djougourian .bg-plg-cream {
-  background-color: var(--page-ground) !important;
+  background-color: var(--dj-black) !important;
 }
+/* Tinted panels inside white cards (offer box, etc.) */
 html.theme-djougourian .bg-plg-warmIvory,
 html.theme-djougourian .bg-plg-warmIvory\/50,
 html.theme-djougourian .bg-plg-warmIvory\/60,
 html.theme-djougourian .bg-plg-warmIvory\/80 {
-  background-color: #e5eae6 !important;
+  background-color: #faf7ee !important;
+}
+html.theme-djougourian .border-plg-borderMuted {
+  border-color: #e7e5e4;
 }
 
-/* Tabular figures for currency / inputs */
 html.theme-djougourian .font-serif,
 html.theme-djougourian .font-display {
   font-family: var(--font-display), Georgia, "Times New Roman", serif;
@@ -242,89 +260,68 @@ html.theme-djougourian .font-cinzel {
   letter-spacing: 0.02em;
 }
 
-/* Input focus ring — emerald */
+/* Inputs on white cards: black border + gold ring on focus */
 html.theme-djougourian .focus\:border-plg-crimson:focus {
-  border-color: #047857 !important;
+  border-color: #0a0a0a !important;
 }
 html.theme-djougourian .focus\:ring-plg-crimson:focus {
-  --tw-ring-color: rgba(4, 120, 87, 0.25) !important;
+  --tw-ring-color: rgba(201, 162, 39, 0.55) !important;
 }
 
-/* Range thumb emerald */
+/* Range thumb: gold with black ring */
 html.theme-djougourian input[type="range"]::-webkit-slider-thumb {
-  background: #047857;
+  background: var(--dj-gold);
+  border-color: #0a0a0a;
 }
 html.theme-djougourian input[type="range"]::-moz-range-thumb {
-  background: #047857;
+  background: var(--dj-gold);
+  border-color: #0a0a0a;
 }
 
-/* Executive shadows */
 html.theme-djougourian .shadow-plg-card {
-  box-shadow:
-    0 1px 3px 0 rgba(15, 23, 42, 0.04),
-    0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
 }
 html.theme-djougourian .shadow-plg-panel {
   box-shadow:
-    0 10px 25px -5px rgba(6, 78, 59, 0.08),
-    0 8px 10px -6px rgba(15, 23, 42, 0.05);
+    0 10px 25px -5px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(201, 162, 39, 0.12);
 }
 
-/* Dark results module helpers */
-html.theme-djougourian .dj-results-shell {
-  background: var(--dj-inverse, #17231c);
-  border-color: #263a2f;
-  color: #e9efe9;
-}
 html.theme-djougourian .dj-results-mid {
-  background: var(--dj-primary-container, #064E3B);
-  border-color: #10B981;
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.25), 0 10px 25px -5px rgba(6, 78, 59, 0.35);
-}
-html.theme-djougourian .dj-results-tier {
-  background: var(--dj-inverse-elevated, #1f3027);
-  border-color: #2b4236;
-}
-html.theme-djougourian .dj-mint {
-  color: var(--dj-mint, #85d9b6);
+  box-shadow: 0 10px 25px -8px rgba(201, 162, 39, 0.35);
 }
 html.theme-djougourian .dj-logo-dark {
-  /* White treatment for dark forest header */
+  /* Logo file is solid black; render white on the black header */
   filter: brightness(0) invert(1);
   opacity: 1;
 }
 
+/* Gold-toned text that sits on white needs the deep gold for AA */
 html.theme-djougourian .required-asterisk {
-  color: #D97706 !important;
+  color: var(--dj-gold-deep) !important;
+}
+html.theme-djougourian #faq .bg-white a.text-plg-crimson {
+  color: var(--dj-gold-deep);
 }
 
-/* Educational sections — soft sage, white cards, emerald accents */
+/* Educational sections: white cards on black grounds */
 html.theme-djougourian #how-it-works li.relative {
   background-color: #ffffff;
-  border-color: #cdd6d0;
+  border-color: #3a3426;
 }
 html.theme-djougourian #faq .divide-y {
   background-color: #ffffff;
-  border-color: #cdd6d0;
+  border-color: #3a3426;
 }
 html.theme-djougourian #settlement-ranges table tbody tr:nth-child(even) {
-  background-color: #f8faf9;
+  background-color: #fafaf9;
 }
-html.theme-djougourian #settlement-ranges .bg-white {
-  background-color: #ffffff !important;
-}
-html.theme-djougourian footer {
-  background-color: var(--dj-header, #091b15) !important;
-}
-
-html.theme-djougourian #how-it-works .text-plg-gold {
-  color: #85d9b6 !important;
-}
-html.theme-djougourian #how-it-works .rounded-2xl.bg-plg-navy {
-  background-color: var(--dj-header, #091b15) !important;
-  border-color: #263a2f !important;
+html.theme-djougourian #settlement-ranges thead tr {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  box-shadow: inset 0 -2px 0 var(--dj-gold);
 }
 html.theme-djougourian .sticky-mobile-cta {
-  background-color: rgba(238, 242, 239, 0.96) !important;
-  border-color: #cdd6d0 !important;
+  background-color: rgba(10, 10, 10, 0.96) !important;
+  border-color: rgba(201, 162, 39, 0.5) !important;
 }

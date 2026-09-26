@@ -1,7 +1,7 @@
 import { WORKED_EXAMPLE } from "@/lib/calculator";
 import { CheckIcon } from "@/components/icons";
 
-export function HowItWorks() {
+export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
   const steps = [
     {
       title: "Total Economic Base",
@@ -24,21 +24,41 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="scroll-mt-28 border-t border-plg-borderMuted bg-transparent py-16"
+      className={
+        dj
+          ? "scroll-mt-28 border-t border-[#3A3426] bg-[#0A0A0A] py-16"
+          : "scroll-mt-28 border-t border-plg-borderMuted bg-transparent py-16"
+      }
       aria-labelledby="how-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 max-w-3xl">
-          <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+          <span
+            className={`text-xs font-bold uppercase tracking-wider ${
+              dj ? "text-[#C9A227]" : "text-plg-crimson"
+            }`}
+          >
             Transparency In Valuation
           </span>
           <h2
             id="how-heading"
-            className="font-serif mt-1 mb-3 text-3xl font-bold text-slate-900 sm:text-4xl"
+            className={
+              dj
+                ? "font-serif mt-1 mb-3 text-3xl font-bold text-white sm:text-4xl"
+                : "font-serif mt-1 mb-3 text-3xl font-bold text-slate-900 sm:text-4xl"
+            }
           >
-            How Insurance Companies and Lawyers Calculate Your Settlement
+            {dj
+              ? "How This Educational Estimate Is Calculated"
+              : "How Insurance Companies and Lawyers Calculate Your Settlement"}
           </h2>
-          <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
+          <p
+            className={
+              dj
+                ? "text-sm leading-relaxed text-[#D6D3D1] sm:text-base"
+                : "text-sm leading-relaxed text-slate-600 sm:text-base"
+            }
+          >
             Attorneys and claims professionals often discuss a “multiplier method” for
             general damages. This calculator shows that educational framework
             transparently — not a prediction of any particular outcome.
@@ -52,7 +72,11 @@ export function HowItWorks() {
               className="relative rounded-xl border border-slate-200 bg-transparent px-5 pb-6 pt-8 text-center shadow-sm transition hover:shadow-md"
             >
               <div
-                className="absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-plg-crimson text-sm font-bold text-white shadow-sm"
+                className={
+                  dj
+                    ? "absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#C9A227] text-sm font-bold text-[#0A0A0A] shadow-sm"
+                    : "absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-plg-crimson text-sm font-bold text-white shadow-sm"
+                }
                 aria-hidden
               >
                 {i + 1}
@@ -65,7 +89,13 @@ export function HowItWorks() {
           ))}
         </ol>
 
-        <div className="rounded-2xl border border-slate-800 bg-plg-navy p-6 text-white shadow-plg-panel sm:p-8">
+        <div
+          className={
+            dj
+              ? "rounded-2xl border border-[#C9A227]/50 bg-[#141414] p-6 text-white sm:p-8"
+              : "rounded-2xl border border-slate-800 bg-plg-navy p-6 text-white shadow-plg-panel sm:p-8"
+          }
+        >
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-plg-gold">
@@ -100,40 +130,72 @@ export function HowItWorks() {
               <h4 className="font-serif mb-2 text-lg font-bold text-white">
                 Educational caveat
               </h4>
-              <p className="mb-4 text-xs leading-relaxed text-slate-300">
+              <p
+                className={
+                  dj
+                    ? "mb-4 text-sm leading-relaxed text-[#D6D3D1]"
+                    : "mb-4 text-xs leading-relaxed text-slate-300"
+                }
+              >
                 Policy limits, comparative fault, venue, and proof quality can overshadow
                 any formula. Use this tool as a conversation starter with a licensed
                 attorney — not a verdict or guarantee.
               </p>
-              <div className="flex items-center gap-3 text-xs text-plg-gold">
-                <CheckIcon size={16} className="shrink-0 text-plg-crimson" />
-                <span>
-                  Contingency fee for many injury cases — no attorney fee unless the firm
-                  wins.
-                </span>
-              </div>
+              {dj ? (
+                <div className="flex items-center gap-3 text-sm text-[#C9A227]">
+                  <CheckIcon size={16} className="shrink-0 text-[#C9A227]" />
+                  <span>Ask about fees and case costs at your free consultation.</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 text-xs text-plg-gold">
+                  <CheckIcon size={16} className="shrink-0 text-plg-crimson" />
+                  <span>
+                    Contingency fee for many injury cases — no attorney fee unless the firm
+                    wins.
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        <details className="mt-8 rounded-2xl border border-plg-borderMuted bg-plg-cream p-6">
+        <details
+          className={
+            dj
+              ? "mt-8 rounded-2xl border border-[#3A3426] bg-[#141414] p-6"
+              : "mt-8 rounded-2xl border border-plg-borderMuted bg-plg-cream p-6"
+          }
+        >
           <summary className="cursor-pointer list-none marker:content-none [&::-webkit-details-marker]:hidden">
             <span className="flex items-center justify-between gap-3">
               <span
                 id="worked-example-heading"
-                className="font-serif text-lg font-semibold text-slate-900"
+                className={`font-serif text-lg font-semibold ${
+                  dj ? "text-white" : "text-slate-900"
+                }`}
               >
                 {WORKED_EXAMPLE.title}
               </span>
-              <span className="text-sm font-medium text-slate-500" aria-hidden>
+              <span
+                className={`text-sm font-medium ${dj ? "text-[#C9A227]" : "text-slate-500"}`}
+                aria-hidden
+              >
                 Show
               </span>
             </span>
           </summary>
-          <p className="mt-3 text-sm leading-relaxed text-slate-600">
+          <p
+            className={`mt-3 text-sm leading-relaxed ${
+              dj ? "text-[#D6D3D1]" : "text-slate-600"
+            }`}
+          >
             {WORKED_EXAMPLE.narrative}
           </p>
-          <ul className="mt-4 list-disc space-y-1.5 pl-5 text-sm text-slate-700">
+          <ul
+            className={`mt-4 list-disc space-y-1.5 pl-5 text-sm ${
+              dj ? "text-[#E7E5E4]" : "text-slate-700"
+            }`}
+          >
             {WORKED_EXAMPLE.highlights.map((h) => (
               <li key={h}>{h}</li>
             ))}

@@ -9,12 +9,15 @@ export function PrintSummary({
   firmName,
   usState,
   compact,
+  disclaimer,
 }: {
   result: SettlementRange;
   offerCheck: OfferRealityCheck | null;
   firmName: string;
   usState: string;
   compact?: boolean;
+  /** Optional qualifier printed with the summary (djlaw passes one). */
+  disclaimer?: string;
 }) {
   function handlePrint() {
     window.print();
@@ -101,6 +104,12 @@ export function PrintSummary({
           </p>
         ) : null}
         <p className="text-xs text-slate-500">{result.comparativeFaultNote}</p>
+        {disclaimer ? (
+          <p className="border-t border-slate-300 pt-2 text-xs text-slate-700">
+            {disclaimer} Using this calculator does not create an attorney-client
+            relationship. Attorney Advertising — {firmName}.
+          </p>
+        ) : null}
       </div>
     </div>
   );

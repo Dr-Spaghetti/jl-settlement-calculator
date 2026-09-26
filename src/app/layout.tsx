@@ -5,6 +5,8 @@ import {
   Cinzel,
   Montserrat,
   Roboto,
+  Newsreader,
+  Inter,
 } from "next/font/google";
 import {
   getActiveClient,
@@ -50,6 +52,25 @@ const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
 });
 
+// Djougourian typography (matches the live djlaw deployment). preload: false keeps
+// these out of the Premier page's <head>; variables are only attached for djlaw.
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  preload: false,
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  preload: false,
+});
+
 export function generateMetadata(): Metadata {
   const client = getActiveClient();
   const region = stateRegionLabel(client.state);
@@ -78,8 +99,8 @@ export default function RootLayout({
 
   const fontVars: Record<string, string> = useDj
     ? {
-        "--font-sans": "var(--font-roboto)",
-        "--font-display": "var(--font-montserrat)",
+        "--font-sans": "var(--font-inter)",
+        "--font-display": "var(--font-newsreader)",
       }
     : {
         "--font-sans": "var(--font-jakarta)",
@@ -92,7 +113,7 @@ export default function RootLayout({
       className={`scroll-smooth${useDj ? " theme-djougourian" : ""}`}
     >
       <body
-        className={`${plusJakarta.variable} ${cormorant.variable} ${cinzel.variable} ${montserrat.variable} ${roboto.variable} bg-plg-cream font-sans text-plg-charcoal antialiased`}
+        className={`${plusJakarta.variable} ${cormorant.variable} ${cinzel.variable} ${montserrat.variable} ${roboto.variable}${useDj ? ` ${newsreader.variable} ${inter.variable}` : ""} bg-plg-cream font-sans text-plg-charcoal antialiased`}
         style={{ ...cssVars, ...fontVars }}
       >
         {children}

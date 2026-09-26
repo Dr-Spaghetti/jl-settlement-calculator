@@ -41,7 +41,7 @@ export interface ClientConfig {
   logoUrl: string;
   /** Navy / charcoal / header role */
   primaryColor: string;
-  /** Crimson / green CTA role */
+  /** Crimson (Premier) / gold (Djougourian) CTA role */
   secondaryColor: string;
   /** Optional gold / amber scarce accent (defaults to Premier gold) */
   accentColor?: string;
@@ -55,6 +55,10 @@ export interface ClientConfig {
   ctaUrl: string;
   city: string;
   state: string;
+  /** Street address of a bona fide office (Rule 7.2(c)); blank shows a marked placeholder */
+  officeAddress?: string;
+  /** Name of at least one responsible CA lawyer (optional; firm name also satisfies 7.2(c)) */
+  responsibleAttorney?: string;
   tagline: string;
   attorneyDisclaimer: string;
   /** Entity designation shown in header (e.g. PLLC, PLC) */
