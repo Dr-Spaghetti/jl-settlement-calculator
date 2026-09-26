@@ -14,5 +14,6 @@ export const DJ_ESTIMATE_QUALIFIER =
 export function djFooterLegalLine(client: ClientConfig): string {
   const street = client.officeAddress?.trim() || "[street address]";
   const attorney = client.responsibleAttorney?.trim() || "[name]";
-  return `Attorney advertising. ${client.firmName}, ${street}, ${client.city}, ${client.state}. Responsible attorney: ${attorney}. Use of this tool does not create an attorney-client relationship. Past results do not guarantee future outcomes.`;
+  const zip = client.officeZip?.trim() ? ` ${client.officeZip.trim()}` : "";
+  return `Attorney advertising. ${client.firmName}, ${street}, ${client.city}, ${client.state}${zip}. Responsible attorney: ${attorney}. Use of this tool does not create an attorney-client relationship. Past results do not guarantee future outcomes.`;
 }

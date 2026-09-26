@@ -57,6 +57,8 @@ export interface ClientConfig {
   state: string;
   /** Street address of a bona fide office (Rule 7.2(c)); blank shows a marked placeholder */
   officeAddress?: string;
+  /** ZIP code for the office address (shown after the state) */
+  officeZip?: string;
   /** Name of at least one responsible CA lawyer (optional; firm name also satisfies 7.2(c)) */
   responsibleAttorney?: string;
   tagline: string;
