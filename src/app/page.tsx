@@ -9,7 +9,6 @@ import { CTASection } from "@/components/CTASection";
 import { Testimonials } from "@/components/Testimonials";
 import { ProfessionalDisclaimer } from "@/components/ProfessionalDisclaimer";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
-import { DjLegalDisclaimer } from "@/components/dj/DjLegalDisclaimer";
 import { getActiveClient, clientUsesDjFonts } from "@/lib/client";
 
 export default function HomePage() {
@@ -27,11 +26,7 @@ export default function HomePage() {
         <Testimonials client={client} />
         <CTASection client={client} />
         <FAQ client={client} />
-        {isDj ? (
-          <DjLegalDisclaimer client={client} />
-        ) : (
-          <ProfessionalDisclaimer client={client} />
-        )}
+        {isDj ? null : <ProfessionalDisclaimer client={client} />}
       </main>
       <Footer client={client} />
       <StickyMobileCTA client={client} />

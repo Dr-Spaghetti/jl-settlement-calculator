@@ -1,6 +1,6 @@
 import type { ClientConfig } from "@/lib/types";
 import { clientUsesDjFonts } from "@/lib/client";
-import { djOfficeLine } from "@/lib/disclaimers";
+import { djFooterLegalLine } from "@/lib/disclaimers";
 
 export function Footer({ client }: { client: ClientConfig }) {
   const year = new Date().getFullYear();
@@ -112,84 +112,69 @@ function DjFooter({
   year: number;
   locationLine: string;
 }) {
-  const tel = client.phone.replace(/[^\d+]/g, "");
+  const email = client.email?.trim();
   const links = [
     { href: "#calculator", label: "Settlement calculator" },
-    { href: "#how-it-works", label: "How the estimate works" },
-    { href: "#settlement-ranges", label: "Illustrative ranges" },
+    { href: "#how-it-works", label: "The formula" },
+    { href: "#settlement-ranges", label: "CA ranges" },
     { href: "#faq", label: "FAQ" },
-    { href: "#legal-disclaimer", label: "Legal disclaimer" },
   ];
   return (
-    <footer className="border-t border-[#C9A227]/60 bg-[#0A0A0A] pb-28 text-[#D6D3D1] md:pb-0">
+    <footer className="border-t border-[#B58A45]/40 bg-[#0D1B2A] pb-28 text-[#C9C1B3] md:pb-0">
       <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2">
           <div>
-            <p className="font-display text-base font-semibold uppercase tracking-[0.12em] text-white">
-              {client.firmName}
+            <p className="font-display text-base font-semibold uppercase tracking-[0.12em] text-[#F5F0E6]">
+              {client.shortName}
             </p>
-            <p className="mt-2 text-sm">{djOfficeLine(client)}</p>
-            <p className="mt-1 text-sm text-[#A8A29E]">{locationLine}</p>
-            <p className="mt-2 text-sm">
+            <p className="mt-2 text-sm">{locationLine}</p>
+            <p className="mt-1 text-sm">
               <a
-                className="font-semibold text-white transition hover:text-[#C9A227]"
-                href={`tel:${tel}`}
+                className="font-semibold text-[#F5F0E6] transition hover:text-[#B58A45]"
+                href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
               >
                 {client.phone}
               </a>
             </p>
-            {client.email?.trim() ? (
+            {email ? (
               <p className="mt-1 text-sm">
-                <a className="transition hover:text-white" href={`mailto:${client.email.trim()}`}>
-                  {client.email.trim()}
+                <a className="transition hover:text-[#F5F0E6]" href={`mailto:${email}`}>
+                  {email}
                 </a>
               </p>
             ) : null}
+            <p className="mt-3 text-xs italic text-[#B58A45]">{client.tagline}</p>
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#C9A227]">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#B58A45]">
               Quick links
             </p>
             <ul className="mt-3 space-y-2 text-sm">
               {links.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="transition hover:text-white">
+                  <a href={l.href} className="transition hover:text-[#F5F0E6]">
                     {l.label}
                   </a>
                 </li>
               ))}
               <li>
-                <a href={client.website} className="transition hover:text-white" rel="noopener noreferrer">
+                <a
+                  href={client.website}
+                  className="transition hover:text-[#F5F0E6]"
+                  rel="noopener noreferrer"
+                >
                   Firm website
                 </a>
               </li>
             </ul>
           </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#C9A227]">
-              Important
-            </p>
-            <p className="mt-3 text-sm leading-relaxed">
-              {client.attorneyDisclaimer}{" "}
-              <a
-                href="#legal-disclaimer"
-                className="font-semibold text-white underline decoration-[#C9A227] underline-offset-2"
-              >
-                Read the full disclaimer
-              </a>
-              .
-            </p>
-          </div>
         </div>
-        <div className="mt-10 border-t border-white/15 pt-6 text-xs leading-relaxed text-[#A8A29E]">
-          <p>
-            <strong className="font-semibold uppercase tracking-wider text-white">
-              Attorney Advertising.
-            </strong>{" "}
-            © {year} {client.firmName}, {djOfficeLine(client)}. Educational estimates only —
-            not a guarantee of any result and not legal advice.
-          </p>
-        </div>
+        <p
+          id="footer-legal"
+          className="mt-10 border-t border-[#C9C1B3]/20 pt-6 text-xs leading-relaxed text-[#C9C1B3]"
+        >
+          {djFooterLegalLine(client)} © {year}
+        </p>
       </div>
     </footer>
   );

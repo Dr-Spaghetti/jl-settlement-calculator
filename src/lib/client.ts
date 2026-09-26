@@ -65,10 +65,10 @@ export function getClientCssVars(
   const ground = client.pageGround?.trim() || DEFAULT_GROUND;
 
   const isDj = client.id === "djougourian-law";
-  // Djougourian: black + gold primary, white details (neutral light tints only)
-  const warmIvory = isDj ? "#FAF7EE" : "#F4F1EA";
-  const surface = "#FFFFFF";
-  const borderMuted = isDj ? "#E7E5E4" : "#E5DFD5";
+  // Djougourian: palette-only tints (charcoal / navy / gold / cream / taupe)
+  const warmIvory = isDj ? "#F5F0E6" : "#F4F1EA";
+  const surface = isDj ? "#0D1B2A" : "#FFFFFF";
+  const borderMuted = isDj ? "#C9C1B3" : "#E5DFD5";
 
   return {
     "--brand-primary": primary,
@@ -81,7 +81,7 @@ export function getClientCssVars(
     "--plg-gold": accent,
     "--plg-gold-light": `color-mix(in srgb, ${accent} 42%, white)`,
     "--plg-navy": primary,
-    "--plg-charcoal": primary === "#212529" ? "#212529" : "#1E293B",
+    "--plg-charcoal": isDj ? "#1B1B1B" : primary === "#212529" ? "#212529" : "#1E293B",
     "--plg-warm-ivory": warmIvory,
     "--plg-surface": surface,
     "--plg-border-muted": borderMuted,

@@ -17,12 +17,9 @@ const LABEL_COPY: Record<OfferRealityCheck["label"], string> = {
 export function OfferGauge({
   check,
   dark = false,
-  note,
 }: {
   check: OfferRealityCheck;
   dark?: boolean;
-  /** Optional qualifier rendered under the summary (djlaw passes one). */
-  note?: string;
 }) {
   const pct = Math.max(0, check.percentOfMid);
   const fillRatio = Math.min(1, pct / 100);
@@ -36,7 +33,7 @@ export function OfferGauge({
     <div
       className={
         dark
-          ? "rounded-xl border border-[#3A3426] bg-[#1A1A1A] p-4"
+          ? "rounded-xl border border-[#C9C1B3]/20 bg-[#1B1B1B] p-4"
           : "rounded-xl border border-plg-borderMuted bg-plg-warmIvory/50 p-4"
       }
       role="group"
@@ -53,7 +50,7 @@ export function OfferGauge({
         <span
           className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
             dark
-              ? "border border-[#C9A227]/60 text-[#C9A227]"
+              ? "border border-[#B58A45]/60 text-[#B58A45]"
               : "bg-plg-crimson/10 text-plg-crimson"
           }`}
         >
@@ -61,7 +58,7 @@ export function OfferGauge({
         </span>
       </div>
 
-      <p className={`mt-2 text-sm ${dark ? "text-[#E7E5E4]" : "text-slate-700"}`}>
+      <p className={`mt-2 text-sm ${dark ? "text-[#F5F0E6]" : "text-slate-700"}`}>
         Offer {formatCurrency(check.offer)} is{" "}
         <strong className="tabular-nums">{check.percentOfMid}%</strong> of the mid estimate (
         {formatCurrency(check.midEstimate)}).
@@ -89,7 +86,7 @@ export function OfferGauge({
             width={trackW}
             height={trackH}
             rx={6}
-            fill={dark ? "#FFFFFF" : "var(--brand-primary)"}
+            fill={dark ? "#F5F0E6" : "var(--brand-primary)"}
             fillOpacity={dark ? 0.15 : 0.1}
           />
           <rect
@@ -98,7 +95,7 @@ export function OfferGauge({
             width={fillW}
             height={trackH}
             rx={6}
-            fill={dark ? "#C9A227" : "var(--brand-secondary)"}
+            fill={dark ? "#B58A45" : "var(--brand-secondary)"}
             className="motion-safe:transition-[width] motion-safe:duration-500"
           />
           <line
@@ -106,14 +103,14 @@ export function OfferGauge({
             y1={4}
             x2={midX - 1}
             y2={24}
-            stroke={dark ? "#FFFFFF" : "var(--brand-primary)"}
+            stroke={dark ? "#F5F0E6" : "var(--brand-primary)"}
             strokeWidth={2}
             strokeOpacity={0.55}
           />
         </svg>
         <div
           className={`mt-1 flex justify-between text-[10px] font-medium uppercase tracking-wide ${
-            dark ? "text-[#A8A29E]" : "text-slate-400"
+            dark ? "text-[#C9C1B3]" : "text-slate-400"
           }`}
         >
           <span>0%</span>
@@ -122,7 +119,7 @@ export function OfferGauge({
         {overMid ? (
           <p
             className={`mt-1 text-xs font-medium ${
-              dark ? "text-[#C9A227]" : "text-[var(--brand-primary)]"
+              dark ? "text-[#B58A45]" : "text-[var(--brand-primary)]"
             }`}
           >
             Offer exceeds mid — meter capped at 100% track.
@@ -130,14 +127,9 @@ export function OfferGauge({
         ) : null}
       </div>
 
-      <p className={`mt-3 text-sm leading-relaxed ${dark ? "text-[#E7E5E4]" : "text-slate-600"}`}>
+      <p className={`mt-3 text-sm leading-relaxed ${dark ? "text-[#F5F0E6]" : "text-slate-600"}`}>
         {check.summary}
       </p>
-      {note ? (
-        <p className={`mt-2 text-xs leading-relaxed ${dark ? "text-[#D6D3D1]" : "text-slate-600"}`}>
-          {note}
-        </p>
-      ) : null}
     </div>
   );
 }

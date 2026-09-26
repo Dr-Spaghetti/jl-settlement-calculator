@@ -192,65 +192,47 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ==========================================================================
-   Djougourian theme: black + gold primary, white details
-   (Premier unaffected: rules only apply under html.theme-djougourian)
-   Gold #C9A227 on #0A0A0A = 8.2:1; #0A0A0A on gold = 8.2:1;
-   deep gold #7A5F12 on white = 6.0:1 (used for gold-toned text on white)
+   Djougourian theme (Premier unaffected: rules only apply under html.theme-djougourian)
+   Palette only: charcoal #1B1B1B, navy #0D1B2A, gold #B58A45, cream #F5F0E6, taupe #C9C1B3.
+   Contrast: gold on charcoal 5.5:1 · charcoal on gold 5.5:1 · taupe on charcoal 9.6:1 ·
+   taupe on navy 9.8:1 · cream on charcoal 15.1:1 · cream on navy 15.5:1.
+   Hovers derive from the same colors via opacity.
    ========================================================================== */
 html.theme-djougourian {
-  --page-ground: #0a0a0a;
-  --dj-black: #0a0a0a;
-  --dj-surface: #141414;
-  --dj-border: #3a3426;
-  --dj-gold: #c9a227;
-  --dj-gold-hover: #d4af37;
-  --dj-gold-deep: #7a5f12;
+  --page-ground: #1b1b1b;
+  --dj-charcoal: #1b1b1b;
+  --dj-navy: #0d1b2a;
+  --dj-gold: #b58a45;
+  --dj-cream: #f5f0e6;
+  --dj-taupe: #c9c1b3;
   font-feature-settings: "tnum" 1, "cv05" 1;
 }
 
 html.theme-djougourian body {
-  background-color: var(--dj-black);
+  background-color: var(--dj-charcoal);
   background-image: none;
-  color: #ffffff;
+  color: var(--dj-cream);
 }
 
 html.theme-djougourian ::selection {
   background: var(--dj-gold);
-  color: #0a0a0a;
+  color: var(--dj-charcoal);
 }
-
 html.theme-djougourian ::-webkit-scrollbar-track {
-  background: #141414;
+  background: var(--dj-charcoal);
 }
 html.theme-djougourian ::-webkit-scrollbar-thumb {
-  background: #3a3426;
+  background: rgba(201, 193, 179, 0.35);
 }
 html.theme-djougourian ::-webkit-scrollbar-thumb:hover {
   background: var(--dj-gold);
 }
 
-/* Focus: gold ring on dark, black ring on white cards (both >= 3:1) */
 html.theme-djougourian :focus-visible {
   outline-color: var(--dj-gold);
 }
-html.theme-djougourian .bg-white :focus-visible {
-  outline-color: #0a0a0a;
-}
 
-html.theme-djougourian .bg-plg-cream {
-  background-color: var(--dj-black) !important;
-}
-/* Tinted panels inside white cards (offer box, etc.) */
-html.theme-djougourian .bg-plg-warmIvory,
-html.theme-djougourian .bg-plg-warmIvory\/50,
-html.theme-djougourian .bg-plg-warmIvory\/60,
-html.theme-djougourian .bg-plg-warmIvory\/80 {
-  background-color: #faf7ee !important;
-}
-html.theme-djougourian .border-plg-borderMuted {
-  border-color: #e7e5e4;
-}
-
+/* Fonts */
 html.theme-djougourian .font-serif,
 html.theme-djougourian .font-display {
   font-family: var(--font-display), Georgia, "Times New Roman", serif;
@@ -260,68 +242,160 @@ html.theme-djougourian .font-cinzel {
   letter-spacing: 0.02em;
 }
 
-/* Inputs on white cards: black border + gold ring on focus */
-html.theme-djougourian .focus\:border-plg-crimson:focus {
-  border-color: #0a0a0a !important;
+/* ---- Map shared (Premier) utility colors onto the dj palette ---- */
+html.theme-djougourian .bg-plg-cream,
+html.theme-djougourian .bg-plg-warmIvory\/60 {
+  background-color: var(--dj-charcoal) !important;
 }
-html.theme-djougourian .focus\:ring-plg-crimson:focus {
-  --tw-ring-color: rgba(201, 162, 39, 0.55) !important;
+html.theme-djougourian .bg-plg-warmIvory,
+html.theme-djougourian .bg-plg-warmIvory\/50,
+html.theme-djougourian .bg-plg-warmIvory\/80 {
+  background-color: rgba(181, 138, 69, 0.1) !important;
+}
+html.theme-djougourian .bg-white {
+  background-color: var(--dj-navy);
+}
+html.theme-djougourian .bg-slate-50,
+html.theme-djougourian .bg-slate-100,
+html.theme-djougourian .bg-slate-50\/50 {
+  background-color: var(--dj-charcoal);
+}
+html.theme-djougourian .bg-slate-200 {
+  background-color: rgba(201, 193, 179, 0.25);
+}
+html.theme-djougourian .hover\:bg-slate-50:hover,
+html.theme-djougourian .hover\:bg-slate-100:hover {
+  background-color: rgba(245, 240, 230, 0.06);
+}
+html.theme-djougourian .text-white,
+html.theme-djougourian .text-slate-900,
+html.theme-djougourian .text-slate-800,
+html.theme-djougourian .hover\:text-white:hover,
+html.theme-djougourian .hover\:text-slate-900:hover {
+  color: var(--dj-cream);
+}
+html.theme-djougourian .text-slate-700,
+html.theme-djougourian .text-slate-600,
+html.theme-djougourian .text-slate-500,
+html.theme-djougourian .text-slate-400,
+html.theme-djougourian .text-slate-300 {
+  color: var(--dj-taupe);
+}
+html.theme-djougourian .border-slate-100,
+html.theme-djougourian .border-slate-200,
+html.theme-djougourian .border-slate-200\/80,
+html.theme-djougourian .border-slate-300,
+html.theme-djougourian .border-plg-borderMuted,
+html.theme-djougourian .border-white\/10,
+html.theme-djougourian .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+html.theme-djougourian .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(201, 193, 179, 0.2);
+}
+html.theme-djougourian .text-plg-crimson,
+html.theme-djougourian .text-plg-gold {
+  color: var(--dj-gold);
 }
 
-/* Range thumb: gold with black ring */
+/* Form fields: charcoal wells inside navy cards */
+html.theme-djougourian .input-touch,
+html.theme-djougourian select,
+html.theme-djougourian input[type="text"],
+html.theme-djougourian input[type="number"] {
+  background-color: var(--dj-charcoal);
+  border-color: rgba(201, 193, 179, 0.3);
+  color: var(--dj-cream);
+}
+html.theme-djougourian .input-touch::placeholder {
+  color: rgba(201, 193, 179, 0.7);
+}
+html.theme-djougourian .focus\:border-plg-crimson:focus {
+  border-color: var(--dj-gold) !important;
+}
+html.theme-djougourian .focus\:ring-plg-crimson:focus {
+  --tw-ring-color: rgba(181, 138, 69, 0.6) !important;
+}
+
+/* Range slider */
+html.theme-djougourian input[type="range"] {
+  accent-color: var(--dj-gold);
+}
 html.theme-djougourian input[type="range"]::-webkit-slider-thumb {
   background: var(--dj-gold);
-  border-color: #0a0a0a;
+  border-color: var(--dj-charcoal);
 }
 html.theme-djougourian input[type="range"]::-moz-range-thumb {
   background: var(--dj-gold);
-  border-color: #0a0a0a;
+  border-color: var(--dj-charcoal);
 }
 
+/* Secondary buttons (e.g. Print / Save PDF): cream fill, charcoal text */
+html.theme-djougourian #results button.bg-white {
+  background-color: var(--dj-cream);
+  border-color: var(--dj-cream);
+  color: var(--dj-charcoal);
+}
+html.theme-djougourian #results button.bg-white:hover {
+  background-color: rgba(245, 240, 230, 0.9);
+}
+
+/* Shadows (neutral) */
 html.theme-djougourian .shadow-plg-card {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
 }
 html.theme-djougourian .shadow-plg-panel {
   box-shadow:
-    0 10px 25px -5px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(201, 162, 39, 0.12);
+    0 10px 25px -5px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(181, 138, 69, 0.15);
 }
-
 html.theme-djougourian .dj-results-mid {
-  box-shadow: 0 10px 25px -8px rgba(201, 162, 39, 0.35);
+  box-shadow: 0 10px 25px -8px rgba(181, 138, 69, 0.35);
 }
 html.theme-djougourian .dj-logo-dark {
-  /* Logo file is solid black; render white on the black header */
+  /* Logo file is solid black; rendered light on the dark header (file untouched) */
   filter: brightness(0) invert(1);
   opacity: 1;
 }
-
-/* Gold-toned text that sits on white needs the deep gold for AA */
 html.theme-djougourian .required-asterisk {
-  color: var(--dj-gold-deep) !important;
-}
-html.theme-djougourian #faq .bg-white a.text-plg-crimson {
-  color: var(--dj-gold-deep);
+  color: var(--dj-gold) !important;
 }
 
-/* Educational sections: white cards on black grounds */
+/* Section cards on charcoal grounds */
 html.theme-djougourian #how-it-works li.relative {
-  background-color: #ffffff;
-  border-color: #3a3426;
+  background-color: var(--dj-navy);
+  border-color: rgba(201, 193, 179, 0.2);
 }
 html.theme-djougourian #faq .divide-y {
-  background-color: #ffffff;
-  border-color: #3a3426;
+  background-color: var(--dj-navy);
+  border-color: rgba(201, 193, 179, 0.2);
 }
 html.theme-djougourian #settlement-ranges table tbody tr:nth-child(even) {
-  background-color: #fafaf9;
+  background-color: rgba(245, 240, 230, 0.03);
 }
 html.theme-djougourian #settlement-ranges thead tr {
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: var(--dj-charcoal);
+  color: var(--dj-cream);
   box-shadow: inset 0 -2px 0 var(--dj-gold);
 }
 html.theme-djougourian .sticky-mobile-cta {
-  background-color: rgba(10, 10, 10, 0.96) !important;
-  border-color: rgba(201, 162, 39, 0.5) !important;
+  background-color: rgba(13, 27, 42, 0.97) !important;
+  border-color: rgba(181, 138, 69, 0.45) !important;
+  box-shadow: 0 -8px 30px -12px rgba(0, 0, 0, 0.6) !important;
+}
+html.theme-djougourian .bg-white\/5 {
+  background-color: rgba(245, 240, 230, 0.05);
+}
+html.theme-djougourian .bg-white\/10 {
+  background-color: rgba(245, 240, 230, 0.08);
+}
+html.theme-djougourian *,
+html.theme-djougourian ::before,
+html.theme-djougourian ::after {
+  --tw-ring-offset-color: #1b1b1b;
+}
+html.theme-djougourian .focus-visible\:ring-white:focus-visible {
+  --tw-ring-color: #f5f0e6;
+}
+/* Validation errors: the only non-palette hue (muted red, readable on dark) */
+html.theme-djougourian .text-red-600 {
+  color: #f19a8f;
 }

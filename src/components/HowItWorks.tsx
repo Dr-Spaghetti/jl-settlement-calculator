@@ -26,7 +26,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
       id="how-it-works"
       className={
         dj
-          ? "scroll-mt-28 border-t border-[#3A3426] bg-[#0A0A0A] py-16"
+          ? "scroll-mt-28 border-t border-[#C9C1B3]/20 bg-[#1B1B1B] py-16"
           : "scroll-mt-28 border-t border-plg-borderMuted bg-transparent py-16"
       }
       aria-labelledby="how-heading"
@@ -35,7 +35,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
         <div className="mb-12 max-w-3xl">
           <span
             className={`text-xs font-bold uppercase tracking-wider ${
-              dj ? "text-[#C9A227]" : "text-plg-crimson"
+              dj ? "text-[#B58A45]" : "text-plg-crimson"
             }`}
           >
             Transparency In Valuation
@@ -49,13 +49,13 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
             }
           >
             {dj
-              ? "How This Educational Estimate Is Calculated"
+              ? "How the Estimate Is Calculated"
               : "How Insurance Companies and Lawyers Calculate Your Settlement"}
           </h2>
           <p
             className={
               dj
-                ? "text-sm leading-relaxed text-[#D6D3D1] sm:text-base"
+                ? "text-sm leading-relaxed text-[#C9C1B3] sm:text-base"
                 : "text-sm leading-relaxed text-slate-600 sm:text-base"
             }
           >
@@ -74,7 +74,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
               <div
                 className={
                   dj
-                    ? "absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#C9A227] text-sm font-bold text-[#0A0A0A] shadow-sm"
+                    ? "absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#B58A45] text-sm font-bold text-[#1B1B1B] shadow-sm"
                     : "absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-plg-crimson text-sm font-bold text-white shadow-sm"
                 }
                 aria-hidden
@@ -92,7 +92,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
         <div
           className={
             dj
-              ? "rounded-2xl border border-[#C9A227]/50 bg-[#141414] p-6 text-white sm:p-8"
+              ? "rounded-2xl border border-[#B58A45]/50 bg-[#0D1B2A] p-6 text-white sm:p-8"
               : "rounded-2xl border border-slate-800 bg-plg-navy p-6 text-white shadow-plg-panel sm:p-8"
           }
         >
@@ -133,7 +133,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
               <p
                 className={
                   dj
-                    ? "mb-4 text-sm leading-relaxed text-[#D6D3D1]"
+                    ? "text-sm leading-relaxed text-[#C9C1B3]"
                     : "mb-4 text-xs leading-relaxed text-slate-300"
                 }
               >
@@ -141,12 +141,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
                 any formula. Use this tool as a conversation starter with a licensed
                 attorney — not a verdict or guarantee.
               </p>
-              {dj ? (
-                <div className="flex items-center gap-3 text-sm text-[#C9A227]">
-                  <CheckIcon size={16} className="shrink-0 text-[#C9A227]" />
-                  <span>Ask about fees and case costs at your free consultation.</span>
-                </div>
-              ) : (
+              {dj ? null : (
                 <div className="flex items-center gap-3 text-xs text-plg-gold">
                   <CheckIcon size={16} className="shrink-0 text-plg-crimson" />
                   <span>
@@ -162,7 +157,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
         <details
           className={
             dj
-              ? "mt-8 rounded-2xl border border-[#3A3426] bg-[#141414] p-6"
+              ? "mt-8 rounded-2xl border border-[#C9C1B3]/20 bg-[#0D1B2A] p-6"
               : "mt-8 rounded-2xl border border-plg-borderMuted bg-plg-cream p-6"
           }
         >
@@ -177,7 +172,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
                 {WORKED_EXAMPLE.title}
               </span>
               <span
-                className={`text-sm font-medium ${dj ? "text-[#C9A227]" : "text-slate-500"}`}
+                className={`text-sm font-medium ${dj ? "text-[#B58A45]" : "text-slate-500"}`}
                 aria-hidden
               >
                 Show
@@ -186,14 +181,14 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
           </summary>
           <p
             className={`mt-3 text-sm leading-relaxed ${
-              dj ? "text-[#D6D3D1]" : "text-slate-600"
+              dj ? "text-[#C9C1B3]" : "text-slate-600"
             }`}
           >
             {WORKED_EXAMPLE.narrative}
           </p>
           <ul
             className={`mt-4 list-disc space-y-1.5 pl-5 text-sm ${
-              dj ? "text-[#E7E5E4]" : "text-slate-700"
+              dj ? "text-[#F5F0E6]" : "text-slate-700"
             }`}
           >
             {WORKED_EXAMPLE.highlights.map((h) => (

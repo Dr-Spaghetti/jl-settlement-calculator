@@ -106,8 +106,7 @@ export function PrintSummary({
         <p className="text-xs text-slate-500">{result.comparativeFaultNote}</p>
         {disclaimer ? (
           <p className="border-t border-slate-300 pt-2 text-xs text-slate-700">
-            {disclaimer} Using this calculator does not create an attorney-client
-            relationship. Attorney Advertising — {firmName}.
+            {disclaimer}
           </p>
         ) : null}
       </div>

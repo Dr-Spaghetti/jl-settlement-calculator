@@ -20,7 +20,7 @@ export function StickyMobileCTA({ client }: { client: ClientConfig }) {
           href={telHref(client.phone)}
           className={
             dj
-              ? "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-white/40 bg-transparent px-3 py-3 text-sm font-semibold text-white"
+              ? "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-[#F5F0E6] bg-[#F5F0E6] px-3 py-3 text-sm font-semibold !text-[#1B1B1B] transition hover:bg-[#F5F0E6]/90"
               : "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 py-3 text-sm font-semibold text-plg-navy"
           }
         >
@@ -30,7 +30,7 @@ export function StickyMobileCTA({ client }: { client: ClientConfig }) {
           href={client.ctaUrl}
           className={
             dj
-              ? "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-[#C9A227] px-3 py-3 text-center text-sm font-semibold text-[#0A0A0A] transition hover:bg-[#D4AF37]"
+              ? "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-[#B58A45] px-3 py-3 text-center text-sm font-semibold text-[#1B1B1B] transition hover:bg-[#B58A45]/90"
               : "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-plg-crimson px-3 py-3 text-center text-sm font-semibold text-white transition hover:bg-plg-crimsonDark"
           }
         >

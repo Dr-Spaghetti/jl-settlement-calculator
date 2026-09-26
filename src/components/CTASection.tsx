@@ -7,7 +7,7 @@ export function CTASection({ client }: { client: ClientConfig }) {
     <section
       className={
         dj
-          ? "border-t border-[#C9A227]/50 bg-[#141414] py-16 sm:py-20"
+          ? "border-t border-[#B58A45]/50 bg-[#0D1B2A] py-16 sm:py-20"
           : "border-t border-plg-borderMuted bg-plg-navy py-16 sm:py-20"
       }
       aria-labelledby="cta-heading"
@@ -23,11 +23,10 @@ export function CTASection({ client }: { client: ClientConfig }) {
           Ready to talk about your case?
         </h2>
         {dj ? (
-          <p className="mx-auto mt-4 max-w-xl text-sm text-[#D6D3D1] sm:text-base">
+          <p className="mx-auto mt-4 max-w-xl text-sm text-[#C9C1B3] sm:text-base">
             {client.shortName} offers a free consultation for vehicle accident and personal
-            injury matters. Bring your questions about your claim, deadlines, fees, and
-            case costs. This estimate is educational only; a lawyer can review the facts
-            of your case.
+            injury matters. Start with this educational estimate, then talk with a
+            lawyer.
           </p>
         ) : (
           <p className="mx-auto mt-4 max-w-xl text-sm text-slate-300 sm:text-base">
@@ -42,7 +41,7 @@ export function CTASection({ client }: { client: ClientConfig }) {
             href={client.ctaUrl}
             className={
               dj
-                ? "inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[#C9A227] px-6 py-3 text-sm font-semibold text-[#0A0A0A] shadow-md transition hover:bg-[#D4AF37] focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                ? "inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[#B58A45] px-6 py-3 text-sm font-semibold text-[#1B1B1B] shadow-md transition hover:bg-[#B58A45]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5F0E6]"
                 : "inline-flex min-h-[44px] items-center justify-center rounded-lg bg-plg-crimson px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-plg-crimsonDark focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             }
           >
@@ -50,7 +49,11 @@ export function CTASection({ client }: { client: ClientConfig }) {
           </a>
           <a
             href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className={
+              dj
+                ? "inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[#F5F0E6] bg-[#F5F0E6] px-6 py-3 text-sm font-semibold !text-[#1B1B1B] transition hover:bg-[#F5F0E6]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B58A45]"
+                : "inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            }
           >
             Call {client.phone}
           </a>

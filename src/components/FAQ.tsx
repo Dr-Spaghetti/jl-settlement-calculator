@@ -75,13 +75,11 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
         q: "How long do I have to file a personal injury claim in California?",
         a: (
           <>
-            California personal injury deadlines are strict and fact-dependent. Many
-            personal-injury lawsuits must be filed within two years (Code Civ. Proc.
-            § 335.1), and a claim against a city, county, or other public entity generally
-            must be presented within six months (Gov. Code § 911.2). Exceptions and other
-            claim types can change the timeline. This is educational information only—not a
-            determination of your filing deadline. Talk with a licensed California attorney
-            promptly before relying on any date.
+            California personal injury deadlines are strict and fact-dependent. Many injury
+            claims against private parties are discussed under a roughly two-year framework,
+            but exceptions, notice rules, and different claim types can change the timeline.
+            This is educational information only—not a determination of your filing deadline.
+            Confirm timing with a licensed California attorney before relying on any date.
           </>
         ),
       },
@@ -105,9 +103,8 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
             Many California personal injury lawyers work on contingency, meaning attorney
             fees are typically a percentage of any recovery and discussed up front.{" "}
             {client.shortName} offers a free consultation so you can ask about fee
-            arrangements for your matter, including who pays case costs if there is no
-            recovery. This calculator is free and educational only—fee terms are set in a
-            written agreement.
+            arrangements for your matter. This calculator is free and educational only—
+            fee terms are set in a written agreement.
           </>
         ),
       }
@@ -171,7 +168,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
       id="faq"
       className={
         dj
-          ? "scroll-mt-28 border-t border-[#3A3426] bg-[#0A0A0A] py-16 sm:py-20"
+          ? "scroll-mt-28 border-t border-[#C9C1B3]/20 bg-[#1B1B1B] py-16 sm:py-20"
           : "scroll-mt-28 border-t border-plg-borderMuted bg-plg-cream py-16 sm:py-20"
       }
       aria-labelledby="faq-heading"
@@ -179,7 +176,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <span
           className={`text-xs font-bold uppercase tracking-wider ${
-            dj ? "text-[#C9A227]" : "text-plg-crimson"
+            dj ? "text-[#B58A45]" : "text-plg-crimson"
           }`}
         >
           Common Questions
@@ -194,7 +191,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
         >
           Frequently Asked Questions
         </h2>
-        <p className={`mt-3 text-sm ${dj ? "text-[#D6D3D1]" : "text-slate-600"}`}>
+        <p className={`mt-3 text-sm ${dj ? "text-[#C9C1B3]" : "text-slate-600"}`}>
           Educational answers only — not legal advice. Rules and deadlines can vary; confirm
           details with a licensed attorney{client.state ? ` in ${client.state}` : ""}.
         </p>
@@ -209,7 +206,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
                   <span
                     className={
                       dj
-                        ? "mt-0.5 shrink-0 font-bold text-[#0A0A0A] motion-safe:transition group-open:rotate-45"
+                        ? "mt-0.5 shrink-0 font-bold text-[#1B1B1B] motion-safe:transition group-open:rotate-45"
                         : "mt-0.5 shrink-0 text-plg-crimson motion-safe:transition group-open:rotate-45"
                     }
                     aria-hidden

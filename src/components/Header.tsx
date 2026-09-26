@@ -39,36 +39,36 @@ export function Header({ client }: { client: ClientConfig }) {
   if (isDj) {
     return (
       <>
-        <div className="border-b border-[#262626] bg-black text-xs text-white print:hidden">
+        <div className="border-b border-[#C9C1B3]/15 bg-[#0D1B2A] text-xs text-white print:hidden">
           <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-2 px-4 py-2.5 sm:flex-row sm:px-6 lg:px-8">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#D6D3D1]">
-              <span className="inline-flex items-center rounded bg-[#C9A227] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0A0A0A]">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#C9C1B3]">
+              <span className="inline-flex items-center rounded bg-[#B58A45] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#1B1B1B]">
                 California
               </span>
-              <span className="text-[#E7E5E4]">{cities}</span>
-              <span className="hidden text-[#C9A227]/60 md:inline">|</span>
+              <span className="text-[#F5F0E6]">{cities}</span>
+              <span className="hidden text-[#B58A45]/60 md:inline">|</span>
               <span className="hidden items-center md:inline-flex">
                 <ScaleIcon
                   size={14}
-                  className="mr-1.5 inline-block align-[-2px] text-[#C9A227]"
+                  className="mr-1.5 inline-block align-[-2px] text-[#B58A45]"
                 />
                 California Pure Comparative Negligence
               </span>
             </div>
             <a
               href={telHref(client.phone)}
-              className="flex items-center font-semibold text-white transition hover:text-[#C9A227]"
+              className="flex items-center font-semibold text-white transition hover:text-[#B58A45]"
             >
               <PhoneIcon
                 size={14}
-                className="mr-1.5 inline-block align-[-2px] text-[#C9A227]"
+                className="mr-1.5 inline-block align-[-2px] text-[#B58A45]"
               />
               {client.phone}
             </a>
           </div>
         </div>
 
-        <header className="sticky top-0 z-40 border-b border-[#C9A227]/40 bg-[#0A0A0A] shadow-md print:hidden">
+        <header className="sticky top-0 z-40 border-b border-[#B58A45]/40 bg-[#1B1B1B] shadow-md print:hidden">
           <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
             <div className="flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
               <a href="#top" className="group flex min-w-0 items-center">
@@ -93,30 +93,30 @@ export function Header({ client }: { client: ClientConfig }) {
 
               <div className="flex items-center gap-3 sm:gap-4">
                 <nav
-                  className="hidden items-center gap-1 rounded-xl border border-[#3A3426] bg-[#141414] p-1 text-sm lg:flex"
+                  className="hidden items-center gap-1 rounded-xl border border-[#C9C1B3]/20 bg-[#0D1B2A] p-1 text-sm lg:flex"
                   aria-label="Primary"
                 >
                   <a
                     href="#calculator"
-                    className="rounded-lg bg-[#C9A227] px-3 py-1.5 font-semibold text-[#0A0A0A] shadow-sm"
+                    className="rounded-lg bg-[#B58A45] px-3 py-1.5 font-semibold text-[#1B1B1B] shadow-sm"
                   >
                     Calculator
                   </a>
                   <a
                     href="#how-it-works"
-                    className="rounded-lg px-3 py-1.5 text-[#D6D3D1] transition hover:text-white"
+                    className="rounded-lg px-3 py-1.5 text-[#C9C1B3] transition hover:text-white"
                   >
                     The Formula
                   </a>
                   <a
                     href="#settlement-ranges"
-                    className="rounded-lg px-3 py-1.5 text-[#D6D3D1] transition hover:text-white"
+                    className="rounded-lg px-3 py-1.5 text-[#C9C1B3] transition hover:text-white"
                   >
                     {rangesLabel}
                   </a>
                   <a
                     href="#faq"
-                    className="rounded-lg px-3 py-1.5 text-[#D6D3D1] transition hover:text-white"
+                    className="rounded-lg px-3 py-1.5 text-[#C9C1B3] transition hover:text-white"
                   >
                     FAQ
                   </a>
@@ -124,7 +124,7 @@ export function Header({ client }: { client: ClientConfig }) {
 
                 <a
                   href={client.ctaUrl}
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#C9A227] px-4 py-2.5 text-sm font-semibold tracking-wide text-[#0A0A0A] shadow-[0_2px_10px_rgba(201,162,39,0.3)] transition hover:bg-[#D4AF37] sm:px-5"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#B58A45] px-4 py-2.5 text-sm font-semibold tracking-wide text-[#1B1B1B] shadow-[0_2px_10px_rgba(181,138,69,0.3)] transition hover:bg-[#B58A45]/90 sm:px-5"
                 >
                   <span className="hidden sm:inline">{client.ctaText}</span>
                   <span className="sm:hidden">Consult</span>
