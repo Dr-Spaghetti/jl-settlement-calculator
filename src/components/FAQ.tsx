@@ -206,7 +206,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
                   <span
                     className={
                       dj
-                        ? "mt-0.5 shrink-0 font-bold text-[#1B1B1B] motion-safe:transition group-open:rotate-45"
+                        ? "mt-0.5 shrink-0 font-bold text-[#B58A45] motion-safe:transition group-open:rotate-45"
                         : "mt-0.5 shrink-0 text-plg-crimson motion-safe:transition group-open:rotate-45"
                     }
                     aria-hidden

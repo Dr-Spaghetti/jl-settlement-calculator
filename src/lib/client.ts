@@ -68,7 +68,7 @@ export function getClientCssVars(
   // Djougourian: palette-only tints (charcoal / navy / gold / cream / taupe)
   const warmIvory = isDj ? "#F5F0E6" : "#F4F1EA";
   const surface = isDj ? "#0D1B2A" : "#FFFFFF";
-  const borderMuted = isDj ? "#C9C1B3" : "#E5DFD5";
+  const borderMuted = isDj ? "rgba(201, 193, 179, 0.2)" : "#E5DFD5";
 
   return {
     "--brand-primary": primary,

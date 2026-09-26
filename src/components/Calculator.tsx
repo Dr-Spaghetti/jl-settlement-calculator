@@ -1245,7 +1245,7 @@ export function Calculator({
                           </span>
                           <span
                             className={`mt-0.5 block text-[10px] ${
-                              isDj ? "font-medium text-[#1B1B1B]/80" : "text-slate-300"
+                              isDj ? "font-medium text-[#1B1B1B]" : "text-slate-300"
                             }`}
                           >
                             {result.multiplierMid}× Multiplier
