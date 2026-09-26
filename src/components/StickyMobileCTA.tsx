@@ -44,7 +44,14 @@ export function StickyMobileCTA({ client }: { client: ClientConfig }) {
               : "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-plg-crimson px-3 py-3 text-center text-sm font-semibold text-white transition hover:bg-plg-crimsonDark"
           }
         >
-          {client.ctaText}
+          {dj ? (
+            <>
+              <span className="max-[359px]:hidden">{client.ctaText}</span>
+              <span className="hidden max-[359px]:inline">Consult</span>
+            </>
+          ) : (
+            client.ctaText
+          )}
         </a>
       </div>
     </div>

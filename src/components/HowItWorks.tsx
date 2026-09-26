@@ -9,7 +9,9 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
     },
     {
       title: "The Multiplier Band",
-      body: "Pain, emotional distress, and disruption to daily life are represented by a severity multiplier, generally ranging from about 1.5× up to 5.0×+.",
+      body: dj
+        ? "Pain, emotional distress, and disruption to daily life are represented by a severity multiplier. This calculator applies a severity multiplier of about 1.25× to 7×, based on your inputs."
+        : "Pain, emotional distress, and disruption to daily life are represented by a severity multiplier, generally ranging from about 1.5× up to 5.0×+.",
     },
     {
       title: "Adjust for Case Levers",

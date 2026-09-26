@@ -91,7 +91,7 @@ export function RangesTable({ client }: { client?: ClientConfig }) {
                         dj ? "text-[#B58A45]" : "text-plg-crimson"
                       }`}
                     >
-                      {row.typicalMultiplier}
+                      {dj && row.scenario.startsWith("Severe") ? "3×–6×" : row.typicalMultiplier}
                     </td>
                     <td className="px-5 py-4 font-bold text-slate-900">
                       {dj ? row.illustrative.replace(/\*$/, "") : row.illustrative}

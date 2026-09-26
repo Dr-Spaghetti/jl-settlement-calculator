@@ -13,11 +13,14 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
   const state = client.state.toUpperCase();
   const isWa = state === "WA";
   const isCa = state === "CA";
+  const djFaq = clientUsesDjFonts(client);
 
   const base: FaqItem[] = [
     {
       q: "How much is my car accident settlement worth?",
-      a: "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier—often discussed around 1.5×–5×—and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range, not a guaranteed payout.",
+      a: djFaq
+        ? "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier (this calculator uses about 1.25×–7×), and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range, not a guaranteed payout."
+        : "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier—often discussed around 1.5×–5×—and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range, not a guaranteed payout.",
     },
     {
       q: "How do insurance companies calculate car accident settlements?",
@@ -133,11 +136,27 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
     },
     {
       q: "How much is a car accident settlement with soft tissue injuries or whiplash?",
-      a: "Soft-tissue claims usually sit toward the lower multiplier band (often roughly 1.5×–2.5×), especially with short treatment and full recovery. Longer care, imaging findings, specialist treatment, or lasting symptoms can push higher. Use severity, care type, and months of treatment in the calculator for a range that fits your facts—not a one-size average.",
+      a: djFaq
+        ? "In this calculator, minor soft-tissue inputs start from a 1.5×–2.5× band, which treatment length, care type, and liability then nudge up or down. Longer care, specialist treatment, or lasting symptoms push it higher. Use severity, care type, and months of treatment in the calculator for a range that fits your facts—not a one-size average."
+        : "Soft-tissue claims usually sit toward the lower multiplier band (often roughly 1.5×–2.5×), especially with short treatment and full recovery. Longer care, imaging findings, specialist treatment, or lasting symptoms can push higher. Use severity, care type, and months of treatment in the calculator for a range that fits your facts—not a one-size average.",
     },
     {
       q: "Is an online car accident settlement calculator accurate?",
-      a: (
+      a: djFaq ? (
+        <>
+          It is a starting point, not a case valuation. No public form can weigh medical
+          records, experts, venue, prior injuries, or negotiation strategy. Treat the
+          result as an educational range to prepare for a consult—not a promise of what
+          you will receive. For a real review, contact {client.shortName} at{" "}
+          <a
+            className="-my-3 inline-block py-3 font-semibold text-plg-crimson underline decoration-slate-300 underline-offset-2 hover:decoration-plg-crimson"
+            href={`tel:${tel}`}
+          >
+            {phone}
+          </a>{" "}
+          or a licensed attorney in your state.
+        </>
+      ) : (
         <>
           It is a starting point, not a case valuation. No public form can weigh medical
           records, experts, venue, prior injuries, or negotiation strategy. Treat the

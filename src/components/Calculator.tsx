@@ -388,8 +388,9 @@ export function Calculator({
                 Accident Presets
               </span>
               <p className={`mt-0.5 text-xs ${isDj ? "text-[#C9C1B3]" : "text-slate-500"}`}>
-                Load typical sample figures to see how multiplier dynamics change by
-                case severity:
+                {isDj
+                  ? "Load sample figures to see how severity changes the multiplier:"
+                  : "Load typical sample figures to see how multiplier dynamics change by case severity:"}
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -1130,7 +1131,7 @@ export function Calculator({
                     <span
                       className={`block text-[10px] font-bold uppercase tracking-[0.2em] ${
                         isDj
-                          ? "inline-block rounded border border-[#C9C1B3]/20 bg-[#060E18] px-2 py-0.5 !text-xs !tracking-[0.14em] text-[#B58A45]"
+                          ? "inline-block whitespace-nowrap rounded border border-[#C9C1B3]/20 bg-[#060E18] px-2 py-0.5 !text-xs !tracking-[0.14em] text-[#B58A45] max-[359px]:!tracking-[0.06em]"
                           : "text-plg-gold"
                       }`}
                     >

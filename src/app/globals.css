@@ -453,6 +453,15 @@ html.theme-djougourian #calculator input[type="range"]::-moz-range-thumb {
   border: 3px solid var(--dj-ground);
 }
 
+/* Keep focused/anchored targets clear of the sticky header (81px on desktop) */
+html.theme-djougourian {
+  scroll-padding-top: 96px;
+}
+/* scroll-padding handles the offset; drop section scroll-margins to avoid a double offset */
+html.theme-djougourian .scroll-mt-28 {
+  scroll-margin-top: 0;
+}
+
 /* Phones: 44px tap targets, keep focus/anchor targets clear of sticky header + bar */
 @media (max-width: 767px) {
   html.theme-djougourian {
