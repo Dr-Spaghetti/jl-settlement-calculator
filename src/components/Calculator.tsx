@@ -356,7 +356,7 @@ export function Calculator({
   return (
     <section
       id="calculator"
-      className={`scroll-mt-28 py-12 pb-32 sm:py-14 lg:pb-14 ${isDj ? "bg-[#1B1B1B]" : "bg-plg-cream"}`}
+      className={`scroll-mt-28 py-12 pb-32 sm:py-14 lg:pb-14 ${isDj ? "bg-[#060E18]" : "bg-plg-cream"}`}
       aria-labelledby="calculator-heading"
     >
       <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${isDj ? "max-w-[1200px]" : "max-w-7xl"}`}>
@@ -462,7 +462,7 @@ export function Calculator({
                       className={`flex h-5 w-5 items-center justify-center rounded-full text-xs ${
                         active
                           ? isDj
-                            ? "bg-[#1B1B1B] text-[#B58A45]"
+                            ? "bg-[#060E18] text-[#B58A45]"
                             : "bg-white/20 text-white"
                           : isDj
                             ? "bg-[#C9C1B3]/15 text-white"
@@ -491,7 +491,7 @@ export function Calculator({
                   <div
                     className={
                       isDj
-                        ? "border-b-2 border-[#B58A45] bg-[#1B1B1B] px-6 py-4 text-white sm:px-8"
+                        ? "border-b-2 border-[#B58A45] bg-[#060E18] px-6 py-4 text-white sm:px-8"
                         : "border-b border-slate-100 pb-4"
                     }
                   >
@@ -591,7 +591,7 @@ export function Calculator({
                                     ? "border-[#B58A45] bg-[#B58A45]/10"
                                     : "border-plg-crimson bg-plg-warmIvory/40"
                                   : isDj
-                                    ? "border-[#C9C1B3]/25 bg-[#1B1B1B] hover:border-[#B58A45]/60"
+                                    ? "border-[#C9C1B3]/25 bg-[#060E18] hover:border-[#B58A45]/60"
                                     : "border-slate-200 bg-white hover:bg-plg-warmIvory"
                               }`}
                               aria-pressed={active}
@@ -651,7 +651,7 @@ export function Calculator({
                   <div
                     className={
                       isDj
-                        ? "border-b-2 border-[#B58A45] bg-[#1B1B1B] px-6 py-4 text-white sm:px-8"
+                        ? "border-b-2 border-[#B58A45] bg-[#060E18] px-6 py-4 text-white sm:px-8"
                         : "border-b border-slate-100 pb-4"
                     }
                   >
@@ -946,7 +946,7 @@ export function Calculator({
                   <div
                     className={
                       isDj
-                        ? "border-b-2 border-[#B58A45] bg-[#1B1B1B] px-6 py-4 text-white sm:px-8"
+                        ? "border-b-2 border-[#B58A45] bg-[#060E18] px-6 py-4 text-white sm:px-8"
                         : "border-b border-slate-100 pb-4"
                     }
                   >
@@ -1130,7 +1130,7 @@ export function Calculator({
                     <span
                       className={`block text-[10px] font-bold uppercase tracking-[0.2em] ${
                         isDj
-                          ? "inline-block rounded border border-[#C9C1B3]/20 bg-[#1B1B1B] px-2 py-0.5 !text-xs !tracking-[0.14em] text-[#B58A45]"
+                          ? "inline-block rounded border border-[#C9C1B3]/20 bg-[#060E18] px-2 py-0.5 !text-xs !tracking-[0.14em] text-[#B58A45]"
                           : "text-plg-gold"
                       }`}
                     >
@@ -1189,7 +1189,7 @@ export function Calculator({
                         <div
                           className={`rounded-xl border text-center transition ${
                             isDj
-                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#1B1B1B] px-1.5 py-2.5 sm:p-3"
+                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#060E18] px-1.5 py-2.5 sm:p-3"
                               : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
                           }`}
                         >
@@ -1255,7 +1255,7 @@ export function Calculator({
                         <div
                           className={`rounded-xl border text-center transition ${
                             isDj
-                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#1B1B1B] px-1.5 py-2.5 sm:p-3"
+                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#060E18] px-1.5 py-2.5 sm:p-3"
                               : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
                           }`}
                         >
@@ -1335,7 +1335,7 @@ export function Calculator({
                         <p
                           className={`mb-3 rounded-lg border px-3 py-2 text-xs tabular-nums leading-snug ${
                             isDj
-                              ? "border-[#C9C1B3]/20 bg-[#1B1B1B] text-center text-[#F5F0E6]"
+                              ? "border-[#C9C1B3]/20 bg-[#060E18] text-center text-[#F5F0E6]"
                               : "text-slate-500"
                           }`}
                         >
@@ -1354,7 +1354,7 @@ export function Calculator({
                       <div
                         className={`mb-5 overflow-hidden rounded-xl border ${
                           isDj
-                            ? "border-[#C9C1B3]/20 bg-[#1B1B1B]"
+                            ? "border-[#C9C1B3]/20 bg-[#060E18]"
                             : "border-slate-200 bg-white"
                         }`}
                       >

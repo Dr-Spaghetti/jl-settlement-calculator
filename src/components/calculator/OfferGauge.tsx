@@ -33,7 +33,7 @@ export function OfferGauge({
     <div
       className={
         dark
-          ? "rounded-xl border border-[#C9C1B3]/20 bg-[#1B1B1B] p-4"
+          ? "rounded-xl border border-[#C9C1B3]/20 bg-[#060E18] p-4"
           : "rounded-xl border border-plg-borderMuted bg-plg-warmIvory/50 p-4"
       }
       role="group"

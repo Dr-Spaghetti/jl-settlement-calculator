@@ -168,7 +168,7 @@ export function FAQ({ client }: { client: ClientConfig }) {
       id="faq"
       className={
         dj
-          ? "scroll-mt-28 border-t border-[#C9C1B3]/20 bg-[#1B1B1B] py-16 sm:py-20"
+          ? "scroll-mt-28 border-t border-[#C9C1B3]/20 bg-[#060E18] py-16 sm:py-20"
           : "scroll-mt-28 border-t border-plg-borderMuted bg-plg-cream py-16 sm:py-20"
       }
       aria-labelledby="faq-heading"

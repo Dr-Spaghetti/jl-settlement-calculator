@@ -81,7 +81,7 @@ export function getClientCssVars(
     "--plg-gold": accent,
     "--plg-gold-light": `color-mix(in srgb, ${accent} 42%, white)`,
     "--plg-navy": primary,
-    "--plg-charcoal": isDj ? "#1B1B1B" : primary === "#212529" ? "#212529" : "#1E293B",
+    "--plg-charcoal": isDj ? "#060E18" : primary === "#212529" ? "#212529" : "#1E293B",
     "--plg-warm-ivory": warmIvory,
     "--plg-surface": surface,
     "--plg-border-muted": borderMuted,

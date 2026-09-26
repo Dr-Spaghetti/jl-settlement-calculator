@@ -193,13 +193,14 @@ input[type="range"]::-moz-range-thumb {
 
 /* ==========================================================================
    Djougourian theme (Premier unaffected: rules only apply under html.theme-djougourian)
-   Palette only: charcoal #1B1B1B, navy #0D1B2A, gold #B58A45, cream #F5F0E6, taupe #C9C1B3.
-   Contrast: gold on charcoal 5.5:1 · charcoal on gold 5.5:1 · taupe on charcoal 9.6:1 ·
-   taupe on navy 9.8:1 · cream on charcoal 15.1:1 · cream on navy 15.5:1.
+   Palette only: deep-navy ground #060E18, navy #0D1B2A, charcoal #1B1B1B (text on gold/cream), gold #B58A45, cream #F5F0E6, taupe #C9C1B3.
+   Contrast: gold on #060E18 6.2:1 · charcoal on gold 5.5:1 · taupe on #060E18 10.9:1 ·
+   taupe on navy 9.7:1 · cream on #060E18 17.1:1 · cream on navy 15.3:1.
    Hovers derive from the same colors via opacity.
    ========================================================================== */
 html.theme-djougourian {
-  --page-ground: #1b1b1b;
+  --page-ground: #060e18;
+  --dj-ground: #060e18;
   --dj-charcoal: #1b1b1b;
   --dj-navy: #0d1b2a;
   --dj-gold: #b58a45;
@@ -209,7 +210,7 @@ html.theme-djougourian {
 }
 
 html.theme-djougourian body {
-  background-color: var(--dj-charcoal);
+  background-color: var(--dj-ground);
   background-image: none;
   color: var(--dj-cream);
 }
@@ -219,7 +220,7 @@ html.theme-djougourian ::selection {
   color: var(--dj-charcoal);
 }
 html.theme-djougourian ::-webkit-scrollbar-track {
-  background: var(--dj-charcoal);
+  background: var(--dj-ground);
 }
 html.theme-djougourian ::-webkit-scrollbar-thumb {
   background: rgba(201, 193, 179, 0.35);
@@ -245,7 +246,7 @@ html.theme-djougourian .font-cinzel {
 /* ---- Map shared (Premier) utility colors onto the dj palette ---- */
 html.theme-djougourian .bg-plg-cream,
 html.theme-djougourian .bg-plg-warmIvory\/60 {
-  background-color: var(--dj-charcoal) !important;
+  background-color: var(--dj-ground) !important;
 }
 html.theme-djougourian .bg-plg-warmIvory,
 html.theme-djougourian .bg-plg-warmIvory\/50,
@@ -258,7 +259,7 @@ html.theme-djougourian .bg-white {
 html.theme-djougourian .bg-slate-50,
 html.theme-djougourian .bg-slate-100,
 html.theme-djougourian .bg-slate-50\/50 {
-  background-color: var(--dj-charcoal);
+  background-color: var(--dj-ground);
 }
 html.theme-djougourian .bg-slate-200 {
   background-color: rgba(201, 193, 179, 0.25);
@@ -301,7 +302,7 @@ html.theme-djougourian .input-touch,
 html.theme-djougourian select,
 html.theme-djougourian input[type="text"],
 html.theme-djougourian input[type="number"] {
-  background-color: var(--dj-charcoal);
+  background-color: var(--dj-ground);
   border-color: rgba(201, 193, 179, 0.3);
   color: var(--dj-cream);
 }
@@ -321,11 +322,11 @@ html.theme-djougourian input[type="range"] {
 }
 html.theme-djougourian input[type="range"]::-webkit-slider-thumb {
   background: var(--dj-gold);
-  border-color: var(--dj-charcoal);
+  border-color: var(--dj-ground);
 }
 html.theme-djougourian input[type="range"]::-moz-range-thumb {
   background: var(--dj-gold);
-  border-color: var(--dj-charcoal);
+  border-color: var(--dj-ground);
 }
 
 /* Secondary buttons (e.g. Print / Save PDF): cream fill, charcoal text */
@@ -372,7 +373,7 @@ html.theme-djougourian #settlement-ranges table tbody tr:nth-child(even) {
   background-color: rgba(245, 240, 230, 0.03);
 }
 html.theme-djougourian #settlement-ranges thead tr {
-  background-color: var(--dj-charcoal);
+  background-color: var(--dj-ground);
   color: var(--dj-cream);
   box-shadow: inset 0 -2px 0 var(--dj-gold);
 }
@@ -390,7 +391,7 @@ html.theme-djougourian .bg-white\/10 {
 html.theme-djougourian *,
 html.theme-djougourian ::before,
 html.theme-djougourian ::after {
-  --tw-ring-offset-color: #1b1b1b;
+  --tw-ring-offset-color: #060e18;
 }
 html.theme-djougourian .focus-visible\:ring-white:focus-visible {
   --tw-ring-color: #f5f0e6;

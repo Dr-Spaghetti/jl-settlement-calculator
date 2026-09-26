@@ -3,7 +3,7 @@
   "firmName": "Djougourian Law Corporation",
   "shortName": "Djougourian Law Corp",
   "logoUrl": "/logo-djougourian.png",
-  "primaryColor": "#1B1B1B",
+  "primaryColor": "#060E18",
   "secondaryColor": "#B58A45",
   "accentColor": "#B58A45",
   "phone": "(818) 530-0000",
@@ -35,5 +35,5 @@
       "label": "No-obligation case review"
     }
   ],
-  "pageGround": "#1B1B1B"
+  "pageGround": "#060E18"
 }

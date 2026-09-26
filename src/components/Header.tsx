@@ -68,7 +68,7 @@ export function Header({ client }: { client: ClientConfig }) {
           </div>
         </div>
 
-        <header className="sticky top-0 z-40 border-b border-[#B58A45]/40 bg-[#1B1B1B] shadow-md print:hidden">
+        <header className="sticky top-0 z-40 border-b border-[#B58A45]/40 bg-[#060E18] shadow-md print:hidden">
           <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
             <div className="flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
               <a href="#top" className="group flex min-w-0 items-center">

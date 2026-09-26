@@ -63,7 +63,7 @@ export function Hero({ client }: { client: ClientConfig }) {
     return (
       <section
         id="top"
-        className="relative overflow-hidden border-b border-[#B58A45]/30 bg-[#1B1B1B] pb-8 pt-8 sm:pb-10 sm:pt-9"
+        className="relative overflow-hidden border-b border-[#B58A45]/30 bg-[#060E18] pb-8 pt-8 sm:pb-10 sm:pt-9"
         aria-labelledby="hero-heading"
       >
         <div

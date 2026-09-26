@@ -26,7 +26,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
       id="how-it-works"
       className={
         dj
-          ? "scroll-mt-28 border-t border-[#C9C1B3]/20 bg-[#1B1B1B] py-16"
+          ? "scroll-mt-28 border-t border-[#C9C1B3]/20 bg-[#060E18] py-16"
           : "scroll-mt-28 border-t border-plg-borderMuted bg-transparent py-16"
       }
       aria-labelledby="how-heading"
