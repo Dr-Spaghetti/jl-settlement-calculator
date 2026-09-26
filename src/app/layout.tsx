@@ -80,6 +80,17 @@ export function generateMetadata(): Metadata {
     title,
     description,
     robots: { index: true, follow: true },
+    ...(clientUsesDjFonts(client)
+      ? {
+          icons: {
+            icon: [
+              { url: "/favicon-djougourian.ico", sizes: "any" },
+              { url: "/icon-djougourian.png", type: "image/png", sizes: "512x512" },
+            ],
+            apple: "/apple-icon-djougourian.png",
+          },
+        }
+      : {}),
     openGraph: {
       title: `Car Accident Settlement Calculator | ${client.shortName}`,
       description: client.tagline,

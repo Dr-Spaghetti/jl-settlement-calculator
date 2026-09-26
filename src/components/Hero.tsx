@@ -58,7 +58,7 @@ export function Hero({ client }: { client: ClientConfig }) {
 
   if (isDj) {
     const shortSupport =
-      "Educational California settlement ranges — illustrative only, not legal advice.";
+      "See an estimated settlement range for your California car accident in three steps.";
 
     return (
       <section

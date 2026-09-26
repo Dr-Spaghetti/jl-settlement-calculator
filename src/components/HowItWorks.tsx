@@ -59,9 +59,15 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
                 : "text-sm leading-relaxed text-slate-600 sm:text-base"
             }
           >
-            Attorneys and claims professionals often discuss a “multiplier method” for
-            general damages. This calculator shows that educational framework
-            transparently — not a prediction of any particular outcome.
+            {dj ? (
+              "Attorneys and claims professionals often discuss a “multiplier method” for general damages."
+            ) : (
+              <>
+                Attorneys and claims professionals often discuss a “multiplier method” for
+                general damages. This calculator shows that educational framework
+                transparently — not a prediction of any particular outcome.
+              </>
+            )}
           </p>
         </div>
 
@@ -96,7 +102,13 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
               : "rounded-2xl border border-slate-800 bg-plg-navy p-6 text-white shadow-plg-panel sm:p-8"
           }
         >
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
+          <div
+            className={
+              dj
+                ? "grid grid-cols-1 items-center gap-8"
+                : "grid grid-cols-1 items-center gap-8 lg:grid-cols-2"
+            }
+          >
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-plg-gold">
                 Formula Architectures
@@ -126,6 +138,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
               </div>
             </div>
 
+            {dj ? null : (
             <div className="rounded-xl border border-white/10 bg-white/10 p-6 backdrop-blur">
               <h4 className="font-serif mb-2 text-lg font-bold text-white">
                 Educational caveat
@@ -151,6 +164,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
                 </div>
               )}
             </div>
+            )}
           </div>
         </div>
 

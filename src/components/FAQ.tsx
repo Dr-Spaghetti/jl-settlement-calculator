@@ -191,10 +191,12 @@ export function FAQ({ client }: { client: ClientConfig }) {
         >
           Frequently Asked Questions
         </h2>
-        <p className={`mt-3 text-sm ${dj ? "text-[#C9C1B3]" : "text-slate-600"}`}>
-          Educational answers only — not legal advice. Rules and deadlines can vary; confirm
-          details with a licensed attorney{client.state ? ` in ${client.state}` : ""}.
-        </p>
+        {dj ? null : (
+          <p className="mt-3 text-sm text-slate-600">
+            Educational answers only — not legal advice. Rules and deadlines can vary; confirm
+            details with a licensed attorney{client.state ? ` in ${client.state}` : ""}.
+          </p>
+        )}
         <div className="mt-8 divide-y divide-plg-borderMuted rounded-2xl border border-plg-borderMuted bg-white px-5 shadow-sm">
           {faqs.map((item) => (
             <details key={item.q} className="group py-4">

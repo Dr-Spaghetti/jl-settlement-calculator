@@ -396,7 +396,115 @@ html.theme-djougourian ::after {
 html.theme-djougourian .focus-visible\:ring-white:focus-visible {
   --tw-ring-color: #f5f0e6;
 }
-/* Validation errors: the only non-palette hue (muted red, readable on dark) */
+/* Validation errors: palette only (cream text, 2px gold rule, "!" badge) */
 html.theme-djougourian .text-red-600 {
-  color: #f19a8f;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-left: 2px solid var(--dj-gold);
+  padding-left: 0.5rem;
+  color: var(--dj-cream);
+}
+html.theme-djougourian .text-red-600::before {
+  content: "!";
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--dj-gold);
+  color: var(--dj-charcoal);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+html.theme-djougourian .border-red-400 {
+  border-color: var(--dj-gold) !important;
+}
+
+/* Range slider: 44px hit area, 8px track, 24px thumb */
+html.theme-djougourian #calculator input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 44px;
+  background: transparent !important;
+}
+html.theme-djougourian #calculator input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(201, 193, 179, 0.25);
+}
+html.theme-djougourian #calculator input[type="range"]::-moz-range-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(201, 193, 179, 0.25);
+}
+html.theme-djougourian #calculator input[type="range"]::-webkit-slider-thumb {
+  width: 24px;
+  height: 24px;
+  margin-top: -8px;
+  border: 3px solid var(--dj-ground);
+}
+html.theme-djougourian #calculator input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--dj-ground);
+}
+
+/* Phones: 44px tap targets, keep focus/anchor targets clear of sticky header + bar */
+@media (max-width: 767px) {
+  html.theme-djougourian {
+    scroll-padding-top: 88px;
+    scroll-padding-bottom: 96px;
+  }
+  html.theme-djougourian .dj-topbar a,
+  html.theme-djougourian header a,
+  html.theme-djougourian #top a,
+  html.theme-djougourian #calculator button,
+  html.theme-djougourian #calculator a,
+  html.theme-djougourian #calculator summary,
+  html.theme-djougourian #how-it-works summary {
+    min-height: 44px;
+  }
+  html.theme-djougourian #calculator summary,
+  html.theme-djougourian #how-it-works summary {
+    display: flex;
+    align-items: center;
+  }
+  html.theme-djougourian #how-it-works summary > span {
+    width: 100%;
+  }
+  html.theme-djougourian #faq details {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  html.theme-djougourian #faq summary {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  html.theme-djougourian #faq summary > span {
+    width: 100%;
+  }
+  html.theme-djougourian #faq details > :not(summary) {
+    padding-bottom: 0.75rem;
+  }
+  html.theme-djougourian footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  html.theme-djougourian footer ul {
+    margin-top: 0.25rem;
+  }
+  html.theme-djougourian footer ul > li + li {
+    margin-top: 0;
+  }
+}
+html.theme-djougourian .decoration-slate-300 {
+  text-decoration-color: rgba(201, 193, 179, 0.5);
 }

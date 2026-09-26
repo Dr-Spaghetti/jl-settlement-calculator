@@ -39,8 +39,8 @@ export function Header({ client }: { client: ClientConfig }) {
   if (isDj) {
     return (
       <>
-        <div className="border-b border-[#C9C1B3]/15 bg-[#0D1B2A] text-xs text-white print:hidden">
-          <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-2 px-4 py-2.5 sm:flex-row sm:px-6 lg:px-8">
+        <div className="dj-topbar border-b border-[#C9C1B3]/15 bg-[#0D1B2A] text-xs text-white print:hidden">
+          <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-x-2 px-4 pt-2.5 sm:flex-row sm:gap-2 sm:py-2.5 sm:px-6 lg:px-8">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#C9C1B3]">
               <span className="inline-flex items-center rounded bg-[#B58A45] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#1B1B1B]">
                 California

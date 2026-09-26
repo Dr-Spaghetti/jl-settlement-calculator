@@ -1,6 +1,7 @@
 "use client";
 
 import type { ClientConfig } from "@/lib/types";
+import { PhoneIcon } from "@/components/icons";
 
 function telHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
@@ -24,7 +25,16 @@ export function StickyMobileCTA({ client }: { client: ClientConfig }) {
               : "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 py-3 text-sm font-semibold text-plg-navy"
           }
         >
-          Call {client.phone}
+          {dj ? (
+            <>
+              <span className="max-[359px]:hidden">Call {client.phone}</span>
+              <span className="hidden items-center gap-1.5 max-[359px]:inline-flex">
+                <PhoneIcon size={16} aria-hidden /> Call
+              </span>
+            </>
+          ) : (
+            <>Call {client.phone}</>
+          )}
         </a>
         <a
           href={client.ctaUrl}

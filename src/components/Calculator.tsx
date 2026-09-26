@@ -513,7 +513,7 @@ export function Calculator({
                       Enter tangible, out-of-pocket financial expenses from the collision.
                     </p>
                     {economicError ? (
-                      <p className={isDj ? "mt-2 text-xs font-medium text-[#F19A8F]" : `mt-2 ${errorClass}`}>{economicError}</p>
+                      <p className={`mt-2 ${errorClass}`}>{economicError}</p>
                     ) : null}
                   </div>
                   <div className={isDj ? "space-y-6 px-6 pb-6 sm:px-8" : "contents"}>
@@ -1183,13 +1183,13 @@ export function Calculator({
 
                       <div
                         className={`mb-4 grid grid-cols-3 items-stretch gap-2 ${
-                          isDj ? "min-w-0 gap-2 sm:!grid-cols-[1fr_1.3fr_1fr] sm:gap-2.5" : "items-end gap-2.5"
+                          isDj ? "min-w-0 gap-2 max-[399px]:!grid-cols-2 min-[400px]:!grid-cols-[1fr_1.3fr_1fr] sm:gap-2.5" : "items-end gap-2.5"
                         }`}
                       >
                         <div
                           className={`rounded-xl border text-center transition ${
                             isDj
-                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#060E18] px-1.5 py-2.5 sm:p-3"
+                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#060E18] px-1.5 py-2.5 sm:p-3 lg:px-1.5 xl:px-2"
                               : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
                           }`}
                         >
@@ -1198,12 +1198,16 @@ export function Calculator({
                               isDj ? "!tracking-wide text-[#C9C1B3]" : "text-slate-500"
                             }`}
                           >
-                            Conservative
+                            {isDj ? "Low" : "Conservative"}
                           </span>
                           <span
                             className={`block font-extrabold ${
                               isDj
-                                ? "text-sm text-white sm:text-base"
+                                ? `whitespace-nowrap text-sm text-white sm:text-base ${
+                                    formatCurrency(result.recoverableLow).length > 8
+                                      ? "lg:text-[13px] xl:text-sm"
+                                      : "lg:text-sm xl:text-base"
+                                  }`
                                 : "text-base text-slate-700 sm:text-lg"
                             }`}
                           >
@@ -1221,7 +1225,7 @@ export function Calculator({
                         <div
                           className={`rounded-xl border text-center text-white shadow-md ${
                             isDj
-                              ? "dj-results-mid min-w-0 overflow-hidden border-[#B58A45] bg-[#B58A45] p-2.5 !text-[#1B1B1B] shadow-lg sm:p-3.5"
+                              ? "dj-results-mid min-w-0 overflow-hidden border-[#B58A45] bg-[#B58A45] p-2.5 !text-[#1B1B1B] shadow-lg max-[399px]:order-first max-[399px]:col-span-2 sm:p-3.5 lg:px-2.5 xl:p-3.5"
                               : "border-slate-700 bg-slate-900 p-3.5 ring-2 ring-plg-crimson/40"
                           } ${midPop ? "motion-safe:animate-mid-pop" : ""}`}
                         >
@@ -1232,12 +1236,16 @@ export function Calculator({
                                 : "text-[10px] font-medium text-plg-gold"
                             }`}
                           >
-                            Estimated Mid
+                            {isDj ? "Mid" : "Estimated Mid"}
                           </span>
                           <span
                             className={`block font-black text-white ${
                               isDj
-                                ? "max-w-full truncate !text-[#1B1B1B] text-[clamp(0.95rem,3.9vw,1.35rem)] leading-none tabular-nums tracking-tight sm:text-xl lg:text-[1.3rem]"
+                                ? `whitespace-nowrap !text-[#1B1B1B] leading-none tabular-nums tracking-tight ${
+                                    formatCurrency(result.recoverableMid).length > 8
+                                      ? "text-[clamp(0.9rem,3.4vw,1.1rem)] max-[399px]:text-2xl sm:text-lg lg:text-[15px] xl:text-[1.1rem]"
+                                      : "text-[clamp(1rem,4vw,1.25rem)] max-[399px]:text-2xl sm:text-xl lg:text-[1.1rem] xl:text-[1.3rem]"
+                                  }`
                                 : "text-xl sm:text-2xl"
                             }`}
                           >
@@ -1255,7 +1263,7 @@ export function Calculator({
                         <div
                           className={`rounded-xl border text-center transition ${
                             isDj
-                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#060E18] px-1.5 py-2.5 sm:p-3"
+                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#060E18] px-1.5 py-2.5 sm:p-3 lg:px-1.5 xl:px-2"
                               : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
                           }`}
                         >
@@ -1264,12 +1272,16 @@ export function Calculator({
                               isDj ? "!tracking-wide text-[#C9C1B3]" : "text-slate-500"
                             }`}
                           >
-                            Trial / Strong
+                            {isDj ? "High" : "Trial / Strong"}
                           </span>
                           <span
                             className={`block font-extrabold ${
                               isDj
-                                ? "text-sm text-white sm:text-base"
+                                ? `whitespace-nowrap text-sm text-white sm:text-base ${
+                                    formatCurrency(result.recoverableHigh).length > 8
+                                      ? "lg:text-[13px] xl:text-sm"
+                                      : "lg:text-sm xl:text-base"
+                                  }`
                                 : "text-base text-slate-700 sm:text-lg"
                             }`}
                           >
@@ -1331,7 +1343,8 @@ export function Calculator({
                         </p>
                       ) : null}
 
-                      {result.cappedMid != null ? (
+                      {result.cappedMid != null &&
+                      (!isDj || result.cappedMid < result.recoverableMid) ? (
                         <p
                           className={`mb-3 rounded-lg border px-3 py-2 text-xs tabular-nums leading-snug ${
                             isDj

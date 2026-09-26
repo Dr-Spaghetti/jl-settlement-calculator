@@ -39,12 +39,16 @@ export function RangesTable({ client }: { client?: ClientConfig }) {
                 : "font-serif mt-1 mb-3 text-3xl font-bold text-slate-900 sm:text-4xl"
             }
           >
-            Typical Educational Settlement Ranges by Injury Type
+            {dj
+              ? "Example Settlement Ranges by Injury Type"
+              : "Typical Educational Settlement Ranges by Injury Type"}
           </h2>
-          <p className={dj ? "text-xs text-[#C9C1B3] sm:text-sm" : "text-xs text-slate-600 sm:text-sm"}>
-            Illustrative bands only — real cases vary widely by venue, policy limits, and
-            proof. These figures are not averages from any firm&apos;s closed files.
-          </p>
+          {dj ? null : (
+            <p className="text-xs text-slate-600 sm:text-sm">
+              Illustrative bands only — real cases vary widely by venue, policy limits, and
+              proof. These figures are not averages from any firm&apos;s closed files.
+            </p>
+          )}
         </div>
 
         <div className="overflow-hidden rounded-2xl border border-plg-borderMuted bg-white shadow-sm">
@@ -62,10 +66,10 @@ export function RangesTable({ client }: { client?: ClientConfig }) {
                     Medical Specials
                   </th>
                   <th scope="col" className="px-5 py-4 font-semibold">
-                    Usual Multiplier
+                    {dj ? "Example Multiplier" : "Usual Multiplier"}
                   </th>
                   <th scope="col" className="px-5 py-4 font-semibold">
-                    Illustrative Total*
+                    {dj ? "Illustrative Total" : "Illustrative Total*"}
                   </th>
                 </tr>
               </thead>
@@ -90,7 +94,7 @@ export function RangesTable({ client }: { client?: ClientConfig }) {
                       {row.typicalMultiplier}
                     </td>
                     <td className="px-5 py-4 font-bold text-slate-900">
-                      {row.illustrative}
+                      {dj ? row.illustrative.replace(/\*$/, "") : row.illustrative}
                     </td>
                   </tr>
                 ))}
@@ -98,10 +102,12 @@ export function RangesTable({ client }: { client?: ClientConfig }) {
             </table>
           </div>
         </div>
-        <p className={`mt-3 text-xs ${dj ? "text-[#C9C1B3]" : "text-slate-500"}`}>
-          *Catastrophic matters often involve structured settlements, life-care plans, and
-          multiple coverage layers. Always seek individualized legal advice.
-        </p>
+        {dj ? null : (
+          <p className="mt-3 text-xs text-slate-500">
+            *Catastrophic matters often involve structured settlements, life-care plans, and
+            multiple coverage layers. Always seek individualized legal advice.
+          </p>
+        )}
       </div>
     </section>
   );

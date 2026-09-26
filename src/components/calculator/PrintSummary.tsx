@@ -41,7 +41,9 @@ export function PrintSummary({
         <header>
           <h1 className="text-xl font-bold">{firmName}</h1>
           <p className="text-sm text-slate-600">
-            Educational settlement estimate summary — not legal advice
+            {disclaimer
+              ? "Settlement estimate summary"
+              : "Educational settlement estimate summary — not legal advice"}
           </p>
           <p className="text-xs text-slate-500">
             Generated locally in your browser · State note: {usState} · Formula:{" "}
