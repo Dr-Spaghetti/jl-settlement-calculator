@@ -1,4 +1,4 @@
-import type { ClientConfig } from "./types";
+import type { ClientConfig, OfferRealityCheck } from "./types";
 
 /**
  * Djougourian (CA) disclaimer copy: kept deliberately minimal.
@@ -14,9 +14,26 @@ export const DJ_ESTIMATE_QUALIFIER =
 export const DJ_OFFER_NOTE =
   "This comparison is educational only and is not advice on whether to accept or reject an offer.";
 
-/** Offer Reality Check summary for djlaw: neutral wording plus the educational-only note. */
-export function djOfferSummary(summary: string): string {
-  return `${summary.replace("a typical mid-range estimate", "the mid-range educational estimate")} ${DJ_OFFER_NOTE}`;
+/** Neutral (non-advice) band copy for the djlaw Offer Reality Check. */
+const DJ_OFFER_BAND_COPY: Record<OfferRealityCheck["label"], string> = {
+  "well-below":
+    "This offer sits well below the mid-range educational estimate for the inputs you entered. An attorney can explain how documentation and negotiation may affect an offer.",
+  below:
+    "This offer is below the mid-range educational estimate. Where it lands depends on liability, medical proof, and insurance limits.",
+  near:
+    "This offer is near the mid-range educational estimate. Whether it is fair depends on case specifics an attorney can evaluate.",
+  above:
+    "This offer is above the mid-range educational estimate for these inputs. An attorney can review whether future care, wage loss, and other damages are fully accounted for.",
+};
+
+/**
+ * Offer Reality Check summary for djlaw: neutral band copy, the shared policy-limit
+ * sentence (if any), then the educational-only note.
+ */
+export function djOfferSummary(check: Pick<OfferRealityCheck, "label" | "summary">): string {
+  const i = check.summary.indexOf(" Policy limits may bind:");
+  const policy = i >= 0 ? check.summary.slice(i) : "";
+  return `${DJ_OFFER_BAND_COPY[check.label]}${policy} ${DJ_OFFER_NOTE}`;
 }
 
 export function djFooterLegalLine(client: ClientConfig): string {

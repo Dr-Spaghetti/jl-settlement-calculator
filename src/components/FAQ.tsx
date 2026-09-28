@@ -82,14 +82,14 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
         q: "How long do I have to file a personal injury claim in California?",
         a: djFaq ? (
           <>
-            California personal injury deadlines are strict and fact-dependent. Many injury
-            claims against private parties are discussed under a roughly two-year framework,
-            but exceptions, notice rules, and different claim types can change the timeline.
-            Claims against a government agency generally must be presented within six months
-            (Cal. Gov. Code § 911.2). Many other injury lawsuits must be filed within two
-            years (Code Civ. Proc. § 335.1). This is educational information only—not a
-            determination of your filing deadline. Confirm timing with a licensed California
-            attorney before relying on any date.
+            California injury deadlines are strict and depend on the facts. A personal injury
+            lawsuit against a private party generally must be filed within two years of the
+            injury (Code Civ. Proc. §&nbsp;335.1). An injury claim against a California public
+            entity, such as a city, county, or state agency, generally must be presented to
+            that entity within six months of the injury (Cal. Gov. Code §&nbsp;911.2) before a
+            lawsuit can be filed. Exceptions can shorten or extend these periods. This is
+            educational information only, not a determination of your filing deadline.
+            Confirm timing with a licensed California attorney before relying on any date.
           </>
         ) : (
           <>

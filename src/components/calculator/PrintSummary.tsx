@@ -104,7 +104,7 @@ export function PrintSummary({
             Offer Reality Check: {formatCurrency(offerCheck.offer)} ={" "}
             {offerCheck.percentOfMid}% of post-fault mid (
             {formatCurrency(offerCheck.midEstimate)}). {disclaimer
-              ? djOfferSummary(offerCheck.summary)
+              ? djOfferSummary(offerCheck)
               : offerCheck.summary}
           </p>
         ) : null}

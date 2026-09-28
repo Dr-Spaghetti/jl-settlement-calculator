@@ -1008,7 +1008,7 @@ export function Calculator({
                       <option value="50000">$50,000 Policy Limit</option>
                       <option value="100000">
                         {isDj
-                          ? "$100,000 Policy Limit (Middle-tier)"
+                          ? "$100,000 Policy Limit"
                           : "$100,000 Policy Limit (Typical middle-tier)"}
                       </option>
                       <option value="250000">$250,000 Policy Limit</option>

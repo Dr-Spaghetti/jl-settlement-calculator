@@ -114,7 +114,7 @@ export function RangesTable({ client }: { client?: ClientConfig }) {
           <p id="ranges-qualifier" className="mt-3 text-xs leading-relaxed text-[#C9C1B3]">
             These are rounded illustrations of how this formula behaves, not averages, jury
             verdicts, or results Djougourian Law Corporation has obtained. Every case is
-            different. Not a guarantee or prediction of any result.
+            different, and these figures are not a guarantee or prediction of any result.
           </p>
         ) : (
           <p className="mt-3 text-xs text-slate-500">

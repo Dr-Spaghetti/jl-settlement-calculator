@@ -130,7 +130,7 @@ export function OfferGauge({
 
       <p className={`mt-3 text-sm leading-relaxed ${dark ? "text-[#F5F0E6]" : "text-slate-600"}`}>
         {dark
-          ? djOfferSummary(check.summary)
+          ? djOfferSummary(check)
           : check.summary}
       </p>
     </div>
