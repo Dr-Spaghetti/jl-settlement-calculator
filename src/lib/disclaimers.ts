@@ -11,9 +11,17 @@ import type { ClientConfig } from "./types";
 export const DJ_ESTIMATE_QUALIFIER =
   "Estimate only. Not a guarantee of any result or legal advice.";
 
+export const DJ_OFFER_NOTE =
+  "This comparison is educational only and is not advice on whether to accept or reject an offer.";
+
+/** Offer Reality Check summary for djlaw: neutral wording plus the educational-only note. */
+export function djOfferSummary(summary: string): string {
+  return `${summary.replace("a typical mid-range estimate", "the mid-range educational estimate")} ${DJ_OFFER_NOTE}`;
+}
+
 export function djFooterLegalLine(client: ClientConfig): string {
   const street = client.officeAddress?.trim() || "[street address]";
   const attorney = client.responsibleAttorney?.trim() || "[name]";
   const zip = client.officeZip?.trim() ? ` ${client.officeZip.trim()}` : "";
-  return `Attorney advertising. ${client.firmName}, ${street}, ${client.city}, ${client.state}${zip}. Responsible attorney: ${attorney}. Use of this tool does not create an attorney-client relationship. Past results do not guarantee future outcomes.`;
+  return `Attorney advertising. ${client.firmName}, ${street}, ${client.city}, ${client.state}${zip}. Responsible attorney: ${attorney}. Use of this tool does not create an attorney-client relationship. Past results do not guarantee future outcomes. Calculator inputs stay in your browser and are not sent to or stored by the firm.`;
 }

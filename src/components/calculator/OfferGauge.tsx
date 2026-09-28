@@ -2,6 +2,7 @@
 
 import type { OfferRealityCheck } from "@/lib/types";
 import { formatCurrency } from "@/lib/calculator";
+import { djOfferSummary } from "@/lib/disclaimers";
 
 const LABEL_COPY: Record<OfferRealityCheck["label"], string> = {
   "well-below": "Well below mid",
@@ -128,7 +129,9 @@ export function OfferGauge({
       </div>
 
       <p className={`mt-3 text-sm leading-relaxed ${dark ? "text-[#F5F0E6]" : "text-slate-600"}`}>
-        {check.summary}
+        {dark
+          ? djOfferSummary(check.summary)
+          : check.summary}
       </p>
     </div>
   );

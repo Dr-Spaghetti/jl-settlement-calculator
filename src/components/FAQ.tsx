@@ -24,11 +24,15 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
     },
     {
       q: "How do insurance companies calculate car accident settlements?",
-      a: "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (usually not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range. It does not recreate any insurer’s proprietary software.",
+      a: djFaq
+        ? "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range. It does not recreate any insurer’s proprietary software."
+        : "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (usually not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range. It does not recreate any insurer’s proprietary software.",
     },
     {
       q: "How is pain and suffering calculated after a car accident?",
-      a: "Pain and suffering is the non-economic part of a claim. The usual convention is medical or economic damages × a multiplier tied to severity (soft tissue toward the low end; surgery or permanent impairment toward the high end). Permanency, treatment length, care type, and treatment gaps all nudge that factor. Enter those levers in the calculator to see how the mid estimate changes.",
+      a: djFaq
+        ? "Pain and suffering is the non-economic part of a claim. A common approach multiplies medical or economic damages by a factor tied to severity (soft tissue toward the low end; surgery or permanent impairment toward the high end). Permanency, treatment length, care type, and treatment gaps all nudge that factor. Enter those levers in the calculator to see how the mid estimate changes."
+        : "Pain and suffering is the non-economic part of a claim. The usual convention is medical or economic damages × a multiplier tied to severity (soft tissue toward the low end; surgery or permanent impairment toward the high end). Permanency, treatment length, care type, and treatment gaps all nudge that factor. Enter those levers in the calculator to see how the mid estimate changes.",
     },
   ];
 
@@ -76,7 +80,18 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
     base.push(
       {
         q: "How long do I have to file a personal injury claim in California?",
-        a: (
+        a: djFaq ? (
+          <>
+            California personal injury deadlines are strict and fact-dependent. Many injury
+            claims against private parties are discussed under a roughly two-year framework,
+            but exceptions, notice rules, and different claim types can change the timeline.
+            Claims against a government agency generally must be presented within six months
+            (Cal. Gov. Code § 911.2). Many other injury lawsuits must be filed within two
+            years (Code Civ. Proc. § 335.1). This is educational information only—not a
+            determination of your filing deadline. Confirm timing with a licensed California
+            attorney before relying on any date.
+          </>
+        ) : (
           <>
             California personal injury deadlines are strict and fact-dependent. Many injury
             claims against private parties are discussed under a roughly two-year framework,
@@ -88,7 +103,16 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
       },
       {
         q: "Does my percentage of fault reduce a California car accident settlement?",
-        a: (
+        a: djFaq ? (
+          <>
+            California generally follows pure comparative negligence: your share of fault
+            reduces recoverable damages by that percentage but does not automatically bar
+            recovery even if you are mostly at fault. Enter your estimated fault % and set the
+            state to CA in the calculator to see an educational recoverable range after that
+            reduction. Insurers may still dispute fault share—this tool does not decide
+            liability.
+          </>
+        ) : (
           <>
             California generally follows pure comparative negligence: your share of fault
             typically reduces recoverable damages by that percentage but does not
@@ -101,7 +125,15 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
       },
       {
         q: "What does it cost to hire a personal injury lawyer?",
-        a: (
+        a: djFaq ? (
+          <>
+            Many California personal injury lawyers work on contingency, meaning attorney
+            fees are generally a percentage of any recovery and discussed up front.{" "}
+            {client.shortName} offers a free consultation so you can ask about fee
+            arrangements for your matter. This calculator is free and educational only—
+            fee terms are set in a written agreement.
+          </>
+        ) : (
           <>
             Many California personal injury lawyers work on contingency, meaning attorney
             fees are typically a percentage of any recovery and discussed up front.{" "}

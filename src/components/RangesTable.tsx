@@ -91,10 +91,18 @@ export function RangesTable({ client }: { client?: ClientConfig }) {
                         dj ? "text-[#B58A45]" : "text-plg-crimson"
                       }`}
                     >
-                      {dj && row.scenario.startsWith("Severe") ? "3×–6×" : row.typicalMultiplier}
+                      {dj && row.scenario.startsWith("Severe")
+                        ? "3×–6×"
+                        : dj && row.scenario.startsWith("Catastrophic")
+                          ? "4×–7×"
+                          : row.typicalMultiplier}
                     </td>
                     <td className="px-5 py-4 font-bold text-slate-900">
-                      {dj ? row.illustrative.replace(/\*$/, "") : row.illustrative}
+                      {dj && row.scenario.startsWith("Catastrophic")
+                        ? "$500,000+"
+                        : dj
+                          ? row.illustrative.replace(/\*$/, "")
+                          : row.illustrative}
                     </td>
                   </tr>
                 ))}
@@ -102,7 +110,13 @@ export function RangesTable({ client }: { client?: ClientConfig }) {
             </table>
           </div>
         </div>
-        {dj ? null : (
+        {dj ? (
+          <p id="ranges-qualifier" className="mt-3 text-xs leading-relaxed text-[#C9C1B3]">
+            These are rounded illustrations of how this formula behaves, not averages, jury
+            verdicts, or results Djougourian Law Corporation has obtained. Every case is
+            different. Not a guarantee or prediction of any result.
+          </p>
+        ) : (
           <p className="mt-3 text-xs text-slate-500">
             *Catastrophic matters often involve structured settlements, life-care plans, and
             multiple coverage layers. Always seek individualized legal advice.

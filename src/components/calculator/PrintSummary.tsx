@@ -2,6 +2,7 @@
 
 import type { OfferRealityCheck, SettlementRange } from "@/lib/types";
 import { formatCurrency } from "@/lib/calculator";
+import { djOfferSummary } from "@/lib/disclaimers";
 
 export function PrintSummary({
   result,
@@ -102,7 +103,9 @@ export function PrintSummary({
           <p className="text-sm">
             Offer Reality Check: {formatCurrency(offerCheck.offer)} ={" "}
             {offerCheck.percentOfMid}% of post-fault mid (
-            {formatCurrency(offerCheck.midEstimate)}). {offerCheck.summary}
+            {formatCurrency(offerCheck.midEstimate)}). {disclaimer
+              ? djOfferSummary(offerCheck.summary)
+              : offerCheck.summary}
           </p>
         ) : null}
         <p className="text-xs text-slate-500">{result.comparativeFaultNote}</p>

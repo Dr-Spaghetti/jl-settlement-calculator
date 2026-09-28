@@ -844,8 +844,17 @@ export function Calculator({
                           isDj ? "text-xs text-slate-700" : "text-[11px] text-slate-600"
                         }`}
                       >
-                        <strong>Legal note:</strong> Your share of fault typically reduces
-                        recoverable damages.{" "}
+                        {isDj ? (
+                          <>
+                            <strong>Legal note:</strong> Your share of fault reduces
+                            recoverable damages.
+                          </>
+                        ) : (
+                          <>
+                            <strong>Legal note:</strong> Your share of fault typically reduces
+                            recoverable damages.
+                          </>
+                        )}{" "}
                         {usState === "WA" ? (
                           <>
                             WA pure comparative negligence allows recovery even above 50%
@@ -998,7 +1007,9 @@ export function Calculator({
                       </option>
                       <option value="50000">$50,000 Policy Limit</option>
                       <option value="100000">
-                        $100,000 Policy Limit (Typical middle-tier)
+                        {isDj
+                          ? "$100,000 Policy Limit (Middle-tier)"
+                          : "$100,000 Policy Limit (Typical middle-tier)"}
                       </option>
                       <option value="250000">$250,000 Policy Limit</option>
                       <option value="500000">$500,000 Policy Limit</option>

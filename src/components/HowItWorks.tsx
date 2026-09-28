@@ -62,7 +62,7 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
             }
           >
             {dj ? (
-              "Attorneys and claims professionals often discuss a “multiplier method” for general damages."
+              "Attorneys and claims professionals often discuss a “multiplier method” for general damages. The figures come only from the numbers you enter and a simplified formula. They are not based on Djougourian Law Corporation’s case results, jury-verdict data, or any insurer’s software."
             ) : (
               <>
                 Attorneys and claims professionals often discuss a “multiplier method” for
