@@ -75,7 +75,9 @@ export function generateMetadata(): Metadata {
   const client = getActiveClient();
   const region = stateRegionLabel(client.state);
   const title = `${region} Car Accident Settlement Calculator | ${client.firmName}`;
-  const description = `${client.tagline} Free educational settlement range estimator from ${client.firmName} in ${client.city}, ${client.state}. Not legal advice.`;
+  const description = clientUsesDjFonts(client)
+    ? `${client.tagline} Free educational settlement range estimator from ${client.firmName} in ${client.city}, ${client.state}.`
+    : `${client.tagline} Free educational settlement range estimator from ${client.firmName} in ${client.city}, ${client.state}. Not legal advice.`;
   return {
     title,
     description,

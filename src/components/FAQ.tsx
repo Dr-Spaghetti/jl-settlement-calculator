@@ -19,13 +19,13 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
     {
       q: "How much is my car accident settlement worth?",
       a: djFaq
-        ? "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier (this calculator uses about 1.25×–7×), and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range, not a guaranteed payout."
+        ? "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier (this calculator uses about 1.25×–7×), and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range."
         : "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier—often discussed around 1.5×–5×—and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range, not a guaranteed payout.",
     },
     {
       q: "How do insurance companies calculate car accident settlements?",
       a: djFaq
-        ? "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range. It does not recreate any insurer’s proprietary software."
+        ? "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range."
         : "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (usually not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range. It does not recreate any insurer’s proprietary software.",
     },
     {
@@ -87,9 +87,7 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
             injury (Code Civ. Proc. §&nbsp;335.1). An injury claim against a California public
             entity, such as a city, county, or state agency, generally must be presented to
             that entity within six months of the injury (Cal. Gov. Code §&nbsp;911.2) before a
-            lawsuit can be filed. Exceptions can shorten or extend these periods. This is
-            educational information only, not a determination of your filing deadline.
-            Confirm timing with a licensed California attorney before relying on any date.
+            lawsuit can be filed. Exceptions can shorten or extend these periods.
           </>
         ) : (
           <>
@@ -109,8 +107,7 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
             reduces recoverable damages by that percentage but does not automatically bar
             recovery even if you are mostly at fault. Enter your estimated fault % and set the
             state to CA in the calculator to see an educational recoverable range after that
-            reduction. Insurers may still dispute fault share—this tool does not decide
-            liability.
+            reduction. Insurers may still dispute fault share.
           </>
         ) : (
           <>
@@ -130,8 +127,7 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
             Many California personal injury lawyers work on contingency, meaning attorney
             fees are generally a percentage of any recovery and discussed up front.{" "}
             {client.shortName} offers a free consultation so you can ask about fee
-            arrangements for your matter. This calculator is free and educational only—
-            fee terms are set in a written agreement.
+            arrangements for your matter. Fee terms are set in a written agreement.
           </>
         ) : (
           <>
@@ -207,7 +203,8 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
     }
   );
 
-  return base;
+  // Djougourian: the "accurate?" answer is disclaimer-only copy, so it is omitted.
+  return djFaq ? base.filter((f) => !f.q.startsWith("Is an online")) : base;
 }
 
 export function FAQ({ client }: { client: ClientConfig }) {
