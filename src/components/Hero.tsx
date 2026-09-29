@@ -87,7 +87,7 @@ export function Hero({ client }: { client: ClientConfig }) {
               </span>
             </h1>
 
-            <p className="mx-auto mb-5 max-w-2xl text-sm font-normal leading-relaxed text-[#F5F0E6] sm:text-base">
+            <p className="mx-auto mb-5 max-w-2xl text-balance text-sm font-normal leading-relaxed text-[#F5F0E6] sm:text-base">
               {shortSupport}
             </p>
 
