@@ -58,7 +58,7 @@ export function Hero({ client }: { client: ClientConfig }) {
 
   if (isDj) {
     const shortSupport =
-      "See an estimated settlement range for your California car accident in three steps.";
+      "Estimate only. Not a guarantee of any result or legal advice.";
 
     return (
       <section

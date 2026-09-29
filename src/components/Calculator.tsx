@@ -364,6 +364,12 @@ export function Calculator({
           Settlement calculator
         </h2>
 
+        {isDj ? (
+          <p id="dj-no-relationship" className="-mt-8 mb-4 text-center text-xs text-[#C9C1B3]">
+            Use of this tool does not create an attorney-client relationship.
+          </p>
+        ) : null}
+
         {/* Severity presets */}
         <div
           className={`mb-8 rounded-xl border p-4 shadow-sm sm:p-5 ${

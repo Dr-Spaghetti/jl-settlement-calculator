@@ -35,13 +35,25 @@ export function HowItWorks({ dj = false }: { dj?: boolean } = {}) {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 max-w-3xl">
-          <span
-            className={`text-xs font-bold uppercase tracking-wider ${
-              dj ? "text-[#B58A45]" : "text-plg-crimson"
-            }`}
-          >
-            Transparency In Valuation
-          </span>
+          {dj ? (
+            <>
+              <p id="dj-figures-note" className="-mt-8 mb-4 text-xs text-[#C9C1B3]">
+                Figures are rounded illustrations, not averages, jury verdicts, or results
+                Djougourian Law Corporation has obtained.
+              </p>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#B58A45]">
+                Transparency In Valuation
+              </span>
+            </>
+          ) : (
+            <span
+              className={`text-xs font-bold uppercase tracking-wider ${
+                dj ? "text-[#B58A45]" : "text-plg-crimson"
+              }`}
+            >
+              Transparency In Valuation
+            </span>
+          )}
           <h2
             id="how-heading"
             className={
