@@ -2,6 +2,7 @@
 
 import type { OfferRealityCheck, SettlementRange } from "@/lib/types";
 import { formatCurrency } from "@/lib/calculator";
+import { djOfferSummary } from "@/lib/disclaimers";
 
 export function PrintSummary({
   result,
@@ -9,12 +10,15 @@ export function PrintSummary({
   firmName,
   usState,
   compact,
+  disclaimer,
 }: {
   result: SettlementRange;
   offerCheck: OfferRealityCheck | null;
   firmName: string;
   usState: string;
   compact?: boolean;
+  /** Optional qualifier printed with the summary (djlaw passes one). */
+  disclaimer?: string;
 }) {
   function handlePrint() {
     window.print();
@@ -38,7 +42,9 @@ export function PrintSummary({
         <header>
           <h1 className="text-xl font-bold">{firmName}</h1>
           <p className="text-sm text-slate-600">
-            Educational settlement estimate summary — not legal advice
+            {disclaimer
+              ? "Settlement estimate summary"
+              : "Educational settlement estimate summary — not legal advice"}
           </p>
           <p className="text-xs text-slate-500">
             Generated locally in your browser · State note: {usState} · Formula:{" "}
@@ -97,10 +103,17 @@ export function PrintSummary({
           <p className="text-sm">
             Offer Reality Check: {formatCurrency(offerCheck.offer)} ={" "}
             {offerCheck.percentOfMid}% of post-fault mid (
-            {formatCurrency(offerCheck.midEstimate)}). {offerCheck.summary}
+            {formatCurrency(offerCheck.midEstimate)}). {disclaimer
+              ? djOfferSummary(offerCheck)
+              : offerCheck.summary}
           </p>
         ) : null}
         <p className="text-xs text-slate-500">{result.comparativeFaultNote}</p>
+        {disclaimer ? (
+          <p className="border-t border-slate-300 pt-2 text-xs text-slate-700">
+            {disclaimer}
+          </p>
+        ) : null}
       </div>
     </div>
   );

@@ -28,6 +28,8 @@ import { PrintSummary } from "@/components/calculator/PrintSummary";
 import { CountUpCurrency } from "@/components/calculator/CountUpCurrency";
 import { SignatureMoment } from "@/components/motion/SignatureMoment";
 import { prefersReducedMotion } from "@/lib/motion";
+import { EstimateQualifier } from "@/components/dj/EstimateQualifier";
+import { DJ_ESTIMATE_QUALIFIER } from "@/lib/disclaimers";
 import {
   BoltIcon,
   ChevronLeftIcon,
@@ -354,7 +356,7 @@ export function Calculator({
   return (
     <section
       id="calculator"
-      className={`scroll-mt-28 py-12 pb-32 sm:py-14 lg:pb-14 ${isDj ? "bg-[#eef2ef]" : "bg-plg-cream"}`}
+      className={`scroll-mt-28 py-12 pb-32 sm:py-14 lg:pb-14 ${isDj ? "bg-[#060E18]" : "bg-plg-cream"}`}
       aria-labelledby="calculator-heading"
     >
       <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${isDj ? "max-w-[1200px]" : "max-w-7xl"}`}>
@@ -366,7 +368,7 @@ export function Calculator({
         <div
           className={`mb-8 rounded-xl border p-4 shadow-sm sm:p-5 ${
             isDj
-              ? "border-[#cdd6d0] bg-[#e6ece8]"
+              ? "border-[#C9C1B3]/20 bg-[#0D1B2A]"
               : "border-plg-borderMuted bg-white"
           }`}
         >
@@ -374,7 +376,7 @@ export function Calculator({
             <div>
               <span
                 className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider ${
-                  isDj ? "text-[#047857]" : "text-plg-crimson"
+                  isDj ? "text-[#B58A45]" : "text-plg-crimson"
                 }`}
               >
                 <BoltIcon size={14} className="inline-block" /> Quick{" "}
@@ -385,9 +387,10 @@ export function Calculator({
                     : ""}
                 Accident Presets
               </span>
-              <p className="mt-0.5 text-xs text-slate-500">
-                Load typical sample figures to see how multiplier dynamics change by
-                case severity:
+              <p className={`mt-0.5 text-xs ${isDj ? "text-[#C9C1B3]" : "text-slate-500"}`}>
+                {isDj
+                  ? "Load sample figures to see how severity changes the multiplier:"
+                  : "Load typical sample figures to see how multiplier dynamics change by case severity:"}
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -399,10 +402,10 @@ export function Calculator({
                   className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
                     activePreset === id
                       ? isDj
-                        ? "border-[#062e22] bg-[#062e22] text-white shadow-sm"
+                        ? "border-[#B58A45] bg-[#B58A45] text-[#1B1B1B] shadow-sm"
                         : "border-plg-crimson bg-plg-warmIvory text-plg-crimson"
                       : isDj
-                        ? "border-[#c3cdc6] bg-[#dbe3de] text-[#062e22] hover:bg-[#cfd9d3]"
+                        ? "border-[#C9C1B3]/40 bg-transparent text-white hover:border-[#B58A45]"
                         : "border-slate-200 text-slate-700 hover:border-plg-crimson hover:bg-plg-warmIvory"
                   }`}
                 >
@@ -414,7 +417,7 @@ export function Calculator({
                 onClick={resetCalculator}
                 className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium transition ${
                   isDj
-                    ? "text-red-600 hover:bg-red-50"
+                    ? "text-[#C9C1B3] hover:bg-[#F5F0E6]/5 hover:text-[#F5F0E6]"
                     : "text-slate-400 hover:text-slate-700"
                 }`}
                 title="Reset fields"
@@ -431,7 +434,7 @@ export function Calculator({
             <div
               className={`flex items-center justify-between rounded-xl border p-2 shadow-sm ${
                 isDj
-                  ? "border-[#cdd6d0] bg-[#e2e8e4]"
+                  ? "border-[#C9C1B3]/20 bg-[#0D1B2A]"
                   : "border-plg-borderMuted bg-white"
               }`}
               role="tablist"
@@ -449,10 +452,10 @@ export function Calculator({
                     className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-2 py-3 text-xs font-semibold transition sm:px-4 sm:text-sm ${
                       active
                         ? isDj
-                          ? "bg-[#062e22] text-white shadow-sm"
+                          ? "bg-[#B58A45] text-[#1B1B1B] shadow-sm"
                           : "bg-plg-navy text-white shadow-sm"
                         : isDj
-                          ? "font-medium text-[#404944] hover:text-[#111c16]"
+                          ? "font-medium text-[#C9C1B3] hover:text-white"
                           : "font-medium text-slate-600 hover:bg-plg-warmIvory"
                     }`}
                   >
@@ -460,10 +463,10 @@ export function Calculator({
                       className={`flex h-5 w-5 items-center justify-center rounded-full text-xs ${
                         active
                           ? isDj
-                            ? "bg-[#0e5c43] text-white"
+                            ? "bg-[#060E18] text-[#B58A45]"
                             : "bg-white/20 text-white"
                           : isDj
-                            ? "bg-[#d3dbd5] text-[#111c16]"
+                            ? "bg-[#C9C1B3]/15 text-white"
                             : "bg-slate-200 text-slate-700"
                       }`}
                     >
@@ -479,7 +482,7 @@ export function Calculator({
             <div
               className={`overflow-hidden rounded-xl border shadow-plg-card sm:rounded-2xl ${
                 isDj
-                  ? "border-[#c8d2cc] bg-[#e6ece8]"
+                  ? "border-[#C9C1B3]/20 bg-[#0D1B2A]"
                   : "border-plg-borderMuted bg-white"
               }`}
             >
@@ -489,13 +492,13 @@ export function Calculator({
                   <div
                     className={
                       isDj
-                        ? "border-b border-[#1c5d48] bg-gradient-to-r from-[#0b3d2e] to-[#124d3b] px-6 py-4 text-white sm:px-8"
+                        ? "border-b-2 border-[#B58A45] bg-[#060E18] px-6 py-4 text-white sm:px-8"
                         : "border-b border-slate-100 pb-4"
                     }
                   >
                     <span
                       className={`text-xs font-bold uppercase tracking-wider ${
-                        isDj ? "text-[#85d9b6]" : "text-plg-crimson"
+                        isDj ? "text-[#B58A45]" : "text-plg-crimson"
                       }`}
                     >
                       Step 1 of 3
@@ -507,7 +510,7 @@ export function Calculator({
                     >
                       Direct Economic Damages (Special Damages)
                     </h3>
-                    <p className={`mt-1 text-xs ${isDj ? "text-[#d5e7df]" : "text-slate-500"}`}>
+                    <p className={`mt-1 text-xs ${isDj ? "text-[#F5F0E6]" : "text-slate-500"}`}>
                       Enter tangible, out-of-pocket financial expenses from the collision.
                     </p>
                     {economicError ? (
@@ -586,10 +589,10 @@ export function Calculator({
                               className={`relative flex cursor-pointer items-start rounded-xl border-2 p-3.5 text-left transition ${
                                 active
                                   ? isDj
-                                    ? "border-[#047857] bg-[#F0FDF4]"
+                                    ? "border-[#B58A45] bg-[#B58A45]/10"
                                     : "border-plg-crimson bg-plg-warmIvory/40"
                                   : isDj
-                                    ? "border-[#c7d2cc] bg-[#e0e7e2] hover:bg-[#d8e2db]"
+                                    ? "border-[#C9C1B3]/25 bg-[#060E18] hover:border-[#B58A45]/60"
                                     : "border-slate-200 bg-white hover:bg-plg-warmIvory"
                               }`}
                               aria-pressed={active}
@@ -598,7 +601,7 @@ export function Calculator({
                                 className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
                                   active
                                     ? isDj
-                                      ? "border-[#047857] bg-[#047857]"
+                                      ? "border-[#B58A45] bg-[#B58A45]"
                                       : "border-plg-crimson bg-plg-crimson"
                                     : "border-slate-300"
                                 }`}
@@ -623,7 +626,7 @@ export function Calculator({
                     </div>
                   </div>
 
-                  <div className={`flex items-center justify-between pt-4 ${isDj ? "border-t border-[#d1dbd4]" : ""}`}>
+                  <div className={`flex items-center justify-between pt-4 ${isDj ? "border-t border-[#C9C1B3]/20" : ""}`}>
                     <span className="text-xs italic text-slate-500">
                       Step 1 figures update the live range immediately.
                     </span>
@@ -632,7 +635,7 @@ export function Calculator({
                       onClick={goNext}
                       className={`flex items-center gap-2 rounded-lg px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition ${
                         isDj
-                          ? "bg-[#062e22] hover:bg-[#0b3d2e]"
+                          ? "bg-[#B58A45] !text-[#1B1B1B] hover:bg-[#B58A45]/90"
                           : "bg-slate-900 hover:bg-plg-crimson"
                       }`}
                     >
@@ -649,13 +652,13 @@ export function Calculator({
                   <div
                     className={
                       isDj
-                        ? "border-b border-[#1c5d48] bg-gradient-to-r from-[#0b3d2e] to-[#124d3b] px-6 py-4 text-white sm:px-8"
+                        ? "border-b-2 border-[#B58A45] bg-[#060E18] px-6 py-4 text-white sm:px-8"
                         : "border-b border-slate-100 pb-4"
                     }
                   >
                     <span
                       className={`text-xs font-bold uppercase tracking-wider ${
-                        isDj ? "text-[#85d9b6]" : "text-plg-crimson"
+                        isDj ? "text-[#B58A45]" : "text-plg-crimson"
                       }`}
                     >
                       Step 2 of 3
@@ -667,7 +670,7 @@ export function Calculator({
                     >
                       Injury Severity & Comparative Fault
                     </h3>
-                    <p className={`mt-1 text-xs ${isDj ? "text-[#d5e7df]" : "text-slate-500"}`}>
+                    <p className={`mt-1 text-xs ${isDj ? "text-[#F5F0E6]" : "text-slate-500"}`}>
                       General damages are estimated from injury classification, care
                       factors, and degree of responsibility.
                     </p>
@@ -836,9 +839,22 @@ export function Calculator({
                     {faultError ? (
                       <p className={errorClass}>{faultError}</p>
                     ) : (
-                      <div className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-[11px] text-slate-600">
-                        <strong>Legal note:</strong> Your share of fault typically reduces
-                        recoverable damages.{" "}
+                      <div
+                        className={`rounded-lg border border-slate-200 bg-slate-50 p-2.5 ${
+                          isDj ? "text-xs text-slate-700" : "text-[11px] text-slate-600"
+                        }`}
+                      >
+                        {isDj ? (
+                          <>
+                            <strong>Legal note:</strong> Your share of fault reduces
+                            recoverable damages.
+                          </>
+                        ) : (
+                          <>
+                            <strong>Legal note:</strong> Your share of fault typically reduces
+                            recoverable damages.
+                          </>
+                        )}{" "}
                         {usState === "WA" ? (
                           <>
                             WA pure comparative negligence allows recovery even above 50%
@@ -877,10 +893,10 @@ export function Calculator({
                             className={`rounded-lg px-3 py-2.5 text-xs font-semibold transition ${
                               active
                                 ? isDj
-                                  ? "border-2 border-[#047857] bg-[#F0FDF4] text-[#064E3B]"
+                                  ? "border-2 border-[#B58A45] bg-[#B58A45]/10 text-[#F5F0E6]"
                                   : "border-2 border-plg-crimson bg-plg-warmIvory text-plg-crimson"
                                 : isDj
-                                  ? "border border-[#c7d2cc] font-medium text-slate-600 hover:border-[#047857]"
+                                  ? "border border-[#C9C1B3]/25 font-medium text-[#C9C1B3] hover:border-[#B58A45]/60"
                                   : "border border-slate-200 font-medium text-slate-600 hover:border-slate-400"
                             }`}
                             aria-pressed={active}
@@ -910,7 +926,7 @@ export function Calculator({
                     </select>
                   </div>
 
-                  <div className={`flex items-center justify-between border-t pt-4 ${isDj ? "border-[#d1dbd4]" : "border-slate-100"}`}>
+                  <div className={`flex items-center justify-between border-t pt-4 ${isDj ? "border-[#C9C1B3]/20" : "border-slate-100"}`}>
                     <button
                       type="button"
                       onClick={goBack}
@@ -923,7 +939,7 @@ export function Calculator({
                       onClick={goNext}
                       className={`flex items-center gap-2 rounded-lg px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition ${
                         isDj
-                          ? "bg-[#062e22] hover:bg-[#0b3d2e]"
+                          ? "bg-[#B58A45] !text-[#1B1B1B] hover:bg-[#B58A45]/90"
                           : "bg-slate-900 hover:bg-plg-crimson"
                       }`}
                     >
@@ -940,13 +956,13 @@ export function Calculator({
                   <div
                     className={
                       isDj
-                        ? "border-b border-[#1c5d48] bg-gradient-to-r from-[#0b3d2e] to-[#124d3b] px-6 py-4 text-white sm:px-8"
+                        ? "border-b-2 border-[#B58A45] bg-[#060E18] px-6 py-4 text-white sm:px-8"
                         : "border-b border-slate-100 pb-4"
                     }
                   >
                     <span
                       className={`text-xs font-bold uppercase tracking-wider ${
-                        isDj ? "text-[#85d9b6]" : "text-plg-crimson"
+                        isDj ? "text-[#B58A45]" : "text-plg-crimson"
                       }`}
                     >
                       Step 3 of 3
@@ -958,7 +974,7 @@ export function Calculator({
                     >
                       Insurance Policy Limits & Offer Reality Check
                     </h3>
-                    <p className={`mt-1 text-xs ${isDj ? "text-[#d5e7df]" : "text-slate-500"}`}>
+                    <p className={`mt-1 text-xs ${isDj ? "text-[#F5F0E6]" : "text-slate-500"}`}>
                       Settlements are frequently capped by applicable policy maximums.
                       Enter known BI limits and any insurer offer.
                     </p>
@@ -991,7 +1007,9 @@ export function Calculator({
                       </option>
                       <option value="50000">$50,000 Policy Limit</option>
                       <option value="100000">
-                        $100,000 Policy Limit (Typical middle-tier)
+                        {isDj
+                          ? "$100,000 Policy Limit"
+                          : "$100,000 Policy Limit (Typical middle-tier)"}
                       </option>
                       <option value="250000">$250,000 Policy Limit</option>
                       <option value="500000">$500,000 Policy Limit</option>
@@ -1073,7 +1091,7 @@ export function Calculator({
                     )}
                   </div>
 
-                  <div className={`flex items-center justify-between border-t pt-4 ${isDj ? "border-[#d1dbd4]" : "border-slate-100"}`}>
+                  <div className={`flex items-center justify-between border-t pt-4 ${isDj ? "border-[#C9C1B3]/20" : "border-slate-100"}`}>
                     <button
                       type="button"
                       onClick={goBack}
@@ -1086,7 +1104,7 @@ export function Calculator({
                       onClick={markTouched}
                       className={`flex items-center gap-2 rounded-lg border px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition lg:hidden ${
                         isDj
-                          ? "border-[#c8d2cc] bg-[#dbe3de] text-[#062e22] hover:bg-[#cfd9d3]"
+                          ? "border-[#F5F0E6] bg-[#F5F0E6] !text-[#1B1B1B] hover:bg-[#F5F0E6]/90"
                           : "border-slate-300 bg-plg-warmIvory text-slate-900 hover:bg-slate-200"
                       }`}
                     >
@@ -1108,7 +1126,7 @@ export function Calculator({
                 id="results"
                 className={`scroll-mt-28 overflow-hidden rounded-xl border shadow-plg-panel sm:rounded-2xl ${
                   isDj
-                    ? "dj-results-shell border-[#263a2f] bg-[#17231c] text-[#e9efe9]"
+                    ? "dj-results-shell border-[#B58A45]/60 bg-[#0D1B2A] text-white"
                     : "border-2 border-slate-900 bg-white"
                 }`}
                 aria-live="polite"
@@ -1116,7 +1134,7 @@ export function Calculator({
                 <div
                   className={`flex items-center justify-between px-6 py-4 ${
                     isDj
-                      ? "border-b border-[#2d473a]"
+                      ? "border-b border-[#C9C1B3]/20"
                       : "border-b border-slate-800 bg-plg-navy text-white"
                   }`}
                 >
@@ -1124,11 +1142,11 @@ export function Calculator({
                     <span
                       className={`block text-[10px] font-bold uppercase tracking-[0.2em] ${
                         isDj
-                          ? "inline-block rounded bg-[#22382c] border border-[#2e4c3c] px-2 py-0.5 text-[#97f5cc]"
+                          ? "inline-block whitespace-nowrap rounded border border-[#C9C1B3]/20 bg-[#060E18] px-2 py-0.5 !text-xs !tracking-[0.14em] text-[#B58A45] max-[359px]:!tracking-[0.06em]"
                           : "text-plg-gold"
                       }`}
                     >
-                      Confidential Analysis
+                      {isDj ? "Settlement Estimate" : "Confidential Analysis"}
                     </span>
                     <h3
                       className={`font-serif text-lg font-bold ${
@@ -1139,7 +1157,7 @@ export function Calculator({
                     </h3>
                   </div>
                   {isDj ? (
-                    <span className="text-xs text-[#e9efe9]/70">Estimated range</span>
+                    <span className="text-xs text-[#C9C1B3]">Estimated range</span>
                   ) : null}
                 </div>
 
@@ -1152,14 +1170,14 @@ export function Calculator({
                 >
                   {isDj ? (
                     <div
-                      className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[#0e5c43]/20 blur-2xl"
+                      className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[#B58A45]/10 blur-2xl"
                       aria-hidden
                     />
                   ) : null}
                   <SignatureMoment placement="result" className="min-h-0" />
 
                   {!hasEconomic ? (
-                    <p className={`text-sm ${isDj ? "text-[#cadbd2]" : "text-slate-500"}`}>
+                    <p className={`text-sm ${isDj ? "text-[#C9C1B3]" : "text-slate-500"}`}>
                       Enter at least one economic damage amount to see a low / mid / high
                       range.
                     </p>
@@ -1167,7 +1185,7 @@ export function Calculator({
                     <>
                       <p
                         className={`mb-3 text-[10px] font-semibold uppercase tracking-wide ${
-                          isDj ? "text-[#cadbd2]/80" : "text-slate-500"
+                          isDj ? "!text-xs text-[#C9C1B3]" : "text-slate-500"
                         }`}
                       >
                         {showPreFault
@@ -1177,27 +1195,31 @@ export function Calculator({
 
                       <div
                         className={`mb-4 grid grid-cols-3 items-stretch gap-2 ${
-                          isDj ? "min-w-0 gap-2 sm:gap-2.5" : "items-end gap-2.5"
+                          isDj ? "min-w-0 gap-2 max-[399px]:!grid-cols-2 min-[400px]:!grid-cols-[1fr_1.3fr_1fr] sm:gap-2.5" : "items-end gap-2.5"
                         }`}
                       >
                         <div
                           className={`rounded-xl border text-center transition ${
                             isDj
-                              ? "dj-results-tier min-w-0 overflow-hidden border-[#2b4236] bg-[#1f3027] p-2.5 sm:p-3"
+                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#060E18] px-1.5 py-2.5 sm:p-3 lg:px-1.5 xl:px-2"
                               : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
                           }`}
                         >
                           <span
                             className={`mb-1 block text-[10px] font-bold uppercase tracking-wider ${
-                              isDj ? "text-[#e9efe9]/45" : "text-slate-500"
+                              isDj ? "!tracking-wide text-[#C9C1B3]" : "text-slate-500"
                             }`}
                           >
-                            Conservative
+                            {isDj ? "Low" : "Conservative"}
                           </span>
                           <span
                             className={`block font-extrabold ${
                               isDj
-                                ? "text-sm text-[#e9efe9]/85 sm:text-base"
+                                ? `whitespace-nowrap text-sm text-white sm:text-base ${
+                                    formatCurrency(result.recoverableLow).length > 8
+                                      ? "lg:text-[13px] xl:text-sm"
+                                      : "lg:text-sm xl:text-base"
+                                  }`
                                 : "text-base text-slate-700 sm:text-lg"
                             }`}
                           >
@@ -1205,7 +1227,7 @@ export function Calculator({
                           </span>
                           <span
                             className={`mt-0.5 block text-[10px] ${
-                              isDj ? "text-[#e9efe9]/40" : "text-slate-400"
+                              isDj ? "text-[#C9C1B3]" : "text-slate-400"
                             }`}
                           >
                             {result.multiplierLow}× Multiplier
@@ -1215,23 +1237,27 @@ export function Calculator({
                         <div
                           className={`rounded-xl border text-center text-white shadow-md ${
                             isDj
-                              ? "dj-results-mid min-w-0 overflow-hidden border-[#10B981]/50 bg-[#064E3B] p-2.5 shadow-lg sm:p-3.5"
+                              ? "dj-results-mid min-w-0 overflow-hidden border-[#B58A45] bg-[#B58A45] p-2.5 !text-[#1B1B1B] shadow-lg max-[399px]:order-first max-[399px]:col-span-2 sm:p-3.5 lg:px-2.5 xl:p-3.5"
                               : "border-slate-700 bg-slate-900 p-3.5 ring-2 ring-plg-crimson/40"
                           } ${midPop ? "motion-safe:animate-mid-pop" : ""}`}
                         >
                           <span
                             className={`mb-1 block uppercase tracking-wider ${
                               isDj
-                                ? "text-[10px] font-semibold text-[#97f5cc]"
+                                ? "text-[10px] font-bold text-[#1B1B1B]"
                                 : "text-[10px] font-medium text-plg-gold"
                             }`}
                           >
-                            Estimated Mid
+                            {isDj ? "Mid" : "Estimated Mid"}
                           </span>
                           <span
                             className={`block font-black text-white ${
                               isDj
-                                ? "max-w-full truncate text-[clamp(0.95rem,3.6vw,1.35rem)] leading-none tabular-nums tracking-tight sm:text-xl lg:text-2xl"
+                                ? `whitespace-nowrap !text-[#1B1B1B] leading-none tabular-nums tracking-tight ${
+                                    formatCurrency(result.recoverableMid).length > 8
+                                      ? "text-[clamp(0.9rem,3.4vw,1.1rem)] max-[399px]:text-2xl sm:text-lg lg:text-[15px] xl:text-[1.1rem]"
+                                      : "text-[clamp(1rem,4vw,1.25rem)] max-[399px]:text-2xl sm:text-xl lg:text-[1.1rem] xl:text-[1.3rem]"
+                                  }`
                                 : "text-xl sm:text-2xl"
                             }`}
                           >
@@ -1239,7 +1265,7 @@ export function Calculator({
                           </span>
                           <span
                             className={`mt-0.5 block text-[10px] ${
-                              isDj ? "text-[#a3e0c7]" : "text-slate-300"
+                              isDj ? "font-medium text-[#1B1B1B]" : "text-slate-300"
                             }`}
                           >
                             {result.multiplierMid}× Multiplier
@@ -1249,21 +1275,25 @@ export function Calculator({
                         <div
                           className={`rounded-xl border text-center transition ${
                             isDj
-                              ? "dj-results-tier min-w-0 overflow-hidden border-[#2b4236] bg-[#1f3027] p-2.5 sm:p-3"
+                              ? "dj-results-tier min-w-0 overflow-hidden border-[#C9C1B3]/20 bg-[#060E18] px-1.5 py-2.5 sm:p-3 lg:px-1.5 xl:px-2"
                               : "border-slate-200 bg-slate-50 p-3 hover:border-slate-300"
                           }`}
                         >
                           <span
                             className={`mb-1 block text-[10px] font-bold uppercase tracking-wider ${
-                              isDj ? "text-[#e9efe9]/45" : "text-slate-500"
+                              isDj ? "!tracking-wide text-[#C9C1B3]" : "text-slate-500"
                             }`}
                           >
-                            Trial / Strong
+                            {isDj ? "High" : "Trial / Strong"}
                           </span>
                           <span
                             className={`block font-extrabold ${
                               isDj
-                                ? "text-sm text-[#e9efe9]/85 sm:text-base"
+                                ? `whitespace-nowrap text-sm text-white sm:text-base ${
+                                    formatCurrency(result.recoverableHigh).length > 8
+                                      ? "lg:text-[13px] xl:text-sm"
+                                      : "lg:text-sm xl:text-base"
+                                  }`
                                 : "text-base text-slate-700 sm:text-lg"
                             }`}
                           >
@@ -1271,7 +1301,7 @@ export function Calculator({
                           </span>
                           <span
                             className={`mt-0.5 block text-[10px] ${
-                              isDj ? "text-[#e9efe9]/40" : "text-slate-400"
+                              isDj ? "text-[#C9C1B3]" : "text-slate-400"
                             }`}
                           >
                             {result.multiplierHigh}× Multiplier
@@ -1279,11 +1309,15 @@ export function Calculator({
                         </div>
                       </div>
 
+                      {isDj ? (
+                        <EstimateQualifier id="estimate-qualifier" className="mb-4" />
+                      ) : null}
+
                       {result.policyLimitsMayBind ? (
                         <div
                           className={`mb-4 rounded-lg border p-3 text-xs ${
                             isDj
-                              ? "border-[#6a3700]/60 bg-[#4a2400]/40 text-[#ffb77d]"
+                              ? "border-[#B58A45]/50 bg-[#B58A45]/10 text-[#F5F0E6]"
                               : "border-amber-200 bg-amber-50 text-amber-900"
                           }`}
                           role="status"
@@ -1297,7 +1331,7 @@ export function Calculator({
                       {result.recoveryBarred ? (
                         <p
                           className={`mb-3 text-xs leading-snug ${
-                            isDj ? "text-[#ffb77d]" : "text-amber-900"
+                            isDj ? "text-[#F5F0E6]" : "text-amber-900"
                           }`}
                           role="status"
                         >
@@ -1310,7 +1344,7 @@ export function Calculator({
                       {showPreFault ? (
                         <p
                           className={`mb-3 text-xs tabular-nums leading-snug ${
-                            isDj ? "text-[#cadbd2]/80" : "text-slate-500"
+                            isDj ? "text-[#C9C1B3]" : "text-slate-500"
                           }`}
                         >
                           Pre-fault: Low {formatCurrency(result.low)} · Mid{" "}
@@ -1321,11 +1355,12 @@ export function Calculator({
                         </p>
                       ) : null}
 
-                      {result.cappedMid != null ? (
+                      {result.cappedMid != null &&
+                      (!isDj || result.cappedMid < result.recoverableMid) ? (
                         <p
                           className={`mb-3 rounded-lg border px-3 py-2 text-xs tabular-nums leading-snug ${
                             isDj
-                              ? "border-[#2d473a] bg-[#1f3027] text-center text-[#e9efe9]/80"
+                              ? "border-[#C9C1B3]/20 bg-[#060E18] text-center text-[#F5F0E6]"
                               : "text-slate-500"
                           }`}
                         >
@@ -1344,7 +1379,7 @@ export function Calculator({
                       <div
                         className={`mb-5 overflow-hidden rounded-xl border ${
                           isDj
-                            ? "border-[#2d473a] bg-[#1f3027]"
+                            ? "border-[#C9C1B3]/20 bg-[#060E18]"
                             : "border-slate-200 bg-white"
                         }`}
                       >
@@ -1352,13 +1387,13 @@ export function Calculator({
                           <summary
                             className={`flex cursor-pointer list-none items-center justify-between px-4 py-2.5 text-left text-xs font-bold transition marker:content-none [&::-webkit-details-marker]:hidden ${
                               isDj
-                                ? "text-[#97f5cc] hover:text-white"
+                                ? "text-[#B58A45] hover:text-white"
                                 : "text-slate-800 hover:bg-slate-50"
                             }`}
                           >
                             <span className="flex items-center gap-1.5">
                               <span
-                                className={isDj ? "text-[#85d9b6]" : "text-plg-crimson"}
+                                className={isDj ? "text-[#B58A45]" : "text-plg-crimson"}
                                 aria-hidden
                               >
                                 ⌘
@@ -1366,7 +1401,7 @@ export function Calculator({
                               Show Line-by-Line Math Breakdown
                             </span>
                             <span
-                              className={`text-xs ${isDj ? "text-[#85d9b6]/70" : "text-slate-400"}`}
+                              className={`text-xs ${isDj ? "text-[#B58A45]" : "text-slate-400"}`}
                               aria-hidden
                             >
                               ▾
@@ -1375,7 +1410,7 @@ export function Calculator({
                           <div
                             className={`border-t px-2 pb-2 pt-2 ${
                               isDj
-                                ? "border-[#2d473a] bg-[#14221b]/80"
+                                ? "border-[#C9C1B3]/20 bg-[#0D1B2A]"
                                 : "border-slate-100 bg-slate-50/50"
                             }`}
                           >
@@ -1389,7 +1424,7 @@ export function Calculator({
                           href={client.ctaUrl}
                           className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg ${
                             isDj
-                              ? "bg-[#047857] hover:bg-[#064E3B]"
+                              ? "bg-[#B58A45] !text-[#1B1B1B] hover:bg-[#B58A45]/90"
                               : "bg-plg-crimson hover:bg-plg-crimsonDark"
                           }`}
                         >
@@ -1400,13 +1435,13 @@ export function Calculator({
                             href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
                             className={`flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-white transition ${
                               isDj
-                                ? "bg-[#0F172A] hover:bg-[#1E293B]"
+                                ? "border border-[#F5F0E6]/40 bg-transparent hover:bg-[#F5F0E6]/5"
                                 : "bg-slate-900 hover:bg-slate-800"
                             }`}
                           >
                             <PhoneIcon
                               size={14}
-                              className={isDj ? "text-[#85d9b6]" : "text-plg-gold"}
+                              className={isDj ? "text-[#B58A45]" : "text-plg-gold"}
                             />
                             {client.phone}
                           </a>
@@ -1416,26 +1451,21 @@ export function Calculator({
                             offerCheck={offerCheck}
                             firmName={client.firmName}
                             usState={usState}
+                            disclaimer={isDj ? DJ_ESTIMATE_QUALIFIER : undefined}
                           />
                         </div>
                       </div>
 
-                      <div
-                        className={`mt-4 border-t pt-4 text-center ${
-                          isDj ? "border-[#2d473a]" : "border-slate-200"
-                        }`}
-                      >
-                        <p
-                          className={`text-[11px] leading-normal ${
-                            isDj ? "text-[#cadbd2]/80" : "text-slate-500"
-                          }`}
-                        >
-                          <strong>No upfront attorney fees.</strong> For qualifying
-                          contingency cases, you pay nothing unless {client.shortName}{" "}
-                          settles or wins your case. Educational estimate only — not a
-                          guarantee or legal advice.
-                        </p>
-                      </div>
+                      {isDj ? null : (
+                        <div className="mt-4 border-t pt-4 text-center border-slate-200">
+                          <p className="text-[11px] leading-normal text-slate-500">
+                            <strong>No upfront attorney fees.</strong> For qualifying
+                            contingency cases, you pay nothing unless {client.shortName}{" "}
+                            settles or wins your case. Educational estimate only — not a
+                            guarantee or legal advice.
+                          </p>
+                        </div>
+                      )}
                     </>
                   )}
                 </div>

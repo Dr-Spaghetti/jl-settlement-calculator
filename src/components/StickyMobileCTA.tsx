@@ -1,6 +1,7 @@
 "use client";
 
 import type { ClientConfig } from "@/lib/types";
+import { PhoneIcon } from "@/components/icons";
 
 function telHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
@@ -8,6 +9,7 @@ function telHref(phone: string): string {
 
 /** Sticky bottom bar on small screens — Call + primary CTA (no lead capture). */
 export function StickyMobileCTA({ client }: { client: ClientConfig }) {
+  const dj = client.id === "djougourian-law";
   return (
     <div
       className="sticky-mobile-cta fixed inset-x-0 bottom-0 z-50 border-t border-plg-borderMuted bg-white/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_-12px_rgba(15,23,42,0.22)] backdrop-blur-md md:hidden print:hidden"
@@ -17,15 +19,39 @@ export function StickyMobileCTA({ client }: { client: ClientConfig }) {
       <div className="mx-auto flex max-w-lg gap-2">
         <a
           href={telHref(client.phone)}
-          className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 py-3 text-sm font-semibold text-plg-navy"
+          className={
+            dj
+              ? "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-[#F5F0E6] bg-[#F5F0E6] px-3 py-3 text-sm font-semibold !text-[#1B1B1B] transition hover:bg-[#F5F0E6]/90"
+              : "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 py-3 text-sm font-semibold text-plg-navy"
+          }
         >
-          Call {client.phone}
+          {dj ? (
+            <>
+              <span className="max-[359px]:hidden">Call {client.phone}</span>
+              <span className="hidden items-center gap-1.5 max-[359px]:inline-flex">
+                <PhoneIcon size={16} aria-hidden /> Call
+              </span>
+            </>
+          ) : (
+            <>Call {client.phone}</>
+          )}
         </a>
         <a
           href={client.ctaUrl}
-          className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-plg-crimson px-3 py-3 text-center text-sm font-semibold text-white transition hover:bg-plg-crimsonDark"
+          className={
+            dj
+              ? "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-[#B58A45] px-3 py-3 text-center text-sm font-semibold text-[#1B1B1B] transition hover:bg-[#B58A45]/90"
+              : "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-plg-crimson px-3 py-3 text-center text-sm font-semibold text-white transition hover:bg-plg-crimsonDark"
+          }
         >
-          {client.ctaText}
+          {dj ? (
+            <>
+              <span className="max-[359px]:hidden">{client.ctaText}</span>
+              <span className="hidden max-[359px]:inline">Consult</span>
+            </>
+          ) : (
+            client.ctaText
+          )}
         </a>
       </div>
     </div>

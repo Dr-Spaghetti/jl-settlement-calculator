@@ -1,5 +1,6 @@
 import type { ClientConfig } from "@/lib/types";
 import type { ReactNode } from "react";
+import { clientUsesDjFonts } from "@/lib/client";
 
 type FaqItem = {
   q: string;
@@ -12,19 +13,26 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
   const state = client.state.toUpperCase();
   const isWa = state === "WA";
   const isCa = state === "CA";
+  const djFaq = clientUsesDjFonts(client);
 
   const base: FaqItem[] = [
     {
       q: "How much is my car accident settlement worth?",
-      a: "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier—often discussed around 1.5×–5×—and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range, not a guaranteed payout.",
+      a: djFaq
+        ? "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier (this calculator uses about 1.25×–7×), and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range."
+        : "There is no single average that predicts your case. A common educational approach starts from economic damages (medical bills, lost wages, and related costs), estimates pain and suffering with a severity multiplier—often discussed around 1.5×–5×—and accounts for fault and available coverage. This calculator applies that method to your inputs and returns a low / mid / high range, not a guaranteed payout.",
     },
     {
       q: "How do insurance companies calculate car accident settlements?",
-      a: "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (usually not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range. It does not recreate any insurer’s proprietary software.",
+      a: djFaq
+        ? "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range."
+        : "Many discussions use a multiplier-style approach: start from proven economic losses, estimate pain and suffering with a severity factor, add property damage (usually not multiplied), then consider fault and available coverage. This tool shows that educational structure—including Demand-style vs Adjuster-style views—so you can see how inputs move the range. It does not recreate any insurer’s proprietary software.",
     },
     {
       q: "How is pain and suffering calculated after a car accident?",
-      a: "Pain and suffering is the non-economic part of a claim. The usual convention is medical or economic damages × a multiplier tied to severity (soft tissue toward the low end; surgery or permanent impairment toward the high end). Permanency, treatment length, care type, and treatment gaps all nudge that factor. Enter those levers in the calculator to see how the mid estimate changes.",
+      a: djFaq
+        ? "Pain and suffering is the non-economic part of a claim. A common approach multiplies medical or economic damages by a factor tied to severity (soft tissue toward the low end; surgery or permanent impairment toward the high end). Permanency, treatment length, care type, and treatment gaps all nudge that factor. Enter those levers in the calculator to see how the mid estimate changes."
+        : "Pain and suffering is the non-economic part of a claim. The usual convention is medical or economic damages × a multiplier tied to severity (soft tissue toward the low end; surgery or permanent impairment toward the high end). Permanency, treatment length, care type, and treatment gaps all nudge that factor. Enter those levers in the calculator to see how the mid estimate changes.",
     },
   ];
 
@@ -72,7 +80,16 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
     base.push(
       {
         q: "How long do I have to file a personal injury claim in California?",
-        a: (
+        a: djFaq ? (
+          <>
+            California injury deadlines are strict and depend on the facts. A personal injury
+            lawsuit against a private party generally must be filed within two years of the
+            injury (Code Civ. Proc. §&nbsp;335.1). An injury claim against a California public
+            entity, such as a city, county, or state agency, generally must be presented to
+            that entity within six months of the injury (Cal. Gov. Code §&nbsp;911.2) before a
+            lawsuit can be filed. Exceptions can shorten or extend these periods.
+          </>
+        ) : (
           <>
             California personal injury deadlines are strict and fact-dependent. Many injury
             claims against private parties are discussed under a roughly two-year framework,
@@ -84,7 +101,15 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
       },
       {
         q: "Does my percentage of fault reduce a California car accident settlement?",
-        a: (
+        a: djFaq ? (
+          <>
+            California generally follows pure comparative negligence: your share of fault
+            reduces recoverable damages by that percentage but does not automatically bar
+            recovery even if you are mostly at fault. Enter your estimated fault % and set the
+            state to CA in the calculator to see an educational recoverable range after that
+            reduction. Insurers may still dispute fault share.
+          </>
+        ) : (
           <>
             California generally follows pure comparative negligence: your share of fault
             typically reduces recoverable damages by that percentage but does not
@@ -97,7 +122,14 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
       },
       {
         q: "What does it cost to hire a personal injury lawyer?",
-        a: (
+        a: djFaq ? (
+          <>
+            Many California personal injury lawyers work on contingency, meaning attorney
+            fees are generally a percentage of any recovery and discussed up front.{" "}
+            {client.shortName} offers a free consultation so you can ask about fee
+            arrangements for your matter. Fee terms are set in a written agreement.
+          </>
+        ) : (
           <>
             Many California personal injury lawyers work on contingency, meaning attorney
             fees are typically a percentage of any recovery and discussed up front.{" "}
@@ -132,11 +164,27 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
     },
     {
       q: "How much is a car accident settlement with soft tissue injuries or whiplash?",
-      a: "Soft-tissue claims usually sit toward the lower multiplier band (often roughly 1.5×–2.5×), especially with short treatment and full recovery. Longer care, imaging findings, specialist treatment, or lasting symptoms can push higher. Use severity, care type, and months of treatment in the calculator for a range that fits your facts—not a one-size average.",
+      a: djFaq
+        ? "In this calculator, minor soft-tissue inputs start from a 1.5×–2.5× band, which treatment length, care type, and liability then nudge up or down. Longer care, specialist treatment, or lasting symptoms push it higher. Use severity, care type, and months of treatment in the calculator for a range that fits your facts—not a one-size average."
+        : "Soft-tissue claims usually sit toward the lower multiplier band (often roughly 1.5×–2.5×), especially with short treatment and full recovery. Longer care, imaging findings, specialist treatment, or lasting symptoms can push higher. Use severity, care type, and months of treatment in the calculator for a range that fits your facts—not a one-size average.",
     },
     {
       q: "Is an online car accident settlement calculator accurate?",
-      a: (
+      a: djFaq ? (
+        <>
+          It is a starting point, not a case valuation. No public form can weigh medical
+          records, experts, venue, prior injuries, or negotiation strategy. Treat the
+          result as an educational range to prepare for a consult—not a promise of what
+          you will receive. For a real review, contact {client.shortName} at{" "}
+          <a
+            className="-my-3 inline-block py-3 font-semibold text-plg-crimson underline decoration-slate-300 underline-offset-2 hover:decoration-plg-crimson"
+            href={`tel:${tel}`}
+          >
+            {phone}
+          </a>{" "}
+          or a licensed attorney in your state.
+        </>
+      ) : (
         <>
           It is a starting point, not a case valuation. No public form can weigh medical
           records, experts, venue, prior injuries, or negotiation strategy. Treat the
@@ -155,32 +203,48 @@ function buildFaqs(client: ClientConfig): FaqItem[] {
     }
   );
 
-  return base;
+  // Djougourian: the "accurate?" answer is disclaimer-only copy, so it is omitted.
+  return djFaq ? base.filter((f) => !f.q.startsWith("Is an online")) : base;
 }
 
 export function FAQ({ client }: { client: ClientConfig }) {
   const faqs = buildFaqs(client);
+  const dj = clientUsesDjFonts(client);
 
   return (
     <section
       id="faq"
-      className="scroll-mt-28 border-t border-plg-borderMuted bg-plg-cream py-16 sm:py-20"
+      className={
+        dj
+          ? "scroll-mt-28 border-t border-[#C9C1B3]/20 bg-[#060E18] py-16 sm:py-20"
+          : "scroll-mt-28 border-t border-plg-borderMuted bg-plg-cream py-16 sm:py-20"
+      }
       aria-labelledby="faq-heading"
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <span className="text-xs font-bold uppercase tracking-wider text-plg-crimson">
+        <span
+          className={`text-xs font-bold uppercase tracking-wider ${
+            dj ? "text-[#B58A45]" : "text-plg-crimson"
+          }`}
+        >
           Common Questions
         </span>
         <h2
           id="faq-heading"
-          className="font-serif mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl"
+          className={
+            dj
+              ? "font-serif mt-1 text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              : "font-serif mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl"
+          }
         >
           Frequently Asked Questions
         </h2>
-        <p className="mt-3 text-sm text-slate-600">
-          Educational answers only — not legal advice. Rules and deadlines can vary; confirm
-          details with a licensed attorney{client.state ? ` in ${client.state}` : ""}.
-        </p>
+        {dj ? null : (
+          <p className="mt-3 text-sm text-slate-600">
+            Educational answers only — not legal advice. Rules and deadlines can vary; confirm
+            details with a licensed attorney{client.state ? ` in ${client.state}` : ""}.
+          </p>
+        )}
         <div className="mt-8 divide-y divide-plg-borderMuted rounded-2xl border border-plg-borderMuted bg-white px-5 shadow-sm">
           {faqs.map((item) => (
             <details key={item.q} className="group py-4">
@@ -190,7 +254,11 @@ export function FAQ({ client }: { client: ClientConfig }) {
                     {item.q}
                   </span>
                   <span
-                    className="mt-0.5 shrink-0 text-plg-crimson motion-safe:transition group-open:rotate-45"
+                    className={
+                      dj
+                        ? "mt-0.5 shrink-0 font-bold text-[#B58A45] motion-safe:transition group-open:rotate-45"
+                        : "mt-0.5 shrink-0 text-plg-crimson motion-safe:transition group-open:rotate-45"
+                    }
                     aria-hidden
                   >
                     +

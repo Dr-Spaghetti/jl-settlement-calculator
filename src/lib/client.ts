@@ -53,7 +53,7 @@ export function getActiveClient(): ClientConfig {
 /**
  * Map client brand colors onto CSS variables used by Tailwind `plg-*` tokens.
  * - primary → navy / charcoal (header, panels)
- * - secondary → crimson / CTA green
+ * - secondary → crimson (Premier) / gold CTA (Djougourian)
  * - accent → gold / amber scarce accent
  */
 export function getClientCssVars(
@@ -65,15 +65,10 @@ export function getClientCssVars(
   const ground = client.pageGround?.trim() || DEFAULT_GROUND;
 
   const isDj = client.id === "djougourian-law";
-  const warmIvory = isDj
-    ? `color-mix(in srgb, ${accent} 18%, white)`
-    : "#F4F1EA";
-  const surface = isDj
-    ? `color-mix(in srgb, ${secondary} 7%, white)`
-    : "#FFFFFF";
-  const borderMuted = isDj
-    ? `color-mix(in srgb, ${secondary} 22%, #E5DFD5)`
-    : "#E5DFD5";
+  // Djougourian: palette-only tints (charcoal / navy / gold / cream / taupe)
+  const warmIvory = isDj ? "#F5F0E6" : "#F4F1EA";
+  const surface = isDj ? "#0D1B2A" : "#FFFFFF";
+  const borderMuted = isDj ? "rgba(201, 193, 179, 0.2)" : "#E5DFD5";
 
   return {
     "--brand-primary": primary,
@@ -86,7 +81,7 @@ export function getClientCssVars(
     "--plg-gold": accent,
     "--plg-gold-light": `color-mix(in srgb, ${accent} 42%, white)`,
     "--plg-navy": primary,
-    "--plg-charcoal": primary === "#212529" ? "#212529" : "#1E293B",
+    "--plg-charcoal": isDj ? "#060E18" : primary === "#212529" ? "#212529" : "#1E293B",
     "--plg-warm-ivory": warmIvory,
     "--plg-surface": surface,
     "--plg-border-muted": borderMuted,

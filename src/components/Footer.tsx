@@ -1,4 +1,6 @@
 import type { ClientConfig } from "@/lib/types";
+import { clientUsesDjFonts } from "@/lib/client";
+import { djFooterLegalLine } from "@/lib/disclaimers";
 
 export function Footer({ client }: { client: ClientConfig }) {
   const year = new Date().getFullYear();
@@ -15,6 +17,10 @@ export function Footer({ client }: { client: ClientConfig }) {
     (state === "WA"
       ? `${client.city}, ${client.state} · Seattle · Federal Way · Renton`
       : `${client.city}, ${client.state}`);
+
+  if (clientUsesDjFonts(client)) {
+    return <DjFooter client={client} year={year} locationLine={locationLine} />;
+  }
 
   return (
     <footer className="border-t border-slate-800 bg-plg-navy pb-24 text-slate-300 md:pb-0">
@@ -92,6 +98,83 @@ export function Footer({ client }: { client: ClientConfig }) {
             © {year} {client.firmName}. Educational tool only — not legal advice.
           </p>
         </div>
+      </div>
+    </footer>
+  );
+}
+
+function DjFooter({
+  client,
+  year,
+  locationLine,
+}: {
+  client: ClientConfig;
+  year: number;
+  locationLine: string;
+}) {
+  const email = client.email?.trim();
+  const links = [
+    { href: "#calculator", label: "Settlement calculator" },
+    { href: "#how-it-works", label: "The formula" },
+    { href: "#settlement-ranges", label: "CA ranges" },
+    { href: "#faq", label: "FAQ" },
+  ];
+  return (
+    <footer className="border-t border-[#B58A45]/40 bg-[#0D1B2A] pb-28 text-[#C9C1B3] md:pb-0">
+      <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid gap-8 sm:grid-cols-2">
+          <div>
+            <p className="font-display text-base font-semibold uppercase tracking-[0.12em] text-[#F5F0E6]">
+              {client.shortName}
+            </p>
+            <p className="mt-2 text-sm">{locationLine}</p>
+            <p className="mt-1 text-sm">
+              <a
+                className="font-semibold text-[#F5F0E6] transition hover:text-[#B58A45]"
+                href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
+              >
+                {client.phone}
+              </a>
+            </p>
+            {email ? (
+              <p className="mt-1 text-sm">
+                <a className="transition hover:text-[#F5F0E6]" href={`mailto:${email}`}>
+                  {email}
+                </a>
+              </p>
+            ) : null}
+            <p className="mt-3 text-xs italic text-[#B58A45]">{client.tagline}</p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#B58A45]">
+              Quick links
+            </p>
+            <ul className="mt-3 space-y-2 text-sm">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} className="transition hover:text-[#F5F0E6]">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a
+                  href={client.website}
+                  className="transition hover:text-[#F5F0E6]"
+                  rel="noopener noreferrer"
+                >
+                  Firm website
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <p
+          id="footer-legal"
+          className="mt-10 border-t border-[#C9C1B3]/20 pt-6 text-xs leading-relaxed text-[#C9C1B3]"
+        >
+          {djFooterLegalLine(client)} © {year}
+        </p>
       </div>
     </footer>
   );

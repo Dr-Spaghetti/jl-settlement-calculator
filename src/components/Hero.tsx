@@ -21,7 +21,8 @@ export function Hero({ client }: { client: ClientConfig }) {
   const state = client.state.toUpperCase();
 
   const trust =
-    client.trustStats?.length === 4
+    client.trustStats &&
+    (client.trustStats.length === 4 || (isDj && client.trustStats.length > 0))
       ? client.trustStats
       : [
           { value: "100% Private", label: "Zero data stored on servers" },
@@ -57,20 +58,20 @@ export function Hero({ client }: { client: ClientConfig }) {
 
   if (isDj) {
     const shortSupport =
-      "Educational California settlement ranges — illustrative only, not legal advice.";
+      "See an estimated settlement range for your California car accident in three steps.";
 
     return (
       <section
         id="top"
-        className="relative overflow-hidden border-b border-[#d8dfdb] bg-gradient-to-b from-[#091b15] via-[#0d261e] to-[#eef2ef] pb-8 pt-8 sm:pb-10 sm:pt-9"
+        className="relative overflow-hidden border-b border-[#B58A45]/30 bg-[#060E18] pb-8 pt-8 sm:pb-10 sm:pt-9"
         aria-labelledby="hero-heading"
       >
         <div
-          className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-[#1b5e47]/20 blur-3xl"
+          className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-[#B58A45]/10 blur-3xl"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-[#144233]/20 blur-3xl"
+          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-[#B58A45]/[0.07] blur-3xl"
           aria-hidden
         />
 
@@ -81,19 +82,19 @@ export function Hero({ client }: { client: ClientConfig }) {
               className="font-display mb-4 text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[56px] lg:leading-[1.08]"
             >
               {titleLead}{" "}
-              <span className="font-display italic text-[#85d9b6]">
+              <span className="font-display italic text-[#B58A45]">
                 Settlement Calculator
               </span>
             </h1>
 
-            <p className="mx-auto mb-5 max-w-2xl text-sm font-normal leading-relaxed text-[#c3d5cb] sm:text-base">
+            <p className="mx-auto mb-5 max-w-2xl text-sm font-normal leading-relaxed text-[#F5F0E6] sm:text-base">
               {shortSupport}
             </p>
 
             <div className="mb-6 flex justify-center">
               <a
                 href="#calculator"
-                className="inline-flex items-center gap-2 rounded-lg bg-[#047857] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_10px_rgba(4,120,87,0.35)] transition hover:bg-[#064E3B]"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#B58A45] px-5 py-2.5 text-sm font-semibold text-[#1B1B1B] shadow-[0_2px_10px_rgba(181,138,69,0.3)] transition hover:bg-[#B58A45]/90"
               >
                 Start estimate
               </a>
@@ -105,14 +106,14 @@ export function Hero({ client }: { client: ClientConfig }) {
                 return (
                   <div
                     key={`${stat.value}-${stat.label}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#225542] bg-[#113126]/90 px-3 py-1.5 text-left"
+                    className="inline-flex items-center gap-2 rounded-full border border-[#C9C1B3]/20 bg-[#0D1B2A] px-3 py-1.5 text-left"
                   >
-                    <Icon size={14} className="shrink-0 text-[#85d9b6]" aria-hidden />
+                    <Icon size={14} className="shrink-0 text-[#B58A45]" aria-hidden />
                     <div className="min-w-0">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-white">
+                      <div className="text-xs font-semibold uppercase tracking-wider text-white">
                         {stat.value}
                       </div>
-                      <div className="truncate text-[10px] text-[#a3bdb2]">{stat.label}</div>
+                      <div className="truncate text-xs text-[#C9C1B3]">{stat.label}</div>
                     </div>
                   </div>
                 );
