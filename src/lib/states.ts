@@ -3,6 +3,7 @@ export type FaultCategory =
   | "modified-50"
   | "modified-51"
   | "contributory"
+  | "slight-vs-defendant"
   | "unknown";
 
 export interface StateFaultInfo {
@@ -55,7 +56,7 @@ export const US_STATES: StateFaultInfo[] = [
   { code: "PA", name: "Pennsylvania", category: "modified-51", note: "Pennsylvania uses modified comparative negligence: recovery is generally barred at 51% or more fault." },
   { code: "RI", name: "Rhode Island", category: "pure-comparative", note: "Rhode Island uses pure comparative negligence: damages may be reduced by your share of fault." },
   { code: "SC", name: "South Carolina", category: "modified-51", note: "South Carolina uses modified comparative negligence: recovery is generally barred at 51% or more fault." },
-  { code: "SD", name: "South Dakota", category: "pure-comparative", note: "South Dakota uses a form of pure comparative negligence with unique slight/gross fault framing — seek local counsel." },
+  { code: "SD", name: "South Dakota", category: "slight-vs-defendant", note: "South Dakota (SDCL 20-9-2) allows recovery only when the plaintiff's contributory negligence was slight compared with the defendant's; damages are then reduced by the plaintiff's fault share. 'Slight' is qualitative (not a fixed statute %). This educational model bars recovery at ~30%+ plaintiff fault (per Wood v. City of Crooks) and otherwise reduces the range by the entered fault %. Seek local counsel." },
   { code: "TN", name: "Tennessee", category: "modified-50", note: "Tennessee uses modified comparative negligence: recovery is generally barred at 50% or more fault." },
   { code: "TX", name: "Texas", category: "modified-51", note: "Texas uses modified comparative negligence: you typically cannot recover if more than 50% at fault." },
   { code: "UT", name: "Utah", category: "modified-50", note: "Utah uses modified comparative negligence: recovery is generally barred at 50% or more fault." },

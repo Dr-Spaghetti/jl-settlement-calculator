@@ -42,6 +42,17 @@ export function runCalculatorTests(): void {
   assert.equal(noLimit.policyLimitPerPerson, null);
   assert.equal(noLimit.policyLimitsMayBind, false);
   assert.equal(applyComparativeFault(10000, 25, "pure-comparative").recoverable, 7500);
+  // SD slight-vs-defendant (educational SDCL 20-9-2 / Wood ~30% bar)
+  assert.equal(applyComparativeFault(10000, 10, "slight-vs-defendant").recoverable, 9000);
+  assert.equal(applyComparativeFault(10000, 10, "slight-vs-defendant").barred, false);
+  assert.equal(applyComparativeFault(10000, 30, "slight-vs-defendant").recoverable, 0);
+  assert.equal(applyComparativeFault(10000, 30, "slight-vs-defendant").barred, true);
+  const sdOk = calculateSettlement({ ...base, usState: "SD", plaintiffFaultPercent: 10 });
+  const sdBar = calculateSettlement({ ...base, usState: "SD", plaintiffFaultPercent: 30 });
+  assert.equal(sdOk.comparativeFaultCategory, "slight-vs-defendant");
+  assert.ok(sdOk.recoverableMid > 0);
+  assert.equal(sdBar.recoverableMid, 0);
+  assert.equal(sdBar.recoveryBarred, true);
   // Liability labels align with keys used by UI buttons / breakdown
   assert.equal(LIABILITY_LABELS.mixed.includes("Mixed"), true);
   assert.equal(LIABILITY_LABELS.disputed.includes("Disputed"), true);

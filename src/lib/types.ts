@@ -147,6 +147,7 @@ export interface SettlementRange {
     | "modified-50"
     | "modified-51"
     | "contributory"
+    | "slight-vs-defendant"
     | "unknown";
 }
 

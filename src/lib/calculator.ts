@@ -137,6 +137,13 @@ export function applyComparativeFault(
     case "contributory":
       if (fault > 0) return { recoverable: 0, barred: true };
       return { recoverable: safeAmount, barred: false };
+    case "slight-vs-defendant":
+      // Educational SDCL 20-9-2 model: Wood held ~30%+ more than slight as a matter of law.
+      if (fault >= 30) return { recoverable: 0, barred: true };
+      return {
+        recoverable: safeAmount * (1 - fault / 100),
+        barred: false,
+      };
     case "unknown":
     default:
       return {

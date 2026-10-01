@@ -997,12 +997,19 @@ export function Calculator({
                       value={
                         policyLimitPerPerson === ""
                           ? "unknown"
-                          : String(policyLimitPerPerson)
+                          : usState === "CA" && policyLimitPerPerson === 30000
+                            ? "ca-30-60"
+                            : String(policyLimitPerPerson)
                       }
                       onChange={(e) => {
                         const v = e.target.value;
                         if (v === "unknown") {
                           setPolicyLimitPerPerson("");
+                        } else if (v === "ca-30-60") {
+                          // CA statutory pair: $30k per person caps the estimate;
+                          // $60k is per-accident only (separate field, not a per-person cap).
+                          setPolicyLimitPerPerson(30000);
+                          setPolicyLimitPerAccident(60000);
                         } else {
                           setPolicyLimitPerPerson(Number(v));
                         }
@@ -1010,8 +1017,8 @@ export function Calculator({
                     >
                       <option value="unknown">Unknown / No limit applied</option>
                       {usState === "CA" ? (
-                        <option value="30000">
-                          CA statutory minimum / $30,000 per person (policies on/after Jan 1, 2025)
+                        <option value="ca-30-60">
+                          CA statutory minimum / $30,000 per person · $60,000 per accident (Jan 1, 2025+)
                         </option>
                       ) : usState === "WA" ? (
                         <option value="25000">
@@ -1022,11 +1029,6 @@ export function Calculator({
                           Common statutory minimum / $25,000 per person
                         </option>
                       )}
-                      {usState === "CA" ? (
-                        <option value="60000">
-                          CA statutory per-accident / $60,000 (for reference)
-                        </option>
-                      ) : null}
                       <option value="50000">$50,000 Policy Limit</option>
                       <option value="100000">
                         {isDj
@@ -1049,10 +1051,11 @@ export function Calculator({
                       ) : usState === "CA" ? (
                         <>
                           <strong>California minimum (Jan 1, 2025+):</strong> $30,000 bodily
-                          injury per person / $60,000 per accident for policies issued or
-                          renewed on or after Jan 1, 2025. Default is Unknown (no cap).
-                          Leave unknown if you do not know limits yet — the range still
-                          updates.
+                          injury <em>per person</em> / $60,000 <em>per accident</em> for
+                          policies issued or renewed on or after Jan 1, 2025. Only the
+                          per-person limit caps this estimate; the $60k figure fills the
+                          separate per-accident field and is not applied as a per-person
+                          cap. Default is Unknown (no cap).
                         </>
                       ) : (
                         "Leave unknown if you do not know limits yet — the range still updates."
@@ -1072,7 +1075,11 @@ export function Calculator({
                     <NumberField
                       id="policy-per-accident"
                       label="BI Limit Per Accident ($)"
-                      help="Shown as a note; not used to cap the estimate"
+                      help={
+                        usState === "CA"
+                          ? "CA statutory pair uses $60,000 here — informational only; does not cap the per-person estimate"
+                          : "Shown as a note; not used to cap the estimate"
+                      }
                       value={policyLimitPerAccident}
                       onChange={setPolicyLimitPerAccident}
                       optional
