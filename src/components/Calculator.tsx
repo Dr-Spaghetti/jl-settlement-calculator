@@ -194,9 +194,9 @@ export function Calculator({
   const [plaintiffFaultPercent, setPlaintiffFaultPercent] = useState(0);
   const [treatmentGap, setTreatmentGap] = useState<TreatmentGap>("none");
   const [permanency, setPermanency] = useState<Permanency>("none");
-  const [formulaMode, setFormulaMode] = useState<FormulaMode>("demand");
+  const [formulaMode, setFormulaMode] = useState<FormulaMode>("adjuster");
   const [policyLimitPerPerson, setPolicyLimitPerPerson] = useState<number | "">(
-    100000
+    ""
   );
   const [policyLimitPerAccident, setPolicyLimitPerAccident] = useState<
     number | ""
@@ -337,8 +337,8 @@ export function Calculator({
     setPlaintiffFaultPercent(0);
     setTreatmentGap("none");
     setPermanency("none");
-    setFormulaMode("demand");
-    setPolicyLimitPerPerson(100000);
+    setFormulaMode("adjuster");
+    setPolicyLimitPerPerson("");
     setPolicyLimitPerAccident("");
     setOfferReceived("");
     setStep(1);
@@ -347,11 +347,10 @@ export function Calculator({
 
   const showPreFault = result.faultPercentApplied > 0 || result.recoveryBarred;
 
-  const liabilityButtons: { id: LiabilityClarity; label: string }[] = [
-    { id: "clear", label: "Clear Liability (Rear-ended, red light)" },
-    { id: "mixed", label: "Disputed / Contested" },
-    { id: "disputed", label: "Multi-Vehicle / Complex" },
-  ];
+  // Button id → DEFAULT_LIABILITY coeff → LIABILITY_LABELS (breakdown) must stay aligned.
+  const liabilityButtons: { id: LiabilityClarity; label: string }[] = (
+    Object.keys(LIABILITY_LABELS) as LiabilityClarity[]
+  ).map((id) => ({ id, label: LIABILITY_LABELS[id] }));
 
   return (
     <section
@@ -1008,9 +1007,25 @@ export function Calculator({
                         }
                       }}
                     >
-                      <option value="25000">
-                        Statutory minimum / $25,000 per person
-                      </option>
+                      <option value="unknown">Unknown / No limit applied</option>
+                      {usState === "CA" ? (
+                        <option value="30000">
+                          CA statutory minimum / $30,000 per person (policies on/after Jan 1, 2025)
+                        </option>
+                      ) : usState === "WA" ? (
+                        <option value="25000">
+                          WA statutory minimum / $25,000 per person
+                        </option>
+                      ) : (
+                        <option value="25000">
+                          Common statutory minimum / $25,000 per person
+                        </option>
+                      )}
+                      {usState === "CA" ? (
+                        <option value="60000">
+                          CA statutory per-accident / $60,000 (for reference)
+                        </option>
+                      ) : null}
                       <option value="50000">$50,000 Policy Limit</option>
                       <option value="100000">
                         {isDj
@@ -1022,7 +1037,6 @@ export function Calculator({
                       <option value="1000000">
                         $1,000,000+ Commercial / Umbrella
                       </option>
-                      <option value="unknown">Unknown / Multiple Coverage Layers</option>
                     </select>
                     <p className={helpClass}>
                       {usState === "WA" ? (
@@ -1033,11 +1047,11 @@ export function Calculator({
                         </>
                       ) : usState === "CA" ? (
                         <>
-                          <strong>California note:</strong> California requires minimum
-                          bodily injury liability coverage; limits and UIM options vary.
+                          <strong>California minimum (Jan 1, 2025+):</strong> $30,000 bodily
+                          injury per person / $60,000 per accident for policies issued or
+                          renewed on or after Jan 1, 2025. Default is Unknown (no cap).
                           Leave unknown if you do not know limits yet — the range still
-                          updates. Ask counsel about current statutory minimums and excess
-                          coverage.
+                          updates.
                         </>
                       ) : (
                         "Leave unknown if you do not know limits yet — the range still updates."
@@ -1425,10 +1439,10 @@ export function Calculator({
                         </details>
                       </div>
 
-                      <div className="space-y-2.5 print:hidden">
+                      <div className="space-y-2.5">
                         <a
                           href={client.ctaUrl}
-                          className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg ${
+                          className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg print:hidden ${
                             isDj
                               ? "bg-[#B58A45] !text-[#1B1B1B] hover:bg-[#B58A45]/90"
                               : "bg-plg-crimson hover:bg-plg-crimsonDark"
@@ -1436,10 +1450,10 @@ export function Calculator({
                         >
                           {client.ctaText} — Review With An Attorney
                         </a>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-2 gap-2 print:block">
                           <a
                             href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
-                            className={`flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-white transition ${
+                            className={`flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-white transition print:hidden ${
                               isDj
                                 ? "border border-[#F5F0E6]/40 bg-transparent hover:bg-[#F5F0E6]/5"
                                 : "bg-slate-900 hover:bg-slate-800"

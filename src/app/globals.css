@@ -114,22 +114,72 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media print {
+  /* Hide chrome — but NEVER hide #print-summary (incl. firm name brand block). */
   .print\:hidden,
-  header,
   .sticky-mobile-cta,
   nav,
   aside[role="note"],
-  .no-print {
+  .no-print,
+  body > div > header,
+  header.sticky,
+  .dj-topbar {
     display: none !important;
   }
 
-  body {
-    background: white;
+  /* Site <header> elements outside the print sheet */
+  header:not(.print-summary-brand) {
+    display: none !important;
   }
 
+  html,
+  body {
+    background: white !important;
+    color: #0f172a !important;
+  }
+
+  /* Isolate summary: hide everything else on the page during print */
+  body * {
+    visibility: hidden;
+  }
   #print-summary,
+  #print-summary * {
+    visibility: visible !important;
+  }
+  #print-summary {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 1.25rem;
+    background: white !important;
+    color: #0f172a !important;
+  }
   .print\:block {
     display: block !important;
+  }
+
+  /* Force readable ink on white paper (Djougourian cream/taupe → near-black) */
+  #print-summary,
+  #print-summary .print-ink,
+  #print-summary h1,
+  #print-summary dd,
+  #print-summary p {
+    color: #0f172a !important;
+  }
+  #print-summary .print-ink-muted,
+  #print-summary dt {
+    color: #334155 !important;
+  }
+  html.theme-djougourian #print-summary,
+  html.theme-djougourian #print-summary * {
+    color: #0f172a !important;
+    background: transparent !important;
+    border-color: #94a3b8 !important;
+  }
+  html.theme-djougourian #print-summary .print-ink-muted,
+  html.theme-djougourian #print-summary dt {
+    color: #334155 !important;
   }
 }
 

@@ -210,12 +210,11 @@ function applyFormula(
   property: number,
   multiplier: number
 ): number {
-  if (mode === "adjuster") {
-    return medical * multiplier + wages + other + property;
-  }
-  // demand (default): specials × mult + property
-  const specials = medical + wages + other;
-  return specials * multiplier + property;
+  // Both modes multiply medical (pain & suffering base) only.
+  // Economic losses (wages, OOP) and property are added once — never multiplied.
+  // (Legacy "demand" incorrectly multiplied specials = medical+wages+other.)
+  void mode;
+  return medical * multiplier + wages + other + property;
 }
 
 /**
@@ -228,7 +227,7 @@ export function calculateSettlement(
   multipliers?: FirmMultipliers
 ): SettlementRange {
   const cfg = resolveMultipliers(multipliers);
-  const mode: FormulaMode = inputs.formulaMode ?? "demand";
+  const mode: FormulaMode = inputs.formulaMode ?? "adjuster";
 
   const medical =
     Math.max(0, inputs.medicalBillsPast) + Math.max(0, inputs.medicalBillsFuture);
@@ -238,7 +237,8 @@ export function calculateSettlement(
 
   const specialsForPain = medical + wages + other;
   const economicBase = specialsForPain + property;
-  const multipliedBase = mode === "adjuster" ? medical : specialsForPain;
+  // Pain & suffering multiplier applies to medical only (both formula modes).
+  const multipliedBase = medical;
 
   const base = cfg.severity[inputs.severity];
   const levers = buildLevers(inputs, cfg);
@@ -433,9 +433,9 @@ export const CARE_LABELS: Record<CareType, string> = {
 };
 
 export const LIABILITY_LABELS: Record<LiabilityClarity, string> = {
-  clear: "Clear (other party clearly at fault)",
-  mixed: "Mixed (shared or unclear fault)",
-  disputed: "Disputed (liability contested)",
+  clear: "Clear Liability (Rear-ended, red light)",
+  mixed: "Mixed / Shared or Unclear Fault",
+  disputed: "Disputed / Contested",
 };
 
 export const TREATMENT_GAP_LABELS: Record<TreatmentGap, string> = {
@@ -456,15 +456,15 @@ export const FORMULA_MODE_COPY: Record<
 > = {
   demand: {
     label: "Demand-style",
-    short: "Multiplies specials, then adds property.",
+    short: "Multiplies medical only; adds economic once.",
     blurb:
-      "Multiplies medical + wages + other (specials), then adds property — common in demand letters.",
+      "Multiplies medical for pain & suffering, then adds wages, other out-of-pocket, and property once (economic losses are never multiplied).",
   },
   adjuster: {
     label: "Adjuster-style",
     short: "Multiplies medical only; adds other costs after.",
     blurb:
-      "Multiplies medical only, then adds wages, other, and property — closer to some adjuster worksheets.",
+      "Multiplies medical only, then adds wages, other, and property — default educational worksheet. Same structure as corrected demand-style.",
   },
 };
 
@@ -502,9 +502,9 @@ export const WORKED_EXAMPLE = {
   narrative:
     "Suppose $15,000 in medical bills, $4,500 lost wages, $800 other costs, and $6,500 property damage after a moderate injury with four months of MD care and clear liability.",
   highlights: [
-    "Specials for pain: $20,300",
-    "Severity band starts near 2.0×–3.5×",
-    "Care + treatment + liability levers nudge the mid multiplier upward",
+    "Medical total $15,000 is multiplied for pain & suffering",
+    "Lost wages + other OOP ($5,300) are added once (not multiplied)",
+    "Severity band starts near 2.0×–3.5×; care + treatment + liability nudge mid upward",
     "Property damage is added after multiplication",
   ],
 };

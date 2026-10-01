@@ -44,7 +44,7 @@ function clamp(n) { return Math.max(1.25, Math.min(7, n)); }
 function roundMoney(n) { return Math.round(n / 100) * 100; }
 
 export function calculateSettlement(inputs) {
-  const mode = inputs.formulaMode ?? "demand";
+  const mode = inputs.formulaMode ?? "adjuster";
   const medical = Math.max(0, inputs.medicalBillsPast) + Math.max(0, inputs.medicalBillsFuture);
   const wages = Math.max(0, inputs.lostWages);
   const other = Math.max(0, inputs.otherOutOfPocket);
@@ -57,8 +57,9 @@ export function calculateSettlement(inputs) {
   const multiplierLow = clamp(base.low + totalAdjustment);
   const multiplierHigh = clamp(base.high + totalAdjustment);
   function apply(mult) {
-    if (mode === "adjuster") return medical * mult + wages + other + property;
-    return (medical + wages + other) * mult + property;
+    // Both modes: multiply medical only; add economic once (Ben audit fix).
+    void mode;
+    return medical * mult + wages + other + property;
   }
   const low = roundMoney(apply(multiplierLow));
   const mid = roundMoney(apply(multiplierMid));
@@ -87,7 +88,7 @@ const baseInputs = {
   medicalBillsPast: 12000, medicalBillsFuture: 3000, lostWages: 4500, otherOutOfPocket: 800,
   propertyDamage: 6500, severity: "moderate", treatmentMonths: 4, careType: "md",
   liabilityClarity: "clear", usState: "AZ", plaintiffFaultPercent: 0, treatmentGap: "none",
-  permanency: "none", formulaMode: "demand",
+  permanency: "none", formulaMode: "adjuster",
 };
 
 console.log("Running calculator usefulness assertions...");
@@ -119,10 +120,22 @@ console.log("Running calculator usefulness assertions...");
 {
   const demand = calculateSettlement({ ...baseInputs, formulaMode: "demand", plaintiffFaultPercent: 0 });
   const adjuster = calculateSettlement({ ...baseInputs, formulaMode: "adjuster", plaintiffFaultPercent: 0 });
-  assert.ok(baseInputs.lostWages > 0);
-  assert.notEqual(demand.mid, adjuster.mid);
-  assert.ok(demand.mid > adjuster.mid);
-  console.log("  OK demand vs adjuster differ when wages > 0");
+  assert.equal(demand.mid, adjuster.mid);
+  console.log("  OK demand and adjuster share corrected medical×mult + economic structure");
+}
+{
+  const highEarner = calculateSettlement({
+    ...baseInputs,
+    medicalBillsPast: 5000,
+    medicalBillsFuture: 0,
+    lostWages: 200000,
+    otherOutOfPocket: 800,
+    propertyDamage: 6500,
+    formulaMode: "demand",
+    plaintiffFaultPercent: 0,
+  });
+  assert.equal(highEarner.mid, 223600);
+  console.log("  OK high-earner demand mid $223,600 (wages not multiplied)");
 }
 {
   const uncapped = calculateSettlement({ ...baseInputs, plaintiffFaultPercent: 0 });
