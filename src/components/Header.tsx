@@ -39,7 +39,7 @@ export function Header({ client }: { client: ClientConfig }) {
   if (isDj) {
     return (
       <>
-        <div className="dj-topbar border-b border-[#C9C1B3]/15 bg-[#0D1B2A] text-xs text-white print:hidden">
+        <div className="dj-topbar border-b border-[#C9C1B3]/15 bg-[#0D1B2A] text-xs text-white">
           <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-x-2 px-4 pt-2.5 sm:flex-row sm:gap-2 sm:py-2.5 sm:px-6 lg:px-8">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#C9C1B3]">
               <span className="inline-flex items-center rounded bg-[#B58A45] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#1B1B1B]">
@@ -68,7 +68,7 @@ export function Header({ client }: { client: ClientConfig }) {
           </div>
         </div>
 
-        <header className="sticky top-0 z-40 border-b border-[#B58A45]/40 bg-[#060E18] shadow-md print:hidden">
+        <header className="sticky top-0 z-40 border-b border-[#B58A45]/40 bg-[#060E18] shadow-md">
           <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
             <div className="flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
               <a href="#top" className="group flex min-w-0 items-center">
@@ -141,7 +141,7 @@ export function Header({ client }: { client: ClientConfig }) {
 
   return (
     <>
-      <div className="border-b border-slate-800 bg-plg-navy text-xs text-white print:hidden">
+      <div className="border-b border-slate-800 bg-plg-navy text-xs text-white">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-2 sm:flex-row sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 text-slate-300">
             <span className="inline-flex items-center rounded bg-plg-crimson px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
@@ -185,7 +185,7 @@ export function Header({ client }: { client: ClientConfig }) {
         </div>
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-plg-borderMuted bg-white/95 shadow-sm backdrop-blur transition-all duration-300 print:hidden">
+      <header className="sticky top-0 z-40 border-b border-plg-borderMuted bg-white/95 shadow-sm backdrop-blur transition-all duration-300">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-28 items-center justify-between gap-4">
             <a href="#top" className="group flex min-w-0 items-center gap-3 sm:gap-4">

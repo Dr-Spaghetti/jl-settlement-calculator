@@ -24,7 +24,6 @@ import type {
 } from "@/lib/types";
 import { BreakdownPanel } from "@/components/calculator/BreakdownPanel";
 import { OfferGauge } from "@/components/calculator/OfferGauge";
-import { PrintSummary } from "@/components/calculator/PrintSummary";
 import { CountUpCurrency } from "@/components/calculator/CountUpCurrency";
 import { SignatureMoment } from "@/components/motion/SignatureMoment";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -1442,7 +1441,7 @@ export function Calculator({
                       <div className="space-y-2.5">
                         <a
                           href={client.ctaUrl}
-                          className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg print:hidden ${
+                          className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg ${
                             isDj
                               ? "bg-[#B58A45] !text-[#1B1B1B] hover:bg-[#B58A45]/90"
                               : "bg-plg-crimson hover:bg-plg-crimsonDark"
@@ -1450,30 +1449,20 @@ export function Calculator({
                         >
                           {client.ctaText} — Review With An Attorney
                         </a>
-                        <div className="grid grid-cols-2 gap-2 print:block">
-                          <a
-                            href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
-                            className={`flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-white transition print:hidden ${
-                              isDj
-                                ? "border border-[#F5F0E6]/40 bg-transparent hover:bg-[#F5F0E6]/5"
-                                : "bg-slate-900 hover:bg-slate-800"
-                            }`}
-                          >
-                            <PhoneIcon
-                              size={14}
-                              className={isDj ? "text-[#B58A45]" : "text-plg-gold"}
-                            />
-                            {client.phone}
-                          </a>
-                          <PrintSummary
-                            compact
-                            result={result}
-                            offerCheck={offerCheck}
-                            firmName={client.firmName}
-                            usState={usState}
-                            disclaimer={isDj ? DJ_ESTIMATE_QUALIFIER : undefined}
+                        <a
+                          href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
+                          className={`flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-white transition ${
+                            isDj
+                              ? "border border-[#F5F0E6]/40 bg-transparent hover:bg-[#F5F0E6]/5"
+                              : "bg-slate-900 hover:bg-slate-800"
+                          }`}
+                        >
+                          <PhoneIcon
+                            size={14}
+                            className={isDj ? "text-[#B58A45]" : "text-plg-gold"}
                           />
-                        </div>
+                          {client.phone}
+                        </a>
                       </div>
 
                       {isDj ? null : (

@@ -110,7 +110,7 @@ Private template for Justify Local / client deployments unless otherwise agreed.
 
 ## Changelog (2026-09-08)
 
-- UX: 3-step calc, live range, breakdown, SVG Offer Reality Check, print, sticky mobile CTA
+- UX: 3-step calc, live range, breakdown, SVG Offer Reality Check, sticky mobile CTA (no print/PDF)
 - Trust: heroEyebrow/trustStats/testimonials, 3-pill strip, professional disclaimer, FAQ phone
 - Visual: warm #F7F5F0, Source Serif 4 + Inter, Mid hierarchy + count-up, scarce gold
 - Motion: reduced-motion hooks; signature-moment flag OFF
@@ -129,7 +129,7 @@ Testimonials: only real quotes for live clients.
 
 1. Document CLIENT_ID-first multi-tenant; Djougourian Vercel keeps `CLIENT_ID=djougourian-law`; do not flip shared `active.json` away from Premier.
 2. Demand formula no longer multiplies wages/OOP; default formula mode → adjuster.
-3. Print/PDF: summary escapes `print:hidden` ancestors; firm name not killed by `header` print rule; high-contrast ink on white paper.
+3. Print/PDF feature **removed** (no Save PDF CTA, no `window.print`, no print-summary isolation CSS) so visitors cannot walk away with a clean estimate PDF.
 4. CA statutory BI minimum option → $30k/$60k (Jan 1, 2025+).
 5. Policy limit default → Unknown (null; no banner).
 6. Liability buttons aligned with coefficients + breakdown labels (Clear / Mixed / Disputed).

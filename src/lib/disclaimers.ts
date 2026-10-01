@@ -2,7 +2,7 @@ import type { ClientConfig, OfferRealityCheck } from "./types";
 
 /**
  * Djougourian (CA) disclaimer copy: kept deliberately minimal.
- *  - Estimate qualifier: rendered under the estimate figures and in the print summary.
+ *  - Estimate qualifier: rendered under the estimate figures.
  *  - Footer legal line: responsible firm/attorney + office (Rule 7.2(c);
  *    Bus. & Prof. Code 6157.2(b)) and no attorney-client relationship.
  * Bracketed values are placeholders until the firm confirms them in clients/djougourian-law.json.
