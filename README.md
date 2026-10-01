@@ -125,6 +125,17 @@ Wire via calculateSettlement(inputs, client.multipliers) from the page.
 - Treatment gap, permanency, firm multipliers JSON
 Testimonials: only real quotes for live clients.
 
+## Changelog (2026-10-01) — Band C spacing polish
+
+Visual alignment only after Print/PDF removal (no formula / location / PDF regress):
+- Results panel: phone CTA matched to consult (equal min-height, padding, type); centered stack gap
+- Results header: drop dangling “Estimated range” on Djougourian (badge + title only)
+- Presets: Reset separated under chips (right-aligned on md+)
+- Bottom CTA section: full-width equal buttons on mobile, row on sm+
+- Sticky mobile CTA: 48px min-height, slightly tighter equal gap
+
+Band D HOLD — do not merge/promote.
+
 ## Changelog (2026-10-01) — Ben punch list (Band C)
 
 1. Document CLIENT_ID-first multi-tenant; Djougourian Vercel keeps `CLIENT_ID=djougourian-law`; do not flip shared `active.json` away from Premier.

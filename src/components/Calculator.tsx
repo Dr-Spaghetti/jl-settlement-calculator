@@ -397,29 +397,31 @@ export function Calculator({
                   : "Load typical sample figures to see how multiplier dynamics change by case severity:"}
               </p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {(Object.keys(PRESETS) as PresetId[]).map((id) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => loadPreset(id)}
-                  className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
-                    activePreset === id
-                      ? isDj
-                        ? "border-[#B58A45] bg-[#B58A45] text-[#1B1B1B] shadow-sm"
-                        : "border-plg-crimson bg-plg-warmIvory text-plg-crimson"
-                      : isDj
-                        ? "border-[#C9C1B3]/40 bg-transparent text-white hover:border-[#B58A45]"
-                        : "border-slate-200 text-slate-700 hover:border-plg-crimson hover:bg-plg-warmIvory"
-                  }`}
-                >
-                  {PRESETS[id].label}
-                </button>
-              ))}
+            <div className="flex flex-col gap-2 md:items-end">
+              <div className="flex flex-wrap gap-2 md:justify-end">
+                {(Object.keys(PRESETS) as PresetId[]).map((id) => (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => loadPreset(id)}
+                    className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
+                      activePreset === id
+                        ? isDj
+                          ? "border-[#B58A45] bg-[#B58A45] text-[#1B1B1B] shadow-sm"
+                          : "border-plg-crimson bg-plg-warmIvory text-plg-crimson"
+                        : isDj
+                          ? "border-[#C9C1B3]/40 bg-transparent text-white hover:border-[#B58A45]"
+                          : "border-slate-200 text-slate-700 hover:border-plg-crimson hover:bg-plg-warmIvory"
+                    }`}
+                  >
+                    {PRESETS[id].label}
+                  </button>
+                ))}
+              </div>
               <button
                 type="button"
                 onClick={resetCalculator}
-                className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium transition ${
+                className={`inline-flex items-center gap-1 self-start rounded-lg px-2.5 py-1.5 text-xs font-medium transition md:self-end ${
                   isDj
                     ? "text-[#C9C1B3] hover:bg-[#F5F0E6]/5 hover:text-[#F5F0E6]"
                     : "text-slate-400 hover:text-slate-700"
@@ -1151,10 +1153,10 @@ export function Calculator({
                 aria-live="polite"
               >
                 <div
-                  className={`flex items-center justify-between px-6 py-4 ${
+                  className={`px-6 py-4 ${
                     isDj
                       ? "border-b border-[#C9C1B3]/20"
-                      : "border-b border-slate-800 bg-plg-navy text-white"
+                      : "flex items-center justify-between border-b border-slate-800 bg-plg-navy text-white"
                   }`}
                 >
                   <div>
@@ -1175,9 +1177,6 @@ export function Calculator({
                       Estimated Settlement Range
                     </h3>
                   </div>
-                  {isDj ? (
-                    <span className="text-xs text-[#C9C1B3]">Estimated range</span>
-                  ) : null}
                 </div>
 
                 <div
@@ -1396,7 +1395,7 @@ export function Calculator({
                       ) : null}
 
                       <div
-                        className={`mb-5 overflow-hidden rounded-xl border ${
+                        className={`mb-4 overflow-hidden rounded-xl border ${
                           isDj
                             ? "border-[#C9C1B3]/20 bg-[#060E18]"
                             : "border-slate-200 bg-white"
@@ -1438,27 +1437,30 @@ export function Calculator({
                         </details>
                       </div>
 
-                      <div className="space-y-2.5">
+                      <div className="flex flex-col gap-2.5">
                         <a
                           href={client.ctaUrl}
-                          className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg ${
+                          className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-center text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg ${
                             isDj
                               ? "bg-[#B58A45] !text-[#1B1B1B] hover:bg-[#B58A45]/90"
                               : "bg-plg-crimson hover:bg-plg-crimsonDark"
                           }`}
                         >
-                          {client.ctaText} — Review With An Attorney
+                          <span className="max-sm:hidden">
+                            {client.ctaText} — Review With An Attorney
+                          </span>
+                          <span className="sm:hidden">{client.ctaText}</span>
                         </a>
                         <a
                           href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
-                          className={`flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-white transition ${
+                          className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white transition ${
                             isDj
                               ? "border border-[#F5F0E6]/40 bg-transparent hover:bg-[#F5F0E6]/5"
                               : "bg-slate-900 hover:bg-slate-800"
                           }`}
                         >
                           <PhoneIcon
-                            size={14}
+                            size={16}
                             className={isDj ? "text-[#B58A45]" : "text-plg-gold"}
                           />
                           {client.phone}
