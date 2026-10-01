@@ -24,7 +24,6 @@ import type {
 } from "@/lib/types";
 import { BreakdownPanel } from "@/components/calculator/BreakdownPanel";
 import { OfferGauge } from "@/components/calculator/OfferGauge";
-import { PrintSummary } from "@/components/calculator/PrintSummary";
 import { CountUpCurrency } from "@/components/calculator/CountUpCurrency";
 import { SignatureMoment } from "@/components/motion/SignatureMoment";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -194,9 +193,9 @@ export function Calculator({
   const [plaintiffFaultPercent, setPlaintiffFaultPercent] = useState(0);
   const [treatmentGap, setTreatmentGap] = useState<TreatmentGap>("none");
   const [permanency, setPermanency] = useState<Permanency>("none");
-  const [formulaMode, setFormulaMode] = useState<FormulaMode>("demand");
+  const [formulaMode, setFormulaMode] = useState<FormulaMode>("adjuster");
   const [policyLimitPerPerson, setPolicyLimitPerPerson] = useState<number | "">(
-    100000
+    ""
   );
   const [policyLimitPerAccident, setPolicyLimitPerAccident] = useState<
     number | ""
@@ -337,8 +336,8 @@ export function Calculator({
     setPlaintiffFaultPercent(0);
     setTreatmentGap("none");
     setPermanency("none");
-    setFormulaMode("demand");
-    setPolicyLimitPerPerson(100000);
+    setFormulaMode("adjuster");
+    setPolicyLimitPerPerson("");
     setPolicyLimitPerAccident("");
     setOfferReceived("");
     setStep(1);
@@ -347,11 +346,10 @@ export function Calculator({
 
   const showPreFault = result.faultPercentApplied > 0 || result.recoveryBarred;
 
-  const liabilityButtons: { id: LiabilityClarity; label: string }[] = [
-    { id: "clear", label: "Clear Liability (Rear-ended, red light)" },
-    { id: "mixed", label: "Disputed / Contested" },
-    { id: "disputed", label: "Multi-Vehicle / Complex" },
-  ];
+  // Button id → DEFAULT_LIABILITY coeff → LIABILITY_LABELS (breakdown) must stay aligned.
+  const liabilityButtons: { id: LiabilityClarity; label: string }[] = (
+    Object.keys(LIABILITY_LABELS) as LiabilityClarity[]
+  ).map((id) => ({ id, label: LIABILITY_LABELS[id] }));
 
   return (
     <section
@@ -399,29 +397,31 @@ export function Calculator({
                   : "Load typical sample figures to see how multiplier dynamics change by case severity:"}
               </p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {(Object.keys(PRESETS) as PresetId[]).map((id) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => loadPreset(id)}
-                  className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
-                    activePreset === id
-                      ? isDj
-                        ? "border-[#B58A45] bg-[#B58A45] text-[#1B1B1B] shadow-sm"
-                        : "border-plg-crimson bg-plg-warmIvory text-plg-crimson"
-                      : isDj
-                        ? "border-[#C9C1B3]/40 bg-transparent text-white hover:border-[#B58A45]"
-                        : "border-slate-200 text-slate-700 hover:border-plg-crimson hover:bg-plg-warmIvory"
-                  }`}
-                >
-                  {PRESETS[id].label}
-                </button>
-              ))}
+            <div className="flex flex-col gap-2 md:items-end">
+              <div className="flex flex-wrap gap-2 md:justify-end">
+                {(Object.keys(PRESETS) as PresetId[]).map((id) => (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => loadPreset(id)}
+                    className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
+                      activePreset === id
+                        ? isDj
+                          ? "border-[#B58A45] bg-[#B58A45] text-[#1B1B1B] shadow-sm"
+                          : "border-plg-crimson bg-plg-warmIvory text-plg-crimson"
+                        : isDj
+                          ? "border-[#C9C1B3]/40 bg-transparent text-white hover:border-[#B58A45]"
+                          : "border-slate-200 text-slate-700 hover:border-plg-crimson hover:bg-plg-warmIvory"
+                    }`}
+                  >
+                    {PRESETS[id].label}
+                  </button>
+                ))}
+              </div>
               <button
                 type="button"
                 onClick={resetCalculator}
-                className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium transition ${
+                className={`inline-flex items-center gap-1 self-start rounded-lg px-2.5 py-1.5 text-xs font-medium transition md:self-end ${
                   isDj
                     ? "text-[#C9C1B3] hover:bg-[#F5F0E6]/5 hover:text-[#F5F0E6]"
                     : "text-slate-400 hover:text-slate-700"
@@ -997,20 +997,38 @@ export function Calculator({
                       value={
                         policyLimitPerPerson === ""
                           ? "unknown"
-                          : String(policyLimitPerPerson)
+                          : usState === "CA" && policyLimitPerPerson === 30000
+                            ? "ca-30-60"
+                            : String(policyLimitPerPerson)
                       }
                       onChange={(e) => {
                         const v = e.target.value;
                         if (v === "unknown") {
                           setPolicyLimitPerPerson("");
+                        } else if (v === "ca-30-60") {
+                          // CA statutory pair: $30k per person caps the estimate;
+                          // $60k is per-accident only (separate field, not a per-person cap).
+                          setPolicyLimitPerPerson(30000);
+                          setPolicyLimitPerAccident(60000);
                         } else {
                           setPolicyLimitPerPerson(Number(v));
                         }
                       }}
                     >
-                      <option value="25000">
-                        Statutory minimum / $25,000 per person
-                      </option>
+                      <option value="unknown">Unknown / No limit applied</option>
+                      {usState === "CA" ? (
+                        <option value="ca-30-60">
+                          CA statutory minimum / $30,000 per person · $60,000 per accident (Jan 1, 2025+)
+                        </option>
+                      ) : usState === "WA" ? (
+                        <option value="25000">
+                          WA statutory minimum / $25,000 per person
+                        </option>
+                      ) : (
+                        <option value="25000">
+                          Common statutory minimum / $25,000 per person
+                        </option>
+                      )}
                       <option value="50000">$50,000 Policy Limit</option>
                       <option value="100000">
                         {isDj
@@ -1022,7 +1040,6 @@ export function Calculator({
                       <option value="1000000">
                         $1,000,000+ Commercial / Umbrella
                       </option>
-                      <option value="unknown">Unknown / Multiple Coverage Layers</option>
                     </select>
                     <p className={helpClass}>
                       {usState === "WA" ? (
@@ -1033,11 +1050,12 @@ export function Calculator({
                         </>
                       ) : usState === "CA" ? (
                         <>
-                          <strong>California note:</strong> California requires minimum
-                          bodily injury liability coverage; limits and UIM options vary.
-                          Leave unknown if you do not know limits yet — the range still
-                          updates. Ask counsel about current statutory minimums and excess
-                          coverage.
+                          <strong>California minimum (Jan 1, 2025+):</strong> $30,000 bodily
+                          injury <em>per person</em> / $60,000 <em>per accident</em> for
+                          policies issued or renewed on or after Jan 1, 2025. Only the
+                          per-person limit caps this estimate; the $60k figure fills the
+                          separate per-accident field and is not applied as a per-person
+                          cap. Default is Unknown (no cap).
                         </>
                       ) : (
                         "Leave unknown if you do not know limits yet — the range still updates."
@@ -1057,7 +1075,11 @@ export function Calculator({
                     <NumberField
                       id="policy-per-accident"
                       label="BI Limit Per Accident ($)"
-                      help="Shown as a note; not used to cap the estimate"
+                      help={
+                        usState === "CA"
+                          ? "CA statutory pair uses $60,000 here — informational only; does not cap the per-person estimate"
+                          : "Shown as a note; not used to cap the estimate"
+                      }
                       value={policyLimitPerAccident}
                       onChange={setPolicyLimitPerAccident}
                       optional
@@ -1138,10 +1160,10 @@ export function Calculator({
                 aria-live="polite"
               >
                 <div
-                  className={`flex items-center justify-between px-6 py-4 ${
+                  className={`px-6 py-4 ${
                     isDj
                       ? "border-b border-[#C9C1B3]/20"
-                      : "border-b border-slate-800 bg-plg-navy text-white"
+                      : "flex items-center justify-between border-b border-slate-800 bg-plg-navy text-white"
                   }`}
                 >
                   <div>
@@ -1162,9 +1184,6 @@ export function Calculator({
                       Estimated Settlement Range
                     </h3>
                   </div>
-                  {isDj ? (
-                    <span className="text-xs text-[#C9C1B3]">Estimated range</span>
-                  ) : null}
                 </div>
 
                 <div
@@ -1383,7 +1402,7 @@ export function Calculator({
                       ) : null}
 
                       <div
-                        className={`mb-5 overflow-hidden rounded-xl border ${
+                        className={`mb-4 overflow-hidden rounded-xl border ${
                           isDj
                             ? "border-[#C9C1B3]/20 bg-[#060E18]"
                             : "border-slate-200 bg-white"
@@ -1425,41 +1444,34 @@ export function Calculator({
                         </details>
                       </div>
 
-                      <div className="space-y-2.5 print:hidden">
+                      <div className="flex flex-col gap-2.5">
                         <a
                           href={client.ctaUrl}
-                          className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg ${
+                          className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-center text-sm font-bold tracking-wide text-white shadow-md transition hover:shadow-lg ${
                             isDj
                               ? "bg-[#B58A45] !text-[#1B1B1B] hover:bg-[#B58A45]/90"
                               : "bg-plg-crimson hover:bg-plg-crimsonDark"
                           }`}
                         >
-                          {client.ctaText} — Review With An Attorney
+                          <span className="max-sm:hidden">
+                            {client.ctaText} — Review With An Attorney
+                          </span>
+                          <span className="sm:hidden">{client.ctaText}</span>
                         </a>
-                        <div className="grid grid-cols-2 gap-2">
-                          <a
-                            href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
-                            className={`flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-white transition ${
-                              isDj
-                                ? "border border-[#F5F0E6]/40 bg-transparent hover:bg-[#F5F0E6]/5"
-                                : "bg-slate-900 hover:bg-slate-800"
-                            }`}
-                          >
-                            <PhoneIcon
-                              size={14}
-                              className={isDj ? "text-[#B58A45]" : "text-plg-gold"}
-                            />
-                            {client.phone}
-                          </a>
-                          <PrintSummary
-                            compact
-                            result={result}
-                            offerCheck={offerCheck}
-                            firmName={client.firmName}
-                            usState={usState}
-                            disclaimer={isDj ? DJ_ESTIMATE_QUALIFIER : undefined}
+                        <a
+                          href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
+                          className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-bold tracking-wide text-white transition ${
+                            isDj
+                              ? "border border-[#F5F0E6]/40 bg-transparent hover:bg-[#F5F0E6]/5"
+                              : "bg-slate-900 hover:bg-slate-800"
+                          }`}
+                        >
+                          <PhoneIcon
+                            size={16}
+                            className={isDj ? "text-[#B58A45]" : "text-plg-gold"}
                           />
-                        </div>
+                          {client.phone}
+                        </a>
                       </div>
 
                       {isDj ? null : (

@@ -15,6 +15,9 @@ export function applyComparativeFault(amount, faultPercent, category) {
     case "contributory":
       if (fault > 0) return { recoverable: 0, barred: true };
       return { recoverable: safeAmount, barred: false };
+    case "slight-vs-defendant":
+      if (fault >= 30) return { recoverable: 0, barred: true };
+      return { recoverable: safeAmount * (1 - fault / 100), barred: false };
     default:
       return { recoverable: safeAmount * (1 - fault / 100), barred: false };
   }
@@ -30,7 +33,7 @@ const CARE = { chiro: -0.15, md: 0.1, surgery: 0.45 };
 const LIABILITY = { clear: 0.25, mixed: -0.2, disputed: -0.55 };
 const GAP = { none: 0, short: -0.2, long: -0.45 };
 const PERM = { none: 0, possible: 0.25, rated: 0.55 };
-const STATE_CAT = { AZ: "pure-comparative", NC: "contributory", TX: "modified-51" };
+const STATE_CAT = { AZ: "pure-comparative", NC: "contributory", TX: "modified-51", SD: "slight-vs-defendant" };
 
 function treatmentAdj(months) {
   const m = Math.max(0, months);
@@ -44,7 +47,7 @@ function clamp(n) { return Math.max(1.25, Math.min(7, n)); }
 function roundMoney(n) { return Math.round(n / 100) * 100; }
 
 export function calculateSettlement(inputs) {
-  const mode = inputs.formulaMode ?? "demand";
+  const mode = inputs.formulaMode ?? "adjuster";
   const medical = Math.max(0, inputs.medicalBillsPast) + Math.max(0, inputs.medicalBillsFuture);
   const wages = Math.max(0, inputs.lostWages);
   const other = Math.max(0, inputs.otherOutOfPocket);
@@ -57,8 +60,9 @@ export function calculateSettlement(inputs) {
   const multiplierLow = clamp(base.low + totalAdjustment);
   const multiplierHigh = clamp(base.high + totalAdjustment);
   function apply(mult) {
-    if (mode === "adjuster") return medical * mult + wages + other + property;
-    return (medical + wages + other) * mult + property;
+    // Both modes: multiply medical only; add economic once (Ben audit fix).
+    void mode;
+    return medical * mult + wages + other + property;
   }
   const low = roundMoney(apply(multiplierLow));
   const mid = roundMoney(apply(multiplierMid));
@@ -87,7 +91,7 @@ const baseInputs = {
   medicalBillsPast: 12000, medicalBillsFuture: 3000, lostWages: 4500, otherOutOfPocket: 800,
   propertyDamage: 6500, severity: "moderate", treatmentMonths: 4, careType: "md",
   liabilityClarity: "clear", usState: "AZ", plaintiffFaultPercent: 0, treatmentGap: "none",
-  permanency: "none", formulaMode: "demand",
+  permanency: "none", formulaMode: "adjuster",
 };
 
 console.log("Running calculator usefulness assertions...");
@@ -119,10 +123,22 @@ console.log("Running calculator usefulness assertions...");
 {
   const demand = calculateSettlement({ ...baseInputs, formulaMode: "demand", plaintiffFaultPercent: 0 });
   const adjuster = calculateSettlement({ ...baseInputs, formulaMode: "adjuster", plaintiffFaultPercent: 0 });
-  assert.ok(baseInputs.lostWages > 0);
-  assert.notEqual(demand.mid, adjuster.mid);
-  assert.ok(demand.mid > adjuster.mid);
-  console.log("  OK demand vs adjuster differ when wages > 0");
+  assert.equal(demand.mid, adjuster.mid);
+  console.log("  OK demand and adjuster share corrected medical×mult + economic structure");
+}
+{
+  const highEarner = calculateSettlement({
+    ...baseInputs,
+    medicalBillsPast: 5000,
+    medicalBillsFuture: 0,
+    lostWages: 200000,
+    otherOutOfPocket: 800,
+    propertyDamage: 6500,
+    formulaMode: "demand",
+    plaintiffFaultPercent: 0,
+  });
+  assert.equal(highEarner.mid, 223600);
+  console.log("  OK high-earner demand mid $223,600 (wages not multiplied)");
 }
 {
   const uncapped = calculateSettlement({ ...baseInputs, plaintiffFaultPercent: 0 });
@@ -137,6 +153,20 @@ console.log("Running calculator usefulness assertions...");
   const r = applyComparativeFault(10000, 25, "pure-comparative");
   assert.equal(r.recoverable, 7500);
   console.log("  OK applyComparativeFault pure 25%");
+}
+{
+  const slight = applyComparativeFault(10000, 10, "slight-vs-defendant");
+  const barred = applyComparativeFault(10000, 30, "slight-vs-defendant");
+  assert.equal(slight.recoverable, 9000);
+  assert.equal(slight.barred, false);
+  assert.equal(barred.recoverable, 0);
+  assert.equal(barred.barred, true);
+  const sdOk = calculateSettlement({ ...baseInputs, usState: "SD", plaintiffFaultPercent: 10 });
+  const sdBar = calculateSettlement({ ...baseInputs, usState: "SD", plaintiffFaultPercent: 30 });
+  assert.ok(sdOk.recoverableMid > 0);
+  assert.equal(sdBar.recoverableMid, 0);
+  assert.equal(sdBar.recoveryBarred, true);
+  console.log("  OK SD slight-vs-defendant 10% reduces / 30% bars");
 }
 
 console.log("All calculator tests passed.");

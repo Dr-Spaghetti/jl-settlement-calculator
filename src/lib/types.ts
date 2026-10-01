@@ -94,7 +94,7 @@ export interface CalculatorInputs {
   policyLimitPerPerson?: number | null;
   /** Optional BI per-accident limit (display note; not used to cap) */
   policyLimitPerAccident?: number | null;
-  /** demand = specials×mult+property; adjuster = med×mult+wages+other+property */
+  /** Both modes: med×mult+wages+other+property (economic never multiplied). Default UI: adjuster. */
   formulaMode?: FormulaMode;
   treatmentGap?: TreatmentGap;
   permanency?: Permanency;
@@ -147,6 +147,7 @@ export interface SettlementRange {
     | "modified-50"
     | "modified-51"
     | "contributory"
+    | "slight-vs-defendant"
     | "unknown";
 }
 

@@ -113,26 +113,6 @@ input[type="range"]::-moz-range-thumb {
   color: white;
 }
 
-@media print {
-  .print\:hidden,
-  header,
-  .sticky-mobile-cta,
-  nav,
-  aside[role="note"],
-  .no-print {
-    display: none !important;
-  }
-
-  body {
-    background: white;
-  }
-
-  #print-summary,
-  .print\:block {
-    display: block !important;
-  }
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -327,16 +307,6 @@ html.theme-djougourian input[type="range"]::-webkit-slider-thumb {
 html.theme-djougourian input[type="range"]::-moz-range-thumb {
   background: var(--dj-gold);
   border-color: var(--dj-ground);
-}
-
-/* Secondary buttons (e.g. Print / Save PDF): cream fill, charcoal text */
-html.theme-djougourian #results button.bg-white {
-  background-color: var(--dj-cream);
-  border-color: var(--dj-cream);
-  color: var(--dj-charcoal);
-}
-html.theme-djougourian #results button.bg-white:hover {
-  background-color: rgba(245, 240, 230, 0.9);
 }
 
 /* Shadows (neutral) */

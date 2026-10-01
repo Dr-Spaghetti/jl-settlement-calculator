@@ -12,17 +12,17 @@ export function StickyMobileCTA({ client }: { client: ClientConfig }) {
   const dj = client.id === "djougourian-law";
   return (
     <div
-      className="sticky-mobile-cta fixed inset-x-0 bottom-0 z-50 border-t border-plg-borderMuted bg-white/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_-12px_rgba(15,23,42,0.22)] backdrop-blur-md md:hidden print:hidden"
+      className="sticky-mobile-cta fixed inset-x-0 bottom-0 z-50 border-t border-plg-borderMuted bg-white/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_-12px_rgba(15,23,42,0.22)] backdrop-blur-md md:hidden"
       role="region"
       aria-label="Quick contact"
     >
-      <div className="mx-auto flex max-w-lg gap-2">
+      <div className="mx-auto flex max-w-lg items-stretch gap-2.5">
         <a
           href={telHref(client.phone)}
           className={
             dj
-              ? "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-[#F5F0E6] bg-[#F5F0E6] px-3 py-3 text-sm font-semibold !text-[#1B1B1B] transition hover:bg-[#F5F0E6]/90"
-              : "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 py-3 text-sm font-semibold text-plg-navy"
+              ? "inline-flex min-h-[48px] flex-1 items-center justify-center rounded-lg border border-[#F5F0E6] bg-[#F5F0E6] px-3 py-3 text-sm font-semibold !text-[#1B1B1B] transition hover:bg-[#F5F0E6]/90"
+              : "inline-flex min-h-[48px] flex-1 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 py-3 text-sm font-semibold text-plg-navy"
           }
         >
           {dj ? (
@@ -40,8 +40,8 @@ export function StickyMobileCTA({ client }: { client: ClientConfig }) {
           href={client.ctaUrl}
           className={
             dj
-              ? "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-[#B58A45] px-3 py-3 text-center text-sm font-semibold text-[#1B1B1B] transition hover:bg-[#B58A45]/90"
-              : "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-plg-crimson px-3 py-3 text-center text-sm font-semibold text-white transition hover:bg-plg-crimsonDark"
+              ? "inline-flex min-h-[48px] flex-1 items-center justify-center rounded-lg bg-[#B58A45] px-3 py-3 text-center text-sm font-semibold text-[#1B1B1B] transition hover:bg-[#B58A45]/90"
+              : "inline-flex min-h-[48px] flex-1 items-center justify-center rounded-lg bg-plg-crimson px-3 py-3 text-center text-sm font-semibold text-white transition hover:bg-plg-crimsonDark"
           }
         >
           {dj ? (

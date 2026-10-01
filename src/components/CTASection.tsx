@@ -18,7 +18,7 @@ export function CTASection({ client }: { client: ClientConfig }) {
         </span>
         <h2
           id="cta-heading"
-          className="font-serif mt-2 text-3xl font-bold text-white sm:text-4xl"
+          className="font-serif mt-2 text-balance text-3xl font-bold text-white sm:text-4xl"
         >
           Ready to talk about your case?
         </h2>
@@ -36,13 +36,13 @@ export function CTASection({ client }: { client: ClientConfig }) {
             lawyer.
           </p>
         )}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <div className="mx-auto mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:items-center sm:justify-center">
           <a
             href={client.ctaUrl}
             className={
               dj
-                ? "inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[#B58A45] px-6 py-3 text-sm font-semibold text-[#1B1B1B] shadow-md transition hover:bg-[#B58A45]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5F0E6]"
-                : "inline-flex min-h-[44px] items-center justify-center rounded-lg bg-plg-crimson px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-plg-crimsonDark focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                ? "inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[#B58A45] px-6 py-3 text-center text-sm font-semibold text-[#1B1B1B] shadow-md transition hover:bg-[#B58A45]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5F0E6] sm:w-auto"
+                : "inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-plg-crimson px-6 py-3 text-center text-sm font-semibold text-white shadow-md transition hover:bg-plg-crimsonDark focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:w-auto"
             }
           >
             {client.ctaText}
@@ -51,8 +51,8 @@ export function CTASection({ client }: { client: ClientConfig }) {
             href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
             className={
               dj
-                ? "inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[#F5F0E6] bg-[#F5F0E6] px-6 py-3 text-sm font-semibold !text-[#1B1B1B] transition hover:bg-[#F5F0E6]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B58A45]"
-                : "inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                ? "inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-[#F5F0E6] bg-[#F5F0E6] px-6 py-3 text-center text-sm font-semibold !text-[#1B1B1B] transition hover:bg-[#F5F0E6]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B58A45] sm:w-auto"
+                : "inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-white/30 bg-white/10 px-6 py-3 text-center text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:w-auto"
             }
           >
             Call {client.phone}
