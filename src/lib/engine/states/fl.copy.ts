@@ -26,7 +26,7 @@ const en: FlCopy = {
     ["Economic losses", "Medical bills, lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied. Personal Injury Protection (PIP) benefits paid or payable are subtracted, because they can't be recovered again from the at-fault driver (Fla. Stat. § 627.736(3))."],
     ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills. It is included only if the § 627.737(2) threshold is met. The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
     ["State rules", ""],
-    ["Policy reality", "A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person bodily-injury limit, the shown range stops there as a practical collection estimate; your uninsured/underinsured motorist coverage (if you bought it) or other sources may apply. If you don't know the limit, nothing is limited."],
+    ["Policy reality", "A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person bodily-injury limit, the shown range stops there as a practical collection estimate; your uninsured/underinsured motorist coverage (if you have it) or other sources may apply. If you don't know the limit, nothing is limited."],
   ],
   thresholdLabel: "Does your injury meet Florida's threshold for pain and suffering?",
   thresholdHelp:
@@ -68,7 +68,7 @@ const en: FlCopy = {
     },
     {
       q: "What if the at-fault driver has little or no bodily-injury insurance?",
-      a: "Florida's no-fault law requires $10,000 of PIP benefits and $10,000 of property damage liability (Fla. Stat. §§ 627.736(1), 324.022(1)), so the at-fault driver's bodily-injury coverage may be low or unknown. A policy limit is not a legal cap on damages. Your uninsured/underinsured motorist coverage, if you bought it, may apply (§ 627.727). Leave the policy limit on Unknown if you don't know it.",
+      a: "Florida requires PIP with a $10,000 limit (Fla. Stat. § 627.736(1)) and $10,000 of property damage liability (§ 324.022(1)), so the at-fault driver's bodily-injury coverage may be low or unknown. A policy limit is not a legal cap on damages. Your uninsured/underinsured motorist coverage, if you have it (it can be rejected in writing, § 627.727(1)), may apply; it covers pain and suffering only if the § 627.737(2) threshold is met (§ 627.727(7)). Leave the policy limit on Unknown if you don't know it.",
     },
   ],
 };
@@ -85,7 +85,7 @@ const es: FlCopy = {
     ["Pérdidas económicas", "Los gastos médicos, los salarios perdidos, otros gastos de su bolsillo y los daños a la propiedad se suman una sola vez. Nunca se multiplican. Se restan los beneficios de Protección contra Lesiones Personales (PIP) pagados o pagaderos, porque no se pueden cobrar de nuevo al conductor culpable (Fla. Stat. § 627.736(3))."],
     ["Dolor y sufrimiento", "Dolor y sufrimiento = gastos médicos × (multiplicador − 1), sobre los gastos médicos brutos. Solo se incluye si se cumple el umbral del § 627.737(2). El rango del multiplicador depende de la gravedad de la lesión, del tratamiento y de la responsabilidad. Una responsabilidad compartida o en disputa reduce la estimación además del porcentaje de culpa. Es un método de estimación, no es ley, y no es la forma en que una aseguradora o un tribunal deba valorar un reclamo."],
     ["Reglas del estado", ""],
-    ["La realidad de la póliza", "El límite de la póliza no es un tope legal de los daños. Si indica el límite por persona de lesiones corporales del conductor culpable, el rango mostrado se detiene ahí como estimación práctica de cobro; su cobertura de motorista sin seguro o con seguro insuficiente (si la compró) u otras fuentes podrían aplicarse. Si no conoce el límite, no se limita nada."],
+    ["La realidad de la póliza", "El límite de la póliza no es un tope legal de los daños. Si indica el límite por persona de lesiones corporales del conductor culpable, el rango mostrado se detiene ahí como estimación práctica de cobro; su cobertura de motorista sin seguro o con seguro insuficiente (si la tiene) u otras fuentes podrían aplicarse. Si no conoce el límite, no se limita nada."],
   ],
   thresholdLabel: "¿Su lesión cumple el umbral de Florida para reclamar dolor y sufrimiento?",
   thresholdHelp:
@@ -127,7 +127,7 @@ const es: FlCopy = {
     },
     {
       q: "¿Qué pasa si el conductor culpable tiene poco o ningún seguro de lesiones corporales?",
-      a: "La ley de seguro sin culpa de Florida exige $10,000 en beneficios de PIP y $10,000 de responsabilidad por daños a la propiedad (Fla. Stat. §§ 627.736(1), 324.022(1)), así que la cobertura de lesiones corporales del conductor culpable puede ser baja o desconocida. El límite de la póliza no es un tope legal de los daños. Su cobertura de motorista sin seguro o con seguro insuficiente, si la compró, podría aplicarse (§ 627.727). Deje el límite de la póliza en «Desconocido» si no lo sabe.",
+      a: "Florida exige el PIP con un límite de $10,000 (Fla. Stat. § 627.736(1)) y $10,000 de responsabilidad por daños a la propiedad (§ 324.022(1)), así que la cobertura de lesiones corporales del conductor culpable puede ser baja o desconocida. El límite de la póliza no es un tope legal de los daños. Su cobertura de motorista sin seguro o con seguro insuficiente, si la tiene (se puede rechazar por escrito, § 627.727(1)), podría aplicarse; cubre el dolor y sufrimiento solo si se cumple el umbral del § 627.737(2) (§ 627.727(7)). Deje el límite de la póliza en «Desconocido» si no lo sabe.",
     },
   ],
 };
