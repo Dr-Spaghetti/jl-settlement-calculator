@@ -31,7 +31,7 @@ export const NJ_KIT: StateKit = {
     barredNote: `At {fault}% fault, your negligence would be greater than that of the people you sue, which bars recovery in New Jersey (N.J.S.A. 2A:15-5.1).`,
     how: [
       ["Economic losses", "Medical bills (less up to $250,000 covered by the PIP rules), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
-      ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your PIP pays). The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
+      ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your PIP pays). The multiplier range comes from injury severity, treatment. Your share of fault is applied only once, as the statutory percentage reduction (with the bar above 50%). This is an estimate method, not law, and not how any insurer or court must value a claim."],
       ["State rules", "Comparative negligence (N.J.S.A. 2A:15-5.1) and your policy's lawsuit option (N.J.S.A. 39:6A-8) are applied as described in the calculator."],
       ["Policy reality", `A policy limit is not a legal cap on damages. If you enter the at-fault driver's limit, the shown range stops there as a practical collection estimate; ${POLICY_HELP_TAIL} If you don't know the limit, nothing is limited.`],
     ],

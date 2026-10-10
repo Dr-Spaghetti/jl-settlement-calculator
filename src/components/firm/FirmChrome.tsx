@@ -108,7 +108,7 @@ export function FirmHero({ a, b, chips }: { a: string; b: string; chips: { title
 export function FirmHowItWorks({ faultNote, steps: custom }: { faultNote: string; steps?: [string, string][] }) {
   const steps = custom ?? [
     ["Economic losses", "Medical bills (less benefits paid or payable by your own coverage), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
-    ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your own insurer pays). The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
+    ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your own insurer pays). The multiplier range comes from injury severity, treatment. Your share of fault is applied only once, as the statutory percentage reduction (with the bar above 50%). This is an estimate method, not law, and not how any insurer or court must value a claim."],
     ["State rules", faultNote],
     ["Policy reality", "A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person limit, the shown range stops there as a practical collection estimate; your underinsured motorist coverage (if you bought it) or other sources may apply. If you don't know the limit, nothing is limited."],
   ];
