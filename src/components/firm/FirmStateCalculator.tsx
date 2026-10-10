@@ -3,7 +3,6 @@ import { roundMoney } from "@/lib/engine/core";
 
 import { useMemo, useState } from "react";
 import type { ClientConfig } from "@/lib/types";
-import { LIABILITY_OPTIONS, liabilityOption, type LiabilityId } from "@/lib/engine/liability";
 import type { CareType, Permanency, Severity, TreatmentGap } from "@/lib/engine/core";
 import { calculateGated, type GateOption, type YesNoUnsure, type StateKit } from "@/lib/engine/states/gated";
 import { PhoneIcon } from "@/components/icons";
@@ -83,7 +82,6 @@ export function FirmStateCalculator({ client, kit }: { client: ClientConfig; kit
   const [treatmentMonths, setMonths] = useState(4);
   const [treatmentGap, setGap] = useState<TreatmentGap>("none");
   const [permanency, setPerm] = useState<Permanency>("none");
-  const [liability, setLiab] = useState<LiabilityId>("clear");
   const [fault, setFault] = useState(0);
   const [gate, setGate] = useState<GateOption>(kit.gate?.defaultOption ?? "open");
   const [exc, setExc] = useState<YesNoUnsure>("unsure");
@@ -93,14 +91,13 @@ export function FirmStateCalculator({ client, kit }: { client: ClientConfig; kit
 
   const r = useMemo(() => calculateGated({
     medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap,
-    permanency, liability, plaintiffFaultPercent: fault, gate: kit.gate ? gate : null, gateException: exc,
+    permanency, plaintiffFaultPercent: fault, gate: kit.gate ? gate : null, gateException: exc,
     firstPartyMedical: kit.offset ? firstParty : 0, policyLimitPerPerson: POLICY.find((p) => p.id === policy)!.value,
-  }, kit.faultRule), [kit, medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap, permanency, liability, fault, gate, exc, firstParty, policy]);
+  }, kit.faultRule), [kit, medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap, permanency, fault, gate, exc, firstParty, policy]);
 
   const shown = r.capped ?? r.recoverable;
   const single = shown.low === shown.high;
   const offerNum = offer.trim() === "" ? null : Number(offer);
-  const lev = liabilityOption(liability);
 
   return (
     <section id="calculator" className="px-4 py-12" aria-labelledby="calc-h">
@@ -167,10 +164,6 @@ export function FirmStateCalculator({ client, kit }: { client: ClientConfig; kit
                           {PERM.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                         </select>
                       </div>
-                    </div>
-                    <div>
-                      <span className={label}>Liability</span>
-                      <Choice name="Liability" opts={LIABILITY_OPTIONS.map((o) => ({ id: o.id, label: o.label }))} v={liability} set={setLiab} />
                     </div>
                     <div>
                       <label htmlFor="fault" className={label}>Your share of fault: {fault}%</label>
@@ -292,8 +285,7 @@ export function FirmStateCalculator({ client, kit }: { client: ClientConfig; kit
                     {kit.offset ? <Row k={kit.offset.breakdownLabel} v={`− ${fmt(r.medicalOffset)}`} /> : null}
                     <Row k="Lost wages + other + property (added once)" v={fmt(lostWages + otherOutOfPocket + propertyDamage)} />
                     <Row k="Economic damages" v={fmt(r.economic)} strong />
-                    <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label} (estimate method, not law)`} v={`${(r.m.mid - r.m.adjustment).toFixed(2)}× base`} />
-                    <Row k={`Liability: ${lev.breakdownLabel}`} v={`${lev.coef > 0 ? "+" : ""}${lev.coef.toFixed(2)}×`} />
+                    <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label} (estimate method, not law)`} v={`${r.m.baseMid.toFixed(2)}× base`} />
                     <Row k="All adjustments" v={`${r.m.adjustment > 0 ? "+" : ""}${r.m.adjustment.toFixed(2)}×`} />
                     <Row k={`Pain & suffering = gross medical × (${r.m.mid} − 1)${r.gateUnsure ? " (before fault/limit)" : ""}`} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.gateUnsure ? `${fmt(roundMoney(medicalBills * (r.m.mid - 1)))} ${kit.gate!.scenarioOpen.toLowerCase()}` : kit.gate!.breakdownNotIncluded} />
                     <Row k={`Your fault ${r.faultPercent}%`} v={r.barred ? "Barred (more than 50%)" : `× ${(1 - r.faultPercent / 100).toFixed(2)}`} />

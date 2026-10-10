@@ -29,7 +29,7 @@ export const CA_KIT: StateKit = {
     barredNote: "",
     how: [
       ["Economic losses", "Medical bills, lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
-      ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1). The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
+      ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1). The multiplier range comes from injury severity, treatment. Your share of fault is applied only once, as the statutory percentage reduction (pure comparative fault, no bar). This is an estimate method, not law, and not how any insurer or court must value a claim."],
       ["State rules", "California pure comparative negligence and Proposition 213 (Civil Code § 3333.4) are applied as described in the calculator."],
       ["Policy reality", `A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person limit, the shown range stops there as a practical collection estimate; ${TAIL} If you don't know the limit, nothing is limited.`],
     ],
