@@ -34,8 +34,17 @@ export interface FirmMultipliers {
   treatmentMonths?: { maxMonths: number; adjustment: number }[];
 }
 
+export interface FirmTheme { headerBg: string; ground: string; surface: string; accent: string; onAccent: string; text: string; muted: string }
+export interface FirmLogo { src: string; width: number; height: number; alt: string; headerBg: string; artworkOffsetX?: number; artworkOffsetY?: number }
+
 export interface ClientConfig {
   id: string;
+  /** "firm-v1" = shared white-label template (src/components/firm). Omit for legacy Premier/Djougourian pages. */
+  template?: "firm-v1";
+  stateModule?: "PA";
+  theme?: FirmTheme;
+  logo?: FirmLogo;
+  sources?: Record<string, string>;
   firmName: string;
   shortName: string;
   logoUrl: string;

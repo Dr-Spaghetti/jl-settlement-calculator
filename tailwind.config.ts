@@ -9,6 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        t: {
+          header: "rgb(var(--t-header) / <alpha-value>)",
+          ground: "rgb(var(--t-ground) / <alpha-value>)",
+          surface: "rgb(var(--t-surface) / <alpha-value>)",
+          accent: "rgb(var(--t-accent) / <alpha-value>)",
+          "on-accent": "rgb(var(--t-on-accent) / <alpha-value>)",
+          text: "rgb(var(--t-text) / <alpha-value>)",
+          muted: "rgb(var(--t-muted) / <alpha-value>)",
+        },
         brand: {
           DEFAULT: "var(--brand-primary)",
           secondary: "var(--brand-secondary)",

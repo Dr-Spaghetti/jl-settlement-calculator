@@ -12,42 +12,17 @@ function readJson<T>(filePath: string): T {
   return JSON.parse(raw) as T;
 }
 
-/**
- * Resolve active client:
- * 1. CLIENT_ID env → clients/{CLIENT_ID}.json
- * 2. clients/active.json → { clientFile: "demo-apex-injury.json" }
- * 3. Fallback: demo-apex-injury.json
- */
 export function getActiveClient(): ClientConfig {
+  // Lesson #1: no silent firm default. CLIENT_ID is required; there is no fallback.
   const envId = process.env.CLIENT_ID?.trim();
-
-  if (envId) {
-    const candidates = [
-      path.join(CLIENTS_DIR, `${envId}.json`),
-      path.join(CLIENTS_DIR, envId),
-    ];
-    for (const candidate of candidates) {
-      if (existsSync(candidate)) {
-        return readJson<ClientConfig>(candidate);
-      }
-    }
-    throw new Error(
-      `CLIENT_ID="${envId}" did not match a file in clients/. Expected clients/${envId}.json`
-    );
+  if (!envId) {
+    throw new Error("CLIENT_ID is not set. Refusing to fall back to a default firm.");
   }
-
-  const activePath = path.join(CLIENTS_DIR, "active.json");
-  if (existsSync(activePath)) {
-    const active = readJson<{ clientFile: string }>(activePath);
-    const filePath = path.join(CLIENTS_DIR, active.clientFile);
-    if (!existsSync(filePath)) {
-      throw new Error(`active.json points to missing file: ${active.clientFile}`);
-    }
-    return readJson<ClientConfig>(filePath);
+  const candidate = path.join(CLIENTS_DIR, `${envId}.json`);
+  if (!existsSync(candidate)) {
+    throw new Error(`CLIENT_ID="${envId}" did not match clients/${envId}.json`);
   }
-
-  const fallback = path.join(CLIENTS_DIR, "demo-apex-injury.json");
-  return readJson<ClientConfig>(fallback);
+  return readJson<ClientConfig>(candidate);
 }
 
 /**
@@ -96,5 +71,6 @@ export function stateRegionLabel(state: string): string {
   const s = state.toUpperCase();
   if (s === "WA") return "Washington";
   if (s === "CA") return "California";
+  if (s === "PA") return "Pennsylvania";
   return state;
 }

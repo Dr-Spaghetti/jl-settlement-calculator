@@ -1,0 +1,40 @@
+{
+  "id": "kaplunmarx-pa",
+  "template": "firm-v1",
+  "stateModule": "PA",
+  "firmName": "KaplunMarx Accident & Injury Lawyers",
+  "shortName": "KaplunMarx",
+  "logoUrl": "/firms/kaplunmarx/logo.png",
+  "logo": { "src": "/firms/kaplunmarx/logo.png", "width": 831, "height": 200, "alt": "KaplunMarx Accident & Injury Lawyers", "headerBg": "#052240", "artworkOffsetX": -1.0, "artworkOffsetY": -6.0 },
+  "theme": {
+    "headerBg": "#052240",
+    "ground": "#10172C",
+    "surface": "#18223B",
+    "accent": "#AD9779",
+    "onAccent": "#10172C",
+    "text": "#F9F6F1",
+    "muted": "#BFC5D2"
+  },
+  "primaryColor": "#10172C",
+  "secondaryColor": "#AD9779",
+  "phone": "(215) 939-4895",
+  "website": "https://kaplunmarx.com/",
+  "ctaText": "Free Consultation",
+  "ctaUrl": "https://kaplunmarx.com/contact-us/",
+  "city": "Philadelphia",
+  "state": "PA",
+  "officeAddress": "115 S 8th St Suite 5",
+  "officeZip": "19106",
+  "responsibleAttorney": "Ted Kaplun",
+  "tagline": "Pennsylvania car accident settlement estimate.",
+  "attorneyDisclaimer": "",
+  "sources": {
+    "firmName": "https://kaplunmarx.com/ (footer: © 2026 KaplunMarx Accident & Injury Lawyers)",
+    "phone": "https://kaplunmarx.com/contact-us/ (main tel link)",
+    "officeAddress": "https://kaplunmarx.com/contact-us/ (Philadelphia: 115 S 8th St Suite 5, Philadelphia, PA 19106)",
+    "responsibleAttorney": "kaplunmarx-pa.md — Ted Kaplun, founding partner (site schema founder)",
+    "ctaUrl": "https://kaplunmarx.com/contact-us/",
+    "colors": "_kaplunmarx-original-notes.md — site CSS navy #10172C, tan #AD9779, cream #F9F6F1",
+    "headerBg": "#052240 = modal border pixel of kaplunmarx-full-navy-from-nick.png"
+  }
+}

@@ -1,1 +1,3 @@
-{ "clientFile": "premier-law-group.json" }
+{
+  "_note": "Unused since 2026-10-09: CLIENT_ID is required (scripts/require-client-id.mjs). Kept so old docs don't 404."
+}

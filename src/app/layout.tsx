@@ -1,75 +1,33 @@
 import type { Metadata } from "next";
-import {
-  Cormorant_Garamond,
-  Plus_Jakarta_Sans,
-  Cinzel,
-  Montserrat,
-  Roboto,
-  Newsreader,
-  Inter,
-} from "next/font/google";
+import localFont from "next/font/local";
 import {
   getActiveClient,
   getClientCssVars,
   clientUsesDjFonts,
   stateRegionLabel,
 } from "@/lib/client";
+import { firmThemeVars } from "@/lib/firm-theme";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800"],
+// Lesson #7: fonts are self-hosted (committed woff2, latin subset incl. Spanish
+// accents) so the build never fetches fonts.googleapis.com.
+const plusJakarta = localFont({ src: "../fonts/plus-jakarta-sans-latin-wght-normal.woff2", variable: "--font-jakarta", weight: "200 800", display: "swap" });
+const cormorant = localFont({
+  src: [
+    { path: "../fonts/cormorant-garamond-latin-wght-normal.woff2", style: "normal" },
+    { path: "../fonts/cormorant-garamond-latin-wght-italic.woff2", style: "italic" },
+  ],
+  variable: "--font-cormorant", weight: "300 700", display: "swap",
 });
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+const cinzel = localFont({ src: "../fonts/cinzel-latin-wght-normal.woff2", variable: "--font-cinzel", weight: "400 900", display: "swap" });
+const newsreader = localFont({
+  src: [
+    { path: "../fonts/newsreader-latin-wght-normal.woff2", style: "normal" },
+    { path: "../fonts/newsreader-latin-wght-italic.woff2", style: "italic" },
+  ],
+  variable: "--font-newsreader", weight: "200 800", display: "swap", preload: false,
 });
-
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["500", "600", "700", "800"],
-});
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const roboto = Roboto({
-  variable: "--font-roboto",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["300", "400", "500", "700"],
-});
-
-// Djougourian typography (matches the live djlaw deployment). preload: false keeps
-// these out of the Premier page's <head>; variables are only attached for djlaw.
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  preload: false,
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-  preload: false,
-});
+const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap", preload: false });
 
 export function generateMetadata(): Metadata {
   const client = getActiveClient();
@@ -109,8 +67,9 @@ export default function RootLayout({
   const client = getActiveClient();
   const cssVars = getClientCssVars(client);
   const useDj = clientUsesDjFonts(client);
+  const isFirm = client.template === "firm-v1";
 
-  const fontVars: Record<string, string> = useDj
+  const fontVars: Record<string, string> = useDj || isFirm
     ? {
         "--font-sans": "var(--font-inter)",
         "--font-display": "var(--font-newsreader)",
@@ -123,11 +82,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`scroll-smooth${useDj ? " theme-djougourian" : ""}`}
+      className={`scroll-smooth${useDj ? " theme-djougourian" : ""}${isFirm ? " theme-firm" : ""}`}
     >
       <body
-        className={`${plusJakarta.variable} ${cormorant.variable} ${cinzel.variable} ${montserrat.variable} ${roboto.variable}${useDj ? ` ${newsreader.variable} ${inter.variable}` : ""} bg-plg-cream font-sans text-plg-charcoal antialiased`}
-        style={{ ...cssVars, ...fontVars }}
+        className={`${plusJakarta.variable} ${cormorant.variable} ${cinzel.variable}${useDj || isFirm ? ` ${newsreader.variable} ${inter.variable}` : ""} bg-plg-cream font-sans text-plg-charcoal antialiased`}
+        style={{ ...cssVars, ...fontVars, ...(isFirm ? firmThemeVars(client) : {}) }}
       >
         {children}
       </body>

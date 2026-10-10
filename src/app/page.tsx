@@ -10,10 +10,12 @@ import { Testimonials } from "@/components/Testimonials";
 import { ProfessionalDisclaimer } from "@/components/ProfessionalDisclaimer";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { getActiveClient, clientUsesDjFonts } from "@/lib/client";
+import { FirmPage } from "@/components/firm/FirmPage";
 
 export default function HomePage() {
   const client = getActiveClient();
   const isDj = clientUsesDjFonts(client);
+  if (client.template === "firm-v1") return <FirmPage client={client} />;
 
   return (
     <>

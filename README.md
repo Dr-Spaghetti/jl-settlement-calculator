@@ -7,16 +7,16 @@ Stack: **Next.js App Router**, **TypeScript**, **Tailwind CSS**. Calculator math
 
 ## Active client & multi-tenant deploys
 
-**`CLIENT_ID` always wins** over `clients/active.json`.
+**There is no default firm.** `CLIENT_ID` is required; the build fails without it (`scripts/require-client-id.mjs`, `getActiveClient()`).
+Every Vercel project must set `CLIENT_ID` for Preview AND Production (`vercel env ls`).
 
-| Deploy target | How client is selected |
-|---------------|------------------------|
-| `jl-settlement-calculator-djlaw` (Djougourian black-gold) | Vercel env `CLIENT_ID=djougourian-law` (Preview + Production) |
-| `jl-settlement-calculator` (Premier / shared) | No `CLIENT_ID` → falls through to `clients/active.json` → currently `premier-law-group.json` |
+| Deploy target | CLIENT_ID |
+|---|---|
+| `jl-settlement-calculator-djlaw` | `djougourian-law` |
+| `jl-settlement-calculator` (Premier) | **must be set to `premier-law-group` before this branch merges** |
+| `jl-calc-kaplunmarx-pa` (preview) | `kaplunmarx-pa` |
 
-Do **not** flip `clients/active.json` to Djougourian if Premier production still shares this repo without its own `CLIENT_ID`. Local/dev without env uses `active.json`.
-
-Fallback when neither env nor active.json resolve: `demo-apex-injury.json` (fictional Apex demo).
+New firms use the shared white-label template (`"template": "firm-v1"` in `clients/<id>.json`, components in `src/components/firm/`, law + math in `src/lib/engine/`).
 
 ## Local run
 
