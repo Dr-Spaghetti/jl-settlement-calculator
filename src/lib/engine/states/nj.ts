@@ -30,7 +30,7 @@ export const NJ_KIT: StateKit = {
       "New Jersey's Comparative Negligence Act (N.J.S.A. 2A:15-5.1): your damages are reduced by your percentage of negligence, and you can't recover if your negligence is greater than that of the person you sue (or the combined negligence of the people you sue).",
     barredNote: `At {fault}% fault, your negligence would be greater than that of the people you sue, which bars recovery in New Jersey (N.J.S.A. 2A:15-5.1).`,
     how: [
-      ["Economic losses", "Medical bills (less what your PIP covers), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
+      ["Economic losses", "Medical bills (less your PIP medical limit, up to your bills), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
       ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your PIP pays). The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
       ["State rules", "Comparative negligence (N.J.S.A. 2A:15-5.1) and your policy's lawsuit option (N.J.S.A. 39:6A-8) are applied as described in the calculator."],
       ["Policy reality", `A policy limit is not a legal cap on damages. If you enter the at-fault driver's limit, the shown range stops there as a practical collection estimate; ${POLICY_HELP_TAIL} If you don't know the limit, nothing is limited.`],
@@ -40,7 +40,7 @@ export const NJ_KIT: StateKit = {
     faq: [
       {
         q: "What is the difference between the limitation on lawsuit and no limitation on lawsuit options?",
-        a: "New Jersey drivers choose a lawsuit option on their own policy (N.J.S.A. 39:6A-8). With no limitation on lawsuit, you keep the right to sue for pain and suffering for any injury. With the limitation on lawsuit option (often called the verbal threshold), pain and suffering is recoverable only for an injury that results in death; dismemberment; significant disfigurement or significant scarring; displaced fractures; loss of a fetus; or a permanent injury within a reasonable degree of medical probability, other than scarring or disfigurement. The limitation does not affect claims for economic damages such as medical expenses and lost wages. Your declarations page shows which option applies.",
+        a: "New Jersey drivers choose a lawsuit option on their own policy (N.J.S.A. 39:6A-8). With no limitation on lawsuit, you keep the right to sue for pain and suffering for any injury. With the limitation on lawsuit option (often called the verbal threshold), pain and suffering is recoverable only for an injury that results in death; dismemberment; significant disfigurement or significant scarring; displaced fractures; loss of a fetus; or a permanent injury within a reasonable degree of medical probability, other than scarring or disfigurement. Choosing the limitation does not affect your ability to sue for economic damages such as medical expenses and lost wages (NJ DOBI).",
       },
       {
         q: "How does my share of fault affect a New Jersey claim?",
@@ -48,7 +48,7 @@ export const NJ_KIT: StateKit = {
       },
       {
         q: "Why does the calculator subtract my PIP?",
-        a: "Personal injury protection (PIP) on your own policy pays your medical expenses first. Amounts collectible or paid under PIP can't be presented as damages against the at-fault driver (N.J.S.A. 39:6A-12), so the calculator subtracts your PIP medical limit from your medical bills. Enter your actual PIP limit in Step 3.",
+        a: "Personal injury protection (PIP) on your own New Jersey policy pays medical expenses up to its limit. Evidence of amounts collectible or paid under PIP is inadmissible in your lawsuit for bodily injury (N.J.S.A. 39:6A-12), so the calculator subtracts your PIP medical limit (up to your bills) from your medical bills. Enter your actual PIP limit in Step 3. PIP deductibles and copayments you pay yourself are not added back.",
       },
       {
         q: "How long do I have to file a car accident lawsuit in New Jersey?",
@@ -62,7 +62,7 @@ export const NJ_KIT: StateKit = {
   },
   gate: {
     label: "Your own policy's lawsuit option",
-    help: "Your own auto policy's lawsuit option matters in New Jersey (N.J.S.A. 39:6A-8). With the limitation on lawsuit option, you can't recover pain and suffering unless your injury is in one of the categories the law lists. Claims for economic damages are not affected.",
+    help: "Your own auto policy's lawsuit option matters in New Jersey (N.J.S.A. 39:6A-8). With the limitation on lawsuit option, you can't recover pain and suffering unless your injury is in one of the categories the law lists. It does not affect your ability to sue for economic damages such as medical expenses and lost wages (NJ DOBI).",
     options: [
       { id: "open", label: "No limitation on lawsuit" },
       { id: "restricted", label: "Limitation on lawsuit (verbal threshold)" },
@@ -73,7 +73,7 @@ export const NJ_KIT: StateKit = {
       "With the limitation on lawsuit option, pain and suffering is recoverable only for a bodily injury that results in death; dismemberment; significant disfigurement or significant scarring; displaced fractures; loss of a fetus; or a permanent injury within a reasonable degree of medical probability, other than scarring or disfigurement. An injury is considered permanent when the body part or organ has not healed to function normally and will not heal to function normally with further medical treatment.",
     exceptionQuestion: "Does your injury fall into one of those categories (for example, a displaced fracture or a permanent injury)?",
     unsureNote:
-      "If the named insured didn't choose a lawsuit option in writing, New Jersey applies the limitation on lawsuit option (N.J.S.A. 39:6A-8.1(b)). The option chosen also applies to immediate family members living in the named insured's household who aren't named insureds on another auto policy (§ 39:6A-8.1(a)).",
+      "If the named insured didn't choose a lawsuit option, New Jersey law treats the policy as having the limitation on lawsuit option (N.J.S.A. 39:6A-8.1(b)), and a basic policy includes it (NJ DOBI). The choice applies to you, your spouse, children and other relatives living with you who are not covered under another auto policy (NJ DOBI).",
     scenarioOpen: "If no limitation on lawsuit",
     scenarioRestricted: "If limitation, no listed injury",
     headingUnsure: "Two Scenarios: Lawsuit Option Not Sure",
@@ -83,7 +83,7 @@ export const NJ_KIT: StateKit = {
   },
   offset: {
     label: "Your PIP medical expense limit",
-    help: "PIP on your own New Jersey policy pays your medical expenses first. Amounts collectible or paid under PIP can't be presented as damages against the at-fault driver (N.J.S.A. 39:6A-12), so they are subtracted here. Standard policies offer PIP medical limits from $15,000 to $250,000 or more ($250,000 is what most drivers choose); the basic policy has $15,000, up to $250,000 for certain injuries (NJ DOBI). If you chose a lower limit, bills between that limit and $250,000 may still not be recoverable from the other driver (Haines v. Taft, 237 N.J. 271 (2019)). PIP income benefits are not subtracted here.",
+    help: "PIP on your own New Jersey policy pays medical expenses up to its limit. Evidence of amounts collectible or paid under PIP is inadmissible in your lawsuit for bodily injury (N.J.S.A. 39:6A-12), so they are subtracted here. Standard policies offer PIP medical limits from $15,000 to $250,000 or more ($250,000 is what most drivers choose); the basic policy has $15,000, up to $250,000 for certain injuries (NJ DOBI). If you chose a lower limit, bills between that limit and $250,000 may still not be recoverable from the other driver (Haines v. Taft, 237 N.J. 271 (2019)). Estimate simplification: PIP deductibles and copayments you pay yourself, and PIP income benefits, are not adjusted for.",
     defaultValue: NJ_LAW.pip.commonLimit,
     breakdownLabel: "Less PIP collectible or paid (N.J.S.A. 39:6A-12)",
   },
