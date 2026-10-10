@@ -107,7 +107,7 @@ export function FirmStateCalculator({ client, kit }: { client: ClientConfig; kit
       <div className="mx-auto max-w-[1200px]">
         <h2 id="calc-h" className="sr-only">Settlement calculator</h2>
         <div className="grid items-start gap-8 lg:grid-cols-12">
-          <div className="space-y-5 lg:col-span-7">
+          <div className="min-w-0 space-y-5 lg:col-span-7">
             <div className="flex rounded-xl border border-t-muted/20 bg-t-surface p-1.5" role="tablist" aria-label="Calculator steps">
               {STEPS.map((s, i) => (
                 <button key={s} type="button" role="tab" aria-selected={step === i} onClick={() => setStep(i)}
@@ -225,7 +225,7 @@ export function FirmStateCalculator({ client, kit }: { client: ClientConfig; kit
             </div>
           </div>
 
-          <div className="lg:col-span-5 lg:sticky lg:top-28">
+          <div className="min-w-0 lg:col-span-5 lg:sticky lg:top-28">
             <div id="results" aria-live="polite" className="overflow-hidden rounded-2xl border border-t-accent/60 bg-t-surface shadow-lg">
               <div className="border-b border-t-muted/20 px-6 py-4">
                 <span className="inline-block rounded border border-t-muted/20 bg-t-ground px-2 py-0.5 text-xs font-bold uppercase tracking-[0.14em] text-t-accent">Settlement Estimate</span>
@@ -248,11 +248,11 @@ export function FirmStateCalculator({ client, kit }: { client: ClientConfig; kit
                       <span id="est-mid" className="block text-3xl font-black tabular-nums">{fmt(shown.mid)}</span>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-[1fr_1.3fr_1fr] gap-2">
+                    <div className="grid grid-cols-[1fr_1.3fr_1fr] gap-1.5 sm:gap-2">
                       {(["low", "mid", "high"] as const).map((k) => (
-                        <div key={k} className={`rounded-xl border p-3 text-center ${k === "mid" ? "border-t-accent bg-t-accent text-t-on-accent" : "border-t-muted/20 bg-t-ground text-t-text"}`}>
+                        <div key={k} className={`min-w-0 rounded-xl border px-1.5 py-3 text-center sm:p-3 ${k === "mid" ? "border-t-accent bg-t-accent text-t-on-accent" : "border-t-muted/20 bg-t-ground text-t-text"}`}>
                           <span className={`block text-[10px] font-bold uppercase tracking-wider ${k === "mid" ? "" : "text-t-muted"}`}>{k}</span>
-                          <span id={`est-${k}`} className={`block whitespace-nowrap font-extrabold tabular-nums ${k === "mid" ? "text-xl" : "text-base"}`}>{fmt(shown[k])}</span>
+                          <span id={`est-${k}`} className={`block whitespace-nowrap font-extrabold tabular-nums ${k === "mid" ? "text-lg sm:text-xl" : "text-sm sm:text-base"}`}>{fmt(shown[k])}</span>
                           <span className={`block text-[10px] ${k === "mid" ? "" : "text-t-muted"}`}>{r.m[k]}× multiplier</span>
                         </div>
                       ))}
@@ -345,7 +345,7 @@ function Row({ k, v, strong }: { k: string; v: string; strong?: boolean }) {
   return (
     <div className={`flex justify-between gap-3 ${strong ? "border-t border-t-muted/20 pt-1.5 font-bold" : ""}`}>
       <dt className="text-t-muted">{k}</dt>
-      <dd className="whitespace-nowrap tabular-nums">{v}</dd>
+      <dd className="text-right tabular-nums">{v}</dd>
     </div>
   );
 }
