@@ -32,7 +32,7 @@ test("NJ no limitation, PIP $0: econ 15,500 + P&S 15,000/22,500/30,000 = 30,500/
   assert.deepEqual(r.recoverable, { low: 30500, mid: 38000, high: 45500 });
 });
 
-test("NJ PIP $250,000 (default) offsets all $10,000 medical: econ 5,500 → 20,500/28,000/35,500", () => {
+test("NJ PIP threshold $250,000 (default, Haines v. Taft) offsets all $10,000 medical: econ 5,500 → 20,500/28,000/35,500", () => {
   const r = nj({ firstPartyMedical: 250000 });
   assert.equal(r.medicalOffset, 10000);
   assert.deepEqual(r.recoverable, { low: 20500, mid: 28000, high: 35500 });
@@ -78,4 +78,10 @@ test("NJ copy: statute-exact categories, no '51%' shorthand, default-limitation 
   for (const n of ["death; dismemberment; significant disfigurement or significant scarring; displaced fractures; loss of a fetus; or a permanent injury within a reasonable degree of medical probability, other than scarring or disfigurement"]) assert.ok(t.includes(n));
   assert.ok(NJ_KIT.gate!.unsureNote.includes("39:6A-8.1(b)"));
   assert.ok(!JSON.stringify(NJ_KIT).includes("51%"));
+});
+
+test("NJ PIP copy follows Haines v. Taft: $250,000 regardless of elected PIP limit; no 'enter your actual PIP limit'", () => {
+  assert.ok(NJ_KIT.offset!.help.includes("even if you chose a lower PIP limit"));
+  assert.equal(NJ_KIT.offset!.defaultValue, 250000);
+  assert.ok(!JSON.stringify(NJ_KIT).includes("Enter your actual PIP limit"));
 });

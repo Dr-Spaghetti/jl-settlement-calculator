@@ -30,7 +30,7 @@ export const NJ_KIT: StateKit = {
       "New Jersey's Comparative Negligence Act (N.J.S.A. 2A:15-5.1): your damages are reduced by your percentage of negligence, and you can't recover if your negligence is greater than that of the person you sue (or the combined negligence of the people you sue).",
     barredNote: `At {fault}% fault, your negligence would be greater than that of the people you sue, which bars recovery in New Jersey (N.J.S.A. 2A:15-5.1).`,
     how: [
-      ["Economic losses", "Medical bills (less your PIP medical limit, up to your bills), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
+      ["Economic losses", "Medical bills (less up to $250,000 covered by the PIP rules), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
       ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your PIP pays). The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
       ["State rules", "Comparative negligence (N.J.S.A. 2A:15-5.1) and your policy's lawsuit option (N.J.S.A. 39:6A-8) are applied as described in the calculator."],
       ["Policy reality", `A policy limit is not a legal cap on damages. If you enter the at-fault driver's limit, the shown range stops there as a practical collection estimate; ${POLICY_HELP_TAIL} If you don't know the limit, nothing is limited.`],
@@ -47,8 +47,8 @@ export const NJ_KIT: StateKit = {
         a: "Under N.J.S.A. 2A:15-5.1, your damages are reduced by your percentage of negligence. If your negligence is greater than that of the person you sue (or the combined negligence of the people you sue), you can't recover. The calculator applies both rules.",
       },
       {
-        q: "Why does the calculator subtract my PIP?",
-        a: "Personal injury protection (PIP) on your own New Jersey policy pays medical expenses up to its limit. Evidence of amounts collectible or paid under PIP is inadmissible in your lawsuit for bodily injury (N.J.S.A. 39:6A-12), so the calculator subtracts your PIP medical limit (up to your bills) from your medical bills. Enter your actual PIP limit in Step 3. PIP deductibles and copayments you pay yourself are not added back.",
+        q: "Why does the calculator subtract my medical bills covered by PIP?",
+        a: "Evidence of medical expenses collectible or paid under PIP is inadmissible in your lawsuit for bodily injury (N.J.S.A. 39:6A-12). Under a standard policy, the New Jersey Supreme Court held that this covers medical expenses up to $250,000 even if you chose a lower PIP limit (Haines v. Taft, 237 N.J. 271 (2019)). So the calculator subtracts up to $250,000 of medical bills. Pain and suffering is still estimated from your gross medical bills.",
       },
       {
         q: "How long do I have to file a car accident lawsuit in New Jersey?",
@@ -82,10 +82,10 @@ export const NJ_KIT: StateKit = {
     defaultOption: "unsure",
   },
   offset: {
-    label: "Your PIP medical expense limit",
-    help: "PIP on your own New Jersey policy pays medical expenses up to its limit. Evidence of amounts collectible or paid under PIP is inadmissible in your lawsuit for bodily injury (N.J.S.A. 39:6A-12), so they are subtracted here. Standard policies offer PIP medical limits from $15,000 to $250,000 or more ($250,000 is what most drivers choose); the basic policy has $15,000, up to $250,000 for certain injuries (NJ DOBI). If you chose a lower limit, bills between that limit and $250,000 may still not be recoverable from the other driver (Haines v. Taft, 237 N.J. 271 (2019)). Estimate simplification: PIP deductibles and copayments you pay yourself, and PIP income benefits, are not adjusted for.",
+    label: "Medical bills covered by the PIP rules",
+    help: "In New Jersey, evidence of medical expenses collectible or paid under PIP is inadmissible in your lawsuit for bodily injury (N.J.S.A. 39:6A-12). Under a standard policy, that bars medical expenses up to $250,000 even if you chose a lower PIP limit (Haines v. Taft, 237 N.J. 271 (2019)), so up to $250,000 of your medical bills is subtracted here. If your situation is different (for example, you have no New Jersey auto policy), change this amount; an attorney can confirm what applies. Estimate simplification: PIP deductibles, copayments and income benefits are not adjusted for.",
     defaultValue: NJ_LAW.pip.commonLimit,
-    breakdownLabel: "Less PIP collectible or paid (N.J.S.A. 39:6A-12)",
+    breakdownLabel: "Less medical expenses covered by PIP rules (39:6A-12)",
   },
   policyOptions: [
     { id: "unknown", label: "Unknown", value: null },
