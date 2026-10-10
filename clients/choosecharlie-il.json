@@ -1,0 +1,50 @@
+{
+  "id": "choosecharlie-il",
+  "template": "firm-v1",
+  "stateModule": "IL",
+  "firmName": "Therman Law Offices, LTD",
+  "shortName": "Charlie Therman",
+  "logoUrl": "/firms/choosecharlie/logo.png",
+  "logo": {
+    "src": "/firms/choosecharlie/logo.png",
+    "width": 853,
+    "height": 274,
+    "alt": "Charlie Therman Injury & Accident Lawyers",
+    "headerBg": "#011733",
+    "artworkOffsetX": -11.5,
+    "artworkOffsetY": 1.0,
+    "heightPhone": 52,
+    "heightDesktop": 72
+  },
+  "theme": {
+    "headerBg": "#011733",
+    "ground": "#011633",
+    "surface": "#0C2A4E",
+    "accent": "#FFB254",
+    "onAccent": "#011633",
+    "text": "#F3F0E8",
+    "muted": "#BFC8D6"
+  },
+  "primaryColor": "#011633",
+  "secondaryColor": "#FFB254",
+  "phone": "(773) 825-3093",
+  "website": "https://www.choosecharlie.com/",
+  "ctaText": "Free Case Consultation",
+  "ctaUrl": "https://www.choosecharlie.com/contact-us/",
+  "city": "Chicago",
+  "state": "IL",
+  "officeAddress": "8501 W Higgins Rd Ste 720",
+  "officeZip": "60631",
+  "responsibleAttorney": "Charles N. Therman",
+  "tagline": "Illinois car accident settlement estimate.",
+  "attorneyDisclaimer": "",
+  "sources": {
+    "firmName": "https://www.choosecharlie.com/ footer: '© Copyright 2026 Therman Law Offices, LTD. All Rights Reserved.' MISMATCH: logo and GBP say 'Charlie Therman Injury & Accident Lawyers, P.C.'; IL ARDC record not reachable (iardc.org connection closed) — UNVERIFIED on the official record.",
+    "phone": "https://www.choosecharlie.com/contact-us/ ('Chicago 8501 W Higgins Rd Ste 720, Chicago, IL 60631, USA NEW CLIENT (773) 825-3093'); also header 'Free Case Consultation | No Win No Fee (773) 825-3093'",
+    "officeAddress": "https://www.choosecharlie.com/contact-us/ ('8501 W Higgins Rd Ste 720, Chicago, IL 60631')",
+    "responsibleAttorney": "https://www.choosecharlie.com/advertising-disclaimer/ ('Charles Therman Attorney & Owner'); team list 'Charles N Therman'. IL ARDC status UNVERIFIED (site unreachable).",
+    "ctaText": "https://www.choosecharlie.com/ header 'Free Case Consultation'",
+    "headerBg": "#011733 = modal border pixel of therman-full-navy-from-nick.png (site CSS navy #011633 used for page ground)",
+    "colors": "choosecharlie.md: #011633 navy, #FFB254 amber, #F3F0E8 cream (homepage CSS)"
+  }
+}
