@@ -4,7 +4,6 @@ import assert from "node:assert/strict";
 import { UI, fmtMoney } from "./index";
 import { FL_COPY } from "../engine/states/fl.copy";
 import { SC_COPY } from "../engine/states/sc.copy";
-import { LIABILITY_OPTIONS } from "../engine/liability";
 
 const SAMPLE = [37, "$12,345", "$67,890"] as const;
 function flatten(o: unknown, p = ""): Record<string, string> {
@@ -34,8 +33,9 @@ for (const [name, dict] of [["UI", UI], ["FL_COPY", FL_COPY], ["SC_COPY", SC_COP
   });
 }
 test("money format is locale-independent", () => assert.equal(fmtMoney(12345), "$12,345"));
-test("English liability labels equal the liability table (single source of truth)", () => {
-  for (const o of LIABILITY_OPTIONS) assert.equal(UI.en.liabilityOpts[o.id], o.label);
+test("no liability/shared-fault penalty copy in EN or ES (fault is applied once, by %)", () => {
+  const all = JSON.stringify([FL_COPY, SC_COPY]) + JSON.stringify(Object.keys(UI.en));
+  assert.ok(!/in addition to the fault|además del porcentaje de culpa|liabilityOpts|rowLiability/.test(all));
 });
 
 // Re-audit SC #4: "excluido/excluida" mistranslates the >50% bar ("no recovery"). Never in ES copy.

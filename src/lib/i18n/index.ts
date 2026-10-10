@@ -30,13 +30,12 @@ export interface Ui {
   stepTitles: [string, string, string];
   back: string; next: string; viewEstimate: string; settlementCalculator: string; calcSteps: string;
   medical: string; wages: string; other: string; property: string;
-  severity: string; care: string; months: string; gap: string; impairment: string; liability: string;
+  severity: string; care: string; months: string; gap: string; impairment: string;
   yourFault: (p: number) => string;
   severityOpts: Record<"minor" | "moderate" | "severe" | "catastrophic", string>;
   careOpts: Record<"chiro" | "md" | "surgery", string>;
   gapOpts: Record<"none" | "short" | "long", string>;
   permOpts: Record<"none" | "possible" | "rated", string>;
-  liabilityOpts: Record<"clear" | "mixed" | "disputed", string>;
   yes: string; no: string; notSure: string;
   policyLabel: string; policyHelp: string; unknown: string; perPerson: (v: string) => string;
   offerLabel: string; optional: string;
@@ -46,7 +45,7 @@ export interface Ui {
   offerCompare: (offer: string, pct: number) => string;
   policyBind: (lim: string) => string; policyBindTitle: string;
   rowMedical: string; rowEconOnce: string; rowEconomic: string; rowSeverity: (s: string) => string;
-  rowLiability: (l: string) => string; rowAdjust: string; rowPain: (m: number) => string;
+  rowAdjust: string; rowPain: (m: number) => string;
   rowFault: (f: number) => string; barredShort: string; rowPolicy: string; rowPolicyUnknown: string;
   notIncluded: string; base: string;
   /** Breakdown row shown only when the multiplier range hits the 1.25×–7× floor/ceiling. */
@@ -70,13 +69,12 @@ const en: Ui = {
   stepTitles: ["Your Economic Losses", "Injury, Treatment & Fault", "Your Coverage & the Other Driver's"],
   back: "← Back", next: "Continue →", viewEstimate: "View estimate", settlementCalculator: "Settlement calculator", calcSteps: "Calculator steps",
   medical: "Medical bills (past + expected)", wages: "Lost wages", other: "Other out-of-pocket costs", property: "Property damage",
-  severity: "Injury severity", care: "Primary care", months: "Months of treatment", gap: "Gaps in treatment", impairment: "Lasting impairment", liability: "Liability",
+  severity: "Injury severity", care: "Primary care", months: "Months of treatment", gap: "Gaps in treatment", impairment: "Lasting impairment",
   yourFault: (p) => `Your share of fault: ${p}%`,
   severityOpts: { minor: "Minor (soft tissue, brief recovery)", moderate: "Moderate (months of care, lasting symptoms)", severe: "Severe (fractures, significant impairment)", catastrophic: "Catastrophic (permanent / life-altering)" },
   careOpts: { chiro: "Chiropractic / PT primary", md: "MD / specialist care", surgery: "Surgery involved" },
   gapOpts: { none: "No meaningful gap in care", short: "Short gap (weeks)", long: "Long gap (months+)" },
   permOpts: { none: "No lasting impairment claimed", possible: "Possible lasting impairment", rated: "Documented permanent impairment" },
-  liabilityOpts: { clear: "Clear liability (e.g. rear-ended, ran a red light)", mixed: "Shared or unclear fault", disputed: "Disputed / contested" },
   yes: "Yes", no: "No", notSure: "Not sure",
   policyLabel: "At-fault driver's bodily-injury limit (per person)",
   policyHelp: "A policy limit is not a legal cap on damages. Leave Unknown if you don't know it.",
@@ -89,7 +87,7 @@ const en: Ui = {
   policyBindTitle: "Policy limit (practical estimate, not a legal cap):",
   policyBind: (l) => `this driver's insurance may stop at the ${l} per-person limit you entered; your underinsured motorist coverage (if you have it) or other sources may apply.`,
   rowMedical: "Medical bills", rowEconOnce: "Lost wages + other + property (added once)", rowEconomic: "Economic damages",
-  rowSeverity: (s) => `Severity: ${s} (estimate method, not law)`, rowLiability: (l) => `Liability: ${l}`, rowAdjust: "All adjustments",
+  rowSeverity: (s) => `Severity: ${s} (estimate method, not law)`, rowAdjust: "All adjustments",
   rowPain: (m) => `Pain & suffering = gross medical × (${m} − 1)`, rowFault: (f) => `Your fault ${f}%`, barredShort: "Barred (>50%)",
   rowPolicy: "Policy limit (practical, not a legal cap)", rowPolicyUnknown: "Unknown — not limited", notIncluded: "Not included", base: "base",
   rowClamped: "Multiplier held within 1.25×–7× (estimate method, not law)",
@@ -112,13 +110,12 @@ const es: Ui = {
   stepTitles: ["Sus pérdidas económicas", "Lesión, tratamiento y culpa", "Su cobertura y la del otro conductor"],
   back: "← Atrás", next: "Continuar →", viewEstimate: "Ver la estimación", settlementCalculator: "Calculadora de acuerdos", calcSteps: "Pasos de la calculadora",
   medical: "Gastos médicos (pasados y previstos)", wages: "Salarios perdidos", other: "Otros gastos de su bolsillo", property: "Daños a la propiedad",
-  severity: "Gravedad de la lesión", care: "Atención principal", months: "Meses de tratamiento", gap: "Interrupciones en el tratamiento", impairment: "Discapacidad duradera", liability: "Responsabilidad",
+  severity: "Gravedad de la lesión", care: "Atención principal", months: "Meses de tratamiento", gap: "Interrupciones en el tratamiento", impairment: "Discapacidad duradera",
   yourFault: (p) => `Su porcentaje de culpa: ${p}%`,
   severityOpts: { minor: "Leve (tejido blando, recuperación breve)", moderate: "Moderada (meses de atención, síntomas persistentes)", severe: "Grave (fracturas, discapacidad importante)", catastrophic: "Catastrófica (permanente / cambia la vida)" },
   careOpts: { chiro: "Quiropráctica / fisioterapia principal", md: "Médico / especialista", surgery: "Hubo cirugía" },
   gapOpts: { none: "Sin interrupciones importantes", short: "Interrupción corta (semanas)", long: "Interrupción larga (meses o más)" },
   permOpts: { none: "No se reclama discapacidad duradera", possible: "Posible discapacidad duradera", rated: "Discapacidad permanente documentada" },
-  liabilityOpts: { clear: "Responsabilidad clara (p. ej., le chocaron por detrás o se pasaron un semáforo en rojo)", mixed: "Culpa compartida o poco clara", disputed: "En disputa / impugnada" },
   yes: "Sí", no: "No", notSure: "No estoy seguro",
   policyLabel: "Límite de lesiones corporales del conductor culpable (por persona)",
   policyHelp: "El límite de la póliza no es un tope legal de los daños. Deje «Desconocido» si no lo sabe.",
@@ -131,7 +128,7 @@ const es: Ui = {
   policyBindTitle: "Límite de la póliza (estimación práctica, no un tope legal):",
   policyBind: (l) => `el seguro de este conductor podría pagar solo hasta el límite de ${l} por persona que usted indicó; su cobertura de motorista con seguro insuficiente (si la tiene) u otras fuentes podrían aplicarse.`,
   rowMedical: "Gastos médicos", rowEconOnce: "Salarios perdidos + otros + propiedad (se suman una vez)", rowEconomic: "Daños económicos",
-  rowSeverity: (s) => `Gravedad: ${s} (método de estimación, no es ley)`, rowLiability: (l) => `Responsabilidad: ${l}`, rowAdjust: "Todos los ajustes",
+  rowSeverity: (s) => `Gravedad: ${s} (método de estimación, no es ley)`, rowAdjust: "Todos los ajustes",
   rowPain: (m) => `Dolor y sufrimiento = gastos médicos brutos × (${m} − 1)`, rowFault: (f) => `Su culpa ${f}%`, barredShort: "Sin indemnización (>50%)",
   rowPolicy: "Límite de la póliza (práctico, no un tope legal)", rowPolicyUnknown: "Desconocido: sin límite", notIncluded: "No incluido", base: "base",
   rowClamped: "Multiplicador mantenido entre 1.25× y 7× (método de estimación, no es ley)",
