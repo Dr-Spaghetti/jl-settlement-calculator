@@ -64,7 +64,7 @@ const es: ScCopy = {
   regionName: "Carolina del Sur",
   heroTitleA: "Calculadora de acuerdos",
   heroTitleB: "por accidentes de auto en Carolina del Sur",
-  faultChip: { title: "Regla de culpa en SC", detail: "Excluido si tiene más del 50% de culpa" },
+  faultChip: { title: "Regla de culpa en SC", detail: "Sin indemnización si tiene más del 50% de culpa" },
   topbarRule: "Negligencia comparativa en Carolina del Sur: excluido si tiene más del 50% de culpa",
   faultNote:
     "Carolina del Sur aplica la negligencia comparativa modificada (Nelson v. Concrete Supply Co., 303 S.C. 243 (1991)): usted puede recuperar daños si su negligencia no es mayor que la de los demandados en conjunto, y su indemnización se reduce en proporción a su negligencia. Con más del 50% de culpa no hay indemnización.",

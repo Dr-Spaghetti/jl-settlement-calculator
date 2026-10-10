@@ -4,6 +4,10 @@
   "stateModule": "SC",
   "locales": ["en", "es"],
   "firmName": "Shelly Leeke Law Firm, LLC",
+  "practiceGeography": {
+    "en": "Cases handled by lawyers who principally practice in our North Charleston (headquarters), Beaufort, Columbia, Mt. Pleasant, Surfside Beach (Myrtle Beach area), Greenville, and Walterboro offices.",
+    "es": "Casos atendidos por abogados que ejercen principalmente en nuestras oficinas de North Charleston (sede), Beaufort, Columbia, Mt. Pleasant, Surfside Beach (zona de Myrtle Beach), Greenville y Walterboro."
+  },
   "shortName": "Shelly Leeke Law Firm",
   "logoUrl": "/firms/leekelaw/logo.png",
   "logo": {
@@ -41,15 +45,16 @@
   "tagline": "South Carolina car accident settlement estimate.",
   "attorneyDisclaimer": "",
   "offices": [
-    { "name": "North Charleston (HQ)", "address": "6060 Rivers Ave, North Charleston, SC 29406", "phone": "(843) 604-3273" },
+    { "name": "North Charleston (HQ)", "nameEs": "North Charleston (sede)", "address": "6060 Rivers Ave, North Charleston, SC 29406", "phone": "(843) 604-3273" },
     { "name": "Mt. Pleasant", "address": "222 W. Coleman Blvd., Mt. Pleasant, SC 29464", "phone": "(843) 920-5542" },
     { "name": "Walterboro", "address": "123 E. Washington Street, Walterboro, SC 29488", "phone": "(843) 305-7524" },
-    { "name": "Myrtle Beach", "address": "1012 16th Ave NW, Unit #126, Surfside Beach, SC 29575", "phone": "(843) 428-6934" },
+    { "name": "Surfside Beach (Myrtle Beach area)", "nameEs": "Surfside Beach (zona de Myrtle Beach)", "address": "1012 16th Ave NW, Unit #126, Surfside Beach, SC 29575", "phone": "(843) 428-6934" },
     { "name": "Columbia", "address": "1111 Laurel Street, Columbia, SC 29201", "phone": "(803) 281-6054" },
     { "name": "Greenville", "address": "703 E North Street, Suite B, Greenville, SC 29601", "phone": "(864) 383-3531" },
     { "name": "Beaufort", "address": "2015 Boundary Street, Ste 231, Beaufort, SC 29902", "phone": "(843) 305-3993" }
   ],
   "sources": {
+    "practiceGeography": "https://www.leekelaw.com/ footer: 'Cases handled by lawyers who principally practice in our North Charleston (headquarters), Beaufort, Columbia, Mt. Pleasant, Myrtle Beach, Greenville, and Walterboro.' ('Myrtle Beach' office is at 1012 16th Ave NW, Surfside Beach, SC 29575; relabeled per SC RPC 7.2(h) city-or-town)",
     "firmName": "https://www.leekelaw.com/ (JSON-LD legalName 'Shelly Leeke Law Firm, LLC')",
     "phone": "https://www.leekelaw.com/ (main tel link (843) 277-6064, 'Contact Us' footer)",
     "offices": "Each office's own page https://www.leekelaw.com/personal-injury-lawyer/south-carolina/<city>/ (JSON-LD telephone + body CTA 'give us a call at'), fetched 2026-10-09; these match the homepage footer. CONFLICT: https://www.leekelaw.com/offices/ lists different numbers (e.g. North Charleston (843) 608-8811, Columbia (803) 470-6744) and each location page's top address strip repeats the /offices/ number. Firm to confirm.",
