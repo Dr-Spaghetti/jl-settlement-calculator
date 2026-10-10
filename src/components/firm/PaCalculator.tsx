@@ -303,9 +303,10 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                     <Row k="Less benefits paid or payable (§ 1722; § 1711 medical benefit)" v={`− ${fmt(r.medicalOffset)}`} />
                     <Row k="Lost wages + other + property (added once)" v={fmt(lostWages + otherOutOfPocket + propertyDamage)} />
                     <Row k="Economic damages" v={fmt(r.economic)} strong />
-                    <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label} (estimate method, not law)`} v={`${(r.m.mid - r.m.adjustment).toFixed(2)}× base`} />
+                    <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label} (estimate method, not law)`} v={`${r.m.baseMid.toFixed(2)}× base`} />
                     <Row k={`Liability: ${lev.breakdownLabel}`} v={`${lev.coef > 0 ? "+" : ""}${lev.coef.toFixed(2)}×`} />
                     <Row k="All adjustments" v={`${r.m.adjustment > 0 ? "+" : ""}${r.m.adjustment.toFixed(2)}×`} />
+                    {r.m.clamped ? <Row k="Multiplier held within 1.25×–7× (estimate method, not law)" v={`${r.m.low.toFixed(2)}× / ${r.m.mid.toFixed(2)}× / ${r.m.high.toFixed(2)}×`} /> : null}
                     <Row k={`Pain & suffering = gross medical × (${r.m.mid} − 1)${r.tortUnsure ? " (before fault/limit)" : ""}`} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.tortUnsure ? `${fmt(roundMoney(medicalBills * (r.m.mid - 1)))} if full tort` : "Not included (tort option)"} />
                     <Row k={`Your fault ${r.faultPercent}%`} v={r.barred ? "Barred (>50%)" : `× ${(1 - r.faultPercent / 100).toFixed(2)}`} />
                     <Row k="Policy limit (practical, not a legal cap)" v={r.capped ? fmt(POLICY.find((p) => p.id === policy)!.value ?? 0) : "Unknown — not limited"} />

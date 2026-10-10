@@ -47,7 +47,11 @@ export interface ClientConfig {
   /** Spanish CTA text (firm's own wording); falls back to ctaText. */
   ctaTextEs?: string;
   /** Offices for the compact multi-office footer (each cited in "sources"). */
-  offices?: { name: string; address: string; phone?: string }[];
+  offices?: { name: string; nameEs?: string; address: string; phone?: string }[];
+  /** Registered entity name shown after a trade name in the footer, e.g. "Norden Leacox, PLLC". */
+  firmLegalName?: string;
+  /** Firm's own "lawyers who principally practice in…" sentence (e.g. SC RPC 7.2(h)), per locale. */
+  practiceGeography?: { en: string; es?: string };
   theme?: FirmTheme;
   logo?: FirmLogo;
   sources?: Record<string, string>;

@@ -41,7 +41,13 @@ export interface CoreInputs {
   liability: LiabilityId;
 }
 
-export interface Multipliers { low: number; mid: number; high: number; adjustment: number }
+export interface Multipliers {
+  low: number; mid: number; high: number; adjustment: number;
+  /** Unclamped severity-band mid (the real "× base" for the breakdown). */
+  baseMid: number;
+  /** True when any of low/mid/high was held to the CLAMP_MIN–CLAMP_MAX range. */
+  clamped: boolean;
+}
 
 export function multipliers(i: CoreInputs): Multipliers {
   const base = SEVERITY_BANDS[i.severity];
@@ -49,7 +55,9 @@ export function multipliers(i: CoreInputs): Multipliers {
     CARE_COEF[i.careType] + treatmentCoef(i.treatmentMonths) + GAP_COEF[i.treatmentGap] +
     PERM_COEF[i.permanency] + liabilityOption(i.liability).coef;
   const r = (n: number) => Math.round(clamp(n) * 100) / 100;
-  return { low: r(base.low + adjustment), mid: r(base.mid + adjustment), high: r(base.high + adjustment), adjustment: Math.round(adjustment * 100) / 100 };
+  const raw = [base.low, base.mid, base.high].map((b) => b + adjustment);
+  const clamped = raw.some((n) => n < CLAMP_MIN || n > CLAMP_MAX);
+  return { low: r(raw[0]), mid: r(raw[1]), high: r(raw[2]), adjustment: Math.round(adjustment * 100) / 100, baseMid: base.mid, clamped };
 }
 
 /**
