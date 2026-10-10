@@ -41,6 +41,11 @@ export function FirmHeader({ client, regionName, rule }: { client: ClientConfig;
           // Logo heights per firm (CSS px). Bar = logo + the same vertical padding as before (14px phone, 12px desktop).
           ["--logo-h-m" as string]: `${logo.heightPhone ?? 44}px`,
           ["--logo-h-d" as string]: `${logo.heightDesktop ?? 56}px`,
+          // Optical-centering move rounded to whole CSS px per breakpoint (no sub-pixel resampling of the artwork).
+          ["--logo-tx-m" as string]: `${Math.round((-(logo.artworkOffsetX ?? 0) * (logo.heightPhone ?? 44)) / logo.height)}px`,
+          ["--logo-ty-m" as string]: `${Math.round((-(logo.artworkOffsetY ?? 0) * (logo.heightPhone ?? 44)) / logo.height)}px`,
+          ["--logo-tx-d" as string]: `${Math.round((-(logo.artworkOffsetX ?? 0) * (logo.heightDesktop ?? 56)) / logo.height)}px`,
+          ["--logo-ty-d" as string]: `${Math.round((-(logo.artworkOffsetY ?? 0) * (logo.heightDesktop ?? 56)) / logo.height)}px`,
         }}
       >
         <div className="mx-auto flex h-[calc(var(--logo-h-m)+28px)] max-w-[1200px] items-center justify-between gap-4 px-4 sm:h-[calc(var(--logo-h-d)+24px)] sm:px-6 lg:px-8">
@@ -53,11 +58,8 @@ export function FirmHeader({ client, regionName, rule }: { client: ClientConfig;
               alt={logo.alt}
               width={logo.width}
               height={logo.height}
-              className="firm-logo block h-[var(--logo-h-m)] w-auto sm:h-[var(--logo-h-d)]"
               // Optical centering of the file's artwork inside its own canvas (CSS move only; file untouched).
-              style={{
-                transform: `translate(${(-(logo.artworkOffsetX ?? 0) / logo.width) * 100}%, ${(-(logo.artworkOffsetY ?? 0) / logo.height) * 100}%)`,
-              }}
+              className="firm-logo block h-[var(--logo-h-m)] w-auto [transform:translate(var(--logo-tx-m),var(--logo-ty-m))] sm:h-[var(--logo-h-d)] sm:[transform:translate(var(--logo-tx-d),var(--logo-ty-d))]"
               decoding="async"
             />
           </a>
