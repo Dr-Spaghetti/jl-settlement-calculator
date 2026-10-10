@@ -37,3 +37,9 @@ test("money format is locale-independent", () => assert.equal(fmtMoney(12345), "
 test("English liability labels equal the liability table (single source of truth)", () => {
   for (const o of LIABILITY_OPTIONS) assert.equal(UI.en.liabilityOpts[o.id], o.label);
 });
+
+// Re-audit SC #4: "excluido/excluida" mistranslates the >50% bar ("no recovery"). Never in ES copy.
+test("ES copy never says 'excluido' (SC, FL, UI chrome)", () => {
+  const dump = JSON.stringify([SC_COPY.es, FL_COPY.es, Object.fromEntries(Object.entries(UI.es).map(([k, v]) => [k, typeof v === "function" ? String((v as (...a: unknown[]) => string)(1, 1)) : v]))]);
+  assert.ok(!/xclu[ií]d/i.test(dump), "found 'excluido' in Spanish copy");
+});
