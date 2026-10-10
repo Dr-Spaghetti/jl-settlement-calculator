@@ -68,6 +68,8 @@ export interface ClientConfig {
   officeAddress?: string;
   /** ZIP code for the office address (shown after the state) */
   officeZip?: string;
+  /** Optional extra footer sentence (firm-approved), appended after the office/attorney line. */
+  footerNote?: string;
   /** Extra offices for the compact footer line (Rule 7.2(h) city disclosure). */
   additionalOffices?: string[];
   /** Name of at least one responsible CA lawyer (optional; firm name also satisfies 7.2(c)) */

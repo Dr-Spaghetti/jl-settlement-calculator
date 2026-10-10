@@ -10,7 +10,7 @@ export function legalLine(c: ClientConfig): string {
   }
   return (`${c.firmName}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
     (c.additionalOffices?.length ? `; ${c.additionalOffices.join("; ")}` : "")) +
-    `. Responsible attorney: ${c.responsibleAttorney}. Use of this tool does not create an attorney-client relationship and is not legal advice.`;
+    `. Responsible attorney: ${c.responsibleAttorney}.${c.footerNote ? ` ${c.footerNote}` : ""} Use of this tool does not create an attorney-client relationship and is not legal advice.`;
 }
 
 export function FirmHeader({ client, regionName, rule }: { client: ClientConfig; regionName: string; rule: string }) {

@@ -182,3 +182,10 @@ test("PA clamp ceiling: catastrophic 4/5/6 + surgery .45 + 13 mo .45 + rated .55
   // P&S 10,000 × 4.45/5.45/6.00 = 44,500/54,500/60,000; + 10,500 → 55,000/65,000/70,500
   assert.deepEqual(calculatePA(i).recoverable, { low: 55000, mid: 65000, high: 70500 });
 });
+
+test("PA footer carries the approved Philadelphia principal-office sentence and keeps 115 S 8th St", async () => {
+  const { readFileSync } = await import("node:fs");
+  const c = JSON.parse(readFileSync(new URL("../../../clients/kaplunmarx-pa.json", import.meta.url), "utf8"));
+  assert.equal(c.footerNote, "Cases are handled by lawyers who principally practice in our Philadelphia office.");
+  assert.equal(c.officeAddress, "115 S 8th St Suite 5");
+});
