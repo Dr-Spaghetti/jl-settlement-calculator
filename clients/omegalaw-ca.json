@@ -12,7 +12,7 @@
     "alt": "Omega Law Group",
     "headerBg": "#1A2225",
     "artworkOffsetX": 0,
-    "artworkOffsetY": 0,
+    "artworkOffsetY": 11.2,
     "heightPhone": 40,
     "heightDesktop": 72
   },
@@ -46,6 +46,7 @@
     "ctaText": "https://www.omegalaw.com/ header 'FREE CONSULTATION'",
     "logo": "https://www.omegalaw.com/wp-content/themes/omega-rebuild/assets/app/svg/weblogo.svg (viewBox 1877.33x269.62), untouched",
     "headerBg": "#1A2225 charcoal (omegalaw.md site CSS); SVG is transparent",
-    "logoPhoneHeight": "40px on phones (not 52): at 52px the 6.96:1 SVG is 362px wide, wider than a 320px viewport"
+    "logoPhoneHeight": "40px on phones (not 52): at 52px the 6.96:1 SVG is 362px wide, wider than a 320px viewport",
+    "artworkOffsetY": "11.2 viewBox units: artwork centroid sits 3.0px low at 72px / 1.67px at 40px in the live gate (2026-10-09); CSS move only"
   }
 }
