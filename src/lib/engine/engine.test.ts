@@ -150,3 +150,24 @@ test("Policy limit: Unknown default → no cap, no banner; $15k cap binds", () =
   assert.deepEqual(c.capped, { low: 15000, mid: 15000, high: 15000 });
   assert.equal(c.policyLimitsMayBind, true);
 });
+
+// ---- Breakdown base / clamp (independent audit, ported from FL #27 / SC #15). Hand-worked. ----
+test("PA clamp floor: minor 1.5/2.0/2.5 + chiro −.15 + ≤1 mo −.15 + long gap −.45 + disputed −.55 = −1.30 → 0.20/0.70/1.20 → held at 1.25; real base 2.00 (old display 1.25 − (−1.30) = 2.55)", () => {
+  const i = { ...pa, severity: "minor", careType: "chiro", treatmentMonths: 1, treatmentGap: "long", liability: "disputed" } as PaInputs;
+  const m = multipliers(i);
+  assert.equal(m.adjustment, -1.3);
+  assert.deepEqual([m.low, m.mid, m.high, m.baseMid, m.clamped], [1.25, 1.25, 1.25, 2.0, true]);
+  // econ 10,000 − 5,000 + 2,000 + 500 + 3,000 = 10,500; P&S 10,000 × 0.25 = 2,500 → 13,000
+  assert.deepEqual(calculatePA(i).recoverable, { low: 13000, mid: 13000, high: 13000 });
+});
+test("PA no clamp on defaults: moderate 2.75 + .50 → 2.5/3.25/4.0, baseMid 2.75, clamped false", () => {
+  const m = multipliers(pa);
+  assert.deepEqual([m.low, m.mid, m.high, m.baseMid, m.clamped], [2.5, 3.25, 4.0, 2.75, false]);
+});
+test("PA clamp ceiling: catastrophic 4/5/6 + surgery .45 + 13 mo .45 + rated .55 + clear .25 = +1.70 → 5.70/6.70/7.70→7.00", () => {
+  const i = { ...pa, severity: "catastrophic", careType: "surgery", treatmentMonths: 13, permanency: "rated" } as PaInputs;
+  const m = multipliers(i);
+  assert.deepEqual([m.low, m.mid, m.high, m.baseMid, m.clamped], [5.7, 6.7, 7, 5.0, true]);
+  // P&S 10,000 × 4.7/5.7/6.0 = 47,000/57,000/60,000; + 10,500 → 57,500/67,500/70,500
+  assert.deepEqual(calculatePA(i).recoverable, { low: 57500, mid: 67500, high: 70500 });
+});
