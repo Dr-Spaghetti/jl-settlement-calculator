@@ -45,6 +45,7 @@
     "responsibleAttorney": "https://www.choosecharlie.com/advertising-disclaimer/ ('Charles Therman Attorney & Owner'); team list 'Charles N Therman'. IL ARDC status UNVERIFIED (site unreachable).",
     "ctaText": "https://www.choosecharlie.com/ header 'Free Case Consultation'",
     "headerBg": "#011733 = modal border pixel of therman-full-navy-from-nick.png (site CSS navy #011633 used for page ground)",
-    "colors": "choosecharlie.md: #011633 navy, #FFB254 amber, #F3F0E8 cream (homepage CSS)"
+    "colors": "choosecharlie.md: #011633 navy, #FFB254 amber, #F3F0E8 cream (homepage CSS)",
+    "officeSuite": "Ste 720 kept (Nick 2026-10-10: use current contact page). 2026-10-10 contact page visible text: 'Chicago 8501 W Higgins Rd Ste 720, Chicago, IL 60631, USA New Client (773) 839-8944' (x2). Only the page's FAQ JSON-LD (dateModified 2025-11-06) says '8501 W Higgins Rd #420'."
   }
 }
