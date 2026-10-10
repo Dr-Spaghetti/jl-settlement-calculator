@@ -56,3 +56,11 @@ test("IL copy: statute wording 'more than 50% of the proximate cause', no '51%' 
   assert.equal(IL_KIT.gate, undefined);
   assert.equal(IL_KIT.offset, undefined);
 });
+
+test("IL client phone is the site's Chicago new-client number; no 'if you bought it'", async () => {
+  const { readFileSync } = await import("node:fs");
+  const c = JSON.parse(readFileSync(new URL("../../../clients/choosecharlie-il.json", import.meta.url), "utf8"));
+  assert.equal(c.phone, "(773) 839-8944");
+  assert.ok(!String(c.phone).includes("825-3093"));
+  assert.ok(!JSON.stringify(IL_KIT).includes("if you bought it"));
+});
