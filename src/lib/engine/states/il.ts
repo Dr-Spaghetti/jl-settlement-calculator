@@ -39,7 +39,7 @@ export const IL_KIT: StateKit = {
       },
       {
         q: "How long do I have to file a car accident lawsuit in Illinois?",
-        a: "Generally within 2 years after the cause of action accrued (735 ILCS 5/13-202). A civil action against a local public entity or its employees generally must be commenced within one year (745 ILCS 10/8-101(a)). Confirm your deadline with an Illinois attorney.",
+        a: "Generally within 2 years after the cause of action accrued (735 ILCS 5/13-202). A civil action against a local entity or any of its employees generally must be commenced within one year from the date the injury was received or the cause of action accrued (745 ILCS 10/8-101(a)). Confirm your deadline with an Illinois attorney.",
       },
       {
         q: "What if the at-fault driver only has the minimum insurance?",
