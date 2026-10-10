@@ -4,6 +4,7 @@
   "stateModule": "FL",
   "locales": ["en", "es"],
   "firmName": "Norden Leacox Accident & Injury Law",
+  "firmLegalName": "Norden Leacox, PLLC",
   "shortName": "Norden Leacox",
   "logoUrl": "/firms/nordenleacox/logo.svg",
   "logo": {
@@ -49,6 +50,7 @@
     { "name": "Lakeland", "address": "1137 US Hwy 98 S, Suite 205, Lakeland, FL 33801", "phone": "407-874-5574" }
   ],
   "sources": {
+    "firmLegalName": "https://www.floridabar.org/directories/find-mbr/profile/?num=548571 (Firm: Norden Leacox, PLLC)",
     "firmName": "https://nordenleacox.com/ (footer: '© 2026 Norden Leacox Accident & Injury Law. All rights reserved. Orlando, FL.')",
     "phone": "https://nordenleacox.com/contact-us/orlando-personal-injury-law-office/ (JSON-LD telephone 407-801-3000); FL Bar #548571 'Office: 407-801-3000'",
     "offices": "Each office's own page under https://nordenleacox.com/contact-us/<city>-.../ (JSON-LD streetAddress/telephone), fetched 2026-10-09. Albuquerque NM office (also on the site) omitted: Florida calculator. Oxford is named in homepage copy but has no location page/address: omitted.",
