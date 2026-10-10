@@ -1,4 +1,3 @@
-import { liabilityOption, type LiabilityId } from "./liability";
 
 export type Severity = "minor" | "moderate" | "severe" | "catastrophic";
 export type CareType = "chiro" | "md" | "surgery";
@@ -38,7 +37,6 @@ export interface CoreInputs {
   treatmentMonths: number;
   treatmentGap: TreatmentGap;
   permanency: Permanency;
-  liability: LiabilityId;
 }
 
 export interface Multipliers {
@@ -53,7 +51,9 @@ export function multipliers(i: CoreInputs): Multipliers {
   const base = SEVERITY_BANDS[i.severity];
   const adjustment =
     CARE_COEF[i.careType] + treatmentCoef(i.treatmentMonths) + GAP_COEF[i.treatmentGap] +
-    PERM_COEF[i.permanency] + liabilityOption(i.liability).coef;
+    PERM_COEF[i.permanency];
+  // No liability/shared-fault adjustment: fault reduces damages only via the statutory
+  // fault % (42 Pa.C.S. § 7102 and the analogous state rules), never twice.
   const r = (n: number) => Math.round(clamp(n) * 100) / 100;
   const raw = [base.low, base.mid, base.high].map((b) => b + adjustment);
   const clamped = raw.some((n) => n < CLAMP_MIN || n > CLAMP_MAX);

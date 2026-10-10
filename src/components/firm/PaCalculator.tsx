@@ -3,7 +3,6 @@ import { roundMoney } from "@/lib/engine/core";
 
 import { useMemo, useState } from "react";
 import type { ClientConfig } from "@/lib/types";
-import { LIABILITY_OPTIONS, liabilityOption, type LiabilityId } from "@/lib/engine/liability";
 import type { CareType, Permanency, Severity, TreatmentGap } from "@/lib/engine/core";
 import { calculatePA, PA_LAW, type TortOption, type YesNoUnsure } from "@/lib/engine/states/pa";
 import { PA_COPY } from "@/lib/engine/states/pa.copy";
@@ -95,7 +94,6 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
   const [treatmentMonths, setMonths] = useState(4);
   const [treatmentGap, setGap] = useState<TreatmentGap>("none");
   const [permanency, setPerm] = useState<Permanency>("none");
-  const [liability, setLiab] = useState<LiabilityId>("clear");
   const [fault, setFault] = useState(0);
   const [tortOption, setTort] = useState<TortOption>("unsure");
   const [exc, setExc] = useState<YesNoUnsure>("unsure");
@@ -105,14 +103,13 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
 
   const r = useMemo(() => calculatePA({
     medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap,
-    permanency, liability, plaintiffFaultPercent: fault, tortOption, limitedTortException: exc,
+    permanency, plaintiffFaultPercent: fault, tortOption, limitedTortException: exc,
     firstPartyMedical: firstParty, policyLimitPerPerson: POLICY.find((p) => p.id === policy)!.value,
-  }), [medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap, permanency, liability, fault, tortOption, exc, firstParty, policy]);
+  }), [medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap, permanency, fault, tortOption, exc, firstParty, policy]);
 
   const shown = r.capped ?? r.recoverable;
   const single = shown.low === shown.high;
   const offerNum = offer.trim() === "" ? null : Number(offer);
-  const lev = liabilityOption(liability);
 
   return (
     <section id="calculator" className="px-4 py-12" aria-labelledby="calc-h">
@@ -179,10 +176,6 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                           {PERM.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                         </select>
                       </div>
-                    </div>
-                    <div>
-                      <span className={label}>Liability</span>
-                      <Choice name="Liability" opts={LIABILITY_OPTIONS.map((o) => ({ id: o.id, label: o.label }))} v={liability} set={setLiab} />
                     </div>
                     <div>
                       <label htmlFor="fault" className={label}>Your share of fault: {fault}%</label>
@@ -304,7 +297,6 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                     <Row k="Lost wages + other + property (added once)" v={fmt(lostWages + otherOutOfPocket + propertyDamage)} />
                     <Row k="Economic damages" v={fmt(r.economic)} strong />
                     <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label} (estimate method, not law)`} v={`${r.m.baseMid.toFixed(2)}× base`} />
-                    <Row k={`Liability: ${lev.breakdownLabel}`} v={`${lev.coef > 0 ? "+" : ""}${lev.coef.toFixed(2)}×`} />
                     <Row k="All adjustments" v={`${r.m.adjustment > 0 ? "+" : ""}${r.m.adjustment.toFixed(2)}×`} />
                     {r.m.clamped ? <Row k="Multiplier held within 1.25×–7× (estimate method, not law)" v={`${r.m.low.toFixed(2)}× / ${r.m.mid.toFixed(2)}× / ${r.m.high.toFixed(2)}×`} /> : null}
                     <Row k={`Pain & suffering = gross medical × (${r.m.mid} − 1)${r.tortUnsure ? " (before fault/limit)" : ""}`} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.tortUnsure ? `${fmt(roundMoney(medicalBills * (r.m.mid - 1)))} if full tort` : "Not included (tort option)"} />

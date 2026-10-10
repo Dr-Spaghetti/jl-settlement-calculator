@@ -5,7 +5,6 @@
  */
 import { useMemo, useState } from "react";
 import type { ClientConfig } from "@/lib/types";
-import { LIABILITY_OPTIONS, liabilityOption, type LiabilityId } from "@/lib/engine/liability";
 import { roundMoney, type CareType, type Permanency, type Severity, type TreatmentGap } from "@/lib/engine/core";
 import { calculateFL, type PipStatus, type YesNoUnsure } from "@/lib/engine/states/fl";
 import { calculateSC, SC_LAW, type InsuredStatus } from "@/lib/engine/states/sc";
@@ -59,7 +58,6 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
   const [treatmentMonths, setMonths] = useState(4);
   const [treatmentGap, setGap] = useState<TreatmentGap>("none");
   const [permanency, setPerm] = useState<Permanency>("none");
-  const [liability, setLiab] = useState<LiabilityId>("clear");
   const [fault, setFault] = useState(0);
   const [threshold, setThreshold] = useState<YesNoUnsure>("unsure");
   const [pip, setPip] = useState<PipStatus>("emc");
@@ -75,7 +73,7 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
     { id: "250k", label: ui.perPerson(fmt(250000)), value: 250000 },
   ];
   const lim = POLICY.find((p) => p.id === policy)!.value;
-  const core = { medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap, permanency, liability };
+  const core = { medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap, permanency };
 
   const r = useMemo(() => {
     if (st === "FL") {
@@ -85,12 +83,11 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
     const x = calculateSC({ ...core, plaintiffFaultPercent: fault, policyLimitPerPerson: lim, otherDriverInsured: insured });
     return { ...x, nonEconomicAllowed: true, ifNonEconomicAvailable: null as Range | null, unsure: null as { a: Range; b: Range } | null, offset: 0 };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [st, medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap, permanency, liability, fault, threshold, pip, insured, lim]);
+  }, [st, medicalBills, lostWages, otherOutOfPocket, propertyDamage, severity, careType, treatmentMonths, treatmentGap, permanency, fault, threshold, pip, insured, lim]);
 
   const shown = r.capped ?? r.recoverable;
   const single = shown.low === shown.high;
   const offerNum = offer.trim() === "" ? null : Number(offer);
-  const lev = liabilityOption(liability);
   const yn = (["yes", "no", "unsure"] as const).map((id) => ({ id, label: id === "yes" ? ui.yes : id === "no" ? ui.no : ui.notSure }));
   const faultNote = st === "FL" ? fl.faultNote : sc.faultNote;
   const title = r.unsure ? fl.titleUnsure : r.nonEconomicAllowed ? ui.rangeTitle : ui.econOnlyTitle;
@@ -156,10 +153,6 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
                           {(Object.keys(ui.permOpts) as Permanency[]).map((k) => <option key={k} value={k}>{ui.permOpts[k]}</option>)}
                         </select>
                       </div>
-                    </div>
-                    <div>
-                      <span className={label}>{ui.liability}</span>
-                      <Choice name={ui.liability} opts={LIABILITY_OPTIONS.map((o) => ({ id: o.id, label: ui.liabilityOpts[o.id] }))} v={liability} set={setLiab} />
                     </div>
                     <div>
                       <label htmlFor="fault" className={label}>{ui.yourFault(fault)}</label>
@@ -276,7 +269,6 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
                     <Row k={ui.rowEconOnce} v={fmt(lostWages + otherOutOfPocket + propertyDamage)} />
                     <Row k={ui.rowEconomic} v={fmt(r.economic)} strong />
                     <Row k={ui.rowSeverity(ui.severityOpts[severity])} v={`${r.m.baseMid.toFixed(2)}× ${ui.base}`} />
-                    <Row k={ui.rowLiability(ui.liabilityOpts[lev.id])} v={`${lev.coef > 0 ? "+" : ""}${lev.coef.toFixed(2)}×`} />
                     <Row k={ui.rowAdjust} v={`${r.m.adjustment > 0 ? "+" : ""}${r.m.adjustment.toFixed(2)}×`} />
                     {r.m.clamped ? <Row k={ui.rowClamped} v={`${r.m.low.toFixed(2)}× / ${r.m.mid.toFixed(2)}× / ${r.m.high.toFixed(2)}×`} /> : null}
                     <Row k={ui.rowPain(r.m.mid)} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.unsure ? fl.rowPainUnsure(fmt(roundMoney(medicalBills * (r.m.mid - 1)))) : fl.rowPainNotMet} />
