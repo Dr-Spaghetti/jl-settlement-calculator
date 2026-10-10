@@ -41,7 +41,13 @@ export interface ClientConfig {
   id: string;
   /** "firm-v1" = shared white-label template (src/components/firm). Omit for legacy Premier/Djougourian pages. */
   template?: "firm-v1";
-  stateModule?: "PA";
+  stateModule?: "PA" | "FL" | "SC";
+  /** firm-v1 i18n: locales served ("en" at "/", others at "/<locale>"). Default ["en"]. */
+  locales?: ("en" | "es")[];
+  /** Spanish CTA text (firm's own wording); falls back to ctaText. */
+  ctaTextEs?: string;
+  /** Offices for the compact multi-office footer (each cited in "sources"). */
+  offices?: { name: string; address: string; phone?: string }[];
   theme?: FirmTheme;
   logo?: FirmLogo;
   sources?: Record<string, string>;

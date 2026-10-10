@@ -1,19 +1,41 @@
 import type { ClientConfig } from "@/lib/types";
 import { PhoneIcon, ArrowRightIcon, ScaleIcon } from "@/components/icons";
+import { UI, LOCALE_LABEL, localePath, type Locale, type Ui } from "@/lib/i18n";
 
 export const telHref = (p: string) => `tel:${p.replace(/[^\d+]/g, "")}`;
 
 /** Responsible attorney + office address + no attorney-client line (compact, every page). */
-export function legalLine(c: ClientConfig): string {
+export function legalLine(c: ClientConfig, ui: Ui = UI.en): string {
   if (!c.responsibleAttorney || !c.officeAddress) {
     throw new Error(`clients/${c.id}.json: responsibleAttorney and officeAddress are required`);
   }
+  if (c.offices?.length) {
+    // Multi-office, localized form: firm. Responsible attorney: name, address. Offices: City (phone); ...
+    return `${c.firmName}. ${ui.responsibleAttorney}: ${c.responsibleAttorney}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
+      `. ${ui.offices}: ${c.offices.map((o) => `${o.name}, ${o.address}${o.phone ? ` (${o.phone})` : ""}`).join("; ")}. ${ui.noRelationship}`;
+  }
   return (`${c.firmName}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
     (c.additionalOffices?.length ? `; ${c.additionalOffices.join("; ")}` : "")) +
-    `. Responsible attorney: ${c.responsibleAttorney}. Use of this tool does not create an attorney-client relationship and is not legal advice.`;
+    `. ${ui.responsibleAttorney}: ${c.responsibleAttorney}. ${ui.noRelationship}`;
 }
 
-export function FirmHeader({ client, regionName, rule }: { client: ClientConfig; regionName: string; rule: string }) {
+/** EN/ES toggle (only rendered when the firm config lists more than one locale). */
+export function LangToggle({ client, locale }: { client: ClientConfig; locale: Locale }) {
+  const locales = (client.locales ?? ["en"]) as Locale[];
+  if (locales.length < 2) return null;
+  return (
+    <span className="flex items-center gap-1" aria-label="Language / Idioma">
+      {locales.map((l) => (
+        <a key={l} href={localePath(l)} hrefLang={l} lang={l} aria-current={l === locale ? "true" : undefined}
+          className={`rounded px-2 py-0.5 text-[11px] font-bold ${l === locale ? "bg-t-accent text-t-on-accent" : "text-t-text underline-offset-2 hover:underline"}`}>
+          {LOCALE_LABEL[l]}
+        </a>
+      ))}
+    </span>
+  );
+}
+
+export function FirmHeader({ client, regionName, rule, ui = UI.en, locale = "en" }: { client: ClientConfig; regionName: string; rule: string; ui?: Ui; locale?: Locale }) {
   const logo = client.logo!;
   return (
     <>
@@ -28,10 +50,20 @@ export function FirmHeader({ client, regionName, rule }: { client: ClientConfig;
               {rule}
             </span>
           </div>
-          <a href={telHref(client.phone)} className="flex min-h-[32px] items-center font-semibold text-t-text hover:text-t-accent">
-            <PhoneIcon size={14} className="mr-1.5 text-t-accent" />
-            {client.phone}
-          </a>
+          {(client.locales?.length ?? 1) > 1 ? (
+            <div className="flex items-center gap-3">
+              <LangToggle client={client} locale={locale} />
+              <a href={telHref(client.phone)} className="flex min-h-[32px] items-center whitespace-nowrap font-semibold text-t-text hover:text-t-accent">
+                <PhoneIcon size={14} className="mr-1.5 text-t-accent" />
+                {client.phone}
+              </a>
+            </div>
+          ) : (
+            <a href={telHref(client.phone)} className="flex min-h-[32px] items-center font-semibold text-t-text hover:text-t-accent">
+              <PhoneIcon size={14} className="mr-1.5 text-t-accent" />
+              {client.phone}
+            </a>
+          )}
         </div>
       </div>
       <header
@@ -62,13 +94,13 @@ export function FirmHeader({ client, regionName, rule }: { client: ClientConfig;
             />
           </a>
           <div className="flex items-center gap-3">
-            <nav className="hidden items-center gap-1 rounded-xl border border-t-muted/20 bg-t-surface p-1 text-sm lg:flex" aria-label="Primary">
-              <a href="#calculator" className="rounded-lg bg-t-accent px-3 py-1.5 font-semibold text-t-on-accent">Calculator</a>
-              <a href="#how-it-works" className="rounded-lg px-3 py-1.5 text-t-muted hover:text-t-text">The Formula</a>
-              <a href="#faq" className="rounded-lg px-3 py-1.5 text-t-muted hover:text-t-text">FAQ</a>
+            <nav className="hidden items-center gap-1 rounded-xl border border-t-muted/20 bg-t-surface p-1 text-sm lg:flex" aria-label={ui.navPrimary}>
+              <a href="#calculator" className="rounded-lg bg-t-accent px-3 py-1.5 font-semibold text-t-on-accent">{ui.navCalculator}</a>
+              <a href="#how-it-works" className="rounded-lg px-3 py-1.5 text-t-muted hover:text-t-text">{ui.navFormula}</a>
+              <a href="#faq" className="rounded-lg px-3 py-1.5 text-t-muted hover:text-t-text">{ui.navFaq}</a>
             </nav>
             <a href={client.ctaUrl} className="hidden items-center gap-2 rounded-lg bg-t-accent px-4 py-2.5 text-sm font-semibold text-t-on-accent shadow-sm hover:bg-t-accent/90 sm:inline-flex">
-              {client.ctaText} <ArrowRightIcon size={14} />
+              {locale === "es" && client.ctaTextEs ? client.ctaTextEs : client.ctaText} <ArrowRightIcon size={14} />
             </a>
           </div>
         </div>
@@ -77,7 +109,7 @@ export function FirmHeader({ client, regionName, rule }: { client: ClientConfig;
   );
 }
 
-export function FirmHero({ a, b, chips }: { a: string; b: string; chips: { title: string; detail: string }[] }) {
+export function FirmHero({ a, b, chips, ui = UI.en }: { a: string; b: string; chips: { title: string; detail: string }[]; ui?: Ui }) {
   return (
     <section id="top" className="border-b border-t-muted/15 bg-gradient-to-b from-t-header to-t-ground px-4 pb-12 pt-10 text-center sm:pt-14">
       <h1 className="font-display text-balance text-4xl font-semibold leading-tight text-t-text sm:text-5xl">
@@ -86,10 +118,10 @@ export function FirmHero({ a, b, chips }: { a: string; b: string; chips: { title
         <span className="italic text-t-accent">{b}</span>
       </h1>
       <p className="mx-auto mt-5 max-w-xl text-balance text-sm text-t-text sm:text-base">
-        Estimate only. Not a guarantee of any result or legal advice.
+        {ui.heroQualifier}
       </p>
       <a href="#calculator" className="mt-6 inline-flex min-h-[44px] items-center rounded-lg bg-t-accent px-5 text-sm font-semibold text-t-on-accent shadow-md hover:bg-t-accent/90">
-        Start estimate
+        {ui.startEstimate}
       </a>
       <ul className="mx-auto mt-7 flex max-w-3xl flex-wrap justify-center gap-2">
         {chips.map((c) => (
@@ -103,8 +135,8 @@ export function FirmHero({ a, b, chips }: { a: string; b: string; chips: { title
   );
 }
 
-export function FirmHowItWorks({ faultNote }: { faultNote: string }) {
-  const steps = [
+export function FirmHowItWorks({ faultNote, steps: custom, ui = UI.en }: { faultNote: string; steps?: [string, string][]; ui?: Ui }) {
+  const steps = custom ? custom.map(([t, d]) => [t, d || faultNote]) : [
     ["Economic losses", "Medical bills (less benefits paid or payable by your own coverage), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
     ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your own insurer pays). The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
     ["State rules", faultNote],
@@ -113,8 +145,8 @@ export function FirmHowItWorks({ faultNote }: { faultNote: string }) {
   return (
     <section id="how-it-works" className="px-4 py-14">
       <div className="mx-auto max-w-[1200px]">
-        <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-t-accent">Transparent by design</p>
-        <h2 className="font-display mt-2 text-center text-3xl font-semibold text-t-text">How the Estimate Is Calculated</h2>
+        <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-t-accent">{ui.howKicker}</p>
+        <h2 className="font-display mt-2 text-center text-3xl font-semibold text-t-text">{ui.howTitle}</h2>
         <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map(([t, d], i) => (
             <li key={t} className="rounded-xl border border-t-muted/20 bg-t-surface p-5">
@@ -129,11 +161,11 @@ export function FirmHowItWorks({ faultNote }: { faultNote: string }) {
   );
 }
 
-export function FirmFAQ({ items, client }: { items: readonly { q: string; a: string }[]; client: ClientConfig }) {
+export function FirmFAQ({ items, client, ui = UI.en, locale = "en" }: { items: readonly { q: string; a: string }[]; client: ClientConfig; ui?: Ui; locale?: Locale }) {
   return (
     <section id="faq" className="px-4 pb-14">
       <div className="mx-auto max-w-3xl">
-        <h2 className="font-display text-center text-3xl font-semibold text-t-text">Frequently Asked Questions</h2>
+        <h2 className="font-display text-center text-3xl font-semibold text-t-text">{ui.faqTitle}</h2>
         <div className="mt-6 divide-y divide-t-muted/20 rounded-xl border border-t-muted/20 bg-t-surface">
           {items.map((f) => (
             <details key={f.q} className="group px-5">
@@ -146,10 +178,10 @@ export function FirmFAQ({ items, client }: { items: readonly { q: string; a: str
           ))}
         </div>
         <div className="mt-10 rounded-2xl border border-t-accent/40 bg-t-surface p-6 text-center">
-          <h2 className="font-display text-2xl font-semibold text-t-text">Want a lawyer to look at your numbers?</h2>
+          <h2 className="font-display text-2xl font-semibold text-t-text">{ui.ctaTitle}</h2>
           <div className="mt-4 flex flex-col justify-center gap-3 sm:flex-row">
-            <a href={client.ctaUrl} className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-t-accent px-5 text-sm font-semibold text-t-on-accent">{client.ctaText}</a>
-            <a href={telHref(client.phone)} className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-t-text/40 px-5 text-sm font-semibold text-t-text">Call {client.phone}</a>
+            <a href={client.ctaUrl} className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-t-accent px-5 text-sm font-semibold text-t-on-accent">{locale === "es" && client.ctaTextEs ? client.ctaTextEs : client.ctaText}</a>
+            <a href={telHref(client.phone)} className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-t-text/40 px-5 text-sm font-semibold text-t-text">{ui.call} {client.phone}</a>
           </div>
         </div>
       </div>
@@ -157,22 +189,22 @@ export function FirmFAQ({ items, client }: { items: readonly { q: string; a: str
   );
 }
 
-export function FirmFooter({ client }: { client: ClientConfig }) {
+export function FirmFooter({ client, ui = UI.en }: { client: ClientConfig; ui?: Ui }) {
   return (
     <footer className="border-t border-t-accent/30 bg-t-header px-4 pb-24 pt-6 lg:pb-6">
       <p id="legal-line" className="mx-auto max-w-[1200px] text-center text-[11px] leading-relaxed text-t-muted">
-        {legalLine(client)}
+        {legalLine(client, ui)}
       </p>
     </footer>
   );
 }
 
-export function FirmStickyCTA({ client }: { client: ClientConfig }) {
+export function FirmStickyCTA({ client, ui = UI.en, locale = "en" }: { client: ClientConfig; ui?: Ui; locale?: Locale }) {
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-t-accent/40 bg-t-surface/95 p-3 backdrop-blur lg:hidden">
-      <a href={client.ctaUrl} className="flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-t-accent text-sm font-semibold text-t-on-accent">{client.ctaText}</a>
+      <a href={client.ctaUrl} className="flex min-h-[44px] flex-1 items-center justify-center rounded-lg bg-t-accent text-sm font-semibold text-t-on-accent">{locale === "es" && client.ctaTextEs ? client.ctaTextEs : client.ctaText}</a>
       <a href={telHref(client.phone)} className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-lg border border-t-text/40 text-sm font-semibold text-t-text">
-        <PhoneIcon size={14} className="text-t-accent" /> Call
+        <PhoneIcon size={14} className="text-t-accent" /> {ui.callShort}
       </a>
     </div>
   );
