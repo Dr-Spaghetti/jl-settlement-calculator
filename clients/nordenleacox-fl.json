@@ -1,0 +1,60 @@
+{
+  "id": "nordenleacox-fl",
+  "template": "firm-v1",
+  "stateModule": "FL",
+  "locales": ["en", "es"],
+  "firmName": "Norden Leacox Accident & Injury Law",
+  "shortName": "Norden Leacox",
+  "logoUrl": "/firms/nordenleacox/logo.svg",
+  "logo": {
+    "src": "/firms/nordenleacox/logo.svg",
+    "width": 300,
+    "height": 60,
+    "alt": "Norden Leacox Accident & Injury Law",
+    "headerBg": "#FFFFFF",
+    "artworkOffsetX": 0,
+    "artworkOffsetY": 0,
+    "heightPhone": 52,
+    "heightDesktop": 72
+  },
+  "theme": {
+    "headerBg": "#FFFFFF",
+    "ground": "#F5F7FA",
+    "surface": "#FFFFFF",
+    "accent": "#0D68C3",
+    "onAccent": "#FFFFFF",
+    "text": "#111827",
+    "muted": "#4A4F59"
+  },
+  "primaryColor": "#111827",
+  "secondaryColor": "#0D68C3",
+  "phone": "(407) 801-3000",
+  "website": "https://nordenleacox.com/",
+  "ctaText": "Get a Free Consultation",
+  "ctaTextEs": "Consulta Gratuita",
+  "ctaUrl": "https://nordenleacox.com/contact-us/",
+  "city": "Orlando",
+  "state": "FL",
+  "officeAddress": "633 E. Colonial Drive",
+  "officeZip": "32803",
+  "responsibleAttorney": "Zachary Adler Leacox",
+  "tagline": "Florida car accident settlement estimate.",
+  "attorneyDisclaimer": "",
+  "offices": [
+    { "name": "Orlando", "address": "633 E. Colonial Drive, Orlando, FL 32803", "phone": "407-801-3000" },
+    { "name": "Palm Bay", "address": "4620 Lipscomb St NE, Suite 3K, Palm Bay, FL 32905", "phone": "321-334-3819" },
+    { "name": "Melbourne", "address": "1600 W Eau Gallie Blvd, Suite 205J, Melbourne, FL 32935", "phone": "321-334-3929" },
+    { "name": "Cocoa", "address": "717 S Cocoa Blvd, Suite 203, Cocoa, FL 32922", "phone": "321-517-2079" },
+    { "name": "Titusville", "address": "4527 S Hopkins Ave, Suite B, Titusville, FL 32780", "phone": "321-455-5182" },
+    { "name": "Lakeland", "address": "1137 US Hwy 98 S, Suite 205, Lakeland, FL 33801", "phone": "407-874-5574" }
+  ],
+  "sources": {
+    "firmName": "https://nordenleacox.com/ (footer: '© 2026 Norden Leacox Accident & Injury Law. All rights reserved. Orlando, FL.')",
+    "phone": "https://nordenleacox.com/contact-us/orlando-personal-injury-law-office/ (JSON-LD telephone 407-801-3000); FL Bar #548571 'Office: 407-801-3000'",
+    "offices": "Each office's own page under https://nordenleacox.com/contact-us/<city>-.../ (JSON-LD streetAddress/telephone), fetched 2026-10-09. Albuquerque NM office (also on the site) omitted: Florida calculator. Oxford is named in homepage copy but has no location page/address: omitted.",
+    "responsibleAttorney": "The Florida Bar member profile #548571 (https://www.floridabar.org/directories/find-mbr/profile/?num=548571): Zachary Adler Leacox, Member in Good Standing, Norden Leacox, PLLC, 633 E Colonial Dr, Orlando, FL 32803-4602 (fetched 2026-10-09)",
+    "ctaText": "https://nordenleacox.com/ ('Get a Free Consultation'); https://nordenleacox.com/es/ ('Consulta Gratuita')",
+    "colors": "accent #0D68C3 and logo red from the official SVG; text #111827 from homepage CSS; ground/muted derived for contrast",
+    "logo": "https://nordenleacox.com/wp-content/uploads/2024/07/Norden-Leacox-accident-injury-law-1.svg (byte-identical copy)"
+  }
+}
