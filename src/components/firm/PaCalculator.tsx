@@ -1,4 +1,5 @@
 "use client";
+import { roundMoney } from "@/lib/engine/core";
 
 import { useMemo, useState } from "react";
 import type { ClientConfig } from "@/lib/types";
@@ -214,7 +215,7 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                       <select id="policy" className={input} value={policy} onChange={(e) => setPolicy(e.target.value as typeof policy)}>
                         {POLICY.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                       </select>
-                      <p className={help}>Not a legal cap on damages. This driver&apos;s insurance may stop at this limit; your underinsured motorist coverage or other sources may apply.</p>
+                      <p className={help}>Not a legal cap on damages. This driver&apos;s insurance may stop at this limit; your underinsured motorist coverage (if you bought it) or other sources may apply.</p>
                     </div>
                     <div>
                       <label htmlFor="offer" className={label}>Insurance offer received (optional)</label>
@@ -284,7 +285,7 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                 ) : null}
                 {r.policyLimitsMayBind && r.capped && !r.tortUnsure ? (
                   <p className="mt-4 rounded-lg border border-t-accent/50 bg-t-accent/10 px-3 py-2 text-xs text-t-text" role="status">
-                    <strong>Policy limit (practical estimate, not a legal cap):</strong> this driver&apos;s insurance may stop at the {fmt(POLICY.find((p) => p.id === policy)!.value ?? 0)} per-person limit you entered; your underinsured motorist coverage or other sources may apply.
+                    <strong>Policy limit (practical estimate, not a legal cap):</strong> this driver&apos;s insurance may stop at the {fmt(POLICY.find((p) => p.id === policy)!.value ?? 0)} per-person limit you entered; your underinsured motorist coverage (if you bought it) or other sources may apply.
                   </p>
                 ) : null}
                 {offerNum != null && Number.isFinite(offerNum) && offerNum >= 0 && shown.mid > 0 ? (
@@ -305,7 +306,7 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                     <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label} (estimate method, not law)`} v={`${(r.m.mid - r.m.adjustment).toFixed(2)}× base`} />
                     <Row k={`Liability: ${lev.breakdownLabel}`} v={`${lev.coef > 0 ? "+" : ""}${lev.coef.toFixed(2)}×`} />
                     <Row k="All adjustments" v={`${r.m.adjustment > 0 ? "+" : ""}${r.m.adjustment.toFixed(2)}×`} />
-                    <Row k={`Pain & suffering = gross medical × (${r.m.mid} − 1)`} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.tortUnsure ? `${fmt(medicalBills * (r.m.mid - 1))} if full tort` : "Not included (tort option)"} />
+                    <Row k={`Pain & suffering = gross medical × (${r.m.mid} − 1)`} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.tortUnsure ? `${fmt(roundMoney(medicalBills * (r.m.mid - 1)))} if full tort (before fault/limit)` : "Not included (tort option)"} />
                     <Row k={`Your fault ${r.faultPercent}%`} v={r.barred ? "Barred (>50%)" : `× ${(1 - r.faultPercent / 100).toFixed(2)}`} />
                     <Row k="Policy limit (practical, not a legal cap)" v={r.capped ? fmt(POLICY.find((p) => p.id === policy)!.value ?? 0) : "Unknown — not limited"} />
                   </dl>

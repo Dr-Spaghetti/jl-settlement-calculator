@@ -8,7 +8,8 @@ export function legalLine(c: ClientConfig): string {
   if (!c.responsibleAttorney || !c.officeAddress) {
     throw new Error(`clients/${c.id}.json: responsibleAttorney and officeAddress are required`);
   }
-  return `${c.firmName}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
+  return (`${c.firmName}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
+    (c.additionalOffices?.length ? `; ${c.additionalOffices.join("; ")}` : "")) +
     `. Responsible attorney: ${c.responsibleAttorney}. Use of this tool does not create an attorney-client relationship and is not legal advice.`;
 }
 
@@ -105,9 +106,9 @@ export function FirmHero({ a, b, chips }: { a: string; b: string; chips: { title
 export function FirmHowItWorks({ faultNote }: { faultNote: string }) {
   const steps = [
     ["Economic losses", "Medical bills (less benefits paid or payable by your own coverage), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
-    ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your own insurer pays). The multiplier range comes from injury severity, treatment and liability. This is an estimate method, not law, and not how any insurer or court must value a claim."],
+    ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your own insurer pays). The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault % (estimate method, not law). This is an estimate method, not law, and not how any insurer or court must value a claim."],
     ["State rules", faultNote],
-    ["Policy reality", "A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person limit, the shown range stops there as a practical collection estimate; your underinsured motorist coverage or other sources may apply. If you don't know the limit, nothing is limited."],
+    ["Policy reality", "A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person limit, the shown range stops there as a practical collection estimate; your underinsured motorist coverage (if you bought it) or other sources may apply. If you don't know the limit, nothing is limited."],
   ];
   return (
     <section id="how-it-works" className="px-4 py-14">

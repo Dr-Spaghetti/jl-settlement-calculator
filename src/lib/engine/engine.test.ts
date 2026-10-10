@@ -47,7 +47,7 @@ test("liability table: every button's coef and breakdown label equal the clicked
   }
 });
 
-test("modified 51% bar: 50% reduces, 51% bars", () => {
+test("barred when more than 50%: 50% reduces, 51% bars", () => {
   assert.deepEqual(applyModifiedFault50(10000, 50), { recoverable: 5000, barred: false });
   assert.deepEqual(applyModifiedFault50(10000, 51), { recoverable: 0, barred: true });
 });
@@ -125,9 +125,12 @@ test("PA copy: all six §1705(d) exceptions, §1702 serious-injury definition, s
     "intended to cause injury",
     "had no required insurance",
     "other than a private passenger car",
-    "vehicle-defect claim against a manufacturer or repair business",
+    "against a business that designs, manufactures, repairs, services or maintains vehicles (not for a vehicle that business was operating)",
   ]) assert.ok(t.includes(needle), needle);
-  assert.ok(PA_COPY.tortUnsureNote.includes("§ 1705(a)(3), (b)(3)"));
+  assert.equal(PA_COPY.tortUnsureNote, "If no one on your policy elected limited tort, Pennsylvania presumes full tort (75 Pa.C.S. § 1705(a)(3)). If you don't own a car and aren't covered under any household auto policy, you are generally not limited (§ 1705(b)(3)). An owner of a registered car without insurance is treated as limited tort (§ 1705(a)(5)).");
+  assert.ok(!PA_COPY.tortUnsureNote.includes("never signed") && !PA_COPY.tortUnsureNote.includes("your own car insurance"));
+  assert.ok(!t.includes("manufacturer or repair business"));
+  assert.ok(JSON.stringify(PA_COPY.faq).includes("underinsured motorist coverage (if you bought it)"));
   assert.equal(PA_COPY.faultChip.detail, "Barred if more than 50% at fault");
   assert.ok(!JSON.stringify(PA_COPY).includes("51%"));
   assert.ok(PA_COPY.firstPartyHelp.includes("Most car policies") && PA_COPY.firstPartyHelp.includes("§ 1722") && PA_COPY.firstPartyHelp.includes("health insurance"));

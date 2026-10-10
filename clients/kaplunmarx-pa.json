@@ -46,6 +46,10 @@
     "ctaUrl": "https://kaplunmarx.com/contact-us/",
     "colors": "_kaplunmarx-original-notes.md \u2014 site CSS navy #10172C, tan #AD9779, cream #F9F6F1",
     "headerBg": "#052240 = modal border pixel of kaplunmarx-full-navy-from-nick.png",
-    "officeCity_PENDING": "Rule 7.2(h): footer shows Philadelphia (firm contact page) but the Board registers Theodor Kaplun in Bryn Mawr. PENDING FIRM CONFIRMATION of where the handling lawyers principally practice."
-  }
+    "officeCity_PENDING": "Rule 7.2(h): footer shows Philadelphia (firm contact page) but the Board registers Theodor Kaplun in Bryn Mawr. PENDING FIRM CONFIRMATION of where the handling lawyers principally practice.",
+    "additionalOffices_PENDING": "PENDING FIRM CONFIRMATION. Bryn Mawr office: kaplunmarx.com/contact-us/ '1230 County Line Rd Bryn Mawr, PA 19010'; PA Disciplinary Board #312974 (Theodor Kaplun) '1230 COUNTY LINE RD, BRYN MAWR, county DELAWARE, 19004' (fetched 2026-10-09). ZIP differs (Board 19004 vs firm site 19010); footer uses the firm's 19010. Rule 7.2(h)."
+  },
+  "additionalOffices": [
+    "1230 County Line Rd, Bryn Mawr (Delaware County), PA 19010"
+  ]
 }

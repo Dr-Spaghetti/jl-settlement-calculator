@@ -13,10 +13,10 @@ export const PA_COPY = {
     "Your own auto policy's tort option matters in Pennsylvania (75 Pa.C.S. § 1705). Full tort keeps the right to seek pain and suffering. Limited tort generally does not, unless an exception applies.",
   tortExceptionsSummary: "Limited-tort exceptions (§ 1705(d))",
   tortExceptions:
-    "Even with limited tort, you can seek pain and suffering if your injury is a serious injury (death, serious impairment of body function, or permanent serious disfigurement), or if the at-fault driver: was convicted of or accepted ARD for DUI in this crash; was driving a vehicle registered in another state; intended to cause injury; or had no required insurance. You also keep full tort rights if you were in a vehicle other than a private passenger car (e.g., a bus or commercial vehicle), or for a vehicle-defect claim against a manufacturer or repair business.",
+    "Even with limited tort, you can seek pain and suffering if your injury is a serious injury (death, serious impairment of body function, or permanent serious disfigurement), or if the at-fault driver: was convicted of or accepted ARD for DUI in this crash; was driving a vehicle registered in another state; intended to cause injury; or had no required insurance. You also keep full tort rights if you were in a vehicle other than a private passenger car (e.g., a bus or commercial vehicle), or for a vehicle-defect claim against a business that designs, manufactures, repairs, services or maintains vehicles (not for a vehicle that business was operating).",
   tortExceptionQuestion: "Serious injury (death, serious impairment of body function, or permanent serious disfigurement), or does another exception apply?",
   tortUnsureNote:
-    "If you never signed a limited-tort form, or don't have your own car insurance, you are likely full tort (75 Pa.C.S. § 1705(a)(3), (b)(3)).",
+    "If no one on your policy elected limited tort, Pennsylvania presumes full tort (75 Pa.C.S. § 1705(a)(3)). If you don't own a car and aren't covered under any household auto policy, you are generally not limited (§ 1705(b)(3)). An owner of a registered car without insurance is treated as limited tort (§ 1705(a)(5)).",
   firstPartyHelp:
     "Most car policies pay at least $5,000 of your medical bills first (75 Pa.C.S. § 1711). Benefits paid or payable this way are not recovered again from the at-fault driver (§ 1722), so they are subtracted here. Bills paid by health insurance or other benefits generally can't be recovered from the other driver either. Enter $0 if you have no such coverage (for example, on a motorcycle).",
   policyMinLabel: `PA minimum: $${PA_LAW.minLiability.perPerson.toLocaleString("en-US")} per person / $${PA_LAW.minLiability.perAccident.toLocaleString("en-US")} per accident`,
@@ -39,7 +39,7 @@ export const PA_COPY = {
     },
     {
       q: "What if the at-fault driver only has the minimum insurance?",
-      a: "Pennsylvania's minimum bodily-injury liability is $15,000 per person and $30,000 per accident (75 Pa.C.S. § 1702). A policy limit is not a legal cap on damages: this driver's insurance may stop at that limit, and your underinsured motorist coverage or other sources may apply. Leave the policy limit on Unknown if you don't know it.",
+      a: "Pennsylvania's minimum bodily-injury liability is $15,000 per person and $30,000 per accident (75 Pa.C.S. § 1702). A policy limit is not a legal cap on damages: this driver's insurance may stop at that limit, and your underinsured motorist coverage (if you bought it) or other sources may apply. Leave the policy limit on Unknown if you don't know it.",
     },
   ],
 } as const;
