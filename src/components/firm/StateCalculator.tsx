@@ -99,14 +99,14 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
       <div className="mx-auto max-w-[1200px]">
         <h2 id="calc-h" className="sr-only">{ui.settlementCalculator}</h2>
         <div className="grid items-start gap-8 lg:grid-cols-12">
-          <div className="space-y-5 lg:col-span-7">
+          <div className="min-w-0 space-y-5 lg:col-span-7">
             <div className="flex rounded-xl border border-t-muted/20 bg-t-surface p-1.5" role="tablist" aria-label={ui.calcSteps}>
               {ui.steps.map((s, i) => (
                 <button key={s} type="button" role="tab" aria-selected={step === i} onClick={() => setStep(i)}
-                  className={`flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-lg text-xs font-semibold sm:text-sm ${step === i ? "bg-t-accent text-t-on-accent" : "text-t-muted hover:text-t-text"}`}>
-                  <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] ${step === i ? "bg-t-ground text-t-accent" : "bg-t-muted/15 text-t-text"}`}>{i + 1}</span>
+                  className={`flex min-h-[44px] min-w-0 flex-1 items-center justify-center gap-1 rounded-lg px-1 text-[11px] font-semibold sm:gap-2 sm:text-sm ${step === i ? "bg-t-accent text-t-on-accent" : "text-t-muted hover:text-t-text"}`}>
+                  <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] ${step === i ? "bg-t-ground text-t-accent" : "bg-t-muted/15 text-t-text"}`}>{i + 1}</span>
                   <span className="hidden sm:inline">{s}</span>
-                  <span className="sm:hidden">{ui.stepsShort[i]}</span>
+                  <span className="truncate sm:hidden">{ui.stepsShort[i]}</span>
                 </button>
               ))}
             </div>
@@ -217,7 +217,7 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
             </div>
           </div>
 
-          <div className="lg:col-span-5 lg:sticky lg:top-28">
+          <div className="min-w-0 lg:col-span-5 lg:sticky lg:top-28">
             <div id="results" aria-live="polite" className="overflow-hidden rounded-2xl border border-t-accent/60 bg-t-surface shadow-lg">
               <div className="border-b border-t-muted/20 px-6 py-4">
                 <span className="inline-block rounded border border-t-muted/20 bg-t-ground px-2 py-0.5 text-xs font-bold uppercase tracking-[0.14em] text-t-accent">{ui.estimateBadge}</span>
