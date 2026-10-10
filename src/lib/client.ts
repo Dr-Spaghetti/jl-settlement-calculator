@@ -72,5 +72,7 @@ export function stateRegionLabel(state: string): string {
   if (s === "WA") return "Washington";
   if (s === "CA") return "California";
   if (s === "PA") return "Pennsylvania";
+  if (s === "NJ") return "New Jersey";
+  if (s === "IL") return "Illinois";
   return state;
 }

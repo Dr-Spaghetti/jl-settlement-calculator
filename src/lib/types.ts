@@ -41,7 +41,7 @@ export interface ClientConfig {
   id: string;
   /** "firm-v1" = shared white-label template (src/components/firm). Omit for legacy Premier/Djougourian pages. */
   template?: "firm-v1";
-  stateModule?: "PA";
+  stateModule?: "PA" | "NJ" | "IL" | "CA";
   theme?: FirmTheme;
   logo?: FirmLogo;
   sources?: Record<string, string>;
