@@ -15,7 +15,7 @@ export const NJ_LAW = {
 } as const;
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
-const POLICY_HELP_TAIL = "your own underinsured or uninsured motorist coverage (if you bought it) or other sources may apply.";
+const POLICY_HELP_TAIL = "your own underinsured motorist coverage (if you bought it) or other sources may apply.";
 
 export const NJ_KIT: StateKit = {
   code: "NJ",
@@ -56,7 +56,7 @@ export const NJ_KIT: StateKit = {
       },
       {
         q: "What if the at-fault driver only has the minimum insurance?",
-        a: `For standard policies issued or renewed on or after January 1, 2026, New Jersey's minimum bodily-injury liability is ${usd(NJ_LAW.minLiability.perPerson)} per person and ${usd(NJ_LAW.minLiability.perAccident)} per accident (N.J.S.A. 39:6B-1). A basic policy does not include bodily-injury liability unless the optional $10,000 coverage was bought. A policy limit is not a legal cap on damages: this driver's insurance may stop at that limit, and ${POLICY_HELP_TAIL} Leave the policy limit on Unknown if you don't know it.`,
+        a: `For standard policies issued or renewed on or after January 1, 2026, New Jersey's minimum bodily-injury liability is ${usd(NJ_LAW.minLiability.perPerson)} per person and ${usd(NJ_LAW.minLiability.perAccident)} per accident (N.J.S.A. 39:6B-1). A basic policy does not include bodily-injury liability unless the optional $10,000 coverage was bought (NJ DOBI), and a car covered by a basic policy is not an \"uninsured motor vehicle\" for uninsured motorist coverage (N.J.S.A. 17:28-1.1(e)(2)). A policy limit is not a legal cap on damages: this driver's insurance may stop at that limit, and ${POLICY_HELP_TAIL} Leave the policy limit on Unknown if you don't know it.`,
       },
     ],
   },
