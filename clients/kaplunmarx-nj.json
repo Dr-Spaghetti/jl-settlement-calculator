@@ -1,0 +1,50 @@
+{
+  "id": "kaplunmarx-nj",
+  "template": "firm-v1",
+  "stateModule": "NJ",
+  "firmName": "KaplunMarx Accident & Injury Lawyers",
+  "shortName": "KaplunMarx",
+  "logoUrl": "/firms/kaplunmarx/logo.png",
+  "logo": {
+    "src": "/firms/kaplunmarx/logo.png",
+    "width": 831,
+    "height": 200,
+    "alt": "KaplunMarx Accident & Injury Lawyers",
+    "headerBg": "#052240",
+    "artworkOffsetX": 0,
+    "artworkOffsetY": -6.0,
+    "heightPhone": 52,
+    "heightDesktop": 72
+  },
+  "theme": {
+    "headerBg": "#052240",
+    "ground": "#10172C",
+    "surface": "#18223B",
+    "accent": "#AD9779",
+    "onAccent": "#10172C",
+    "text": "#F9F6F1",
+    "muted": "#BFC5D2"
+  },
+  "primaryColor": "#10172C",
+  "secondaryColor": "#AD9779",
+  "phone": "(856) 214-2440",
+  "website": "https://kaplunmarx.com/",
+  "ctaText": "Free Consultation",
+  "ctaUrl": "https://kaplunmarx.com/contact-us/",
+  "city": "Marlton",
+  "state": "NJ",
+  "officeAddress": "10000 Lincoln Dr E #201",
+  "officeZip": "08053",
+  "responsibleAttorney": "Theodor (Ted) Kaplun",
+  "tagline": "New Jersey car accident settlement estimate.",
+  "attorneyDisclaimer": "",
+  "sources": {
+    "firmName": "https://kaplunmarx.com/ (footer: '© 2026 KaplunMarx Accident & Injury Lawyers. All Rights Reserved')",
+    "officeAddress": "https://kaplunmarx.com/contact-us/ ('Marlton 10000 Lincoln Dr E #201 Marlton, NJ 08053 (856) 214 - 2440')",
+    "phone": "https://kaplunmarx.com/contact-us/ (Marlton office line (856) 214-2440)",
+    "responsibleAttorney": "https://kaplunmarx.com/ted-kaplun/ ('Bar Admission Pennsylvania New Jersey'); PA Disciplinary Board #312974 (Theodor Kaplun, KaplunMarx, PLLC). NJ official attorney-index status NOT CHECKED (UNVERIFIED).",
+    "ctaUrl": "https://kaplunmarx.com/contact-us/",
+    "colors": "same as kaplunmarx-pa (site CSS navy #10172C, tan #AD9779, cream #F9F6F1)",
+    "headerBg": "#052240 = modal border pixel of kaplunmarx-full-navy-from-nick.png"
+  }
+}
