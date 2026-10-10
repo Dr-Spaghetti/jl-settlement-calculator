@@ -26,7 +26,7 @@ export const IL_KIT: StateKit = {
     barredNote: "At {fault}% fault, your fault would be more than 50% of the proximate cause, which bars recovery in Illinois (735 ILCS 5/2-1116).",
     how: [
       ["Economic losses", "Medical bills, lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
-      ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1). The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
+      ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1). The multiplier range comes from injury severity, treatment. Your share of fault is applied only once, as the statutory percentage reduction (with the bar above 50%). This is an estimate method, not law, and not how any insurer or court must value a claim."],
       ["State rules", "Illinois comparative fault (735 ILCS 5/2-1116) is applied as described in the calculator."],
       ["Policy reality", `A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person limit, the shown range stops there as a practical collection estimate; ${TAIL} If you don't know the limit, nothing is limited.`],
     ],

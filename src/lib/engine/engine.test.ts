@@ -5,46 +5,57 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { grossRange, multipliers, applyModifiedFault50, type CoreInputs } from "./core";
-import { LIABILITY_OPTIONS, liabilityOption } from "./liability";
 import { calculatePA, PA_LAW, type PaInputs } from "./states/pa";
 import { PA_COPY } from "./states/pa.copy";
 
 const core: CoreInputs = {
   medicalBills: 10000, lostWages: 2000, otherOutOfPocket: 500, propertyDamage: 3000,
   severity: "moderate", careType: "md", treatmentMonths: 4, treatmentGap: "none",
-  permanency: "none", liability: "clear",
+  permanency: "none",
 };
 const pa: PaInputs = { ...core, tortOption: "full", limitedTortException: "unsure", plaintiffFaultPercent: 0, firstPartyMedical: 5000, policyLimitPerPerson: null };
 
-test("golden: $5k medical + $200k wages → ≈$223,600 mid (economics never multiplied)", () => {
-  // adj = md 0.10 + 4mo 0.15 + gap 0 + perm 0 + clear 0.25 = 0.50 → mid 2.75+0.5 = 3.25
-  // 5,000×3.25 + 200,000 + 800 + 6,500 = 223,550
+test("golden: $5k medical + $200k wages → $222,300 mid (economics never multiplied)", () => {
+  // adj = md 0.10 + 4mo 0.15 + gap 0 + perm 0 = 0.25 (no liability term) → mid 2.75+0.25 = 3.00
+  // 5,000×3.00 + 200,000 + 800 + 6,500 = 222,300
   const g = grossRange({ ...core, medicalBills: 5000, lostWages: 200000, otherOutOfPocket: 800, propertyDamage: 6500 });
-  assert.equal(g.m.mid, 3.25);
-  assert.equal(Math.round(g.mid / 100) * 100, 223600);
+  assert.equal(g.m.mid, 3);
+  assert.equal(Math.round(g.mid / 100) * 100, 222300);
 });
 
 test("golden: zero wages", () => {
-  // 10,000×3.25 + 0 + 500 + 3,000 = 36,000
-  assert.equal(grossRange({ ...core, lostWages: 0 }).mid, 36000);
+  // 10,000×3.00 + 0 + 500 + 3,000 = 33,500
+  assert.equal(grossRange({ ...core, lostWages: 0 }).mid, 33500);
 });
 
 test("golden: max severity clamps at 7×", () => {
-  // catastrophic high 6.0 + surgery .45 + 13mo .45 + rated .55 + clear .25 = 7.70 → clamp 7
+  // catastrophic high 6.0 + surgery .45 + 13mo .45 + rated .55 = 7.45 → clamp 7
   const m = multipliers({ ...core, severity: "catastrophic", careType: "surgery", treatmentMonths: 13, permanency: "rated" });
   assert.equal(m.high, 7);
-  assert.equal(m.mid, 6.7); // 5.0 + 1.70
+  assert.equal(m.mid, 6.45); // 5.0 + 1.45
 });
 
-test("liability table: every button's coef and breakdown label equal the clicked option", () => {
-  const expected = { clear: 0.25, mixed: -0.2, disputed: -0.55 } as const;
-  for (const o of LIABILITY_OPTIONS) {
-    assert.equal(liabilityOption(o.id).coef, expected[o.id]);
-    assert.equal(o.breakdownLabel, o.label);
-    // mid multiplier moves by exactly the option's coef vs a zero-liability baseline
-    const m = multipliers({ ...core, liability: o.id });
-    assert.equal(Math.round((m.mid - (2.75 + 0.1 + 0.15)) * 100) / 100, expected[o.id]);
+test("§ 7102: fault is applied once — recoverable = round(gross × (1 − f)) for f ≤ 50, $0 for f > 50; no liability input exists", () => {
+  // Inputs carry no liability/shared-fault field (CoreInputs has none), so nothing else can reduce for fault.
+  assert.ok(!("liability" in pa));
+  const g = calculatePA(pa).recoverable; // f = 0 → 23,000 / 30,500 / 38,000 (hand case below)
+  for (let f = 0; f <= 100; f++) {
+    const r = calculatePA({ ...pa, plaintiffFaultPercent: f });
+    const k = (n: number) => (f > 50 ? 0 : Math.round((n * (1 - f / 100)) / 100) * 100);
+    assert.deepEqual(r.recoverable, { low: k(g.low), mid: k(g.mid), high: k(g.high) }, `fault ${f}%`);
+    assert.equal(r.barred, f > 50);
   }
+});
+
+test("§ 7102 example: $100,000 gross at 20% fault = $80,000; 50% = $50,000; 51% = $0", () => {
+  assert.deepEqual(applyModifiedFault50(100000, 20), { recoverable: 80000, barred: false });
+  // End to end: medical 10,000 (no first-party offset) + wages 70,000 = economic 80,000;
+  // mid multiplier 3.00 → P&S 10,000 × 2.00 = 20,000 → gross mid 100,000.
+  const i: PaInputs = { ...pa, medicalBills: 10000, lostWages: 70000, otherOutOfPocket: 0, propertyDamage: 0, firstPartyMedical: 0 };
+  assert.equal(calculatePA(i).recoverable.mid, 100000);
+  assert.equal(calculatePA({ ...i, plaintiffFaultPercent: 20 }).recoverable.mid, 80000);
+  assert.equal(calculatePA({ ...i, plaintiffFaultPercent: 50 }).recoverable.mid, 50000);
+  assert.equal(calculatePA({ ...i, plaintiffFaultPercent: 51 }).recoverable.mid, 0);
 });
 
 test("barred when more than 50%: 50% reduces, 51% bars", () => {
@@ -61,23 +72,23 @@ test("PA constants equal the figures quoted from §1702 ($15k/$30k/$5k), §1711(
 });
 
 test("PA hand case — full tort, 0% fault", () => {
-  // mult low 2.5 / mid 3.25 / high 4.0
+  // mult low 2.25 / mid 3.00 / high 3.75 (moderate 2.0/2.75/3.5 + md .10 + 4 mo .15)
   // economic = (10,000 − 5,000 first-party) + 2,000 + 500 + 3,000 = 10,500
-  // non-economic = 10,000 × (m − 1) = 15,000 / 22,500 / 30,000
-  // total = 25,500 / 33,000 / 40,500
+  // non-economic = 10,000 × (m − 1) = 12,500 / 20,000 / 27,500
+  // total = 23,000 / 30,500 / 38,000
   const r = calculatePA(pa);
-  assert.deepEqual(r.recoverable, { low: 25500, mid: 33000, high: 40500 });
+  assert.deepEqual(r.recoverable, { low: 23000, mid: 30500, high: 38000 });
   assert.equal(r.economic, 10500);
   assert.equal(r.barred, false);
 });
 
 test("PA hand case — 20% fault reduces proportionally", () => {
-  // 25,500×.8 = 20,400; 33,000×.8 = 26,400; 40,500×.8 = 32,400
-  assert.deepEqual(calculatePA({ ...pa, plaintiffFaultPercent: 20 }).recoverable, { low: 20400, mid: 26400, high: 32400 });
+  // 23,000×.8 = 18,400; 30,500×.8 = 24,400; 38,000×.8 = 30,400
+  assert.deepEqual(calculatePA({ ...pa, plaintiffFaultPercent: 20 }).recoverable, { low: 18400, mid: 24400, high: 30400 });
 });
 
 test("PA hand case — 50% recovers half, 51% barred to $0", () => {
-  assert.deepEqual(calculatePA({ ...pa, plaintiffFaultPercent: 50 }).recoverable, { low: 12800, mid: 16500, high: 20300 }); // 12,750→12,800; 20,250→20,300
+  assert.deepEqual(calculatePA({ ...pa, plaintiffFaultPercent: 50 }).recoverable, { low: 11500, mid: 15300, high: 19000 }); // 11,500; 15,250→15,300; 19,000
   const b = calculatePA({ ...pa, plaintiffFaultPercent: 51 });
   assert.equal(b.barred, true);
   assert.deepEqual(b.recoverable, { low: 0, mid: 0, high: 0 });
@@ -88,32 +99,32 @@ test("PA limited tort without exception → economic damages only (10,500)", () 
     const r = calculatePA({ ...pa, tortOption: "limited", limitedTortException: ex });
     assert.deepEqual(r.recoverable, { low: 10500, mid: 10500, high: 10500 });
     assert.equal(r.nonEconomicAllowed, false);
-    assert.deepEqual(r.ifNonEconomicAvailable, { low: 25500, mid: 33000, high: 40500 });
+    assert.deepEqual(r.ifNonEconomicAvailable, { low: 23000, mid: 30500, high: 38000 });
   }
   const yes = calculatePA({ ...pa, tortOption: "limited", limitedTortException: "yes" });
-  assert.deepEqual(yes.recoverable, { low: 25500, mid: 33000, high: 40500 });
+  assert.deepEqual(yes.recoverable, { low: 23000, mid: 30500, high: 38000 });
 });
 
 test("PA 'not sure' tort → BOTH scenarios with equal weight (§1705(a)(3), (b)(3))", () => {
-  // full: 25,500 / 33,000 / 40,500 (hand case above); limited, no exception: economic only 10,500
+  // full: 23,000 / 30,500 / 38,000 (hand case above); limited, no exception: economic only 10,500
   const r = calculatePA({ ...pa, tortOption: "unsure" });
-  assert.deepEqual(r.tortUnsure, { full: { low: 25500, mid: 33000, high: 40500 }, limited: { low: 10500, mid: 10500, high: 10500 } });
+  assert.deepEqual(r.tortUnsure, { full: { low: 23000, mid: 30500, high: 38000 }, limited: { low: 10500, mid: 10500, high: 10500 } });
   assert.equal(calculatePA({ ...pa, tortOption: "full" }).tortUnsure, null);
 });
 
 test("PA 'not sure' + 20% fault + $15k limit: both scenarios reduced, then limited as a practical estimate", () => {
-  // full ×0.8 = 20,400 / 26,400 / 32,400 → each above 15,000 → 15,000 ×3
+  // full ×0.8 = 18,400 / 24,400 / 30,400 → each above 15,000 → 15,000 ×3
   // limited 10,500 × 0.8 = 8,400 (below 15,000, unchanged)
   const r = calculatePA({ ...pa, tortOption: "unsure", plaintiffFaultPercent: 20, policyLimitPerPerson: 15000 });
   assert.deepEqual(r.tortUnsure, { full: { low: 15000, mid: 15000, high: 15000 }, limited: { low: 8400, mid: 8400, high: 8400 } });
 });
 
 test("PA medical benefit may be $0 (e.g. motorcycle): no deduction", () => {
-  // economic = 10,000 + 2,000 + 500 + 3,000 = 15,500; full tort mid = 15,500 + 22,500 = 38,000
+  // economic = 10,000 + 2,000 + 500 + 3,000 = 15,500; full tort mid = 15,500 + 20,000 = 35,500
   const r = calculatePA({ ...pa, firstPartyMedical: 0 });
   assert.equal(r.medicalOffset, 0);
   assert.equal(r.economic, 15500);
-  assert.equal(r.recoverable.mid, 38000);
+  assert.equal(r.recoverable.mid, 35500);
 });
 
 test("PA copy: all six §1705(d) exceptions, §1702 serious-injury definition, statutory fault wording, no '51%' shorthand", () => {
@@ -149,4 +160,25 @@ test("Policy limit: Unknown default → no cap, no banner; $15k cap binds", () =
   const c = calculatePA({ ...pa, policyLimitPerPerson: 15000 });
   assert.deepEqual(c.capped, { low: 15000, mid: 15000, high: 15000 });
   assert.equal(c.policyLimitsMayBind, true);
+});
+
+// ---- Breakdown base / clamp. Hand-worked (no liability term). ----
+test("PA clamp floor: minor 1.5/2.0/2.5 + chiro −.15 + ≤1 mo −.15 + long gap −.45 = −0.75 → 0.75/1.25/1.75 → 1.25/1.25/1.75; real base 2.00", () => {
+  const i = { ...pa, severity: "minor", careType: "chiro", treatmentMonths: 1, treatmentGap: "long" } as PaInputs;
+  const m = multipliers(i);
+  assert.equal(m.adjustment, -0.75);
+  assert.deepEqual([m.low, m.mid, m.high, m.baseMid, m.clamped], [1.25, 1.25, 1.75, 2.0, true]);
+  // econ 10,500; P&S 10,000 × 0.25/0.25/0.75 = 2,500/2,500/7,500 → 13,000/13,000/18,000
+  assert.deepEqual(calculatePA(i).recoverable, { low: 13000, mid: 13000, high: 18000 });
+});
+test("PA no clamp on defaults: moderate 2.0/2.75/3.5 + .25 → 2.25/3.00/3.75, baseMid 2.75, clamped false", () => {
+  const m = multipliers(pa);
+  assert.deepEqual([m.low, m.mid, m.high, m.baseMid, m.clamped], [2.25, 3, 3.75, 2.75, false]);
+});
+test("PA clamp ceiling: catastrophic 4/5/6 + surgery .45 + 13 mo .45 + rated .55 = +1.45 → 5.45/6.45/7.45→7.00", () => {
+  const i = { ...pa, severity: "catastrophic", careType: "surgery", treatmentMonths: 13, permanency: "rated" } as PaInputs;
+  const m = multipliers(i);
+  assert.deepEqual([m.low, m.mid, m.high, m.baseMid, m.clamped], [5.45, 6.45, 7, 5.0, true]);
+  // P&S 10,000 × 4.45/5.45/6.00 = 44,500/54,500/60,000; + 10,500 → 55,000/65,000/70,500
+  assert.deepEqual(calculatePA(i).recoverable, { low: 55000, mid: 65000, high: 70500 });
 });
