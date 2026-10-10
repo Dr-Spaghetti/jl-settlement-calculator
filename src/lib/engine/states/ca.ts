@@ -11,7 +11,7 @@ export const CA_LAW = {
 } as const;
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
-const TAIL = "your own underinsured motorist coverage (if you bought it) or other sources may apply.";
+const TAIL = "your own underinsured motorist coverage (included unless you rejected it in writing; it applies only if your limit is higher than the at-fault driver's) or other sources may apply.";
 const PROP213_LIST =
   "you were driving under the influence (Vehicle Code § 23152 or 23153) and were convicted of that offense; you owned a vehicle involved in the crash that was not insured as required by California's financial responsibility laws; or you were driving a vehicle involved in the crash and can't establish the financial responsibility those laws require";
 

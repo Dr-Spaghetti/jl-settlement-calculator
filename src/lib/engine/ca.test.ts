@@ -54,3 +54,10 @@ test("CA copy: no '50%'/'51%' bar language, Prop 213 lists all three § 3333.4(a
   for (const n of ["convicted of that offense", "not insured as required", "can't establish the financial responsibility"]) assert.ok(CA_KIT.gate!.help.includes(n), n);
   assert.equal(CA_KIT.offset, undefined);
 });
+
+test("CA: UIM tail on policy surfaces, no 'if you bought it'", () => {
+  const tail = "your own underinsured motorist coverage (included unless you rejected it in writing; it applies only if your limit is higher than the at-fault driver's) or other sources may apply.";
+  const c = CA_KIT.copy;
+  assert.ok(c.policyHelp.includes(tail) && c.policyBanner.includes(tail) && c.how[3][1].includes(tail) && c.faq[3].a.includes(tail));
+  assert.ok(!JSON.stringify(CA_KIT).includes("if you bought it"));
+});
