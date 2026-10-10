@@ -302,7 +302,7 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                     <Row k="Less benefits paid or payable (§ 1722; § 1711 medical benefit)" v={`− ${fmt(r.medicalOffset)}`} />
                     <Row k="Lost wages + other + property (added once)" v={fmt(lostWages + otherOutOfPocket + propertyDamage)} />
                     <Row k="Economic damages" v={fmt(r.economic)} strong />
-                    <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label}`} v={`${(r.m.mid - r.m.adjustment).toFixed(2)}× base (estimate method, not law)`} />
+                    <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label} (estimate method, not law)`} v={`${(r.m.mid - r.m.adjustment).toFixed(2)}× base`} />
                     <Row k={`Liability: ${lev.breakdownLabel}`} v={`${lev.coef > 0 ? "+" : ""}${lev.coef.toFixed(2)}×`} />
                     <Row k="All adjustments" v={`${r.m.adjustment > 0 ? "+" : ""}${r.m.adjustment.toFixed(2)}×`} />
                     <Row k={`Pain & suffering = gross medical × (${r.m.mid} − 1)`} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.tortUnsure ? `${fmt(medicalBills * (r.m.mid - 1))} if full tort` : "Not included (tort option)"} />
