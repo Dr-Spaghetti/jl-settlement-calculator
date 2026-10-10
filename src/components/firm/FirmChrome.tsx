@@ -45,6 +45,10 @@ export function FirmHeader({ client, regionName, rule }: { client: ClientConfig;
               width={logo.width}
               height={logo.height}
               className="firm-logo block h-11 w-auto sm:h-14"
+              // Optical centering of the file's artwork inside its own canvas (CSS move only; file untouched).
+              style={{
+                transform: `translate(${(-(logo.artworkOffsetX ?? 0) / logo.width) * 100}%, ${(-(logo.artworkOffsetY ?? 0) / logo.height) * 100}%)`,
+              }}
               decoding="async"
             />
           </a>
