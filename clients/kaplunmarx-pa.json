@@ -12,7 +12,9 @@
     "alt": "KaplunMarx Accident & Injury Lawyers",
     "headerBg": "#052240",
     "artworkOffsetX": 0,
-    "artworkOffsetY": -6.0
+    "artworkOffsetY": -6.0,
+    "heightPhone": 52,
+    "heightDesktop": 72
   },
   "theme": {
     "headerBg": "#052240",

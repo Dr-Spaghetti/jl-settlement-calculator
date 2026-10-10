@@ -33,8 +33,16 @@ export function FirmHeader({ client, regionName, rule }: { client: ClientConfig;
           </a>
         </div>
       </div>
-      <header className="sticky top-0 z-40 border-b border-t-accent/40 shadow-md" style={{ backgroundColor: logo.headerBg }}>
-        <div className="mx-auto flex h-[4.5rem] max-w-[1200px] items-center justify-between gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
+      <header
+        className="sticky top-0 z-40 border-b border-t-accent/40 shadow-md"
+        style={{
+          backgroundColor: logo.headerBg,
+          // Logo heights per firm (CSS px). Bar = logo + the same vertical padding as before (14px phone, 12px desktop).
+          ["--logo-h-m" as string]: `${logo.heightPhone ?? 44}px`,
+          ["--logo-h-d" as string]: `${logo.heightDesktop ?? 56}px`,
+        }}
+      >
+        <div className="mx-auto flex h-[calc(var(--logo-h-m)+28px)] max-w-[1200px] items-center justify-between gap-4 px-4 sm:h-[calc(var(--logo-h-d)+24px)] sm:px-6 lg:px-8">
           <a href="#top" id="firm-logo-box" className="flex h-full shrink-0 items-center" aria-label={`${client.firmName} home`}>
             {/* Official file, untouched; scaled by CSS only. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -44,7 +52,7 @@ export function FirmHeader({ client, regionName, rule }: { client: ClientConfig;
               alt={logo.alt}
               width={logo.width}
               height={logo.height}
-              className="firm-logo block h-11 w-auto sm:h-14"
+              className="firm-logo block h-[var(--logo-h-m)] w-auto sm:h-[var(--logo-h-d)]"
               // Optical centering of the file's artwork inside its own canvas (CSS move only; file untouched).
               style={{
                 transform: `translate(${(-(logo.artworkOffsetX ?? 0) / logo.width) * 100}%, ${(-(logo.artworkOffsetY ?? 0) / logo.height) * 100}%)`,

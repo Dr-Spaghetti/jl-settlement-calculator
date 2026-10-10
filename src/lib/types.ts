@@ -35,7 +35,7 @@ export interface FirmMultipliers {
 }
 
 export interface FirmTheme { headerBg: string; ground: string; surface: string; accent: string; onAccent: string; text: string; muted: string }
-export interface FirmLogo { src: string; width: number; height: number; alt: string; headerBg: string; artworkOffsetX?: number; artworkOffsetY?: number }
+export interface FirmLogo { src: string; width: number; height: number; alt: string; headerBg: string; artworkOffsetX?: number; artworkOffsetY?: number; /** CSS px; default 44 */ heightPhone?: number; /** CSS px (≥640px); default 56 */ heightDesktop?: number }
 
 export interface ClientConfig {
   id: string;
