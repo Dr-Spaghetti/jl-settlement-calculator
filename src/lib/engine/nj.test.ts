@@ -85,3 +85,11 @@ test("NJ PIP copy follows Haines v. Taft: $250,000 regardless of elected PIP lim
   assert.equal(NJ_KIT.offset!.defaultValue, 250000);
   assert.ok(!JSON.stringify(NJ_KIT).includes("Enter your actual PIP limit"));
 });
+
+test("NJ: UIM tail on all 4 policy surfaces, no 'if you bought it', 8.1(a) household note", () => {
+  const tail = "your own underinsured motorist coverage (required on standard policies, not included in basic policies; it applies only if your UIM limit is higher than the at-fault driver's limit) or other sources may apply.";
+  const c = NJ_KIT.copy;
+  assert.ok(c.policyHelp.includes(tail) && c.policyBanner.includes(tail) && c.how[3][1].includes(tail) && c.faq[4].a.includes(tail));
+  assert.ok(!JSON.stringify(NJ_KIT).includes("if you bought it"));
+  assert.ok(NJ_KIT.gate!.unsureNote.includes("The choice applies to you and to your spouse and children who live with you and are not named insureds on another auto policy (N.J.S.A. 39:6A-8.1(a))."));
+});

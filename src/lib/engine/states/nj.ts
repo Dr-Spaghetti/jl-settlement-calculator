@@ -15,7 +15,7 @@ export const NJ_LAW = {
 } as const;
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
-const POLICY_HELP_TAIL = "your own underinsured motorist coverage (if you bought it) or other sources may apply.";
+const POLICY_HELP_TAIL = "your own underinsured motorist coverage (required on standard policies, not included in basic policies; it applies only if your UIM limit is higher than the at-fault driver's limit) or other sources may apply.";
 
 export const NJ_KIT: StateKit = {
   code: "NJ",
@@ -73,7 +73,7 @@ export const NJ_KIT: StateKit = {
       "With the limitation on lawsuit option, pain and suffering is recoverable only for a bodily injury that results in death; dismemberment; significant disfigurement or significant scarring; displaced fractures; loss of a fetus; or a permanent injury within a reasonable degree of medical probability, other than scarring or disfigurement. An injury is considered permanent when the body part or organ has not healed to function normally and will not heal to function normally with further medical treatment.",
     exceptionQuestion: "Does your injury fall into one of those categories (for example, a displaced fracture or a permanent injury)?",
     unsureNote:
-      "If the named insured didn't choose a lawsuit option, New Jersey law treats the policy as having the limitation on lawsuit option (N.J.S.A. 39:6A-8.1(b)), and a basic policy includes it (NJ DOBI). The choice applies to you, your spouse, children and other relatives living with you who are not covered under another auto policy (NJ DOBI).",
+      "If the named insured didn't choose a lawsuit option, New Jersey law treats the policy as having the limitation on lawsuit option (N.J.S.A. 39:6A-8.1(b)), and a basic policy includes it (NJ DOBI). The choice applies to you and to your spouse and children who live with you and are not named insureds on another auto policy (N.J.S.A. 39:6A-8.1(a)).",
     scenarioOpen: "If no limitation on lawsuit",
     scenarioRestricted: "If limitation, no listed injury",
     headingUnsure: "Two Scenarios: Lawsuit Option Not Sure",
