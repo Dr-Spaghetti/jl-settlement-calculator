@@ -7,6 +7,7 @@ import assert from "node:assert/strict";
 import { grossRange, multipliers, applyModifiedFault50, type CoreInputs } from "./core";
 import { LIABILITY_OPTIONS, liabilityOption } from "./liability";
 import { calculatePA, PA_LAW, type PaInputs } from "./states/pa";
+import { PA_COPY } from "./states/pa.copy";
 
 const core: CoreInputs = {
   medicalBills: 10000, lostWages: 2000, otherOutOfPocket: 500, propertyDamage: 3000,
@@ -51,7 +52,7 @@ test("modified 51% bar: 50% reduces, 51% bars", () => {
   assert.deepEqual(applyModifiedFault50(10000, 51), { recoverable: 0, barred: true });
 });
 
-test("PA law values match the verified reference", () => {
+test("PA constants equal the figures quoted from §1702 ($15k/$30k/$5k), §1711(a) ($5,000) and §5524 (2 years) — a constant check, not a test of the law itself", () => {
   assert.equal(PA_LAW.minLiability.perPerson, 15000);
   assert.equal(PA_LAW.minLiability.perAccident, 30000);
   assert.equal(PA_LAW.minLiability.propertyDamage, 5000);
@@ -93,8 +94,44 @@ test("PA limited tort without exception → economic damages only (10,500)", () 
   assert.deepEqual(yes.recoverable, { low: 25500, mid: 33000, high: 40500 });
 });
 
-test("PA 'not sure' tort → conservative economic-only headline", () => {
-  assert.deepEqual(calculatePA({ ...pa, tortOption: "unsure" }).recoverable, { low: 10500, mid: 10500, high: 10500 });
+test("PA 'not sure' tort → BOTH scenarios with equal weight (§1705(a)(3), (b)(3))", () => {
+  // full: 25,500 / 33,000 / 40,500 (hand case above); limited, no exception: economic only 10,500
+  const r = calculatePA({ ...pa, tortOption: "unsure" });
+  assert.deepEqual(r.tortUnsure, { full: { low: 25500, mid: 33000, high: 40500 }, limited: { low: 10500, mid: 10500, high: 10500 } });
+  assert.equal(calculatePA({ ...pa, tortOption: "full" }).tortUnsure, null);
+});
+
+test("PA 'not sure' + 20% fault + $15k limit: both scenarios reduced, then limited as a practical estimate", () => {
+  // full ×0.8 = 20,400 / 26,400 / 32,400 → each above 15,000 → 15,000 ×3
+  // limited 10,500 × 0.8 = 8,400 (below 15,000, unchanged)
+  const r = calculatePA({ ...pa, tortOption: "unsure", plaintiffFaultPercent: 20, policyLimitPerPerson: 15000 });
+  assert.deepEqual(r.tortUnsure, { full: { low: 15000, mid: 15000, high: 15000 }, limited: { low: 8400, mid: 8400, high: 8400 } });
+});
+
+test("PA medical benefit may be $0 (e.g. motorcycle): no deduction", () => {
+  // economic = 10,000 + 2,000 + 500 + 3,000 = 15,500; full tort mid = 15,500 + 22,500 = 38,000
+  const r = calculatePA({ ...pa, firstPartyMedical: 0 });
+  assert.equal(r.medicalOffset, 0);
+  assert.equal(r.economic, 15500);
+  assert.equal(r.recoverable.mid, 38000);
+});
+
+test("PA copy: all six §1705(d) exceptions, §1702 serious-injury definition, statutory fault wording, no '51%' shorthand", () => {
+  const t = PA_COPY.tortExceptions;
+  for (const needle of [
+    "death, serious impairment of body function, or permanent serious disfigurement",
+    "convicted of or accepted ARD for DUI in this crash",
+    "registered in another state",
+    "intended to cause injury",
+    "had no required insurance",
+    "other than a private passenger car",
+    "vehicle-defect claim against a manufacturer or repair business",
+  ]) assert.ok(t.includes(needle), needle);
+  assert.ok(PA_COPY.tortUnsureNote.includes("§ 1705(a)(3), (b)(3)"));
+  assert.equal(PA_COPY.faultChip.detail, "Barred if more than 50% at fault");
+  assert.ok(!JSON.stringify(PA_COPY).includes("51%"));
+  assert.ok(PA_COPY.firstPartyHelp.includes("Most car policies") && PA_COPY.firstPartyHelp.includes("§ 1722") && PA_COPY.firstPartyHelp.includes("health insurance"));
+  assert.ok(!PA_LAW.tortOption.verifiedOn.includes("not yet opened") && !PA_LAW.sol.verifiedOn.includes("not yet opened"));
 });
 
 test("PA first-party offset never exceeds medical bills", () => {

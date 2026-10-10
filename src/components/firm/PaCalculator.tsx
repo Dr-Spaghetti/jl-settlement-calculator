@@ -196,19 +196,25 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                       <span className={label}>Your own policy&apos;s tort option</span>
                       <Choice name="Tort option" opts={TORT} v={tortOption} set={setTort} />
                       <p className={help}>{PA_COPY.tortHelp}</p>
+                      <details className={help}>
+                        <summary className="cursor-pointer font-semibold text-t-accent">{PA_COPY.tortExceptionsSummary}</summary>
+                        <p className="mt-1">{PA_COPY.tortExceptions}</p>
+                      </details>
+                      {tortOption === "unsure" ? <p className={help}>{PA_COPY.tortUnsureNote}</p> : null}
                     </div>
                     {tortOption === "limited" ? (
                       <div>
-                        <span className={label}>Serious injury, or does an exception apply?</span>
+                        <span className={label}>{PA_COPY.tortExceptionQuestion}</span>
                         <Choice name="Limited tort exception" opts={EXC} v={exc} set={setExc} />
                       </div>
                     ) : null}
                     <Money id="fpb" l="Your own policy's medical benefit" h={PA_COPY.firstPartyHelp} v={firstParty} set={setFirstParty} />
                     <div>
-                      <label htmlFor="policy" className={label}>At-fault driver&apos;s bodily-injury limit</label>
+                      <label htmlFor="policy" className={label}>At-fault driver&apos;s bodily-injury limit (practical collection estimate)</label>
                       <select id="policy" className={input} value={policy} onChange={(e) => setPolicy(e.target.value as typeof policy)}>
                         {POLICY.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                       </select>
+                      <p className={help}>Not a legal cap on damages. This driver&apos;s insurance may stop at this limit; your underinsured motorist coverage or other sources may apply.</p>
                     </div>
                     <div>
                       <label htmlFor="offer" className={label}>Insurance offer received (optional)</label>
@@ -233,42 +239,52 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
               <div className="border-b border-t-muted/20 px-6 py-4">
                 <span className="inline-block rounded border border-t-muted/20 bg-t-ground px-2 py-0.5 text-xs font-bold uppercase tracking-[0.14em] text-t-accent">Settlement Estimate</span>
                 <h3 className="font-display mt-2 text-lg font-semibold text-t-text">
-                  {r.nonEconomicAllowed ? "Estimated Settlement Range" : "Economic Damages Only"}
+                  {r.tortUnsure ? "Two Scenarios: Tort Option Not Sure" : r.nonEconomicAllowed ? "Estimated Settlement Range" : "Economic Damages Only"}
                 </h3>
               </div>
               <div className="p-6">
-                {single ? (
-                  <div className="rounded-xl bg-t-accent p-4 text-center text-t-on-accent">
-                    <span className="block text-[11px] font-bold uppercase tracking-wider">Estimate</span>
-                    <span id="est-mid" className="block text-3xl font-black tabular-nums">{fmt(shown.mid)}</span>
+                {r.tortUnsure ? (
+                  <div className="space-y-3">
+                    <Scenario title="If full tort" range={r.tortUnsure.full} m={r.m} />
+                    <Scenario title="If limited tort, no exception" range={r.tortUnsure.limited} />
+                    <p className="text-center text-xs leading-snug text-t-muted">{PA_COPY.tortUnsureNote}</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-[1fr_1.3fr_1fr] gap-2">
-                    {(["low", "mid", "high"] as const).map((k) => (
-                      <div key={k} className={`rounded-xl border p-3 text-center ${k === "mid" ? "border-t-accent bg-t-accent text-t-on-accent" : "border-t-muted/20 bg-t-ground text-t-text"}`}>
-                        <span className={`block text-[10px] font-bold uppercase tracking-wider ${k === "mid" ? "" : "text-t-muted"}`}>{k}</span>
-                        <span id={`est-${k}`} className={`block whitespace-nowrap font-extrabold tabular-nums ${k === "mid" ? "text-xl" : "text-base"}`}>{fmt(shown[k])}</span>
-                        <span className={`block text-[10px] ${k === "mid" ? "" : "text-t-muted"}`}>{r.m[k]}× multiplier</span>
-                      </div>
-                    ))}
-                  </div>
+                  <>
+                {single ? (
+                    <div className="rounded-xl bg-t-accent p-4 text-center text-t-on-accent">
+                      <span className="block text-[11px] font-bold uppercase tracking-wider">Estimate</span>
+                      <span id="est-mid" className="block text-3xl font-black tabular-nums">{fmt(shown.mid)}</span>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-[1fr_1.3fr_1fr] gap-2">
+                      {(["low", "mid", "high"] as const).map((k) => (
+                        <div key={k} className={`rounded-xl border p-3 text-center ${k === "mid" ? "border-t-accent bg-t-accent text-t-on-accent" : "border-t-muted/20 bg-t-ground text-t-text"}`}>
+                          <span className={`block text-[10px] font-bold uppercase tracking-wider ${k === "mid" ? "" : "text-t-muted"}`}>{k}</span>
+                          <span id={`est-${k}`} className={`block whitespace-nowrap font-extrabold tabular-nums ${k === "mid" ? "text-xl" : "text-base"}`}>{fmt(shown[k])}</span>
+                          <span className={`block text-[10px] ${k === "mid" ? "" : "text-t-muted"}`}>{r.m[k]}× multiplier</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  </>
                 )}
                 <p id="estimate-qualifier" className="mt-3 text-center text-xs leading-snug text-t-muted">
                   Estimate only. Not a guarantee of any result or legal advice.
                 </p>
 
                 {r.barred ? (
-                  <p className="mt-4 text-xs text-t-text" role="status"><strong>Recovery may be barred.</strong> At {r.faultPercent}% fault, Pennsylvania&apos;s 51% bar applies (42 Pa.C.S. § 7102).</p>
+                  <p className="mt-4 text-xs text-t-text" role="status"><strong>Recovery may be barred.</strong> At {r.faultPercent}% fault, Pennsylvania bars recovery when you are more than 50% at fault (42 Pa.C.S. § 7102).</p>
                 ) : null}
-                {!r.nonEconomicAllowed && r.ifNonEconomicAvailable && !r.barred ? (
+                {!r.nonEconomicAllowed && !r.tortUnsure && r.ifNonEconomicAvailable && !r.barred ? (
                   <p className="mt-4 rounded-lg border border-t-muted/20 bg-t-ground px-3 py-2 text-xs leading-snug text-t-text">
-                    {tortOption === "unsure" ? "Not sure of your tort option? " : "Limited tort: "}
+                    {"Limited tort: "}
                     if pain and suffering is available (full tort, or a serious injury/exception under limited tort), the range would be {fmt(r.ifNonEconomicAvailable.low)} – {fmt(r.ifNonEconomicAvailable.high)} before any policy limit.
                   </p>
                 ) : null}
-                {r.policyLimitsMayBind && r.capped ? (
+                {r.policyLimitsMayBind && r.capped && !r.tortUnsure ? (
                   <p className="mt-4 rounded-lg border border-t-accent/50 bg-t-accent/10 px-3 py-2 text-xs text-t-text" role="status">
-                    <strong>Policy limit:</strong> the estimate is capped at the {fmt(POLICY.find((p) => p.id === policy)!.value ?? 0)} per-person limit you entered. Underinsured motorist coverage may matter.
+                    <strong>Policy limit (practical estimate, not a legal cap):</strong> this driver&apos;s insurance may stop at the {fmt(POLICY.find((p) => p.id === policy)!.value ?? 0)} per-person limit you entered; your underinsured motorist coverage or other sources may apply.
                   </p>
                 ) : null}
                 {offerNum != null && Number.isFinite(offerNum) && offerNum >= 0 && shown.mid > 0 ? (
@@ -283,15 +299,15 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
                   </summary>
                   <dl id="breakdown" className="space-y-1.5 border-t border-t-muted/20 px-4 py-3 text-xs text-t-text">
                     <Row k="Medical bills" v={fmt(medicalBills)} />
-                    <Row k="Less your own medical benefit (§ 1711)" v={`− ${fmt(r.medicalOffset)}`} />
+                    <Row k="Less benefits paid or payable (§ 1722; § 1711 medical benefit)" v={`− ${fmt(r.medicalOffset)}`} />
                     <Row k="Lost wages + other + property (added once)" v={fmt(lostWages + otherOutOfPocket + propertyDamage)} />
                     <Row k="Economic damages" v={fmt(r.economic)} strong />
-                    <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label}`} v={`${(r.m.mid - r.m.adjustment).toFixed(2)}× base`} />
+                    <Row k={`Severity: ${SEVERITY.find((s) => s.id === severity)!.label}`} v={`${(r.m.mid - r.m.adjustment).toFixed(2)}× base (estimate method, not law)`} />
                     <Row k={`Liability: ${lev.breakdownLabel}`} v={`${lev.coef > 0 ? "+" : ""}${lev.coef.toFixed(2)}×`} />
                     <Row k="All adjustments" v={`${r.m.adjustment > 0 ? "+" : ""}${r.m.adjustment.toFixed(2)}×`} />
-                    <Row k={`Pain & suffering (medical × (${r.m.mid}× − 1))`} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : "Not included (tort option)"} />
+                    <Row k={`Pain & suffering = gross medical × (${r.m.mid} − 1)`} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.tortUnsure ? `${fmt(medicalBills * (r.m.mid - 1))} if full tort` : "Not included (tort option)"} />
                     <Row k={`Your fault ${r.faultPercent}%`} v={r.barred ? "Barred (>50%)" : `× ${(1 - r.faultPercent / 100).toFixed(2)}`} />
-                    <Row k="Policy limit" v={r.capped ? fmt(POLICY.find((p) => p.id === policy)!.value ?? 0) : "Unknown — not capped"} />
+                    <Row k="Policy limit (practical, not a legal cap)" v={r.capped ? fmt(POLICY.find((p) => p.id === policy)!.value ?? 0) : "Unknown — not limited"} />
                   </dl>
                 </details>
 
@@ -309,6 +325,29 @@ export function PaCalculator({ client }: { client: ClientConfig }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Equal-weight scenario block (same tier styling as the main range). */
+function Scenario({ title, range, m }: { title: string; range: { low: number; mid: number; high: number }; m?: { low: number; mid: number; high: number } }) {
+  const single = range.low === range.high;
+  return (
+    <div className="rounded-xl border border-t-muted/20 bg-t-ground p-3 text-center text-t-text">
+      <span className="block text-[11px] font-bold uppercase tracking-wider text-t-accent">{title}</span>
+      {single ? (
+        <span className="mt-1 block text-xl font-extrabold tabular-nums">{fmt(range.mid)}</span>
+      ) : (
+        <div className="mt-1 grid grid-cols-3 gap-1">
+          {(["low", "mid", "high"] as const).map((k) => (
+            <div key={k}>
+              <span className="block text-[10px] font-bold uppercase tracking-wider text-t-muted">{k}</span>
+              <span className="block whitespace-nowrap text-xl font-extrabold tabular-nums">{fmt(range[k])}</span>
+              {m ? <span className="block text-[10px] text-t-muted">{m[k]}× multiplier</span> : null}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

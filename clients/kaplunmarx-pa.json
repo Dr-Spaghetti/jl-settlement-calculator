@@ -35,16 +35,17 @@
   "state": "PA",
   "officeAddress": "115 S 8th St Suite 5",
   "officeZip": "19106",
-  "responsibleAttorney": "Ted Kaplun",
+  "responsibleAttorney": "Theodor (Ted) Kaplun",
   "tagline": "Pennsylvania car accident settlement estimate.",
   "attorneyDisclaimer": "",
   "sources": {
     "firmName": "https://kaplunmarx.com/ (footer: \u00a9 2026 KaplunMarx Accident & Injury Lawyers)",
     "phone": "https://kaplunmarx.com/contact-us/ (main tel link)",
     "officeAddress": "https://kaplunmarx.com/contact-us/ (Philadelphia: 115 S 8th St Suite 5, Philadelphia, PA 19106)",
-    "responsibleAttorney": "kaplunmarx-pa.md \u2014 Ted Kaplun, founding partner (site schema founder)",
+    "responsibleAttorney": "PA Disciplinary Board attorney search: Kaplun, Theodor #312974, Active, registered Bryn Mawr (AUDIT-2026-10-09.md row 40). PENDING FIRM CONFIRMATION that Ted = Theodor #312974.",
     "ctaUrl": "https://kaplunmarx.com/contact-us/",
     "colors": "_kaplunmarx-original-notes.md \u2014 site CSS navy #10172C, tan #AD9779, cream #F9F6F1",
-    "headerBg": "#052240 = modal border pixel of kaplunmarx-full-navy-from-nick.png"
+    "headerBg": "#052240 = modal border pixel of kaplunmarx-full-navy-from-nick.png",
+    "officeCity_PENDING": "Rule 7.2(h): footer shows Philadelphia (firm contact page) but the Board registers Theodor Kaplun in Bryn Mawr. PENDING FIRM CONFIRMATION of where the handling lawyers principally practice."
   }
 }

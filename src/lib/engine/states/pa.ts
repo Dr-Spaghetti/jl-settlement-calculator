@@ -10,7 +10,7 @@ export const PA_LAW = {
     cite: "75 Pa.C.S. § 1702", source: "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=75&div=0&chpt=17", verifiedOn: "2026-10-09",
   },
   firstPartyMedical: {
-    minimum: 5000, cite: "75 Pa.C.S. § 1711 (paid first; not recoverable from the at-fault driver, § 1722)",
+    minimum: 5000, cite: "75 Pa.C.S. § 1711(a) (most car policies; excludes motorcycles); benefits paid or payable not recoverable, § 1722 (incl. § 1719 health-insurance benefits)",
     source: "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=75&div=0&chpt=17", verifiedOn: "2026-10-09",
   },
   fault: {
@@ -18,12 +18,14 @@ export const PA_LAW = {
     cite: "42 Pa.C.S. § 7102", source: "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=42&div=0&chpt=71", verifiedOn: "2026-10-09",
   },
   tortOption: {
-    cite: "75 Pa.C.S. § 1705", source: "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=75&div=0&chpt=17",
-    verifiedOn: "cited only — not yet opened (see _VERIFICATION-2026-10-09.md)",
+    cite: "75 Pa.C.S. § 1705(a)(3), (b)(3), (c), (d); serious injury defined in § 1702",
+    source: "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=75&div=00.&chpt=17",
+    verifiedOn: "2026-10-09 (official PA General Assembly PDF, quoted in AUDIT-2026-10-09.md rows 11-16)",
   },
   sol: {
-    years: 2, cite: "42 Pa.C.S. § 5524", source: "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=42&div=0&chpt=55",
-    verifiedOn: "cited only — not yet opened (see _VERIFICATION-2026-10-09.md)",
+    years: 2, cite: "42 Pa.C.S. § 5524(2) (runs from accrual, § 5502(a); government notice 6 months, § 5522(a))",
+    source: "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=42&div=00.&chpt=55",
+    verifiedOn: "2026-10-09 (official PA General Assembly PDF, quoted in AUDIT-2026-10-09.md rows 18-19)",
   },
 } as const;
 
@@ -56,6 +58,11 @@ export interface PaResult {
   policyLimitsMayBind: boolean;
   /** For "limited/unsure", the range IF pain & suffering were available (shown as a secondary line). */
   ifNonEconomicAvailable: Range | null;
+  /**
+   * Tort option "Not sure": both scenarios, shown with equal weight (audit row 16).
+   * PA presumes full tort when no election was made (§ 1705(a)(3)); people with no PA auto policy are not limited (§ 1705(b)(3)).
+   */
+  tortUnsure: { full: Range; limited: Range } | null;
 }
 
 function fault(r: Range, f: number): { r: Range; barred: boolean } {
@@ -64,6 +71,12 @@ function fault(r: Range, f: number): { r: Range; barred: boolean } {
     r: { low: roundMoney(lo.recoverable), mid: roundMoney(applyModifiedFault50(r.mid, f).recoverable), high: roundMoney(applyModifiedFault50(r.high, f).recoverable) },
     barred: lo.barred,
   };
+}
+
+/** Practical collection estimate (not a legal cap): limit the shown range to the entered per-person limit. */
+function capR(r: Range, lim: number | null): Range {
+  if (lim == null || !Number.isFinite(lim) || lim <= 0) return r;
+  return { low: Math.min(r.low, lim), mid: Math.min(r.mid, lim), high: Math.min(r.high, lim) };
 }
 
 export function calculatePA(i: PaInputs): PaResult {
@@ -92,5 +105,6 @@ export function calculatePA(i: PaInputs): PaResult {
     nonEconomic: nonEconomicAllowed ? { low: roundMoney(nonEcon.low), mid: roundMoney(nonEcon.mid), high: roundMoney(nonEcon.high) } : { low: 0, mid: 0, high: 0 },
     preFault, recoverable: rec.r, barred: rec.barred, faultPercent: f, capped, policyLimitsMayBind,
     ifNonEconomicAvailable: nonEconomicAllowed ? null : fault(withNE, f).r,
+    tortUnsure: i.tortOption === "unsure" ? { full: capR(fault(withNE, f).r, lim), limited: capR(fault(econOnly, f).r, lim) } : null,
   };
 }

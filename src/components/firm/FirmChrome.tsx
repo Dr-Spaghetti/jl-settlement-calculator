@@ -104,10 +104,10 @@ export function FirmHero({ a, b, chips }: { a: string; b: string; chips: { title
 
 export function FirmHowItWorks({ faultNote }: { faultNote: string }) {
   const steps = [
-    ["Economic losses", "Medical bills, lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
-    ["Pain & suffering", "Medical bills are multiplied by a range set by injury severity, treatment and liability. This is a simplified model, not how any insurer or court must value a claim."],
+    ["Economic losses", "Medical bills (less benefits paid or payable by your own coverage), lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied."],
+    ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills (including any your own insurer pays). The multiplier range comes from injury severity, treatment and liability. This is an estimate method, not law, and not how any insurer or court must value a claim."],
     ["State rules", faultNote],
-    ["Policy reality", "If you enter the at-fault driver's per-person limit, the range is capped at it. If you don't know the limit, nothing is capped."],
+    ["Policy reality", "A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person limit, the shown range stops there as a practical collection estimate; your underinsured motorist coverage or other sources may apply. If you don't know the limit, nothing is limited."],
   ];
   return (
     <section id="how-it-works" className="px-4 py-14">
