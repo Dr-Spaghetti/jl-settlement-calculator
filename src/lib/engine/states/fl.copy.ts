@@ -5,6 +5,8 @@ export interface FlCopy {
   regionName: string; heroTitleA: string; heroTitleB: string;
   faultChip: { title: string; detail: string }; topbarRule: string; faultNote: string;
   how: [string, string][];
+  /** § 768.0427(2)(a) note under the medical-bills input. */
+  medicalPaidNote: string;
   thresholdLabel: string; thresholdHelp: string; thresholdUnsureNote: string;
   scenarioMet: string; scenarioNotMet: string; titleUnsure: string;
   notMetLine: (lo: string, hi: string) => string;
@@ -22,8 +24,9 @@ const en: FlCopy = {
   topbarRule: "Florida comparative fault: no recovery if more than 50% at fault",
   faultNote:
     "Florida comparative fault (Fla. Stat. § 768.81): your fault reduces your damages proportionately, and a party found greater than 50 percent at fault for his or her own harm may not recover any damages. This applies to negligence lawsuits filed after March 24, 2023 (ch. 2023-15, § 30, Laws of Fla.).",
+  medicalPaidNote: "For Florida lawsuits filed after March 24, 2023, past medical bills that have been paid are proven by the amount actually paid, not the amount billed (Fla. Stat. § 768.0427(2)(a)). Enter amounts paid if you know them.",
   how: [
-    ["Economic losses", "Medical bills, lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied. Personal Injury Protection (PIP) benefits paid or payable are subtracted, because they can't be recovered again from the at-fault driver (Fla. Stat. § 627.736(3))."],
+    ["Economic losses", "Medical bills, lost wages, other out-of-pocket costs and property damage are added once. They are never multiplied. Personal Injury Protection (PIP) benefits paid or payable are subtracted, because they can't be recovered again from the at-fault driver (Fla. Stat. § 627.736(3)). For Florida lawsuits filed after March 24, 2023, past medical bills that have been paid are proven by the amount actually paid, not the amount billed (Fla. Stat. § 768.0427(2)(a)). Enter amounts paid if you know them."],
     ["Pain & suffering", "Pain and suffering = medical bills × (multiplier − 1), on gross medical bills. It is included only if the § 627.737(2) threshold is met. The multiplier range comes from injury severity, treatment and liability. Shared or disputed liability lowers the estimate in addition to the fault %. This is an estimate method, not law, and not how any insurer or court must value a claim."],
     ["State rules", ""],
     ["Policy reality", "A policy limit is not a legal cap on damages. If you enter the at-fault driver's per-person bodily-injury limit, the shown range stops there as a practical collection estimate; your uninsured/underinsured motorist coverage (if you have it) or other sources may apply. If you don't know the limit, nothing is limited."],
@@ -81,8 +84,9 @@ const es: FlCopy = {
   topbarRule: "Culpa comparativa en Florida: sin indemnización si tiene más del 50% de culpa",
   faultNote:
     "Culpa comparativa en Florida (Fla. Stat. § 768.81): su culpa reduce sus daños de forma proporcional, y la parte a la que se le atribuya más del 50 por ciento de la culpa por su propio daño no puede recuperar ningún daño. Esto se aplica a las demandas por negligencia presentadas después del 24 de marzo de 2023 (ch. 2023-15, § 30, Laws of Fla.).",
+  medicalPaidNote: "En las demandas de Florida presentadas después del 24 de marzo de 2023, los gastos médicos pasados ya pagados se prueban por el monto realmente pagado, no por el monto facturado (Fla. Stat. § 768.0427(2)(a)). Indique los montos pagados si los conoce.",
   how: [
-    ["Pérdidas económicas", "Los gastos médicos, los salarios perdidos, otros gastos de su bolsillo y los daños a la propiedad se suman una sola vez. Nunca se multiplican. Se restan los beneficios de Protección contra Lesiones Personales (PIP) pagados o pagaderos, porque no se pueden cobrar de nuevo al conductor culpable (Fla. Stat. § 627.736(3))."],
+    ["Pérdidas económicas", "Los gastos médicos, los salarios perdidos, otros gastos de su bolsillo y los daños a la propiedad se suman una sola vez. Nunca se multiplican. Se restan los beneficios de Protección contra Lesiones Personales (PIP) pagados o pagaderos, porque no se pueden cobrar de nuevo al conductor culpable (Fla. Stat. § 627.736(3)). En las demandas de Florida presentadas después del 24 de marzo de 2023, los gastos médicos pasados ya pagados se prueban por el monto realmente pagado, no por el monto facturado (Fla. Stat. § 768.0427(2)(a)). Indique los montos pagados si los conoce."],
     ["Dolor y sufrimiento", "Dolor y sufrimiento = gastos médicos × (multiplicador − 1), sobre los gastos médicos brutos. Solo se incluye si se cumple el umbral del § 627.737(2). El rango del multiplicador depende de la gravedad de la lesión, del tratamiento y de la responsabilidad. Una responsabilidad compartida o en disputa reduce la estimación además del porcentaje de culpa. Es un método de estimación, no es ley, y no es la forma en que una aseguradora o un tribunal deba valorar un reclamo."],
     ["Reglas del estado", ""],
     ["La realidad de la póliza", "El límite de la póliza no es un tope legal de los daños. Si indica el límite por persona de lesiones corporales del conductor culpable, el rango mostrado se detiene ahí como estimación práctica de cobro; su cobertura de motorista sin seguro o con seguro insuficiente (si la tiene) u otras fuentes podrían aplicarse. Si no conoce el límite, no se limita nada."],
@@ -99,7 +103,7 @@ const es: FlCopy = {
   pipLabel: "Su Protección contra Lesiones Personales (PIP)",
   pipOpts: {
     emc: "PIP, se determinó una condición médica de emergencia (límite de $10,000)",
-    noEmc: "PIP, sin condición médica de emergencia (gastos médicos hasta $2,500)",
+    noEmc: "PIP, sin condición médica de emergencia (beneficios médicos limitados a $2,500)",
     none: "No tengo PIP disponible",
   },
   pipHelp:

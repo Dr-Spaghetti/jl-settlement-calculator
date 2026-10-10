@@ -49,6 +49,8 @@ export interface Ui {
   rowLiability: (l: string) => string; rowAdjust: string; rowPain: (m: number) => string;
   rowFault: (f: number) => string; barredShort: string; rowPolicy: string; rowPolicyUnknown: string;
   notIncluded: string; base: string;
+  /** Breakdown row shown only when the multiplier range hits the 1.25×–7× floor/ceiling. */
+  rowClamped: string;
 }
 
 const en: Ui = {
@@ -90,6 +92,7 @@ const en: Ui = {
   rowSeverity: (s) => `Severity: ${s} (estimate method, not law)`, rowLiability: (l) => `Liability: ${l}`, rowAdjust: "All adjustments",
   rowPain: (m) => `Pain & suffering = gross medical × (${m} − 1)`, rowFault: (f) => `Your fault ${f}%`, barredShort: "Barred (>50%)",
   rowPolicy: "Policy limit (practical, not a legal cap)", rowPolicyUnknown: "Unknown — not limited", notIncluded: "Not included", base: "base",
+  rowClamped: "Multiplier held within 1.25×–7× (estimate method, not law)",
 };
 
 const es: Ui = {
@@ -129,8 +132,9 @@ const es: Ui = {
   policyBind: (l) => `el seguro de este conductor podría pagar solo hasta el límite de ${l} por persona que usted indicó; su cobertura de motorista con seguro insuficiente (si la tiene) u otras fuentes podrían aplicarse.`,
   rowMedical: "Gastos médicos", rowEconOnce: "Salarios perdidos + otros + propiedad (se suman una vez)", rowEconomic: "Daños económicos",
   rowSeverity: (s) => `Gravedad: ${s} (método de estimación, no es ley)`, rowLiability: (l) => `Responsabilidad: ${l}`, rowAdjust: "Todos los ajustes",
-  rowPain: (m) => `Dolor y sufrimiento = gastos médicos brutos × (${m} − 1)`, rowFault: (f) => `Su culpa ${f}%`, barredShort: "Excluido (>50%)",
+  rowPain: (m) => `Dolor y sufrimiento = gastos médicos brutos × (${m} − 1)`, rowFault: (f) => `Su culpa ${f}%`, barredShort: "Sin indemnización (>50%)",
   rowPolicy: "Límite de la póliza (práctico, no un tope legal)", rowPolicyUnknown: "Desconocido: sin límite", notIncluded: "No incluido", base: "base",
+  rowClamped: "Multiplicador mantenido entre 1.25× y 7× (método de estimación, no es ley)",
 };
 
 export const UI: Record<Locale, Ui> = { en, es };

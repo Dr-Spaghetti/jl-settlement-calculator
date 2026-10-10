@@ -19,7 +19,7 @@ const help = "mt-1 text-[11px] leading-snug text-t-muted";
 const input = "mt-1.5 block w-full rounded-lg border border-t-muted/30 bg-t-ground px-3.5 py-2.5 text-sm font-semibold text-t-text outline-none focus:border-t-accent focus:ring-1 focus:ring-t-accent";
 type Range = { low: number; mid: number; high: number };
 
-function Money({ id, l, v, set }: { id: string; l: string; v: number; set: (n: number) => void }) {
+function Money({ id, l, v, set, note }: { id: string; l: string; v: number; set: (n: number) => void; note?: string }) {
   return (
     <div>
       <label htmlFor={id} className={label}>{l}</label>
@@ -27,6 +27,7 @@ function Money({ id, l, v, set }: { id: string; l: string; v: number; set: (n: n
         <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 pt-1.5 text-sm text-t-muted">$</span>
         <input id={id} type="number" inputMode="decimal" min={0} step={100} value={v} onChange={(e) => set(Math.max(0, Number(e.target.value) || 0))} className={`${input} pl-8`} />
       </div>
+      {note ? <p className={help}>{note}</p> : null}
     </div>
   );
 }
@@ -118,7 +119,7 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
               <div className="space-y-6 p-6">
                 {step === 0 ? (
                   <div className="grid gap-5 sm:grid-cols-2">
-                    <Money id="med" l={ui.medical} v={medicalBills} set={setMed} />
+                    <Money id="med" l={ui.medical} v={medicalBills} set={setMed} note={st === "FL" ? fl.medicalPaidNote : undefined} />
                     <Money id="wages" l={ui.wages} v={lostWages} set={setWages} />
                     <Money id="other" l={ui.other} v={otherOutOfPocket} set={setOther} />
                     <Money id="prop" l={ui.property} v={propertyDamage} set={setProp} />
@@ -274,9 +275,10 @@ export function StateCalculator({ client, locale }: { client: ClientConfig; loca
                     {st === "FL" ? <Row k={fl.rowPip} v={`− ${fmt(roundMoney(r.offset))}`} /> : null}
                     <Row k={ui.rowEconOnce} v={fmt(lostWages + otherOutOfPocket + propertyDamage)} />
                     <Row k={ui.rowEconomic} v={fmt(r.economic)} strong />
-                    <Row k={ui.rowSeverity(ui.severityOpts[severity])} v={`${(r.m.mid - r.m.adjustment).toFixed(2)}× ${ui.base}`} />
+                    <Row k={ui.rowSeverity(ui.severityOpts[severity])} v={`${r.m.baseMid.toFixed(2)}× ${ui.base}`} />
                     <Row k={ui.rowLiability(ui.liabilityOpts[lev.id])} v={`${lev.coef > 0 ? "+" : ""}${lev.coef.toFixed(2)}×`} />
                     <Row k={ui.rowAdjust} v={`${r.m.adjustment > 0 ? "+" : ""}${r.m.adjustment.toFixed(2)}×`} />
+                    {r.m.clamped ? <Row k={ui.rowClamped} v={`${r.m.low.toFixed(2)}× / ${r.m.mid.toFixed(2)}× / ${r.m.high.toFixed(2)}×`} /> : null}
                     <Row k={ui.rowPain(r.m.mid)} v={r.nonEconomicAllowed ? fmt(r.nonEconomic.mid) : r.unsure ? fl.rowPainUnsure(fmt(roundMoney(medicalBills * (r.m.mid - 1)))) : fl.rowPainNotMet} />
                     <Row k={ui.rowFault(r.faultPercent)} v={r.barred ? ui.barredShort : `× ${(1 - r.faultPercent / 100).toFixed(2)}`} />
                     <Row k={ui.rowPolicy} v={r.capped ? fmt(lim ?? 0) : ui.rowPolicyUnknown} />

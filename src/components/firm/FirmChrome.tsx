@@ -11,8 +11,11 @@ export function legalLine(c: ClientConfig, ui: Ui = UI.en): string {
   }
   if (c.offices?.length) {
     // Multi-office, localized form: firm. Responsible attorney: name, address. Offices: City (phone); ...
-    return `${c.firmName}. ${ui.responsibleAttorney}: ${c.responsibleAttorney}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
-      `. ${ui.offices}: ${c.offices.map((o) => `${o.name}, ${o.address}${o.phone ? `, ${o.phone}` : ""}`).join("; ")}. ${ui.noRelationship}`;
+    const firm = c.firmLegalName ? `${c.firmName} (${c.firmLegalName})` : c.firmName;
+    const es = ui === UI.es;
+    const geo = c.practiceGeography ? ` ${(es && c.practiceGeography.es) || c.practiceGeography.en}` : "";
+    return `${firm}. ${ui.responsibleAttorney}: ${c.responsibleAttorney}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
+      `. ${ui.offices}: ${c.offices.map((o) => `${(es && o.nameEs) || o.name}, ${o.address}${o.phone ? `, ${o.phone}` : ""}`).join("; ")}.${geo} ${ui.noRelationship}`;
   }
   return (`${c.firmName}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
     (c.additionalOffices?.length ? `; ${c.additionalOffices.join("; ")}` : "")) +
