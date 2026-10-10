@@ -12,7 +12,7 @@ export function legalLine(c: ClientConfig, ui: Ui = UI.en): string {
   if (c.offices?.length) {
     // Multi-office, localized form: firm. Responsible attorney: name, address. Offices: City (phone); ...
     return `${c.firmName}. ${ui.responsibleAttorney}: ${c.responsibleAttorney}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
-      `. ${ui.offices}: ${c.offices.map((o) => `${o.name}, ${o.address}${o.phone ? ` (${o.phone})` : ""}`).join("; ")}. ${ui.noRelationship}`;
+      `. ${ui.offices}: ${c.offices.map((o) => `${o.name}, ${o.address}${o.phone ? `, ${o.phone}` : ""}`).join("; ")}. ${ui.noRelationship}`;
   }
   return (`${c.firmName}, ${c.officeAddress}, ${c.city}, ${c.state} ${c.officeZip ?? ""}`.trim() +
     (c.additionalOffices?.length ? `; ${c.additionalOffices.join("; ")}` : "")) +

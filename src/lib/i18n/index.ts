@@ -102,7 +102,7 @@ const es: Ui = {
   howKicker: "Transparente por diseño", howTitle: "Cómo se calcula la estimación",
   faqTitle: "Preguntas frecuentes", ctaTitle: "¿Quiere que un abogado revise sus números?",
   call: "Llame al", callShort: "Llamar", reviewWithAttorney: "Revisión con un abogado",
-  responsibleAttorney: "Abogado responsable", offices: "Oficinas",
+  responsibleAttorney: "Abogado(a) responsable", offices: "Oficinas",
   noRelationship: "El uso de esta herramienta no establece una relación abogado-cliente y no constituye asesoría legal.",
   steps: ["Pérdidas económicas", "Lesión y culpa", "Cobertura"], stepsShort: ["Pérdidas", "Lesión", "Cobertura"],
   stepOf: (n) => `Paso ${n} de 3`,
