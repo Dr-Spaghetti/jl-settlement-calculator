@@ -28,7 +28,8 @@ export function LangToggle({ client, locale }: { client: ClientConfig; locale: L
       {locales.map((l) => (
         <a key={l} href={localePath(l)} hrefLang={l} lang={l} aria-current={l === locale ? "true" : undefined}
           className={`rounded px-2 py-0.5 text-[11px] font-bold ${l === locale ? "bg-t-accent text-t-on-accent" : "text-t-text underline-offset-2 hover:underline"}`}>
-          {LOCALE_LABEL[l]}
+          <span className="sm:hidden">{l.toUpperCase()}</span>
+          <span className="hidden sm:inline">{LOCALE_LABEL[l]}</span>
         </a>
       ))}
     </span>
@@ -51,7 +52,7 @@ export function FirmHeader({ client, regionName, rule, ui = UI.en, locale = "en"
             </span>
           </div>
           {(client.locales?.length ?? 1) > 1 ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <LangToggle client={client} locale={locale} />
               <a href={telHref(client.phone)} className="flex min-h-[32px] items-center whitespace-nowrap font-semibold text-t-text hover:text-t-accent">
                 <PhoneIcon size={14} className="mr-1.5 text-t-accent" />
