@@ -113,3 +113,26 @@ test("SC: insured/uninsured/unsure never changes the math (informational only)",
   const a = calculateSC(sc), b = calculateSC({ ...sc, otherDriverInsured: "uninsured" }), c = calculateSC({ ...sc, otherDriverInsured: "unsure" });
   assert.deepEqual(a, b); assert.deepEqual(a, c);
 });
+
+// ---- Breakdown base / clamp (independent audit FL #27, SC #15). Hand-worked. ----
+import { multipliers } from "./core";
+test("clamp floor: minor 1.5/2.0/2.5 + chiro −.15 + ≤1 mo −.15 + long gap −.45 + disputed −.55 = −1.30 → 0.20/0.70/1.20 → all held at 1.25; real base 2.00 (not 1.25 − (−1.30) = 2.55)", () => {
+  const m = multipliers({ ...core, severity: "minor", careType: "chiro", treatmentMonths: 1, treatmentGap: "long", liability: "disputed" });
+  assert.equal(m.adjustment, -1.3);
+  assert.deepEqual([m.low, m.mid, m.high], [1.25, 1.25, 1.25]);
+  assert.equal(m.baseMid, 2.0);
+  assert.equal(m.clamped, true);
+  assert.notEqual(m.mid - m.adjustment, m.baseMid); // the old display formula was wrong here
+});
+test("no clamp on defaults: moderate 2.75 + .50 = 3.25 → baseMid 2.75, clamped false", () => {
+  const m = multipliers(core);
+  assert.deepEqual([m.low, m.mid, m.high, m.baseMid, m.clamped], [2.5, 3.25, 4.0, 2.75, false]);
+});
+test("clamp ceiling: catastrophic 4/5/6 + surgery .45 + 13 mo .45 + rated .55 + clear .25 = +1.70 → 5.70/6.70/7.70→7.00; clamped", () => {
+  const m = multipliers({ ...core, severity: "catastrophic", careType: "surgery", treatmentMonths: 13, permanency: "rated" });
+  assert.deepEqual([m.low, m.mid, m.high, m.baseMid, m.clamped], [5.7, 6.7, 7, 5.0, true]);
+});
+test("SC with floor: econ 15,500 + 10,000 × (1.25 − 1) = 2,500 → 18,000 low/mid/high", () => {
+  const r = calculateSC({ ...sc, severity: "minor", careType: "chiro", treatmentMonths: 1, treatmentGap: "long", liability: "disputed" });
+  assert.deepEqual(r.recoverable, { low: 18000, mid: 18000, high: 18000 });
+});
