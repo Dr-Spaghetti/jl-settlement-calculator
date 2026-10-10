@@ -1,0 +1,51 @@
+{
+  "id": "omegalaw-ca",
+  "template": "firm-v1",
+  "stateModule": "CA",
+  "firmName": "Omega Law Group, PC",
+  "shortName": "Omega Law Group",
+  "logoUrl": "/firms/omegalaw/logo.svg",
+  "logo": {
+    "src": "/firms/omegalaw/logo.svg",
+    "width": 1877,
+    "height": 270,
+    "alt": "Omega Law Group",
+    "headerBg": "#1A2225",
+    "artworkOffsetX": 0,
+    "artworkOffsetY": 0,
+    "heightPhone": 40,
+    "heightDesktop": 72
+  },
+  "theme": {
+    "headerBg": "#1A2225",
+    "ground": "#1A2225",
+    "surface": "#242E32",
+    "accent": "#D0B56D",
+    "onAccent": "#1A2225",
+    "text": "#F3EFDD",
+    "muted": "#C9C5B6"
+  },
+  "primaryColor": "#1A2225",
+  "secondaryColor": "#D0B56D",
+  "phone": "(310) 526-8383",
+  "website": "https://www.omegalaw.com/",
+  "ctaText": "Free Consultation",
+  "ctaUrl": "https://www.omegalaw.com/contact-us/",
+  "city": "Beverly Hills",
+  "state": "CA",
+  "officeAddress": "269 S Beverly Dr #428",
+  "officeZip": "90212",
+  "responsibleAttorney": "Edwin Saghian",
+  "tagline": "California car accident settlement estimate.",
+  "attorneyDisclaimer": "",
+  "sources": {
+    "firmName": "State Bar of California profile #265386: 'Address: Omega Law Group, PC, 269 South Beverly Drive, 428, Beverly Hills, CA 90212'; site: 'At Omega Law Group, PC, we represent injured victims throughout the state of California.'",
+    "officeAddress": "State Bar of California profile #265386 (Nick's instruction: disclaimer address = bar record). Site footer shows 8800 West Sunset Blvd., West Hollywood, CA 90069 instead.",
+    "phone": "State Bar of California profile #265386: 'Phone: 310-526-8383'. NOTE: site header (2026-10-09) shows (866) 942-3881; 310-526-8383 not found on the homepage/contact page text.",
+    "responsibleAttorney": "https://apps.calbar.ca.gov/attorney/Licensee/Detail/265386 ('Edwin Saghian #265386 License Status: Active')",
+    "ctaText": "https://www.omegalaw.com/ header 'FREE CONSULTATION'",
+    "logo": "https://www.omegalaw.com/wp-content/themes/omega-rebuild/assets/app/svg/weblogo.svg (viewBox 1877.33x269.62), untouched",
+    "headerBg": "#1A2225 charcoal (omegalaw.md site CSS); SVG is transparent",
+    "logoPhoneHeight": "40px on phones (not 52): at 52px the 6.96:1 SVG is 362px wide, wider than a 320px viewport"
+  }
+}
